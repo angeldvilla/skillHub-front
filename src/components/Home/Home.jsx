@@ -6,7 +6,7 @@ export default function Home() {
         <div>
             <h1>ESTOY EN EL HOME</h1>
 
-            <Link to = "CreateWork">
+            <Link to = "/CreateWork">
             <button> Publicar un trabajo </button>
             </Link>
         </div>
