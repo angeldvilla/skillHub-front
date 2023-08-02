@@ -7,17 +7,10 @@ import style from './landingPage.module.css'
 export default function LandingPage () {
     return(
     <div className={style.landingpage}>
+        
         <nav>
- 
-        {/* <div>
+        <div>
         <img src={logoSkillHub} alt='skillHub Logo'/>
-        </div> */}
-        <div className='relative w-32 h-auto '>
-          <img
-            src={logoSkillHub}
-            alt='skillHub-logo'
-            className='absolute -top-16 rounded-full border-4 bg-sky-900 border-sky-800'
-          />
         </div>
 
         <span>About Us </span> 
