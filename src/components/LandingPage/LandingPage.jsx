@@ -8,7 +8,7 @@ const LandingPage = () => {
         <div className='relative w-32 h-auto '>
           <img
             src={logoSkillHub}
-            className="className='absolute -top-16 rounded-full border-4 bg-sky-900 border-sky-800' "
+            className='sticky -top-16 rounded-full border-4 bg-sky-900 border-sky-800'
             alt='skillHub Logo'
           />
         </div>
