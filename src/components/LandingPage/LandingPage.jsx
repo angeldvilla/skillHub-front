@@ -1,14 +1,25 @@
 import React from "react"
 import logoSkillHub from '../../../public/skillHub.jpg'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import style from './landingPage.module.css'
 
-const LandingPage = () => {
+
+export default function LandingPage () {
     return(
-    <div>
+    <div className={style.landingpage}>
         <nav>
-        <div>
+ 
+        {/* <div>
         <img src={logoSkillHub} alt='skillHub Logo'/>
+        </div> */}
+        <div className='relative w-32 h-auto '>
+          <img
+            src={logoSkillHub}
+            alt='skillHub-logo'
+            className='absolute -top-16 rounded-full border-4 bg-sky-900 border-sky-800'
+          />
         </div>
+
         <span>About Us </span> 
         <span> Contact </span>
             <Link to='/signin'>
@@ -23,10 +34,11 @@ const LandingPage = () => {
             <p>
                 Connecting With Talent!
             </p>
-            <button>
+            <Link to='/home'>
               ¡Get Started!
-            </button>
+            </Link>
           </div>
+
         </div>
 
         <div>
@@ -38,6 +50,3 @@ const LandingPage = () => {
     </div>
     );
 }
-
-
-export default LandingPage;
