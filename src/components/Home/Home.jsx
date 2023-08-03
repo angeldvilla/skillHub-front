@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getWork } from "../../toolkit/thunks";
 import Filters from "../filters/Filters";
 
+
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import skillHub from "../../assets/skillHub.jpg";
@@ -108,14 +109,9 @@ export default function Home() {
           <p>Chile</p>
         </div>
       </div>
+      <Card work={work} />
 
-      <div className="flex flex-wrap justify-around ml-64 ">
-        <div className="justify-around m-64 rounded-md grid grid-cols-4 gap-32 -mt-64">
-          <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <Card work={work} />
-          </div>
-        </div>
-      </div>
+
       <Footer />
     </div>
   );

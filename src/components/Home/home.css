@@ -1,16 +1,14 @@
-.conteiner{
+/* .conteiner{
 
     display:flex;
     flex-direction: column;
     justify-content:space-evenly;
     justify-content: center;
     align-items: center;
-
- 
-  
     /* grid-template-columns: repeat(3, 1fr); */
-    gap: 10px;
-}
+    /* gap: 10px;
+    border:solid red} */
+
 .conteiner-product{
     /* display: grid;
     grid-template-columns: repeat(3, 1fr);  */
