@@ -1,8 +1,9 @@
 import React from "react"
+import { NavLink } from "react-router-dom"
 
 //_______________________________________
 
-import { Link } from "react-router-dom"
+
 
 const WorkPerTime = ["Hora", "Precio fijo"]
 
@@ -19,9 +20,9 @@ const FormCreateWork = () => {
             <h5>
                 Publica tu trabajo
             </h5>
-            <Link to='/home'>
+            <NavLink to='/home'>
                 <button>Volver</button>
-            </Link>
+            </NavLink>
 
             <form>
                 <div>
