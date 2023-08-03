@@ -84,7 +84,7 @@ export default function Home() {
         </div>
 
         <p className="bg-blue-900 mt-6 mb-6 w-full text-center">
-          Users Searches
+          Others Countrys
         </p>
         <div className="flex flex-col items-center justify-center gap-5">
           <p>Argentina</p>
