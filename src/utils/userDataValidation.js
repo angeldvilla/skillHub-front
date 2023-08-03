@@ -93,6 +93,7 @@ export const validateUserData = (input, value, userData) => {
 
 export const resetUserData = (setUserData) => {
   setUserData({
+    username: "",
     firstName: "",
     lastName: "",
     email: "",
