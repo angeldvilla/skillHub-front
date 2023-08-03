@@ -5,6 +5,7 @@ import axios from "axios";
 
 export const getWork =()=>{
     return async(dispatch)=>{
+        
         dispatch(startIsLoading())
 
         const {data}= await axios('https://fakestoreapi.com/products')

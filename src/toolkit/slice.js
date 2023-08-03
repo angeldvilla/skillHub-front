@@ -11,6 +11,7 @@ export const workSlice = createSlice({
   name: 'work',
   initialState,
   reducers: {
+
     startIsLoading:(state)=>{
         state.isLoading=true
 
@@ -63,4 +64,4 @@ export const workSlice = createSlice({
 
 export const { startIsLoading,allWork,filterName,filterPrice } = workSlice.actions
 
-export default workSlice.reducer
+//export default workSlice.reducer
