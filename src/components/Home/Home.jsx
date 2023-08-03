@@ -19,12 +19,9 @@ export default function Home() {
   return (
     <div className="relative justify-center h-screen font-mono">
       <Header />
-      <Filters/>
-      <span>Loading:{isLoading ? 'True' : 'False'}</span>
+      <Filters />
+      <span>Loading:{isLoading ? "True" : "False"}</span>
 
-      
-            
-             
       {/* <div className="flex justify-center items-center mt-8 mb-80 h-10 bg-blue-900 gap-80">
         <div className="gap-5 justify-center items-center space-x-2 p-20">
           <select className="w-32 h-auto rounded-full items-center justify-center text-white">
@@ -112,90 +109,13 @@ export default function Home() {
         </div>
       </div>
 
-      {/* <div className="flex flex-wrap justify-around ml-64 ">
+      <div className="flex flex-wrap justify-around ml-64 ">
         <div className="justify-around m-64 rounded-md grid grid-cols-4 gap-32 -mt-64">
           <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <img src={skillHub} className="rounded-full w-32" />
-            <h3 className="text-xl font-bold mb-2 text-black italic">Title</h3>
-            <p className="mb-2 text-black">Skills</p>
-            <p className="text-black">Ubication</p>
-            <button className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-1 rounded-md mt-5 inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-              MORE INFO
-            </button>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <img src={skillHub} className="rounded-full w-32" />
-            <h3 className="text-xl font-bold mb-2 text-black italic">Title</h3>
-            <p className="mb-2 text-black">Skills</p>
-            <p className="text-black">Ubication</p>
-            <button className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-1 rounded-md mt-5 inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-              MORE INFO
-            </button>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <img src={skillHub} className="rounded-full w-32" />
-            <h3 className="text-xl font-bold mb-2 text-black italic">Title</h3>
-            <p className="mb-2 text-black">Skills</p>
-            <p className="text-black">Ubication</p>
-            <button className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-1 rounded-md mt-5 inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-              MORE INFO
-            </button>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <img src={skillHub} className="rounded-full w-32" />
-            <h3 className="text-xl font-bold mb-2 text-black italic">Title</h3>
-            <p className="mb-2 text-black">Skills</p>
-            <p className="text-black">Ubication</p>
-            <button className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-1 rounded-md mt-5 inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-              MORE INFO
-            </button>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <img src={skillHub} className="rounded-full w-32" />
-            <h3 className="text-xl font-bold mb-2 text-black italic">Title</h3>
-            <p className="mb-2 text-black">Skills</p>
-            <p className="text-black">Ubication</p>
-            <button className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-1 rounded-md mt-5 inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-              MORE INFO
-            </button>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <img src={skillHub} className="rounded-full w-32" />
-            <h3 className="text-xl font-bold mb-2 text-black italic">Title</h3>
-            <p className="mb-2 text-black">Skills</p>
-            <p className="text-black">Ubication</p>
-            <button className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-1 rounded-md mt-5 inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-              MORE INFO
-            </button>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <img src={skillHub} className="rounded-full w-32" />
-            <h3 className="text-xl font-bold mb-2 text-black italic">Title</h3>
-            <p className="mb-2 text-black">Skills</p>
-            <p className="text-black">Ubication</p>
-            <button className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-1 rounded-md mt-5 inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-              MORE INFO
-            </button>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow-lg w-52">
-            <img src={skillHub} className="rounded-full w-32" />
-            <h3 className="text-xl font-bold mb-2 text-black italic">Title</h3>
-            <p className="mb-2 text-black">Skills</p>
-            <p className="text-black">Ubication</p>
-            <button className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-1 rounded-md mt-5 inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-              MORE INFO
-            </button>
+            <Card work={work} />
           </div>
         </div>
-      </div> */}
-      <Card work={work}/>
+      </div>
       <Footer />
     </div>
   );
