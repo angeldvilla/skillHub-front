@@ -8,41 +8,41 @@ export default function Home() {
       <Header />
       <div className="flex justify-center items-center mt-8 mb-80 h-10 bg-blue-900 gap-80">
         <div className="gap-5 justify-center items-center space-x-2 p-20">
-          <select className="w-32 h-auto rounded-full items-center justify-center text-white">
-            <option value="" className="text-white italic">
+          <select className="w-32 h-auto rounded-full items-center justify-center text-black">
+            <option value="" className="text-black italic">
               MATH TEACHER
             </option>
-            <option value="Programmer" className="text-white italic">
+            <option value="Programmer" className="text-black italic">
               PROGRAMMER
             </option>
-            <option value="Gardener" className="text-white italic">
+            <option value="Gardener" className="text-black italic">
               GARDENER
             </option>
-            <option value="Electrician" className="text-white italic">
+            <option value="Electrician" className="text-black italic">
               ELECTRICIAN
             </option>
-            <option value="Domiciliary" className="text-white italic">
+            <option value="Domiciliary" className="text-black italic">
               DOMICILIARY
             </option>
           </select>
 
-          <select className="w-35 h-auto rounded-full items-center justify-center text-white space-x-7">
-            <option value="" className="text-white italic">
+          <select className="w-35 h-auto rounded-full items-center justify-center text-black space-x-7">
+            <option value="" className="text-black italic">
               CHOOSE COUNTRY
             </option>
-            <option value="Argentina" className="text-white italic">
+            <option value="Argentina" className="text-black italic">
               ARGENTINA
             </option>
-            <option value="Colombia" className="text-white italic">
+            <option value="Colombia" className="text-black italic">
               COLOMBIA
             </option>
-            <option value="Perú" className="text-white italic">
+            <option value="Perú" className="text-black italic">
               PERÚ
             </option>
           </select>
 
-          <select className="w-32 h-auto rounded-full items-center justify-center text-white">
-            <option value="" className="text-white italic">
+          <select className="w-32 h-auto rounded-full items-center justify-center text-black">
+            <option value="" className="text-black italic">
               CHOOSE CITY
             </option>
           </select>
