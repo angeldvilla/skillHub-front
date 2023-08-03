@@ -1,45 +1,71 @@
-import logoSkillHub from '../../assets/skillHub.jpg'
-import { Link } from 'react-router-dom'
+import backgroundImage from "../../assets/backgroundImage.jpg";
+import logoSkillHub from "../../assets/skillHub.jpg";
+import { Link } from "react-router-dom";
 
-const LandingPage = () => {
+export default function LandingPage() {
   return (
-    <div>
-      <nav className='bg-primary'>
-        <div className='relative w-32 h-auto '>
-          <img
-            src={logoSkillHub}
-            className='sticky -top-16 rounded-full border-4 bg-sky-900 border-sky-800'
-            alt='skillHub Logo'
-          />
+    <div
+      className="min-h-screen flex flex-col"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        position: "relative",
+        backgroundSize: "cover",
+        top: "0",
+        left:"0",
+        width:"100%",
+        height: "100%",
+        backgroundPosition: "center",
+        /* filter: "blur(10px) brightness(0.25)", */
+        zIndex: "1",
+        
+      }}
+    >
+      <nav className="flex items-center justify-beetwen px-4 py-2">
+        <div className="flex items-center space-x-4">
+          <a href="#" className="gap-9">
+            <img
+              src={logoSkillHub}
+              className="sticky -top-16 w-20 h-auto rounded-full border-4 border-sky-500 mt-2"
+              alt="skillHub Logo"
+            />
+          </a>
         </div>
-        <span>About Us </span>
-        <span> Contact </span>
-        <Link
-          to='/signin'
-          className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md'
-        >
-          Login
-        </Link>
+
+        <div className="flex space-x-7">
+          <a href="#" className="text-white-800">
+            About Us
+          </a>
+          <a href="#" className="text-white-800">
+            Contact
+          </a>
+        </div>
+
+          <div className="flex space-x-7 justify-end">
+          <Link
+            to="/signin"
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
+          >
+            Login
+          </Link>
+
+          </div>
       </nav>
 
-      <div className='min-h-screen flex items-center justify-center bg-gray-100'>
-        <div className='bg-white max-w-lg mx-auto p-8 shadow-md rounded-lg'>
-          <h1 className='text-3xl font-bold mb-4'>Welcome To SkillHub</h1>
-          <p className='text-gray-600 mb-6'>Connecting With Talent!</p>
-          <button className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md'>
-            ¡Get Started!
-          </button>
-        </div>
-      </div>
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <h1 className="text-3xl text-white font-bold mb-4">Welcome To SkillHub</h1>
+        <p className="text-white font-bold mb-6">Connecting With Talent!</p>
+        <Link
+          to="/home"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
+        >
+          Get Started!
+        </Link>
 
-      <div className='min-h-screen flex items-center justify-center bg-gray-100'>
-        <h3>You dont have an account?</h3>
-        <Link to='/signup' color='bg-blue'>
+        <h3 className="text-white font-bold mt-8">Don't have an account?</h3>
+        <Link to="/signup" className="text-blue-500 font-bold">
           Sign Up Here
         </Link>
       </div>
     </div>
-  )
+  );
 }
-
-export default LandingPage
