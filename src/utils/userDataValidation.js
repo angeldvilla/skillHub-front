@@ -1,4 +1,3 @@
-const USERNAME = "username";
 const FIRSTNAME = "firstName";
 const LASTNAME = "lastName";
 const EMAIL = "email";
@@ -10,18 +9,6 @@ export const validateUserData = (input, value, userData) => {
   const errors = {};
 
   switch (input) {
-    case USERNAME:
-      if (!value) {
-        errors.username = "Username is required";
-      } else if (value.length < 8) {
-        errors.username = "Must be at least 8 characters";
-      } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
-        errors.username = "Only allowed letters and numbers";
-      } else if (value.length > 20) {
-        errors.username = "Must be less than 20 characters";
-      }
-      break;
-
     case FIRSTNAME:
       if (!value) {
         errors.firstName = "First name is required";
@@ -61,6 +48,8 @@ export const validateUserData = (input, value, userData) => {
         errors.phoneNumber = "Phone number must be a number";
       } else if (value < 0) {
         errors.phoneNumber = "Phone number must be a positive number";
+      } else if (value.length < 10) {
+        errors.phoneNumber = "Must be at least 10 characters";
       } else if (value.length > 20) {
         errors.phoneNumber = "Must be less than 20 characters";
       }
@@ -93,7 +82,6 @@ export const validateUserData = (input, value, userData) => {
 
 export const resetUserData = (setUserData) => {
   setUserData({
-    username: "",
     firstName: "",
     lastName: "",
     email: "",
