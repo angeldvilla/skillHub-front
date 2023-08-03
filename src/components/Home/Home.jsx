@@ -7,7 +7,7 @@ export default function Home() {
     <div className="relative justify-center h-screen font-mono">
       <Header />
       <div className="flex justify-center items-center mt-8 mb-80 h-10 bg-blue-500 gap-80">
-        {/* Filtros */}
+        
         <div className="gap-5 justify-center items-center space-x-10 p-20">
         <select className="w-32 h-auto rounded-full items-center justify-center text-white">
             <option value="Programmer" className="text-white">MATH TEACHER</option>
@@ -29,7 +29,7 @@ export default function Home() {
           </select>
         </div>
 
-        {/* SearchBar */}
+        
         <div className="justify-center items-center space-x-7">
           <input type="text" placeholder="Search..." />
         
@@ -44,12 +44,12 @@ export default function Home() {
       </div>
 
 
-       {/* Columna izquierda */}
+       
        <div className="relative left-0 -mt-5 bg-transparent p-3 -top-1.5">
-        {/* Contenido de la columna izquierda */}
+        
         <p className="text-gray-800 font-bold">Información Adicional</p>
         <p>Esta es una columna fija en la parte izquierda</p>
-        {/* Agrega más contenido aquí si es necesario */}
+
       </div>
         
       <Footer />
