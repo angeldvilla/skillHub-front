@@ -14,7 +14,6 @@ export default function Register() {
   const fakeDb = [];
 
   const [userData, setUserData] = useState({
-    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -35,15 +34,27 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      Object.values(userData).some((value) => value === "") ||
-      Object.keys(errors).length
-    ) {
+    const hasEmptyValues = Object.values(userData).some(
+      (value) => value === ""
+    );
+    const hasErrors = Object.keys(errors).length;
+
+    if (hasEmptyValues || hasErrors) {
       alert("Complete all fields");
       return;
     }
 
-    fakeDb.push(userData);
+    const { firstName, lastName, email, phoneNumber, password } = userData;
+
+    const newUser = {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      password,
+    };
+
+    fakeDb.push(newUser);
     console.log("Users: ", fakeDb);
 
     // dispatch(postUser(userData));
@@ -66,23 +77,6 @@ export default function Register() {
           SIGN UP
         </h1>
         <div className="flex flex-col">
-          <div className="flex flex-col">
-            <label htmlFor="username" className="pl-2 mb-1 text-lg">
-              USERNAME
-            </label>
-            <input
-              type="text"
-              name="username"
-              value={userData.username}
-              onChange={handleChange}
-              className="bg-zinc-200 p-1.5 mb-3 rounded-md w-80 text-slate-900 text-center outline-none"
-            />
-            {errors.username && (
-              <span className="text-center text-red-500 mb-1">
-                {errors.username}
-              </span>
-            )}
-          </div>
           <div className="flex flex-col">
             <label htmlFor="firstName" className="pl-2 mb-1 text-lg">
               FIRST NAME
@@ -216,7 +210,6 @@ export default function Register() {
             RESET FORM
           </button>
         </div>
-
         <div className="bg-zinc-200 w-56 h-0.5 mb-5"></div>
         <h4 className="text-lg mb-5">OR CONTINUE WITH</h4>
         <div className="flex justify-center gap-6">
@@ -239,4 +232,4 @@ export default function Register() {
       </form>
     </div>
   );
-};
+}
