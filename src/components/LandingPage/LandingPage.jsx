@@ -4,22 +4,16 @@ import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   return (
-    <div
-      className="min-h-screen flex flex-col"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        position: "relative",
-        backgroundSize: "cover",
-        top: "0",
-        left:"0",
-        width:"100%",
-        height: "100%",
-        backgroundPosition: "center",
-        /* filter: "blur(10px) brightness(0.25)", */
-        zIndex: "1",
-        
-      }}
-    >
+    <div className="min-h-screen flex flex-col">
+      <div
+        className="absolute top-0 left-0 w-full h-full blur brightness-50"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: -1,
+        }}
+      ></div>
       <nav className="flex items-center justify-beetwen px-4 py-2">
         <div className="flex items-center space-x-4">
           <a href="#" className="gap-9">
@@ -40,19 +34,20 @@ export default function LandingPage() {
           </a>
         </div>
 
-          <div className="flex space-x-7 justify-end">
+        <div className="flex space-x-7 justify-end">
           <Link
             to="/signin"
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
           >
             Login
           </Link>
-
-          </div>
+        </div>
       </nav>
 
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <h1 className="text-3xl text-white font-bold mb-4">Welcome To SkillHub</h1>
+        <h1 className="text-3xl text-white font-bold mb-4">
+          Welcome To SkillHub
+        </h1>
         <p className="text-white font-bold mb-6">Connecting With Talent!</p>
         <Link
           to="/home"
