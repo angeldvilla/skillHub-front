@@ -2,7 +2,7 @@ import logoSkillHub from "../../assets/skillHub.jpg";
 
 export default function Header() {
   return (
-    <nav className="flex items-center justify-beetwen px-4 py-2 font-mono">
+    <nav className="flex items-center justify-beetwen px-4 py-2 font-mono bg-gray-500">
       <div className="flex items-center space-x-4">
         <a href="/" className="gap-9">
           <img
@@ -31,16 +31,16 @@ export default function Header() {
             <path
               d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
               stroke="#fbf9f9"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
               stroke="#ffffff"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </a>

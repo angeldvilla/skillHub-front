@@ -2,9 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterName, filterPrice, filterTypeWork } from "../../toolkit/slice";
 import { getWork } from "../../toolkit/thunks";
-import "./filters.css";
+import SearchBar from "../SearchBar/SearchBar";
 
-const Filters = () => {
+
+export default function Filters({setIndex, setPage}) {
   //AGREGAMOS LOS TIPOS DE TRABAJOS
   const { filterWork } = useSelector((state) => state.work);
   const typeWork = [];
@@ -32,8 +33,8 @@ const Filters = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-8 mb-1 h-10 bg-blue-900 gap-80">
-      <div className="gap-5 justify-center items-center space-x-2 p-20">
+    <div className="flex justify-center items-center mb-1 h-10 bg-blue-900 gap-80">
+      <div className="gap-5 justify-center items-center space-x-4 p-20 ml-48">
         <select
           onChange={handleOrdertitle}
           className="w-45 h-auto rounded-full items-center justify-center text-black"
@@ -74,20 +75,10 @@ const Filters = () => {
         </button>
       </div>
 
-      <div className=" justify-center items-center space-x-7">
-        <input
-          type="text"
-          placeholder="Example: Programmer"
-          className="text-center italic"
-        />
-
-        <button className="bg-red-600 hover:bg-red-500 text-white px-4 py-1 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
-          ENTER
-        </button>
-      </div>
+      <SearchBar setIndex={setIndex} setPage={setPage}/>
 
       {/* COLUMNA IZQUIERDA (FILTRO POR UBICACION) */}
-      <div className="absolute left-0 top-52 w-64 p-px-10 border-3 text-white text-center text-1xl">
+      <div className="absolute left-0 top-40 w-64 p-px-10 border-3 text-white text-center text-1xl">
         <p className="bg-blue-900 mb-6 w-full">
           Services In (country selected)
         </p>
@@ -119,14 +110,11 @@ const Filters = () => {
         </div>
       </div>
       {/* COLUMNA IZQUIERDA (FILTRO POR UBICACION) */}
-      
     </div>
   );
-};
+}
 
-export default Filters;
-
-{
+{ 
   /* <div className="flex justify-center items-center mt-8 mb-80 h-10 bg-blue-900 gap-80">
         <div className="gap-5 justify-center items-center space-x-2 p-20">
           <select className="w-32 h-auto rounded-full items-center justify-center text-white">
