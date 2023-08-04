@@ -22,7 +22,7 @@ export default function SearchBar({setIndex, setPage}) {
       <input
         type="text"
         placeholder="Example: Programmer"
-        className="text-center italic"
+        className="text-center italic text-black"
         value={work}
         onChange={handleChange}
       />

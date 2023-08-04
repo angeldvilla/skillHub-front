@@ -65,7 +65,7 @@ export const workSlice = createSlice({
     filterTypeWork: (state, action) => {
       if (action.payload === "all") state.work = state.filterWork2;
       else {
-        const dataWork = state.filterWork.filter(
+        const dataWork = state.filterWork2.filter(
           (element) => element.category === action.payload
         );
         state.work = dataWork;
