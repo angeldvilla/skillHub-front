@@ -1,14 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterName, filterPrice, filterTypeWork } from "../../toolkit/slice";
+import { getWork } from "../../toolkit/thunks";
 import "./filters.css";
 
 const Filters = () => {
-  
   //AGREGAMOS LOS TIPOS DE TRABAJOS
-  const {filterWork} = useSelector((state) => state.work);
-  const typeWork = []
-  filterWork.map(ele=>{if(typeWork.indexOf(ele.category)===-1) typeWork.push(ele.category)})
+  const { filterWork } = useSelector((state) => state.work);
+  const typeWork = [];
+  filterWork.map((ele) => {
+    if (typeWork.indexOf(ele.category) === -1) typeWork.push(ele.category);
+  });
   //--------------------------------------- cambiar con tipos de trabajo
 
   const dispatch = useDispatch();
@@ -21,10 +23,13 @@ const Filters = () => {
     dispatch(filterPrice(event.target.value));
   };
 
-  const handleFilterTypeWork=(event)=>{
-    dispatch(filterTypeWork(event.target.value))
+  const handleFilterTypeWork = (event) => {
+    dispatch(filterTypeWork(event.target.value));
+  };
 
-  }
+  const resetFilters = () => {
+    dispatch(getWork());
+  };
 
   return (
     <div className="flex justify-center items-center mt-8 mb-1 h-10 bg-blue-900 gap-80">
@@ -49,7 +54,10 @@ const Filters = () => {
           <option value="200$-mas">200$-mas</option>
         </select>
 
-        <select onChange={handleFilterTypeWork} className="w-45 h-auto rounded-full items-center justify-center text-black">
+        <select
+          onChange={handleFilterTypeWork}
+          className="w-45 h-auto rounded-full items-center justify-center text-black"
+        >
           <option value="all">all</option>
           {typeWork.map((work, index) => (
             <option key={index} value={work}>
@@ -58,14 +66,12 @@ const Filters = () => {
           ))}
         </select>
 
-        <select
-          onChange={handleOrdertitle}
-          className="w-45 h-auto rounded-full items-center justify-center text-black"
+        <button
+          onClick={resetFilters}
+          className="bg-red-600 hover:bg-red-500 text-white px-4 py-1 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
         >
-          <option>Select for name</option>
-          <option value="A-Z">A-Z</option>
-          <option value="Z-A">Z-A</option>
-        </select>
+          RESET
+        </button>
       </div>
 
       <div className=" justify-center items-center space-x-7">
@@ -75,64 +81,50 @@ const Filters = () => {
           className="text-center italic"
         />
 
-        <button className="bg-red-600 hover:bg-red-500 text-black px-4 py-1 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
+        <button className="bg-red-600 hover:bg-red-500 text-white px-4 py-1 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
           ENTER
         </button>
       </div>
+
+      {/* COLUMNA IZQUIERDA (FILTRO POR UBICACION) */}
+      <div className="absolute left-0 top-52 w-64 p-px-10 border-3 text-white text-center text-1xl">
+        <p className="bg-blue-900 mb-6 w-full">
+          Services In (country selected)
+        </p>
+        <div className="flex flex-col items-center justify-center gap-5">
+          <p>Rubro 1</p>
+          <p>Rubro 2</p>
+          <p>Rubro 3</p>
+          <p>Rubro 4</p>
+        </div>
+
+        <p className="bg-blue-900 mt-6 mb-6 w-full text-center">
+          Users Searches
+        </p>
+        <div className="flex flex-col items-center justify-center gap-5">
+          <p>Programmer</p>
+          <p>Gardener</p>
+          <p>Electrician</p>
+          <p>Domiciliary</p>
+        </div>
+
+        <p className="bg-blue-900 mt-6 mb-6 w-full text-center">
+          Others Countrys
+        </p>
+        <div className="flex flex-col items-center justify-center gap-5">
+          <p>Argentina</p>
+          <p>Colombia</p>
+          <p>Perú</p>
+          <p>Chile</p>
+        </div>
+      </div>
+      {/* COLUMNA IZQUIERDA (FILTRO POR UBICACION) */}
+      
     </div>
   );
 };
 
 export default Filters;
-
-//   <section id="section-home">
-//     <div>
-//       <select
-//         className="input"
-//         placeholder="Orden"
-//         onChange={handleOrdertitle}
-//       >
-//         <option>Select for name</option>
-//         <option value="A-Z">A-Z</option>
-//         <option value="Z-A">Z-A</option>
-//       </select>
-//     </div>
-
-//     <div>
-//       <select className="input" placeholder="Type Work">
-//         <option value="work">type of work</option>
-//         {/* {typeWork.map((work)=>(
-//                         <option  key= {work.id} value={work.name} >{work.name}</option>
-//                         ))} */}
-//       </select>
-//     </div>
-
-//     <div>
-//       <select
-//         className="input"
-//         placeholder="Orden"
-//         onChange={handleFilterPrice}
-//       >
-//         <option>Filter for price</option>
-//         <option value="menos de 50$">menos de 50$</option>
-//         <option value="50$-100$">50$-100$</option>
-//         <option value="100$-200$">100$-200$</option>
-//         <option value="200$-mas">200$-mas</option>
-//       </select>
-//     </div>
-
-//     <div>
-//       <select className="input" placeholder="Orden">
-//         <option>Ubication </option>
-//         {/* <option value="Ascendente" >Ascendente</option>
-//                     <option value="Descendente">Descendente</option> */}
-//       </select>
-//     </div>
-
-//     <div>
-//       <button className="input">Reset</button>
-//     </div>
-//   </section>
 
 {
   /* <div className="flex justify-center items-center mt-8 mb-80 h-10 bg-blue-900 gap-80">
