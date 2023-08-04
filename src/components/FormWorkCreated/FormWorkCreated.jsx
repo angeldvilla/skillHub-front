@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { AddWorks } from "../../toolkit/sliceWorkPublication";
 
+
 //_______________________________________
 
 const WorkPerTime = ["Hora", "Precio fijo"];
@@ -20,12 +21,14 @@ export default function FormCreateWork() {
 
   const [workdata, setWorkData] = useState({
     id: "",
-    titulo: "",
-    descripción: "",
-    precio: "",
-    tipoTrabajo: [],
-    img: "",
-    ubicación: [],
+    users: "",
+    title: "",
+    address: "",
+    description: "",
+    ability: "",
+    phone:"",
+    image: "",
+
   });
 
   function handleChange(event) {
@@ -44,12 +47,14 @@ export default function FormCreateWork() {
       dispatch(AddWorks(workdata));
       setWorkData({
         id: "",
-        titulo: "",
-        descripción: "",
-        precio: "",
-        tipoTrabajo: [],
-        img: "",
-        ubicación: [],
+        users: "",
+        title: "",
+        address: "",
+        description: "",
+        ability: "",
+        phone:"",
+        image: "",
+    
       });
       alert("Trabajo creado correctamente");
     }
