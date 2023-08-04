@@ -1,0 +1,101 @@
+.atras-adelante{
+    text-align: center;
+    font-size: 30px;
+    border-radius: 12px;
+    background: transparent;
+    transition: 1s;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.695);
+    border: solid black;
+}
+#atras-adelante{
+    text-align: center;
+    font-size: 30px;
+    border-radius: 12px;
+    background: transparent;
+    transition: 1s;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.695);
+    border: solid black;
+}
+
+#atras-adelante:hover{
+    background: #100f0fa8;
+    text-shadow: 0px 0px 0px rgba(255, 255, 255, 0.99);
+    color: white;
+    transform: scale(1.1);
+    border: solid rgba(255, 254, 254, 0.807);
+    cursor: pointer;
+}
+
+.atras-adelante:hover{
+    background: #100f0fa8;
+    text-shadow: 0px 0px 0px rgba(255, 255, 255, 0.99);
+    color: white;
+    transform: scale(1.1);
+    border: solid rgba(255, 254, 254, 0.807);
+    cursor: pointer;
+}
+
+.atras-adelante-desactive{
+    
+    text-align: center;
+    font-size: 30px;
+    border-radius: 12px;
+    background:  gray;
+    transition: 1s;
+    font-weight: bold;
+    color: rgb(99, 96, 96);
+    border: solid rgba(95, 92, 92, 0.684);
+    pointer-events:none; 
+}
+
+
+.conteiner-paginado{
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 25px;
+}
+
+
+.btn-page{
+    text-align: center;
+    font-size: 25px;
+    border-radius: 12px;
+    background: transparent;
+    transition: 1s;
+    font-weight: bold;
+    gap: 5px;
+    margin: 3px;
+    color: rgba(0, 0, 0, 0.695);
+    border: solid black;
+
+
+}
+.btn-page:hover{
+    background: #100f0fa8;
+    text-shadow: 0px 0px 0px rgba(255, 255, 255, 0.99);
+    color: white;
+    transform: scale(1.1);
+    border: solid rgba(255, 254, 254, 0.807);
+
+} 
+
+.btn-page-active{
+    text-align: center;
+    font-size: 25px;
+    border-radius: 12px;
+    background: #100f0fa8;
+    transition: 1s;
+    font-weight: bold;
+    gap: 15px;
+    margin: 3px;
+    color: rgba(255, 255, 255, 0.695);
+    border: solid rgba(255, 254, 254, 0.807);
+}
+
+
