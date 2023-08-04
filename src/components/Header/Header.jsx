@@ -16,7 +16,7 @@ export default function Header() {
       <div className="flex items-center space-x-4">
         <a className="text-white-800">FAVORITES</a>
 
-        <a className="text-white-800">POST SERVICE</a>
+        <a href='/CreateWork' className="text-white-800">POST SERVICE</a>
 
         <a className="text-white-800">UBICATION</a>
 
