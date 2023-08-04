@@ -9,11 +9,12 @@ import Footer from "../Footer/Footer";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { filterWork, work, isLoading } = useSelector((state) => state.work);
+  const {work, isLoading } = useSelector((state) => state.work);
 
   useEffect(() => {
     dispatch(getWork());
   }, []);
+
 
   return (
     <div className="relative justify-center h-screen font-mono">

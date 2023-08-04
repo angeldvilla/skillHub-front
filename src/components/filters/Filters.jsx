@@ -1,21 +1,16 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { filterName, filterPrice } from "../../toolkit/slice";
+import { useDispatch, useSelector } from "react-redux";
+import { filterName, filterPrice, filterTypeWork } from "../../toolkit/slice";
 import "./filters.css";
 
 const Filters = () => {
-  let typeWork = [
-    "Programmer",
-    "Gardener",
-    "Painter",
-    "Math Teacher",
-    "Plumber",
-    "Construction Worker",
-    "Electrician",
-    "Domiciliary",
-    "Cabinetmaker",
-    "Domestic Servant",
-  ];
+  
+  //AGREGAMOS LOS TIPOS DE TRABAJOS
+  const {filterWork} = useSelector((state) => state.work);
+  const typeWork = []
+  filterWork.map(ele=>{if(typeWork.indexOf(ele.category)===-1) typeWork.push(ele.category)})
+  //--------------------------------------- cambiar con tipos de trabajo
+
   const dispatch = useDispatch();
 
   const handleOrdertitle = (event) => {
@@ -26,31 +21,36 @@ const Filters = () => {
     dispatch(filterPrice(event.target.value));
   };
 
+  const handleFilterTypeWork=(event)=>{
+    dispatch(filterTypeWork(event.target.value))
+
+  }
+
   return (
     <div className="flex justify-center items-center mt-8 mb-1 h-10 bg-blue-900 gap-80">
       <div className="gap-5 justify-center items-center space-x-2 p-20">
         <select
           onChange={handleOrdertitle}
-          className="w-45 h-auto rounded-full items-center justify-center text-white"
+          className="w-45 h-auto rounded-full items-center justify-center text-black"
         >
-          <option>Select for name</option>
+          <option>Order Alphabetical</option>
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
         </select>
 
         <select
           onChange={handleFilterPrice}
-          className="w-45 h-auto rounded-full items-center justify-center text-white"
+          className="w-45 h-auto rounded-full items-center justify-center text-black"
         >
-          <option>Filter for price</option>
+          <option>all</option>
           <option value="menos de 50$">menos de 50$</option>
           <option value="50$-100$">50$-100$</option>
           <option value="100$-200$">100$-200$</option>
           <option value="200$-mas">200$-mas</option>
         </select>
 
-        <select className="w-45 h-auto rounded-full items-center justify-center text-white">
-          <option value="work">type of work</option>
+        <select onChange={handleFilterTypeWork} className="w-45 h-auto rounded-full items-center justify-center text-black">
+          <option value="all">all</option>
           {typeWork.map((work, index) => (
             <option key={index} value={work}>
               {work}
@@ -60,7 +60,7 @@ const Filters = () => {
 
         <select
           onChange={handleOrdertitle}
-          className="w-45 h-auto rounded-full items-center justify-center text-white"
+          className="w-45 h-auto rounded-full items-center justify-center text-black"
         >
           <option>Select for name</option>
           <option value="A-Z">A-Z</option>
@@ -75,7 +75,7 @@ const Filters = () => {
           className="text-center italic"
         />
 
-        <button className="bg-red-600 hover:bg-red-500 text-white px-4 py-1 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
+        <button className="bg-red-600 hover:bg-red-500 text-black px-4 py-1 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
           ENTER
         </button>
       </div>

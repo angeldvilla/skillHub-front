@@ -12,7 +12,7 @@ const Card = ({ work }) => {
             <h2 className="text-black text-center font-bold mb-4">{title}</h2>
             <img src={image} alt={title} className="rounded-full w-1/2 mb-5 ml-20 items-center"></img>
             <h3 className="text-black text-center mb-4">Price: {price}</h3>
-            <h3 className="text-black text-center mb-4">Tipos de Trabajo: {price}</h3>
+            <h3 className="text-black text-center mb-4">Tipos de Trabajo: {category}</h3>
             <h3 className="text-black text-center mb-4">Ubicación: {category}</h3>
           </div>
         ))}

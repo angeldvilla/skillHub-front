@@ -32,13 +32,14 @@ export const workSlice = createSlice({
     
         else if(action.payload === "Z-A") newData = state.filterWork.sort((a,b)=>b.title.localeCompare(a.title))
         
-        else return
+        else newData =state.filterWork2
 
         state.work = newData
 
     },
 
     filterPrice:(state,action)=>{
+      console.log(action.payload)
 
         //! para el filtrado por ´precio se hace a partir de la copia "state.filterWork" y estos valores se guardan en "" para usarlo en el filtro por nombre y en " state.work" para renderizarlo en home
         let dataPrice=[]
@@ -51,17 +52,26 @@ export const workSlice = createSlice({
         
         else if(action.payload === "200$-mas")dataPrice= state.filterWork2.filter(element=>element.price>200)
 
-        else return
+        else dataPrice =state.filterWork2
+       
 
         state.work=dataPrice
         state.filterWork=dataPrice
+    },
 
+    filterTypeWork:(state,action)=>{
+      if(action.payload === "all") state.work =state.filterWork2
+      else{
+        const dataWork=state.filterWork.filter(element=>element.category===action.payload)
+        state.work = dataWork
+      }
 
+      
 
     }
   },
 })
 
-export const { startIsLoading,allWork,filterName,filterPrice } = workSlice.actions
+export const { startIsLoading,allWork,filterName,filterPrice,filterTypeWork } = workSlice.actions
 
 //export default workSlice.reducer
