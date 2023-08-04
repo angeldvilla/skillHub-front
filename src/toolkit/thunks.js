@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { allWork, startIsLoading } from "./slice";
 import axios from "axios";
 

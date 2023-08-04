@@ -72,52 +72,57 @@ export default Filters
 
 
 
+{/* <div className="flex justify-center items-center mt-8 mb-80 h-10 bg-blue-900 gap-80">
+        <div className="gap-5 justify-center items-center space-x-2 p-20">
+          <select className="w-32 h-auto rounded-full items-center justify-center text-white">
+            <option value="" className="text-white italic">
+              MATH TEACHER
+            </option>
+            <option value="Programmer" className="text-white italic">
+              PROGRAMMER
+            </option>
+            <option value="Gardener" className="text-white italic">
+              GARDENER
+            </option>
+            <option value="Electrician" className="text-white italic">
+              ELECTRICIAN
+            </option>
+            <option value="Domiciliary" className="text-white italic">
+              DOMICILIARY
+            </option>
+          </select>
 
+          <select className="w-35 h-auto rounded-full items-center justify-center text-white space-x-7">
+            <option value="" className="text-white italic">
+              CHOOSE COUNTRY
+            </option>
+            <option value="Argentina" className="text-white italic">
+              ARGENTINA
+            </option>
+            <option value="Colombia" className="text-white italic">
+              COLOMBIA
+            </option>
+            <option value="Perú" className="text-white italic">
+              PERÚ
+            </option>
+          </select>
 
+          <select className="w-32 h-auto rounded-full items-center justify-center text-white">
+            <option value="" className="text-white italic">
+              CHOOSE CITY
+            </option>
+          </select>
+        </div>
 
+        <div className=" justify-center items-center space-x-7">
+          <input
+            type="text"
+            placeholder="Example: Programmer"
+            className="text-center italic"
+          />
 
-
-
-
-
-
-
-
-
-
-// import React, { useEffect } from "react";
-// import Card from "./Card";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getWork } from "../../toolkit/thunks";
-// import './home.css'
-// import Nav from "../nav/Nav";
-// import Filters from "../filters/Filters";
-
-// export default function Home() {
-//   const dispatch = useDispatch()
-//   const {filterWork,work,isLoading}=useSelector(state=>state.work)
-
-//    useEffect(()=>{
-//      dispatch(getWork())
-//    },[])
-
-//    console.log(work)
-//    console.log(isLoading)
-
-
-//     return (
-//         < div className="conteiner">
-//             <h1>ESTOY EN EL HOME</h1>
-//             <Nav/>
-//             <Filters/>
-//             <span>Loading:{isLoading ? 'True' : 'False'}</span>
-//             <Card work={work}/>
-//         </div>
-//       );
-// }
-
-
-
-
-
-
+          <button className="bg-red-600 hover:bg-red-500 text-white px-4 py-1 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
+            ENTER
+          </button>
+        </div>
+      </div> */}
