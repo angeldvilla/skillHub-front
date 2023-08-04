@@ -14,6 +14,9 @@ function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/signin" element={<Login />} />
       <Route path="/signup" element={<Register />} />
+      <Route path="/CreateWork" element={<FormCreateWork />} />
+      <Route path="/Edit-Work/:id" element={<FormCreateWork />} />
+      <Route path="/WorkPublications" element={<WorkPublication />} />
     </Routes>
   );
 }
