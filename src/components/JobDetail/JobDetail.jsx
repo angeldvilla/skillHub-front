@@ -20,7 +20,7 @@ export default function JobDetail() {
         </h1>
 
         <div className="px-5 max-w-7xl text-md">
-          {/* Job Description */}
+          {/* Job Description. */}
           <h3 className="text-xl pt-2 mb-4 font-semibold">Description</h3>
           <p className="mb-10 p-5 bg-slate-700 rounded-md">
             Hello, I am in need of an experienced and dedicated gardener to care
