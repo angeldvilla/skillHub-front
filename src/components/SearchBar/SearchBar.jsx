@@ -17,6 +17,14 @@ export default function SearchBar({setIndex, setPage}) {
     setWork("");
   };
 
+   // FUNCION PARA BUSCAR SOLO PRESIONANDO LA TECLA ENTER
+   const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      dispatch(getWorkName(work));
+      setWork('');
+    }
+  };
+
   return (
     <div className="justify-center items-center space-x-4 mr-5">
       <input
@@ -25,6 +33,7 @@ export default function SearchBar({setIndex, setPage}) {
         className="text-center italic text-black"
         value={work}
         onChange={handleChange}
+        onKeyDown={handleKeyPress}
       />
 
       <button
