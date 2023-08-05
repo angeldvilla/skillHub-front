@@ -24,7 +24,7 @@ export const workSlice = createSlice({
     filterName: (state, action) => {
       //! para ordenar por nombre  se tiene que filtrar "state.filterWork" ya que aqui se guradan los datos cuando se renderiza la pagina y cuando se guarda los datos del filtro por precio
 
-      let newData = [];
+      let newData = []; // new branch
       if (action.payload === "A-Z")
         newData = state.filterWork.sort((a, b) =>
           a.title.localeCompare(b.title)
