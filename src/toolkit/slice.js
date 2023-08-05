@@ -4,6 +4,7 @@ const initialState = {
   work: [],
   filterWork: [],
   filterWork2: [],
+  filterWork3: [],
   isLoading: false,
 };
 
@@ -24,22 +25,22 @@ export const workSlice = createSlice({
     filterName: (state, action) => {
       //! para ordenar por nombre  se tiene que filtrar "state.filterWork" ya que aqui se guradan los datos cuando se renderiza la pagina y cuando se guarda los datos del filtro por precio
 
-      let newData = []; // new branch
+      let newData = [];
       if (action.payload === "A-Z")
-        newData = state.filterWork.sort((a, b) =>
+        newData = state.work.sort((a, b) =>
           a.title.localeCompare(b.title)
         );
       else if (action.payload === "Z-A")
-        newData = state.filterWork.sort((a, b) =>
+        newData = state.work.sort((a, b) =>
           b.title.localeCompare(a.title)
         );
-      else newData = state.filterWork2;
+      else newData = state.work;
 
       state.work = newData;
     },
 
     filterPrice: (state, action) => {
-      console.log(action.payload);
+      
 
       //! para el filtrado por ´precio se hace a partir de la copia "state.filterWork" y estos valores se guardan en "" para usarlo en el filtro por nombre y en " state.work" para renderizarlo en home
       let dataPrice = [];
@@ -63,12 +64,14 @@ export const workSlice = createSlice({
     },
 
     filterTypeWork: (state, action) => {
-      if (action.payload === "all") state.work = state.filterWork2;
+      let dataWork = []
+      if (action.payload === "all") dataWork = state.filterWork3;
       else {
-        const dataWork = state.filterWork2.filter(
+        dataWork = state.filterWork.filter(
           (element) => element.category === action.payload
         );
         state.work = dataWork;
+        state.filterWork3 = dataWork
       }
     },
     
