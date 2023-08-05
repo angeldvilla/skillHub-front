@@ -7,11 +7,11 @@ import SearchBar from "../SearchBar/SearchBar";
 
 export default function Filters({setIndex, setPage}) {
   //AGREGAMOS LOS TIPOS DE TRABAJOS
-  const { filterWork } = useSelector((state) => state.work);
-  const typeWork = [];
-  filterWork.map((ele) => {
-    if (typeWork.indexOf(ele.category) === -1) typeWork.push(ele.category);
-  });
+  //const { filterWork } = useSelector((state) => state.work);
+  const typeWork = ["men's clothing" , "women's clothing", "jewelery",  "electronics"];
+  // filterWork.map((ele) => {
+  //   if (typeWork.indexOf(ele.category) === -1) typeWork.push(ele.category);
+  // });
   //--------------------------------------- cambiar con tipos de trabajo
 
   const dispatch = useDispatch();

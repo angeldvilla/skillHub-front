@@ -5,6 +5,7 @@ const initialState = {
   filterWork: [],
   filterWork2: [],
   filterWork3: [],
+  filterWork4: [],
   isLoading: false,
 };
 
@@ -20,6 +21,7 @@ export const workSlice = createSlice({
       state.work = action.payload.resultWork; // para renderizar en home
       state.filterWork = action.payload.resultWork; // para el filtro por nombre
       state.filterWork2 = action.payload.resultWork; // para el filtro por precio
+      state.filterWork3 = action.payload.resultWork; // para el tipode trabajo hacia precio
     },
 
     filterName: (state, action) => {
@@ -31,32 +33,35 @@ export const workSlice = createSlice({
     filterPrice: (state, action) => {
     
       let dataPrice = [];
-      let typePrice = [];
+      let typePrice;
+      console.log(state.filterWork4)
 
-         state.filterWork2.length > 0 ? typePrice = state.filterWork : typePrice = state.filterWork2
+         state.filterWork4.length === 0 ? typePrice = state.filterWork2 : typePrice = state.filterWork4
 
       //! para el filtrado por ´precio se hace a partir de la copia "state.filterWork" y estos valores se guardan en "" para usarlo en el filtro por nombre y en " state.work" para renderizarlo en home
 
       if (action.payload === "menos de 50$")
-        dataPrice = state.filterWork2.filter((element) => element.price <= 50);
+        dataPrice = typePrice.filter((element) => element.price <= 50);
       else if (action.payload === "50$-100$")
-        dataPrice = state.filterWork2.filter(
+        dataPrice = typePrice.filter(
           (element) => element.price >= 50 && element.price <= 100
         );
       else if (action.payload === "100$-200$")
-        dataPrice = state.filterWork2.filter(
+        dataPrice = typePrice.filter(
           (element) => element.price >= 100 && element.price <= 200
         );
       else if (action.payload === "200$-mas")
-        dataPrice = state.filterWork2.filter((element) => element.price > 200);
-      else dataPrice = state.filterWork2;
+        dataPrice = typePrice.filter((element) => element.price > 200);
+      else dataPrice = typePrice;
 
       state.work = dataPrice;
       state.filterWork = dataPrice;
     },
 
     filterTypeWork: (state, action) => {
+
       let dataWork = []
+      let arrayy=state.filterWork3.filter(ele=>ele.category === action.payload)
  
       if (action.payload === "all") dataWork = state.filterWork;
       else {
@@ -65,7 +70,8 @@ export const workSlice = createSlice({
         );
       }
       state.work = dataWork;
-      state.filterWork3 = dataWork;
+      state.filterWork4 = arrayy;
+      
     },
     
     getWorkName: (state, action) => {
