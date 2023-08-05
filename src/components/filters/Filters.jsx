@@ -22,14 +22,20 @@ export default function Filters({setIndex, setPage}) {
 
   const handleFilterPrice = (event) => {
     dispatch(filterPrice(event.target.value));
+    setIndex(0);
+    setPage(1);
   };
 
   const handleFilterTypeWork = (event) => {
     dispatch(filterTypeWork(event.target.value));
+    setIndex(0);
+    setPage(1);
   };
 
   const resetFilters = () => {
     dispatch(getWork());
+    setIndex(0);
+    setPage(1);
   };
 
   return (
