@@ -55,10 +55,10 @@ export default function Filters({setIndex, setPage}) {
           className="w-45 h-auto rounded-full items-center justify-center text-black"
         >
           <option>all</option>
-          <option value="menos de 50$">menos de 50$</option>
-          <option value="50$-100$">50$-100$</option>
+          <option value="menos de 100$">menos de 100$</option>
           <option value="100$-200$">100$-200$</option>
-          <option value="200$-mas">200$-mas</option>
+          <option value="200$-300$">200$-300$</option>
+          <option value="400$-mas">400$-mas</option>
         </select>
 
         <select
