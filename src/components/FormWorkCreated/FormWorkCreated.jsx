@@ -3,27 +3,16 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AddWorks } from "../../toolkit/sliceWorkPublication";
+import { AddWorks, GetAllWorkTypes } from "../../toolkit/sliceWorkPublication";
 import { useParams } from "react-router-dom";
 
 
 import validation from "../Validations/Validations";
-import { postJobs } from "../../toolkit/ActionsworkPublications";
+import { postJobs, getTypes } from "../../toolkit/ActionsworkPublications";
 
 //_______________________________________
 
 const WorkPerTime = ["Hora", "Precio fijo"];
-
-// const Ubication = ["Col", "Arg", "Pe", "otro"];
-
-const workTypes =
-  [
-    { name: "Limpieza", id: "1" },
-    { name: "Profesor", id: "2"},
-    { name: "Servicios varios", id: "3" },
-    { name: "Front Developer", id: "4" },
-    { name: "BackDeveloper", id: "5" }
-  ]
 
 export default function FormCreateWork() {
 
@@ -31,13 +20,16 @@ export default function FormCreateWork() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const ability = useSelector((state) => state.formwork.allWorkTypes)
   // const params = useParams()
+
+
 
   const [workdata, setWorkData] = useState({
     title: "",
     description: "",
     address: "",
-    ability: ["Limpieza"],
+    ability: [],
     image: "",
     price: 0,
   });
@@ -46,31 +38,46 @@ export default function FormCreateWork() {
     title: "",
     description: "",
     address: "",
-    ability: ["Limpieza"],
+    ability: [],
     image: "",
     price: 0,
   })
 
+  useEffect(() => {
+    dispatch(getTypes())
+  }, [dispatch])
+
 
   function handleChange(event) {
     const { name, value } = event.target;
-    const parsedValue =  name === "price" ? parseInt(value, 10) : value;
-  
+    const parsedValue = name === "price" ? parseInt(value, 10) : value;
+
     setWorkData({
       ...workdata,
       [name]: parsedValue,
     });
-  
+
     setErrors(validation({
       ...workdata,
       [name]: parsedValue,
     }));
   }
-  
+
+  function handleSelect(event) {
+    const typeworkSelect = event.target.value;
+    if (!workdata.ability.includes(typeworkSelect)) {
+
+      setWorkData({
+        ...workdata,
+        ability: [...workdata.ability, typeworkSelect]
+      })
+    }
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
-  
+    dispatch(postJobs(workdata));
+
     if (!workdata.title || !workdata.description || !workdata.price || !workdata.price) {
       alert("Faltan datos por completar");
     } else {
@@ -80,25 +87,19 @@ export default function FormCreateWork() {
         ability: [],
         image: "",
         address: "",
-        price:0,
+        price: 0,
       });
-      console.log("Datos del formulario:", workdata);
-      dispatch(postJobs(workdata));
       alert("Trabajo creado correctamente");
       navigate("/home");
     }
   }
 
-  // useEffect(() => {
-  //    console.log(works);
-  // }, [])
-
 
   const [selectWorkType, setSelectWorkType] = useState("");
 
+
   return (
     <div>
-      ___________________________________________
       <h5 style={{ color: "red" }}>Publica tu trabajo</h5>
       <NavLink to="/home">
         <button>Volver</button>
@@ -124,9 +125,9 @@ export default function FormCreateWork() {
             name="description"
             placeholder="Descripción del trabajo"
             onChange={(event) => handleChange(event)}
-            
+
           ></textarea>
-            {
+          {
             errors.description && (<p className="error" style={{ color: "red" }}> {errors.description}  </p>)
           }
         </div>
@@ -148,16 +149,20 @@ export default function FormCreateWork() {
           </select>
         </div>
         <div>
-          <label htmlFor="ability">Tipo de trabajo: </label>
-          <select value={selectWorkType} onChange ={setSelectWorkType}>
-          {
-            workTypes.map((type) => (
-              <option key={type.name} value= {type.name}>
-                {type.name}
-              </option>
-            ))
-          }
+          <label>Tipo de trabajo:</label>
+          <select onChange={(event) => handleSelect(event)}>
+            {
+              ability.map((typ, index) => (
+                <option
+                  key={index}
+                  value={typ.title}
+                  disabled={workdata.ability && workdata.ability.includes(ability.title)}
+                >
+                  {typ.title}
+                </option>
+              ))}
           </select>
+
         </div>
         <div>
           <label htmlFor="image">Imagen </label>
@@ -179,7 +184,7 @@ export default function FormCreateWork() {
         </div>
         <button type="submit">Postular oferta</button>
       </form>
-      ___________________________________________
     </div>
   );
 }
+

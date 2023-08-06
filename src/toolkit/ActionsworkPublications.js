@@ -1,11 +1,23 @@
-import axios from  "axios"
+import axios from "axios"
 import { AddWorks } from "./sliceWorkPublication"
+import { GetAllWorkTypes } from "./sliceWorkPublication"
 
-const idUsuario =  "64cee976a45fd417790185b7"
+const idUsuario = "64cee976a45fd417790185b7"
 
-export const postJobs  = (workdata) => (dispatch) =>{
+export const postJobs = (workdata) => (dispatch) => {
     axios.post(`http://localhost:3001/empleador/${idUsuario}`, workdata)
-    .then(res => dispatch(AddWorks(res.data.results)))
-    .catch(error => console.log("Error con postWokrs",error))
+        .then(res => dispatch(AddWorks(res.data.results)))
+        .catch(error => console.log("Error con postWokrs", error))
 }
 
+
+export const getTypes = () => {
+    return async function (dispatch) {
+        try {
+            let json = await axios.get("http://localhost:3001/empleador/allType")
+            return dispatch(GetAllWorkTypes(json.data))
+        } catch (error) {
+            console.log("Error en getTypes", error);
+        }
+    }
+}
