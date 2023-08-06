@@ -7,6 +7,7 @@ const initialState = {
   filterWork3: [],
   filterWork4: [],
   filterWork5:[],
+  isAll:false,
   isLoading: false,
 };
 
@@ -24,8 +25,8 @@ export const workSlice = createSlice({
       state.filterWork = action.payload.resultWork; // para el filtro por nombre
       state.filterWork2 = action.payload.resultWork; // para el filtro por precio
       state.filterWork3 = action.payload.resultWork; // para el tipode trabajo hacia precio
-      state.filterWork4 = action.payload.resultWork; // para el tipode trabajo hacia precio
-      state.filterWork5 = action.payload.resultWork; // para el tipode trabajo hacia precio
+      //state.filterWork4 = action.payload.resultWork; // para el tipode trabajo hacia precio
+      //state.filterWork5 = action.payload.resultWork; // para el tipode trabajo hacia precio
     },
 
     filterName: (state, action) => {
@@ -38,6 +39,7 @@ export const workSlice = createSlice({
         let dataPrice = [];
         let typePrice;
         let priceConditioned
+        state.isAll=false
 
         state.filterWork4.length === 0 ? typePrice = state.filterWork2 : typePrice = state.filterWork4
 
@@ -61,7 +63,8 @@ export const workSlice = createSlice({
             priceConditioned= state.filterWork3.filter((element) => element.price > 200)
         }
         else {dataPrice = typePrice
-              priceConditioned=typePrice};
+              priceConditioned=typePrice
+              state.isAll=true};
 
         state.work = dataPrice;
         state.filterWork = dataPrice;
@@ -77,9 +80,17 @@ export const workSlice = createSlice({
         // SA HACE UNA CONDICIONAL PARA SABER QUE DATOS VAMOS A FILTRAR
         let typeWorkConditioned
         state.filterWork5.length ===0 ? typeWorkConditioned = state.filterWork : typeWorkConditioned = state.filterWork5
-         
+        
         //RESPUESTA
-        action.payload === "all" ? state.work = typeWorkConditioned : state.work = typeWorkConditioned.filter((element) => element.category === action.payload);
+
+        if(state.isAll===true){
+          if(action.payload !== "all") state.work=state.filterWork4
+          else state.work=state.filterWork3
+        }
+        else{
+          action.payload === "all" ? state.work = typeWorkConditioned : state.work = typeWorkConditioned.filter((element) => element.category === action.payload)
+        }
+       
     },
     
     getWorkName: (state, action) => {
