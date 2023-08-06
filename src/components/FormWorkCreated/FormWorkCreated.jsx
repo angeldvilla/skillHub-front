@@ -74,6 +74,13 @@ export default function FormCreateWork() {
     }
   }
 
+  function handleDelete(el){
+setWorkData({
+  ...workdata,
+  ability: workdata.ability.filter(typ => typ !== el)
+})
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     dispatch(postJobs(workdata));
@@ -162,6 +169,18 @@ export default function FormCreateWork() {
                 </option>
               ))}
           </select>
+
+          <text>
+            Tipos seleccionados: {" "}
+            {
+              workdata.ability.map((el, index) => {
+                <div>
+                  <span key = {index}>{el}</span>
+                  <span onClick={()=> handleDelete(el)}> X </span>
+                </div>
+              }
+           )}
+          </text>
 
         </div>
         <div>
