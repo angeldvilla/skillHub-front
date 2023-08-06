@@ -43,24 +43,24 @@ export const workSlice = createSlice({
 
         state.filterWork4.length === 0 ? typePrice = state.filterWork2 : typePrice = state.filterWork4
 
-        if (action.payload === "menos de 50$"){
-            dataPrice = typePrice.filter((element) => element.price <= 50)
-            priceConditioned= state.filterWork3.filter((element) => element.price <= 50)
+        if (action.payload === "menos de 100$"){
+            dataPrice = typePrice.filter((element) => parseInt(element.price) < 100)
+            priceConditioned= state.filterWork3.filter((element) => parseInt(element.price) < 100)
         }
-        else if (action.payload === "50$-100$"){
-            dataPrice = typePrice.filter((element) => element.price >= 50 && element.price <= 100)
-        priceConditioned= state.filterWork3.filter((element) => element.price >= 50 && element.price <= 100)
-
-        }
-
         else if (action.payload === "100$-200$"){
-            dataPrice = typePrice.filter((element) => element.price >= 100 && element.price <= 200)
-            priceConditioned= state.filterWork3.filter((element) => element.price >= 100 && element.price <= 200)
+            dataPrice = typePrice.filter((element) => parseInt(element.price) >= 100 && parseInt(element.price) <= 200)
+        priceConditioned= state.filterWork3.filter((element) => parseInt(element.price) >= 100 && parseInt(element.price) <= 200)
+
         }
 
-        else if (action.payload === "200$-mas"){
-            dataPrice = typePrice.filter((element) => element.price > 200)
-            priceConditioned= state.filterWork3.filter((element) => element.price > 200)
+        else if (action.payload === "200$-300$"){
+            dataPrice = typePrice.filter((element) => parseInt(element.price) >= 200 && parseInt(element.price) <= 300)
+            priceConditioned= state.filterWork3.filter((element) => parseInt(element.price) >= 200 && parseInt(element.price) <= 300)
+        }
+
+        else if (action.payload === "400$-mas"){
+            dataPrice = typePrice.filter((element) => parseInt(element.price) > 400)
+            priceConditioned= state.filterWork3.filter((element) => parseInt(element.price) > 400)
         }
         else {dataPrice = typePrice
               priceConditioned=typePrice

@@ -11,9 +11,9 @@ const Card = ({ work }) => {
           <div key={_id} className="bg-white p-px-12 rounded-lg shadow-lg w-64 flex flex-col">
             <h2 className="text-black text-center font-bold mb-4">{title}</h2>
             <img src={image} alt={title} className="rounded-full w-1/2 mb-5 ml-20 items-center"></img>
-            <h3 className="text-black text-center mb-4">Country: {address}</h3>
-            <h3 className="text-black text-center mb-4">Price: {price}</h3>
+            <h3 className="text-black text-center mb-4">Price: ${price}</h3>
             <h3 className="text-black text-center mb-4">Skills: {ability.map(element=><li>{element}</li>)}</h3>
+            <h3 className="text-black text-center mb-4">Country: {address}</h3>
           </div>
         ))}
       </div>
