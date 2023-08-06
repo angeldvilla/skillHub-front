@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddWorks } from "../../toolkit/sliceWorkPublication";
 import { useParams } from "react-router-dom";
 
+
 import validation from "../Validations/Validations";
+import { postJobs } from "../../toolkit/ActionsworkPublications";
 
 //_______________________________________
 
@@ -16,12 +18,13 @@ const WorkPerTime = ["Hora", "Precio fijo"];
 
 const workTypes =
   [
-    { name: "Limpieza" },
-    { name: "Profesor" },
-    { name: "Servicios varios" },
-    { name: "Front Developer" },
-    { name: "BackDeveloper" }
+    { name: "Limpieza", id: "1" },
+    { name: "Profesor", id: "2"},
+    { name: "Servicios varios", id: "3" },
+    { name: "Front Developer", id: "4" },
+    { name: "BackDeveloper", id: "5" }
   ]
+
 export default function FormCreateWork() {
 
   // const works = useSelector((state) => state.formwork.allPublicationsWork)
@@ -31,12 +34,11 @@ export default function FormCreateWork() {
   // const params = useParams()
 
   const [workdata, setWorkData] = useState({
-    id: "",
     title: "",
     description: "",
     price: "",
     address: "",
-    ability: [],
+    ability: ["Limpieza"],
     image: "",
     phone: "",
   });
@@ -46,42 +48,47 @@ export default function FormCreateWork() {
     description: "",
     price: "",
     address: "",
-    ability: [],
+    ability: ["Limpieza"],
     image: "",
-    phone: "",
+    phone: 0,
   })
 
 
   function handleChange(event) {
+    const { name, value } = event.target;
+    const parsedValue = name === "phone" || name === "price" ? parseInt(value, 10) : value;
+  
     setWorkData({
       ...workdata,
-      [event.target.name]: event.target.value,
+      [name]: parsedValue,
     });
+  
     setErrors(validation({
       ...workdata,
-      [event.target.name]: event.target.value
-    }))
+      [name]: parsedValue,
+    }));
   }
+  
 
   function handleSubmit(event) {
     event.preventDefault();
-
+  
     if (!workdata.title || !workdata.description || !workdata.price || !workdata.price) {
       alert("Faltan datos por completar");
     } else {
       setWorkData({
-        id: "",
         title: "",
         description: "",
         price: "",
         ability: [],
         image: "",
         address: "",
-        phone: "",
+        phone:0,
       });
-      dispatch(AddWorks(workdata));
+      console.log("Datos del formulario:", workdata);
+      dispatch(postJobs(workdata));
       alert("Trabajo creado correctamente");
-      navigate("/WorkPublications");
+      navigate("/home");
     }
   }
 
@@ -100,15 +107,6 @@ export default function FormCreateWork() {
         <button>Volver</button>
       </NavLink>
       <form onSubmit={(event) => handleSubmit(event)}>
-        <div>
-          <label htmlFor="id">Id: </label>
-          <input
-            type="number"
-            name="id"
-            placeholder="Proporciona un id"
-            onChange={(event) => handleChange(event)}
-          />
-        </div>
         <div>
           <label htmlFor="title">Titulo: </label>
           <input
@@ -129,7 +127,11 @@ export default function FormCreateWork() {
             name="description"
             placeholder="Descripción del trabajo"
             onChange={(event) => handleChange(event)}
+            
           ></textarea>
+            {
+            errors.description && (<p className="error" style={{ color: "red" }}> {errors.description}  </p>)
+          }
         </div>
         <div>
           <label htmlFor="price">Precio: </label>

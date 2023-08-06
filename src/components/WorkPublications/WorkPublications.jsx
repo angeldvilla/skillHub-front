@@ -38,7 +38,6 @@ export default  function WorkPublication () {
                 trabajosPublicados.map((works, index) => (
                     <div key={index}>
                         <div>
-                            <h6>{works.id}</h6>
                             <h2>{works.title}</h2>
                             <h3>{works.description}</h3>
                             <h3>{works.price}</h3>
