@@ -7,7 +7,7 @@ export const getWork =()=>{
         
         dispatch(startIsLoading())
 
-        const {data}= await axios('https://fakestoreapi.com/products')/* http://localhost:3001/empleador */
+        const {data}= await axios('http://localhost:3001/empleador') /*https://fakestoreapi.com/products*/
         dispatch(allWork({resultWork:data}))
     }
 }
