@@ -4,7 +4,7 @@ import { getWork } from "../../toolkit/thunks";
 
 import Header from "../Header/Header";
 import Card from "../Cards/Card";
-import Filters from "../Filters/Filters";
+import Filters from "../filters/Filters";
 import Footer from "../Footer/Footer";
 import Paginated from "../Paginated/Paginated";
 

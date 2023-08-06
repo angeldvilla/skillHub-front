@@ -13,8 +13,7 @@ export default  function WorkPublication () {
         const id = event.target.getAttribute("data-id");
         dispatch(DeleteWorks(id));
     }
-
-
+    
     const TotalWorks = trabajosPublicados.length;
     let message;
     if (TotalWorks === 0) {
@@ -39,10 +38,10 @@ export default  function WorkPublication () {
                 trabajosPublicados.map((works, index) => (
                     <div key={index}>
                         <div>
-                            <h6>{works.id}</h6>
-                            <h2>{works.titulo}</h2>
-                            <h3>{works.descripción}</h3>
-                            <h3>{works.precio}</h3>
+                            <h2>{works.title}</h2>
+                            <h3>{works.description}</h3>
+                            <h3>{works.price}</h3>
+                            
                             <br />
                         <NavLink to = {`/Edit-Work/${works.id}`}>
                             <button type="edit"> Editar Trabajo </button>

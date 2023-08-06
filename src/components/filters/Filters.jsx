@@ -7,11 +7,11 @@ import SearchBar from "../SearchBar/SearchBar";
 
 export default function Filters({setIndex, setPage}) {
   //AGREGAMOS LOS TIPOS DE TRABAJOS
-  const { filterWork } = useSelector((state) => state.work);
-  const typeWork = [];
-  filterWork.map((ele) => {
-    if (typeWork.indexOf(ele.category) === -1) typeWork.push(ele.category);
-  });
+  //const { filterWork } = useSelector((state) => state.work);
+  const typeWork = ["men's clothing" , "women's clothing", "jewelery",  "electronics"];
+  // filterWork.map((ele) => {
+  //   if (typeWork.indexOf(ele.category) === -1) typeWork.push(ele.category);
+  // });
   //--------------------------------------- cambiar con tipos de trabajo
 
   const dispatch = useDispatch();
@@ -22,14 +22,20 @@ export default function Filters({setIndex, setPage}) {
 
   const handleFilterPrice = (event) => {
     dispatch(filterPrice(event.target.value));
+    setIndex(0);
+    setPage(1);
   };
 
   const handleFilterTypeWork = (event) => {
     dispatch(filterTypeWork(event.target.value));
+    setIndex(0);
+    setPage(1);
   };
 
   const resetFilters = () => {
     dispatch(getWork());
+    setIndex(0);
+    setPage(1);
   };
 
   return (
@@ -49,10 +55,10 @@ export default function Filters({setIndex, setPage}) {
           className="w-45 h-auto rounded-full items-center justify-center text-black"
         >
           <option>all</option>
-          <option value="menos de 50$">menos de 50$</option>
-          <option value="50$-100$">50$-100$</option>
+          <option value="menos de 100$">menos de 100$</option>
           <option value="100$-200$">100$-200$</option>
-          <option value="200$-mas">200$-mas</option>
+          <option value="200$-300$">200$-300$</option>
+          <option value="400$-mas">400$-mas</option>
         </select>
 
         <select

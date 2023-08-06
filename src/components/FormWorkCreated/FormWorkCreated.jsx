@@ -1,66 +1,100 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { AddWorks } from "../../toolkit/sliceWorkPublication";
+import { useParams } from "react-router-dom";
+
+
+import validation from "../Validations/Validations";
+import { postJobs } from "../../toolkit/ActionsworkPublications";
 
 //_______________________________________
 
 const WorkPerTime = ["Hora", "Precio fijo"];
 
-const Ubication = ["Col", "Arg", "Pe", "otro"];
+// const Ubication = ["Col", "Arg", "Pe", "otro"];
+
+const workTypes =
+  [
+    { name: "Limpieza", id: "1" },
+    { name: "Profesor", id: "2"},
+    { name: "Servicios varios", id: "3" },
+    { name: "Front Developer", id: "4" },
+    { name: "BackDeveloper", id: "5" }
+  ]
 
 export default function FormCreateWork() {
-  // const works = useSelector((state) => state.allPublicationsWork)
-  //  const history = useHistory();
+
+  // const works = useSelector((state) => state.formwork.allPublicationsWork)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const params = useParams()
 
   const [workdata, setWorkData] = useState({
-    id: "",
-    titulo: "",
-    descripción: "",
-    precio: "",
-    tipoTrabajo: [],
-    img: "",
-    ubicación: [],
+    title: "",
+    description: "",
+    address: "",
+    ability: ["Limpieza"],
+    image: "",
+    price: 0,
   });
 
+  const [errors, setErrors] = useState({
+    title: "",
+    description: "",
+    address: "",
+    ability: ["Limpieza"],
+    image: "",
+    price: 0,
+  })
+
+
   function handleChange(event) {
+    const { name, value } = event.target;
+    const parsedValue =  name === "price" ? parseInt(value, 10) : value;
+  
     setWorkData({
       ...workdata,
-      [event.target.name]: event.target.value,
+      [name]: parsedValue,
     });
+  
+    setErrors(validation({
+      ...workdata,
+      [name]: parsedValue,
+    }));
   }
+  
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    if (!workdata.titulo || !workdata.descripción || !workdata.precio) {
+  
+    if (!workdata.title || !workdata.description || !workdata.price || !workdata.price) {
       alert("Faltan datos por completar");
     } else {
-      dispatch(AddWorks(workdata));
       setWorkData({
-        id: "",
-        titulo: "",
-        descripción: "",
-        precio: "",
-        tipoTrabajo: [],
-        img: "",
-        ubicación: [],
+        title: "",
+        description: "",
+        ability: [],
+        image: "",
+        address: "",
+        price:0,
       });
+      console.log("Datos del formulario:", workdata);
+      dispatch(postJobs(workdata));
       alert("Trabajo creado correctamente");
+      navigate("/home");
     }
-    navigate("/WorkPublications");
   }
 
   // useEffect(() => {
-  //     if (params.id) {
-  //         setWorkData(works.find(works => works.id === params.id))
-  //     }
+  //    console.log(works);
   // }, [])
+
+
+  const [selectWorkType, setSelectWorkType] = useState("");
 
   return (
     <div>
@@ -71,37 +105,38 @@ export default function FormCreateWork() {
       </NavLink>
       <form onSubmit={(event) => handleSubmit(event)}>
         <div>
-          <label htmlFor="id">Id: </label>
-          <input
-            type="number"
-            name="id"
-            placeholder="Proporciona un id"
-            onChange={(event) => handleChange(event)}
-          />
-        </div>
-        <div>
-          <label htmlFor="titulo">Titulo: </label>
+          <label htmlFor="title">Titulo: </label>
           <input
             type="text"
-            name="titulo"
+            name="title"
+            value={workdata.title}
             placeholder="Que trabajo necesitas"
             onChange={(event) => handleChange(event)}
           />
+          {
+            errors.title && (<p className="error" style={{ color: "red" }}> {errors.title}  </p>)
+          }
         </div>
         <div>
-          <label htmlFor="descripción">Descripción: </label>
+          <label htmlFor="description">Descripción: </label>
           <textarea
-            name="descripción"
+            value={workdata.description}
+            name="description"
             placeholder="Descripción del trabajo"
             onChange={(event) => handleChange(event)}
+            
           ></textarea>
+            {
+            errors.description && (<p className="error" style={{ color: "red" }}> {errors.description}  </p>)
+          }
         </div>
         <div>
-          <label htmlFor="precio">Precio: </label>
+          <label htmlFor="price">Precio: </label>
           <input
             type="Number"
-            name="precio"
-            placeholder="Ingresa valor"
+            name="price"
+            value={workdata.price}
+            placeholder="Cuanto pagas por tu servicio"
             onChange={(event) => handleChange(event)}
           />
           <select name="Precio">
@@ -113,32 +148,34 @@ export default function FormCreateWork() {
           </select>
         </div>
         <div>
-          <label htmlFor="tipoTrabajo">Tipo de trabajo: </label>
-          <input
-            type="text"
-            name="tipoTrabajo"
-            placeholder="Que tipo de trabjo necesitas"
-            onChange={handleChange}
-          />
+          <label htmlFor="ability">Tipo de trabajo: </label>
+          <select value={selectWorkType} onChange ={setSelectWorkType}>
+          {
+            workTypes.map((type) => (
+              <option key={type.name} value= {type.name}>
+                {type.name}
+              </option>
+            ))
+          }
+          </select>
         </div>
         <div>
-          <label htmlFor="img">Imagen </label>
+          <label htmlFor="image">Imagen </label>
           <input
             type="text"
-            name="img"
+            name="image"
             placeholder="Ingresa una foto sobre el trabajo o una imagen de representación"
             onChange={handleChange}
           />
         </div>
         <div>
-          <label htmlFor="ubicación">Ubicación trajo</label>
-          <select name="ubicación">
-            {Ubication.map((country, index) => (
-              <option value={country} key={index}>
-                {country}
-              </option>
-            ))}
-          </select>
+          <label htmlFor="id">Tu dirección </label>
+          <input
+            type="text"
+            name="address"
+            placeholder="Ingresa una dirección"
+            onChange={(event) => handleChange(event)}
+          />
         </div>
         <button type="submit">Postular oferta</button>
       </form>

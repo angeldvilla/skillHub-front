@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { postUser } from "../../toolkit/Users/usersHandler";
 import {
   validateUserData,
   resetUserData,
 } from "../../utils/userDataValidation";
+
+// Images
 import passwordEye from "../../assets/password-eye.svg";
 import phone from "../../assets/phone.svg";
 import google from "../../assets/google.svg";
@@ -10,8 +15,14 @@ import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
 
+// Toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Register() {
-  const fakeDb = [];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { error } = useSelector((state) => state.users);
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -40,7 +51,7 @@ export default function Register() {
     const hasErrors = Object.keys(errors).length;
 
     if (hasEmptyValues || hasErrors) {
-      alert("Complete all fields");
+      toast.error("Complete all fields");
       return;
     }
 
@@ -54,12 +65,18 @@ export default function Register() {
       password,
     };
 
-    fakeDb.push(newUser);
-    console.log("Users: ", fakeDb);
+    dispatch(postUser(newUser));
 
-    // dispatch(postUser(userData));
+    if (error) {
+      toast.error("Email is already in use");
+      return;
+    }
+
     resetUserData(setUserData);
-    alert("User created successfully");
+    toast.success("User created successfully");
+    setTimeout(() => {
+      navigate("/home");
+    }, 2000);
   };
 
   const handleReset = () => {
@@ -71,22 +88,24 @@ export default function Register() {
     <div className="flex flex-col items-center justify-center h-screen font-mono">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-center bg-sky-950 p-10 rounded-lg"
+        className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-10 rounded-lg shadow-neutral-900 shadow-lg"
       >
-        <h1 className="text-3xl text-center leading-10 text-white mt-1 mb-6">
-          SIGN UP
-        </h1>
+        <h1 className="text-3xl text-center text-white mt-1 mb-8">SIGN UP</h1>
         <div className="flex flex-col">
+          {/* First Name */}
           <div className="flex flex-col">
-            <label htmlFor="firstName" className="pl-2 mb-1 text-lg">
-              FIRST NAME
+            <label
+              htmlFor="firstName"
+              className="pl-2 mb-1 text-lg text-slate-300"
+            >
+              First name
             </label>
             <input
               type="text"
               name="firstName"
               value={userData.firstName}
               onChange={handleChange}
-              className="bg-zinc-200 p-1.5 mb-3 rounded-md w-80 text-slate-900 text-center outline-none"
+              className="bg-neutral-900 opacity-50 p-1.5 mb-3 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
             {errors.firstName && (
               <span className="text-center text-red-500 mb-1">
@@ -94,16 +113,21 @@ export default function Register() {
               </span>
             )}
           </div>
+
+          {/* Last Name */}
           <div className="flex flex-col">
-            <label htmlFor="lastName" className="pl-2 mb-1 text-lg">
-              LAST NAME
+            <label
+              htmlFor="lastName"
+              className="pl-2 mb-1 text-lg text-slate-300"
+            >
+              Last name
             </label>
             <input
               type="text"
               name="lastName"
               value={userData.lastName}
               onChange={handleChange}
-              className="bg-zinc-200 p-1.5 mb-3 rounded-md w-80 text-slate-900 text-center outline-none"
+              className="bg-neutral-900 opacity-50 p-1.5 mb-3 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
             {errors.lastName && (
               <span className="text-center text-red-500 mb-1">
@@ -111,9 +135,11 @@ export default function Register() {
               </span>
             )}
           </div>
+
+          {/* Email */}
           <div className="flex flex-col">
-            <label htmlFor="email" className="pl-2 mb-1 text-lg">
-              EMAIL
+            <label htmlFor="email" className="pl-2 mb-1 text-lg text-slate-300">
+              Email
             </label>
             <div className="relative">
               <input
@@ -121,7 +147,7 @@ export default function Register() {
                 name="email"
                 value={userData.email}
                 onChange={handleChange}
-                className="bg-zinc-200 p-1.5 mb-3 rounded-md w-80 text-slate-900 text-center outline-none"
+                className="bg-neutral-900 opacity-50 p-1.5 mb-3 rounded-md w-80 text-neutral-100 text-center outline-none"
               />
               <img src={email} className="absolute top-0 right-1 w-9 h-9" />
             </div>
@@ -131,9 +157,14 @@ export default function Register() {
               </span>
             )}
           </div>
+
+          {/* Phone Number */}
           <div className="flex flex-col">
-            <label htmlFor="phoneNumber" className="pl-2 mb-1 text-lg">
-              PHONE NUMBER
+            <label
+              htmlFor="phoneNumber"
+              className="pl-2 mb-1 text-lg text-slate-300"
+            >
+              Phone number
             </label>
             <div className="relative">
               <input
@@ -141,9 +172,9 @@ export default function Register() {
                 name="phoneNumber"
                 value={userData.phoneNumber}
                 onChange={handleChange}
-                className="bg-zinc-200 p-1.5 mb-3 rounded-md w-80 text-slate-900 text-center outline-none"
+                className="bg-neutral-900 opacity-50 p-1.5 mb-3 rounded-md w-80 text-neutral-100 text-center outline-none"
               />
-              <img src={phone} className="absolute top-0 right-1 w-8 h-8" />
+              <img src={phone} className="absolute top-0 right-1 w-6 h-9" />
             </div>
             {errors.phoneNumber && (
               <span className="text-center text-red-500 mb-1">
@@ -151,9 +182,14 @@ export default function Register() {
               </span>
             )}
           </div>
+
+          {/* Password */}
           <div className="flex flex-col">
-            <label htmlFor="password" className="pl-2 mb-1 text-lg">
-              PASSWORD
+            <label
+              htmlFor="password"
+              className="pl-2 mb-1 text-lg text-slate-300"
+            >
+              Password
             </label>
             <div className="relative">
               <input
@@ -161,11 +197,11 @@ export default function Register() {
                 name="password"
                 value={userData.password}
                 onChange={handleChange}
-                className="bg-zinc-200 p-1.5 mb-2 rounded-md w-80 text-slate-900 text-center outline-none"
+                className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
               />
               <img
                 src={passwordEye}
-                className="absolute top-0 right-1 w-8 h-8"
+                className="absolute top-0 right-1 w-7 h-9"
               />
             </div>
             {errors.password && (
@@ -174,9 +210,14 @@ export default function Register() {
               </span>
             )}
           </div>
+
+          {/* Confirm Password */}
           <div className="flex flex-col">
-            <label htmlFor="confirmPassword" className="pl-2 mb-1 text-lg">
-              CONFIRM PASSWORD
+            <label
+              htmlFor="confirmPassword"
+              className="pl-2 mb-1 text-lg text-slate-300"
+            >
+              Confirm password
             </label>
             <div className="relative">
               <input
@@ -184,11 +225,11 @@ export default function Register() {
                 name="confirmPassword"
                 value={userData.confirmPassword}
                 onChange={handleChange}
-                className="bg-zinc-200 p-1.5 mb-2 rounded-md w-80 text-slate-900 text-center outline-none"
+                className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
               />
               <img
                 src={passwordEye}
-                className="absolute top-0 right-1 w-8 h-8"
+                className="absolute top-0 right-1 w-7 h-9"
               />
             </div>
             {errors.confirmPassword && (
@@ -198,20 +239,24 @@ export default function Register() {
             )}
           </div>
         </div>
+
+        {/* Buttons */}
         <div className="flex flex-col">
-          <button className="p-2 mt-10 bg-emerald-600 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-600 hover:shadow-md transition">
-            SIGN UP
+          <button className="p-2 mt-10 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
+            Sign up
           </button>
           <button
             type="button"
             onClick={handleReset}
             className="p-2 mt-3 mb-12 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
           >
-            RESET FORM
+            Reset form
           </button>
         </div>
-        <div className="bg-zinc-200 w-56 h-0.5 mb-5"></div>
-        <h4 className="text-lg mb-5">OR CONTINUE WITH</h4>
+
+        {/* Authentication */}
+        <div className="bg-gray-900 w-64 h-0.5 mb-5"></div>
+        <h4 className="text-lg mb-5">Or continue with</h4>
         <div className="flex justify-center gap-6">
           <img
             src={google}
@@ -230,6 +275,7 @@ export default function Register() {
           />
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }
