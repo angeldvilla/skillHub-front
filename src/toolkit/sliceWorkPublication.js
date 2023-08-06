@@ -3,13 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const allPublicationsWork = [
     {
         id: "1",
-        titulo: "Lavar techo terraza",
-        descripción: "Se necesita una persona con habilidades de limpieza en zonas altas",
-        precio: "250000",
-        tipoTrabajo: [],
-        img: "",
-        ubicación: [],
-    }
+        title: "Lavar terraza ",
+        description: "Se necesita una persona para lavar una terraza de 6*15",
+        price: "25000",
+        ability: "Limpieza interiores",
+        image: "",
+        address: "Cali,Col",
+        phone: "3057189737",
+        users: "",
+      }
 ]
 
 export const WorkPublicationSlice = createSlice({
@@ -30,6 +32,7 @@ export const WorkPublicationSlice = createSlice({
       }
         }
     }
+
 })
 
 export const {AddWorks, DeleteWorks} = WorkPublicationSlice.actions 
