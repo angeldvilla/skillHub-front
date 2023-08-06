@@ -4,6 +4,10 @@ const initialState = {
   work: [],
   filterWork: [],
   filterWork2: [],
+  filterWork3: [],
+  filterWork4: [],
+  filterWork5:[],
+  isAll:false,
   isLoading: false,
 };
 
@@ -14,67 +18,86 @@ export const workSlice = createSlice({
     startIsLoading: (state) => {
       state.isLoading = true;
     },
+
     allWork: (state, action) => {
       state.isLoading = false;
       state.work = action.payload.resultWork; // para renderizar en home
       state.filterWork = action.payload.resultWork; // para el filtro por nombre
       state.filterWork2 = action.payload.resultWork; // para el filtro por precio
+      state.filterWork3 = action.payload.resultWork; // para el tipode trabajo hacia precio
+      //state.filterWork4 = action.payload.resultWork; // para el tipode trabajo hacia precio
+      //state.filterWork5 = action.payload.resultWork; // para el tipode trabajo hacia precio
     },
 
     filterName: (state, action) => {
-      //! para ordenar por nombre  se tiene que filtrar "state.filterWork" ya que aqui se guradan los datos cuando se renderiza la pagina y cuando se guarda los datos del filtro por precio
-
-      let newData = [];
-      if (action.payload === "A-Z")
-        newData = state.filterWork.sort((a, b) =>
-          a.title.localeCompare(b.title)
-        );
-      else if (action.payload === "Z-A")
-        newData = state.filterWork.sort((a, b) =>
-          b.title.localeCompare(a.title)
-        );
-      else newData = state.filterWork2;
-
-      state.work = newData;
+        action.payload === "A-Z" ? state.work.sort((a, b) =>a.title.localeCompare(b.title)) : state.work.sort((a, b) =>b.title.localeCompare(a.title));
     },
 
+    //!FILTRO POR PRECIO
     filterPrice: (state, action) => {
-      console.log(action.payload);
 
-      //! para el filtrado por ´precio se hace a partir de la copia "state.filterWork" y estos valores se guardan en "" para usarlo en el filtro por nombre y en " state.work" para renderizarlo en home
-      let dataPrice = [];
+        let dataPrice = [];
+        let typePrice;
+        let priceConditioned
+        state.isAll=false
 
-      if (action.payload === "menos de 50$")
-        dataPrice = state.filterWork2.filter((element) => element.price <= 50);
-      else if (action.payload === "50$-100$")
-        dataPrice = state.filterWork2.filter(
-          (element) => element.price >= 50 && element.price <= 100
-        );
-      else if (action.payload === "100$-200$")
-        dataPrice = state.filterWork2.filter(
-          (element) => element.price >= 100 && element.price <= 200
-        );
-      else if (action.payload === "200$-mas")
-        dataPrice = state.filterWork2.filter((element) => element.price > 200);
-      else dataPrice = state.filterWork2;
+        state.filterWork4.length === 0 ? typePrice = state.filterWork2 : typePrice = state.filterWork4
 
-      state.work = dataPrice;
-      state.filterWork = dataPrice;
+        if (action.payload === "menos de 50$"){
+            dataPrice = typePrice.filter((element) => element.price <= 50)
+            priceConditioned= state.filterWork3.filter((element) => element.price <= 50)
+        }
+        else if (action.payload === "50$-100$"){
+            dataPrice = typePrice.filter((element) => element.price >= 50 && element.price <= 100)
+        priceConditioned= state.filterWork3.filter((element) => element.price >= 50 && element.price <= 100)
+
+        }
+
+        else if (action.payload === "100$-200$"){
+            dataPrice = typePrice.filter((element) => element.price >= 100 && element.price <= 200)
+            priceConditioned= state.filterWork3.filter((element) => element.price >= 100 && element.price <= 200)
+        }
+
+        else if (action.payload === "200$-mas"){
+            dataPrice = typePrice.filter((element) => element.price > 200)
+            priceConditioned= state.filterWork3.filter((element) => element.price > 200)
+        }
+        else {dataPrice = typePrice
+              priceConditioned=typePrice
+              state.isAll=true};
+
+        state.work = dataPrice;
+        state.filterWork = dataPrice;
+        state.filterWork5 = priceConditioned;
     },
 
+    //!FILTRO POR TIPO DE TRABAJO
     filterTypeWork: (state, action) => {
-      if (action.payload === "all") state.work = state.filterWork2;
-      else {
-        const dataWork = state.filterWork.filter(
-          (element) => element.category === action.payload
-        );
-        state.work = dataWork;
-      }
+        
+        // SE GUARDA EN UN ESTADO PARA USARLO CUANDO FILTRAMOS(COMO CONDICIONAL) POR PRECIO
+        state.filterWork4 = state.filterWork3.filter(ele=>ele.category === action.payload)
+        
+        // SA HACE UNA CONDICIONAL PARA SABER QUE DATOS VAMOS A FILTRAR
+        let typeWorkConditioned
+        state.filterWork5.length ===0 ? typeWorkConditioned = state.filterWork : typeWorkConditioned = state.filterWork5
+        
+        //RESPUESTA
+
+        if(state.isAll===true){
+          if(action.payload !== "all") state.work=state.filterWork4
+          else state.work=state.filterWork3
+        }
+        else{
+          action.payload === "all" ? state.work = typeWorkConditioned : state.work = typeWorkConditioned.filter((element) => element.category === action.payload)
+        }
+       
     },
     
     getWorkName: (state, action) => {
-      let workFound=state.filterWork.filter(element=>element.title.includes(action.payload))
-      state.work = workFound
+        let workFound=state.filterWork.filter(element=>element.title.includes(action.payload))
+        state.work = workFound
+        state.filterWork= workFound;
+        state.filterWork2 = workFound;
     }
   },
 });
