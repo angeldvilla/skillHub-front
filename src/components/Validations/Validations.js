@@ -10,16 +10,12 @@ const validation = (data) => {
       errors.title = "No está permitido publicar trabajos de estos indoles";
     }
 
-    if (data.description.length > 10) {
+    if (data.description.length > 200) {
       errors.title = "Maximo de caracteres alcanzados";
     } else if (prohibideWorks.includes(data.description.toLowerCase())) {
       errors.description = "No está permitido publicar trabajos de estos indoles";
     }
 
-    
-    if (data.phone.length > 10) {
-      errors.phone = "Máximo 10 números";
-    }
   
     return errors;
   };

@@ -36,27 +36,25 @@ export default function FormCreateWork() {
   const [workdata, setWorkData] = useState({
     title: "",
     description: "",
-    price: "",
     address: "",
     ability: ["Limpieza"],
     image: "",
-    phone: "",
+    price: 0,
   });
 
   const [errors, setErrors] = useState({
     title: "",
     description: "",
-    price: "",
     address: "",
     ability: ["Limpieza"],
     image: "",
-    phone: 0,
+    price: 0,
   })
 
 
   function handleChange(event) {
     const { name, value } = event.target;
-    const parsedValue = name === "phone" || name === "price" ? parseInt(value, 10) : value;
+    const parsedValue =  name === "price" ? parseInt(value, 10) : value;
   
     setWorkData({
       ...workdata,
@@ -79,11 +77,10 @@ export default function FormCreateWork() {
       setWorkData({
         title: "",
         description: "",
-        price: "",
         ability: [],
         image: "",
         address: "",
-        phone:0,
+        price:0,
       });
       console.log("Datos del formulario:", workdata);
       dispatch(postJobs(workdata));
@@ -179,19 +176,6 @@ export default function FormCreateWork() {
             placeholder="Ingresa una dirección"
             onChange={(event) => handleChange(event)}
           />
-        </div>
-        <div>
-          <label htmlFor="phone">Telefono: </label>
-          <input
-            type="number"
-            name="phone"
-            value={workdata.phone}
-            placeholder="indica tu número de whatsapp"
-            onChange={(event) => handleChange(event)}
-          />
-          {
-            errors.phone && (<p className="error"> {errors.phone}  </p>)
-          }
         </div>
         <button type="submit">Postular oferta</button>
       </form>
