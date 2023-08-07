@@ -56,20 +56,20 @@ export default function FormCreateWork() {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    const parsedValue = name === "price" ? (value === "" ? 0 : parseInt(value, 10)) : value;
+    // const parsedValue = name === "price" ? (value === "" ? 0 : parseInt(value, 10)) : value;
 
     setWorkData({
       ...workdata,
-      [name]: parsedValue,
+      [name]: value,
     });
 
     setErrors(validation({
       ...workdata,
-      [name]: parsedValue,
+      [name]: value,
     }));
     console.log("Datos del formulario:", {
       ...workdata,
-      [name]: parsedValue,
+      [name]: value,
     });
   }
 
@@ -170,7 +170,8 @@ export default function FormCreateWork() {
               Precio:
             </label>
             <input
-              type="number"
+              type="text"
+              placeholder="$20"
               name="price"
               value={workdata.price}
               onChange={handleChange}
@@ -188,8 +189,6 @@ export default function FormCreateWork() {
                 </option>
               ))}
             </select>
-
-
             <label htmlFor="ability" className="pl-2 mb-1 text-lg">
               Categoria
             </label>
@@ -200,10 +199,10 @@ export default function FormCreateWork() {
                 ability.map((typ, index) => (
                   <option
                     key={index}
-                    value={typ.title}
-                    disabled={workdata.ability && workdata.ability.includes(ability.title)}
+                    value={typ.category}
+                    disabled={workdata.category && workdata.ability.includes(ability.category)}
                   >
-                    {typ.title}
+                    {typ.category}
                   </option>
                 ))}
             </select>
