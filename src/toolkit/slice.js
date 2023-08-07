@@ -76,7 +76,8 @@ export const workSlice = createSlice({
     filterTypeWork: (state, action) => {
         
         // SE GUARDA EN UN ESTADO PARA USARLO CUANDO FILTRAMOS(COMO CONDICIONAL) POR PRECIO
-        state.filterWork4 = state.filterWork3.filter(ele=>ele.category === action.payload)
+        console.log(state.work)
+        state.filterWork4 = state.filterWork3.filter(ele=>ele.ability === action.payload)
         
         // SA HACE UNA CONDICIONAL PARA SABER QUE DATOS VAMOS A FILTRAR
         let typeWorkConditioned
@@ -89,7 +90,7 @@ export const workSlice = createSlice({
           else state.work=state.filterWork3
         }
         else{
-          action.payload === "all" ? state.work = typeWorkConditioned : state.work = typeWorkConditioned.filter((element) => element.category === action.payload)
+          action.payload === "all" ? state.work = typeWorkConditioned : state.work = typeWorkConditioned.filter((element) => element.ability === action.payload)
         }
        
     },

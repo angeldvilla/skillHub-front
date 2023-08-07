@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterName, filterPrice, filterTypeWork } from "../../toolkit/slice";
 import { getWork } from "../../toolkit/thunks";
 import SearchBar from "../SearchBar/SearchBar";
+import sliceWorkPublication from "../../toolkit/sliceWorkPublication";
+import { getTypes } from "../../toolkit/ActionsworkPublications";
+
 
 
 export default function Filters({setIndex, setPage}) {
   //AGREGAMOS LOS TIPOS DE TRABAJOS
   //const { filterWork } = useSelector((state) => state.work);
   const typeWork = ["men's clothing" , "women's clothing", "jewelery",  "electronics"];
+  //!---------------------------------
+
+  const trabajo = useSelector(state=>state.formwork.allWorkTypes)
+  //console.log(trabajo)
+  const dispatch=useDispatch()
+
+  useEffect(()=>{
+    dispatch(getTypes())
+  },[dispatch])
+ 
+
+  //!---------------------------------
   // filterWork.map((ele) => {
   //   if (typeWork.indexOf(ele.category) === -1) typeWork.push(ele.category);
   // });
   //--------------------------------------- cambiar con tipos de trabajo
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleOrdertitle = (event) => {
     dispatch(filterName(event.target.value));
@@ -28,6 +43,7 @@ export default function Filters({setIndex, setPage}) {
 
   const handleFilterTypeWork = (event) => {
     dispatch(filterTypeWork(event.target.value));
+    console.log(event.target.value)
     setIndex(0);
     setPage(1);
   };
@@ -66,9 +82,9 @@ export default function Filters({setIndex, setPage}) {
           className="w-45 h-auto rounded-full items-center justify-center text-black"
         >
           <option value="all">all</option>
-          {typeWork.map((work, index) => (
-            <option key={index} value={work}>
-              {work}
+          {trabajo.map((element, index) => (
+            <option key={index} value={element.category}>
+              {element.category}
             </option>
           ))}
         </select>

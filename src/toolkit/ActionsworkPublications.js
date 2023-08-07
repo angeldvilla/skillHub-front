@@ -2,7 +2,7 @@ import axios from "axios"
 import { AddWorks } from "./sliceWorkPublication"
 import { GetAllWorkTypes } from "./sliceWorkPublication"
 
-const idUsuario = "64cee976a45fd417790185b7"
+const idUsuario = "64cf388150a7167b36bb1bd4"
 
 export const postJobs = (workdata) => (dispatch) => {
     axios.post(`http://localhost:3001/empleador/${idUsuario}`, workdata)
