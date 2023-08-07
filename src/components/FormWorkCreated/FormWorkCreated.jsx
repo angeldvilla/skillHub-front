@@ -1,12 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AddWorks } from "../../toolkit/sliceWorkPublication";
+import { AddWorks, GetAllWorkTypes } from "../../toolkit/sliceWorkPublication";
 import { useParams } from "react-router-dom";
 
+
 import validation from "../Validations/Validations";
-import { postJobs } from "../../toolkit/ActionsworkPublications";
+import { postJobs, getTypes } from "../../toolkit/ActionsworkPublications";
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -20,30 +22,22 @@ import Footer from "../Footer/Footer";
 
 const WorkPerTime = ["Hora", "Precio fijo"];
 
-// const Ubication = ["Col", "Arg", "Pe", "otro"];
-
-const workTypes = [
-  { name: "Limpieza", id: "1" },
-  { name: "Profesor", id: "2" },
-  { name: "Servicios varios", id: "3" },
-  { name: "Front Developer", id: "4" },
-  { name: "BackDeveloper", id: "5" },
-];
-
 export default function FormCreateWork() {
+
   // const works = useSelector((state) => state.formwork.allPublicationsWork)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const ability = useSelector((state) => state.formwork.allWorkTypes)
   // const params = useParams()
 
   const [workdata, setWorkData] = useState({
     title: "",
     description: "",
     address: "",
-    ability: ["Limpieza"],
+    ability: [],
     image: "",
-    price: Infinity,
+    price: "",
   });
 
   const [errors, setErrors] = useState({
@@ -52,51 +46,63 @@ export default function FormCreateWork() {
     address: "",
     ability: [],
     image: "",
-    price: null,
-  });
+    price: "",
+  })
+
+  useEffect(() => {
+    dispatch(getTypes())
+  }, [dispatch])
+
 
   function handleChange(event) {
     const { name, value } = event.target;
-    const parsedValue = name === "price" ? parseInt(value, 10) : value;
+    const parsedValue = name === "price" ? (value === "" ? 0 : parseInt(value, 10)) : value;
 
     setWorkData({
       ...workdata,
       [name]: parsedValue,
     });
 
-    setErrors(
-      validation({
+    setErrors(validation({
+      ...workdata,
+      [name]: parsedValue,
+    }));
+    console.log("Datos del formulario:", {
+      ...workdata,
+      [name]: parsedValue,
+    });
+  }
+
+
+  function handleSelect(event) {
+    const typeworkSelect = event.target.value;
+    if (!workdata.ability.includes(typeworkSelect)) {
+
+      setWorkData({
         ...workdata,
-        [name]: parsedValue,
+        ability: [...workdata.ability, typeworkSelect]
       })
-    );
+    }
   }
 
   function handleSubmit(event) {
     event.preventDefault();
+    dispatch(postJobs(workdata));
 
-    if (
-      !workdata.title ||
-      !workdata.description ||
-      !workdata.address ||
-      !workdata.ability.length ||
-      !workdata.image ||
-      !workdata.price
-    ) {
+    if (!workdata.title || !workdata.description || !workdata.price) {
       toast.error("Complete all fields");
     } else {
       console.log("Datos del formulario:", workdata);
 
       dispatch(postJobs(workdata));
       handleReset();
-      toast.success("Job successfully posted");
+      toast.success("Trabajo creado correctamente");
 
       setTimeout(() => {
         navigate("/home");
       }, 3000);
     }
   }
-
   const handleReset = () => {
     setWorkData({
       title: "",
@@ -104,20 +110,16 @@ export default function FormCreateWork() {
       ability: [],
       image: "",
       address: "",
-      price: Infinity,
+      price: "",
     });
   };
 
-  // useEffect(() => {
-  //    console.log(works);
-  // }, [])
-
   const [selectWorkType, setSelectWorkType] = useState("");
+
 
   return (
     <div>
       <Header />
-
       <div className="flex flex-col items-center justify-center my-8">
         <div className="relative">
           <button
@@ -128,64 +130,57 @@ export default function FormCreateWork() {
           </button>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-6 rounded-lg shadow-neutral-900 shadow-lg"
-        >
+        <form onSubmit={(event) => handleSubmit(event)}
+          className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-6 rounded-lg shadow-neutral-900 shadow-lg" >
           <h1 className="text-3xl text-center text-white mb-7 mt-4">
-            Post a job
+            ¡Postula tu trabajo!
           </h1>
 
+
           <div className="flex flex-col">
-            {/* Title */}
             <label htmlFor="title" className="pl-2 mb-1 text-lg">
-              Title
+              Titulo
             </label>
             <input
               type="text"
-              placeholder="Seeking for a gardener"
               name="title"
               value={workdata.title}
-              onChange={handleChange}
+              placeholder="Que trabajo necesitas"
+              onChange={(event) => handleChange(event)}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
             {errors.title && <p className="text-red-500">{errors.title}</p>}
 
-            {/* Ability */}
-            <label htmlFor="ability" className="pl-2 mb-1 text-lg">
-              Ability
-            </label>
-            <select
-              value={selectWorkType}
-              onChange={setSelectWorkType}
-              className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-            >
-              {workTypes.map((type) => (
-                <option key={type.name} value={type.name}>
-                  {type.name}
-                </option>
-              ))}
-            </select>
-            {errors.ability && <p className="text-red-500">{errors.ability}</p>}
 
-            {/* Price */}
-            <label htmlFor="price" className="pl-2 mb-1 text-lg">
-              Price
+            <label htmlFor="description" className="pl-2 mb-1 text-lg">
+              Descripción
+            </label>
+            <textarea
+              value={workdata.description}
+              name="description"
+              placeholder="Necesito persona con capacidad de..."
+              onChange={(event) => handleChange(event)}
+              className="bg-neutral-900 opacity-50 p-4 mb-2 rounded-md w-80 text-neutral-100 outline-none"
+            ></textarea>
+            {errors.description && <p className="text-red-500">{errors.description}</p>}
+
+
+
+            <label className="pl-2 mb-1 text-lg">
+              Precio:
             </label>
             <input
               type="number"
-              placeholder="$20"
               name="price"
               value={workdata.price}
               onChange={handleChange}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
+
             <label htmlFor="payment" className="pl-2 mb-1 text-lg">
-              Payment
+              Pago
             </label>
-            <select
-              name="Precio"
-              className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
+            <select className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             >
               {WorkPerTime.map((work, index) => (
                 <option key={index} value={work}>
@@ -193,59 +188,58 @@ export default function FormCreateWork() {
                 </option>
               ))}
             </select>
-            {errors.price && <p className="text-red-500">{errors.price}</p>}
 
-            {/* Address */}
-            <label htmlFor="address" className="pl-2 mb-1 text-lg">
-              Address
+
+            <label htmlFor="ability" className="pl-2 mb-1 text-lg">
+              Categoria
             </label>
-            <input
-              type="text"
-              placeholder="Colombia, Quindio, Finca Armenia"
-              name="address"
-              value={workdata.address}
-              onChange={handleChange}
+            <select onChange={(event) => handleSelect(event)}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-            />
-            {errors.address && <p className="text-red-500">{errors.address}</p>}
+            >
+              {
+                ability.map((typ, index) => (
+                  <option
+                    key={index}
+                    value={typ.title}
+                    disabled={workdata.ability && workdata.ability.includes(ability.title)}
+                  >
+                    {typ.title}
+                  </option>
+                ))}
+            </select>
 
-            {/* Image */}
             <label htmlFor="image" className="pl-2 mb-1 text-lg">
-              Image
+              Imagen:
             </label>
             <input
               type="text"
-              placeholder="Image URL"
               name="image"
-              value={workdata.image}
+              placeholder="Ingresa URL de imagen"
               onChange={handleChange}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
-            {errors.image && <p className="text-red-500">{errors.image}</p>}
 
-            {/* Description */}
-            <label htmlFor="description" className="pl-2 mb-1 text-lg">
-              Description
+            <label htmlFor="address" className="pl-2 mb-1 text-lg">
+              Dirección:
             </label>
-            <textarea
+            <input
               type="text"
-              placeholder="I am in need of an experienced gardener with a strong work ethic to maintain and enhance the garden of a private residence."
-              name="description"
-              value={workdata.description}
-              onChange={handleChange}
-              className="bg-neutral-900 opacity-50 p-4 mb-2 rounded-md w-80 text-neutral-100 outline-none"
+              name="address"
+              placeholder="Para servicios físicos"
+              onChange={(event) => handleChange(event)}
+              className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
           </div>
 
           <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
-            Post job
+            Publicar Trabajo:
           </button>
           <button
             type="button"
             onClick={handleReset}
             className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
           >
-            Reset form
+            Reset
           </button>
         </form>
       </div>
