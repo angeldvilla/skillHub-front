@@ -7,6 +7,7 @@ const initialState = {
   filterWork3: [],
   filterWork4: [],
   filterWork5:[],
+  detail: {},
   isAll:false,
   isLoading: false,
 };
@@ -97,7 +98,18 @@ export const workSlice = createSlice({
         state.work = action.payload
         state.filterWork= action.payload;
         state.filterWork2 = action.payload;
-    }
+    },
+
+    detailWork: (state, action) => {
+      const detailData = action.payload[0] || {};
+      state.detail = detailData;
+      state.isLoading = false;
+    },
+
+    resetDetail: (state) => {
+      state.detail = {};
+    },
+
   },
 });
 
@@ -108,6 +120,8 @@ export const {
   filterName,
   filterPrice,
   filterTypeWork,
+  detailWork,
+  resetDetail,
 } = workSlice.actions;
 
 //export default workSlice.reducer
