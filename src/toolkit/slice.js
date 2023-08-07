@@ -94,10 +94,9 @@ export const workSlice = createSlice({
     },
     
     getWorkName: (state, action) => {
-        let workFound=state.filterWork.filter(element=>element.title.includes(action.payload))
-        state.work = workFound
-        state.filterWork= workFound;
-        state.filterWork2 = workFound;
+        state.work = action.payload
+        state.filterWork= action.payload;
+        state.filterWork2 = action.payload;
     }
   },
 });
