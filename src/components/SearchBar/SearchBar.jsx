@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getWorkName } from "../../toolkit/slice";
+import { getWorkForName } from "../../toolkit/thunks";
 
 export default function SearchBar({setIndex, setPage}) {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export default function SearchBar({setIndex, setPage}) {
   };
 
   const searchName = (name) => {
-    dispatch(getWorkName(name))
+    dispatch(getWorkForName(name))
     setIndex(0);
     setPage(1);
     setWork("");
@@ -20,7 +20,9 @@ export default function SearchBar({setIndex, setPage}) {
    // FUNCION PARA BUSCAR SOLO PRESIONANDO LA TECLA ENTER
    const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      dispatch(getWorkName(work));
+      dispatch(getWorkForName(work));
+      setIndex(0);
+      setPage(1);
       setWork('');
     }
   };

@@ -17,3 +17,14 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
   );
   return data;
 });
+
+export const userLogin = createAsyncThunk(
+  "users/userLogin",
+  async (userData) => {
+    const { data } = await axios.post(
+      "http://localhost:3002/user/login",
+      userData
+    );
+    return data;
+  }
+);
