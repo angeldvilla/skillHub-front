@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailWork } from "../../toolkit/thunks";
+import { getWork, getDetailWork, detailReset } from "../../toolkit/thunks";
 import { getUsers } from "../../toolkit/Users/usersHandler";
 import { userSlice } from "../../toolkit/Users/usersSlice";
 /* -------------- */
@@ -26,21 +26,27 @@ export default function JobDetail() {
 
   const dispatch = useDispatch();
   
-  const { detail }  = useSelector((state) => state.work);
+  const { work, detail, isLoading }  = useSelector((state) => state.work);
+
   
   const { users } = useSelector((state) => state[userSlice.name]);
 
-  const userRelation = users.find((user) => user._id === detail[0]?.users);
+  const userRelation = users.find((user) => user._id === detail?.users);
 
   useEffect(() => {
-    dispatch(getUsers());
+    !work.length && dispatch(getWork());
+    !users.length && dispatch(getUsers());
     dispatch(getDetailWork(id));
-  }, [dispatch, id]);
+    return () => {
+      dispatch(detailReset())
+    }
+  }, [dispatch, id, work.length, users.length])
 
-  const images = [detail[0]?.image, garden1, garden2, garden3];
+  const images = [detail?.image, garden1, garden2, garden3];
 
   return (
       <div>
+        {isLoading && <p>LOADING...</p>}
          <Header />
    
          <div className="flex flex-col justify-center items-center py-5 bg-gray-800 rounded-lg m-auto font-mono">
@@ -54,14 +60,14 @@ export default function JobDetail() {
            </div>
    
            <h1 className="bg-slate-900 text-3xl text-center mb-9 px-5 py-12 rounded-md xl:w-[65%]">
-             {detail[0]?.title}
+             {detail?.title}
            </h1>
    
            <div className="px-5 max-w-7xl text-md">
              {/* Job Description. */}
              <h3 className="text-xl pt-2 mb-4 font-semibold">Description</h3>
              <p className="mb-10 p-5 bg-slate-700 rounded-md">
-               {detail[0]?.description}
+               {detail?.description}
              </p>
    
              {/* Job Skills */}
@@ -69,7 +75,7 @@ export default function JobDetail() {
                <h3 className="text-xl pt-2 mb-4 font-semibold">Habilidades</h3>
                <ul className="flex flex-col gap-6 p-5 bg-slate-700 rounded-md">
                 {
-                detail[0].ability?.map((skill, index) => (
+                detail.ability?.map((skill, index) => (
                    <li key={index}>{">"} {skill}</li>
                  )) 
                 }
@@ -78,18 +84,17 @@ export default function JobDetail() {
                  
    
              {/* Category */}
-           {/*   <h3 className="mb-5 text-xl font-semibold">Categoria</h3>
+             <h3 className="mb-5 text-xl font-semibold">Categoria</h3>
              <ul className="flex flex-col gap-6 p-5 bg-slate-700 rounded-md">
-             {detail.ability}
                <li>{">"} Watering</li>
-             </ul> */}
+             </ul>
    
              <div className="flex flex-col justify-evenly mb-5 md:flex-row md:justify-between">
                {/* Location */}
                <div className="relative mt-10">
                  <h3 className="mb-4 ml-8 text-xl font-semibold">Ubicación</h3>
                  <p className="p-5 bg-slate-700 rounded-md">
-                   {detail[0]?.address}
+                   {detail?.address}
                  </p>
                  <img
                    src={location}
@@ -119,7 +124,7 @@ export default function JobDetail() {
                    <h3 className="mb-4 ml-5 text-xl text-center font-semibold">
                      Precio
                    </h3>
-                   <p className="p-5 bg-slate-700 rounded-md">{detail[0]?.price}</p>
+                   <p className="p-5 bg-slate-700 rounded-md">{detail?.price}</p>
                    <img
                      src={dollarSign}
                      alt="dollar-sign"

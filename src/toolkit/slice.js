@@ -26,12 +26,8 @@ export const workSlice = createSlice({
       state.filterWork = action.payload.resultWork; // para el filtro por nombre
       state.filterWork2 = action.payload.resultWork; // para el filtro por precio
       state.filterWork3 = action.payload.resultWork; // para el tipode trabajo hacia precio
-      state.detail = action.payload.resultWork;
-    },
-
-    detailWork: (state, action) => {
-      state.detail = action.payload;
-      state.isLoading = false;
+      //state.filterWork4 = action.payload.resultWork; // para el tipode trabajo hacia precio
+      //state.filterWork5 = action.payload.resultWork; // para el tipode trabajo hacia precio
     },
 
     filterName: (state, action) => {
@@ -102,7 +98,18 @@ export const workSlice = createSlice({
         state.work = action.payload
         state.filterWork= action.payload;
         state.filterWork2 = action.payload;
-    }
+    },
+
+    detailWork: (state, action) => {
+      const detailData = action.payload[0] || {};
+      state.detail = detailData;
+      state.isLoading = false;
+    },
+
+    resetDetail: (state) => {
+      state.detail = {};
+    },
+
   },
 });
 
@@ -110,10 +117,11 @@ export const {
   startIsLoading,
   allWork,
   getWorkName,
-  detailWork,
   filterName,
   filterPrice,
   filterTypeWork,
+  detailWork,
+  resetDetail,
 } = workSlice.actions;
 
 //export default workSlice.reducer
