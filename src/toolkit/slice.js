@@ -27,8 +27,6 @@ export const workSlice = createSlice({
       state.filterWork2 = action.payload.resultWork; // para el filtro por precio
       state.filterWork3 = action.payload.resultWork; // para el tipode trabajo hacia precio
       state.detail = action.payload.resultWork;
-      //state.filterWork4 = action.payload.resultWork; // para el tipode trabajo hacia precio
-      //state.filterWork5 = action.payload.resultWork; // para el tipode trabajo hacia precio
     },
 
     detailWork: (state, action) => {
@@ -113,7 +111,6 @@ export const {
   startIsLoading,
   allWork,
   getWorkName,
-  userInfo,
   detailWork,
   filterName,
   filterPrice,

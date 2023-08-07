@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailWork } from "../../toolkit/thunks";
+import { getUsers } from "../../toolkit/Users/usersHandler";
+import { userSlice } from "../../toolkit/Users/usersSlice";
 /* -------------- */
 /* COMPONENTS */
 import Header from "../Header/Header";
@@ -19,26 +21,30 @@ import location from "../../assets/location.svg";
 /* -------------- */
 
 export default function JobDetail() {
-  const images = [garden1, garden2, garden3];
-
+ 
   const { id } = useParams();
 
   const dispatch = useDispatch();
-
+  
   const { detail }  = useSelector((state) => state.work);
+  
+  const { users } = useSelector((state) => state[userSlice.name]);
 
-  const users = useSelector((state) => state.userSlice)
- 
+  const userRelation = users.find((user) => user._id === detail[0]?.users);
+
   useEffect(() => {
-   dispatch(getDetailWork(id));
+    dispatch(getUsers());
+    dispatch(getDetailWork(id));
   }, [dispatch, id]);
+
+  const images = [detail[0]?.image, garden1, garden2, garden3];
 
   return (
       <div>
          <Header />
    
          <div className="flex flex-col justify-center items-center py-5 bg-gray-800 rounded-lg m-auto font-mono">
-           <div className="flex justify-center">
+           <div>
              <NavLink
                to={"/home"}
                className="bg-blue-900 hover:bg-blue-700 text-white text-center p-2 w-full mb-5 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
@@ -60,7 +66,7 @@ export default function JobDetail() {
    
              {/* Job Skills */}
              <div className="mb-10">
-               <h3 className="text-xl pt-2 mb-4 font-semibold">Skills</h3>
+               <h3 className="text-xl pt-2 mb-4 font-semibold">Habilidades</h3>
                <ul className="flex flex-col gap-6 p-5 bg-slate-700 rounded-md">
                 {
                 detail[0].ability?.map((skill, index) => (
@@ -72,22 +78,16 @@ export default function JobDetail() {
                  
    
              {/* Category */}
-             <h3 className="mb-5 text-xl font-semibold">Responsibilities</h3>
+           {/*   <h3 className="mb-5 text-xl font-semibold">Categoria</h3>
              <ul className="flex flex-col gap-6 p-5 bg-slate-700 rounded-md">
-               {
-                 detail.ability?.map((skill) => (
-                   <li key={skill}> {skill}</li>
-                 ))
-               }
-               <li>{">"} Plants and flowers</li>
-               <li>{">"} Landscaping</li>
+             {detail.ability}
                <li>{">"} Watering</li>
-             </ul>
+             </ul> */}
    
              <div className="flex flex-col justify-evenly mb-5 md:flex-row md:justify-between">
                {/* Location */}
                <div className="relative mt-10">
-                 <h3 className="mb-4 ml-8 text-xl font-semibold">Ubication</h3>
+                 <h3 className="mb-4 ml-8 text-xl font-semibold">Ubicación</h3>
                  <p className="p-5 bg-slate-700 rounded-md">
                    {detail[0]?.address}
                  </p>
@@ -98,14 +98,14 @@ export default function JobDetail() {
                  />
                </div>
    
-               <div className="flex flex-row justify-evenly ml-32 mt-10 mb-5 md:gap-20 lg:gap-32 lg:mr-20">
+               <div className="flex flex-row justify-evenly  mt-10 mb-5 md:gap-20 lg:gap-32 lg:mr-20">
                  {/* Phone number */}
                  <div className="relative">
                    <h3 className="mb-4 ml-5 text-xl font-semibold text-center">
-                     Phone Number
+                    Número de Teléfono
                    </h3>
                    <p className="p-5 bg-slate-700 rounded-md">
-                    {users?.phoneNumber}
+                   {"+"} {userRelation?.phoneNumber}
                     </p>
                    <img
                      src={phone}
@@ -117,7 +117,7 @@ export default function JobDetail() {
                  {/* Wage */}
                  <div className="relative">
                    <h3 className="mb-4 ml-5 text-xl text-center font-semibold">
-                     Price
+                     Precio
                    </h3>
                    <p className="p-5 bg-slate-700 rounded-md">{detail[0]?.price}</p>
                    <img
