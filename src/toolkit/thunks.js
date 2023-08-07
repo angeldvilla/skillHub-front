@@ -8,23 +8,23 @@ export const getWork =()=>{
             dispatch(startIsLoading())
 
             const {data}= await axios('http://localhost:3001/empleador') /*https://fakestoreapi.com/products*/
-            dispatch(allWork({resultWork:data}))
-            
+            dispatch(allWork({resultWork:data})) 
         } catch (error) {
-            console.log(error)
-            
-        }
-        
-        
+            throw error.message  
+        }  
     }
 }
 
 export const getWorkForName =(title)=>{
     return async(dispatch)=>{
-        
-        dispatch(startIsLoading())
+        try {
+            dispatch(startIsLoading())
 
-        const {data}= await axios(`http://localhost:3001/empleador/job?title=${title}`) /*https://fakestoreapi.com/products*/
-        dispatch(getWorkName(data))
+            const {data}= await axios(`http://localhost:3001/empleador/job?title=${title}`) 
+            dispatch(getWorkName(data))
+            
+        } catch (error) {
+            throw error.message 
+        } 
     }
 }
