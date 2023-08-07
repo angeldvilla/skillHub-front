@@ -65,14 +65,14 @@ export default function JobDetail() {
    
            <div className="px-5 max-w-7xl text-md">
              {/* Job Description. */}
-             <h3 className="text-xl pt-2 mb-4 font-semibold">Description</h3>
+             <h3 className="text-xl pt-2 mb-4 font-semibold">Descripción</h3>
              <p className="mb-10 p-5 bg-slate-700 rounded-md">
                {detail?.description}
              </p>
    
-             {/* Job Skills */}
+             {/* Category */}
              <div className="mb-10">
-               <h3 className="text-xl pt-2 mb-4 font-semibold">Habilidades</h3>
+               <h3 className="text-xl pt-2 mb-4 font-semibold">Categoria</h3>
                <ul className="flex flex-col gap-6 p-5 bg-slate-700 rounded-md">
                 {
                 detail.ability?.map((skill, index) => (
@@ -82,13 +82,7 @@ export default function JobDetail() {
                </ul>
               </div>
                  
-   
-             {/* Category */}
-             <h3 className="mb-5 text-xl font-semibold">Categoria</h3>
-             <ul className="flex flex-col gap-6 p-5 bg-slate-700 rounded-md">
-               <li>{">"} Watering</li>
-             </ul>
-   
+
              <div className="flex flex-col justify-evenly mb-5 md:flex-row md:justify-between">
                {/* Location */}
                <div className="relative mt-10">
