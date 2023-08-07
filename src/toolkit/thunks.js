@@ -33,11 +33,8 @@ export const getDetailWork = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios(`http://localhost:3001/empleador?_id=${id}`);
-      
-      if(data.title){
         dispatch(detailWork(data));
-      }
-      
+  
     } catch (error) {
       throw Error("Error al obtener el detalle del trabajo", error);
     }
