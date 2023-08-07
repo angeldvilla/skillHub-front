@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const allPublicationsWork = [
     {
-        id: "1",
+        id: "64d026bc2e300d5a0a6b2479",
         title: "Lavar terraza ",
         description: "Se necesita una persona para lavar una terraza de 6*15",
         price: "25000",
