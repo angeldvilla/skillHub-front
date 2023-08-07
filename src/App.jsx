@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import JobDetail from "./components/JobDetail/JobDetail";
 import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
+import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
 /* ------------------------------------------- */
@@ -21,6 +22,11 @@ function App() {
       <Route path="/CreateWork" element={<FormWorkCreated />} />
       <Route path="/Edit-Work/:id" element={<FormWorkCreated />} />
       <Route path="/WorkPublications" element={<WorkPublications />} />
+      <Route path="/terms-of-use" element={<UnderDevelopment />} />
+      <Route path="/privacy-policies" element={<UnderDevelopment />} />
+      <Route path="/cookies-policies" element={<UnderDevelopment />} />
+      <Route path="/payment-policies" element={<UnderDevelopment />} />
+      <Route path="/contact-us" element={<UnderDevelopment />} />
     </Routes>
   );
 }
