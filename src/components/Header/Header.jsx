@@ -23,16 +23,16 @@ export default function Header() {
 
       <div className="flex space-x-20 flex-grow justify-center">
         <a className="text-white-800 hover:bg-slate-600 rounded-md transform transition-transform duration-300 hover:-translate-y-0.5">
-          FAVORITES
+          FAVORITOS
         </a>
         <a
           href="/CreateWork"
           className="text-white-800 hover:bg-slate-600 rounded-md transform transition-transform duration-300 hover:-translate-y-0.5"
         >
-          POST SERVICE
+          PUBLICAR SERVICIO
         </a>
         <a className="text-white-800 hover:bg-slate-600 rounded-md transform transition-transform duration-300 hover:-translate-y-0.5">
-          UBICATION
+          UBICACIÓN
         </a>
       </div>
 
