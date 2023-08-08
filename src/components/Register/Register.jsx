@@ -6,18 +6,16 @@ import {
   validateUserData,
   resetUserData,
 } from "../../utils/userDataValidation";
-
-// Images
 import passwordEye from "../../assets/password-eye.svg";
 import phone from "../../assets/phone.svg";
 import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
-
-// Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import { auth } from "../../firebase";
+// import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -42,7 +40,7 @@ export default function Register() {
     setErrors(validateUserData(name, value, userData));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const hasEmptyValues = Object.values(userData).some(
@@ -72,11 +70,28 @@ export default function Register() {
       return;
     }
 
+    // // Register user in firebase
+    // try {
+    //   const userCredentials = await createUserWithEmailAndPassword(
+    //     auth,
+    //     userData.email,
+    //     userData.password
+    //   );
+    //   const accessToken = userCredentials.user.accessToken;
+    //   console.log("accessToken", accessToken);
+    // } catch (error) {
+    //   toast.error(error.message);
+    // }
+
+    setTimeout(() => {
+      navigate("/signin");
+    }, 4000);
     resetUserData(setUserData);
     toast.success("User created successfully");
+
     setTimeout(() => {
-      navigate("/home");
-    }, 2000);
+      toast.success("You are being redirected to the login page");
+    }, 1500);
   };
 
   const handleReset = () => {
@@ -85,7 +100,7 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen font-mono">
+    <div className="flex flex-col items-center justify-center h-screen">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-10 rounded-lg shadow-neutral-900 shadow-lg"
