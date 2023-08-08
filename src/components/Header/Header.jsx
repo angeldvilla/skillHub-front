@@ -49,11 +49,11 @@ export default function Header() {
         {dropDownOpen && (
           <div className="dropdown-list absolute right-0 mt-2 bg-slate-600 border rounded-lg shadow-lg">
             <a href="/signin" className="dropdown-item block px-4 py-2 text-white hover:text-black">
-              LOGIN
+              INICIAR SESIÓN
             </a>
             <hr className="my-2" />
             <a href="/signup" className="dropdown-item block px-4 py-2 text-white hover:text-black">
-              SIGN UP
+              REGISTRARSE
             </a>
           </div>
         )}
