@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUsers, postUser, userLogin } from "./usersHandler";
+import { getUsers, getUser, postUser, userLogin } from "./usersHandler";
 
 const initialState = {
   users: [],
+  user: {},
   isLoading: false,
   error: null,
   accessToken: null,
@@ -25,6 +26,21 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(getUsers.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = error.message;
+      })
+
+      // Get User
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getUser.fulfilled, (state, { payload }) => {
+        state.user = payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getUser.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = error.message;
       })
