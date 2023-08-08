@@ -7,6 +7,7 @@ import JobDetail from "./components/JobDetail/JobDetail";
 import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
+import UserProfile from "./components/UserProfile/UserProfile";
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
 /* ------------------------------------------- */
@@ -27,6 +28,7 @@ function App() {
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
       <Route path="/payment-policies" element={<UnderDevelopment />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
+      <Route path="/my-profile" element={<UserProfile />} />
     </Routes>
   );
 }
