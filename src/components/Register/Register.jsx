@@ -14,8 +14,8 @@ import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { auth } from "../../firebase";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -53,45 +53,47 @@ export default function Register() {
       return;
     }
 
-    const { firstName, lastName, email, phoneNumber, password } = userData;
-
-    const newUser = {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      password,
-    };
-
-    dispatch(postUser(newUser));
-
     if (error) {
       toast.error("Email is already in use");
       return;
     }
 
-    // // Register user in firebase
-    // try {
-    //   const userCredentials = await createUserWithEmailAndPassword(
-    //     auth,
-    //     userData.email,
-    //     userData.password
-    //   );
-    //   const accessToken = userCredentials.user.accessToken;
-    //   console.log("accessToken", accessToken);
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
+    // Register user in firebase
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password
+      );
+      const { accessToken } = userCredentials.user;
 
-    setTimeout(() => {
-      navigate("/signin");
-    }, 4000);
-    resetUserData(setUserData);
-    toast.success("User created successfully");
+      const { firstName, lastName, email, phoneNumber } = userData;
 
-    setTimeout(() => {
-      toast.success("You are being redirected to the login page");
-    }, 1500);
+      const newUser = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        accessToken,
+      };
+
+      dispatch(postUser(newUser));
+
+      console.log("newUser", newUser);
+
+      setTimeout(() => {
+        navigate("/signin");
+      }, 4000);
+
+      resetUserData(setUserData);
+      toast.success("User created successfully");
+
+      setTimeout(() => {
+        toast.success("You are being redirected to the login page");
+      }, 1500);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleReset = () => {
