@@ -36,8 +36,8 @@ export const validateUserData = (input, value, userData) => {
         !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
       ) {
         errors.email = "Invalid email address";
-      } else if (value.length > 20) {
-        errors.email = "Must be less than 20 characters";
+      } else if (value.length > 30) {
+        errors.email = "Must be less than 30 characters";
       }
       break;
 
@@ -49,7 +49,7 @@ export const validateUserData = (input, value, userData) => {
       } else if (value < 0) {
         errors.phoneNumber = "Phone number must be a positive number";
       } else if (value.length < 10) {
-        errors.phoneNumber = "Must be at least 10 characters";
+        errors.phoneNumber = "Phone number must be 10 characters";
       } else if (value.length > 20) {
         errors.phoneNumber = "Must be less than 20 characters";
       }
