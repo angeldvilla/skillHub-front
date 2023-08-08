@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../../toolkit/Users/usersHandler";
-
-// Images
+import { validateUserData } from "../../utils/userDataValidation";
 import passwordEye from "../../assets/password-eye.svg";
 import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
-
-// Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
