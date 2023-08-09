@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { userLogin } from "../../toolkit/Users/usersHandler";
@@ -14,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState({
     email: "",
@@ -50,8 +52,15 @@ export default function Login() {
       );
 
       const accessToken = userCredentials.user.accessToken;
+
       dispatch(userLogin(accessToken));
       console.log("accessToken", accessToken);
+
+      setTimeout(() => {
+        navigate("/home");
+      }, 4000);
+
+      toast.success("Estás conectado. Siendo redireccionado...");
     } catch (error) {
       toast.error(error.message);
     }
@@ -70,7 +79,9 @@ export default function Login() {
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-10 rounded-lg shadow-neutral-900 shadow-lg"
       >
-        <h1 className="text-3xl text-center text-white mt-16 mb-6">LOGIN</h1>
+        <h1 className="text-3xl text-center text-white mt-16 mb-6">
+          INICIAR SESIÓN
+        </h1>
 
         {/* Email */}
         <div className="flex flex-col">
@@ -105,12 +116,12 @@ export default function Login() {
         </div>
 
         <button className="p-2 mt-10 mb-12 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
-          SIGN IN
+          INICIAR SESION
         </button>
         <div className="bg-slate-500 w-56 h-0.5 mb-5"></div>
 
         {/* Authentication */}
-        <h4 className="text-lg mb-5">OR CONTINUE WITH</h4>
+        <h4 className="text-lg mb-5">O CONTINUAR CON</h4>
         <div className="flex justify-center gap-6">
           <img
             src={google}
