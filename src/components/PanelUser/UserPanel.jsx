@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import menu from "../../assets/menuDropDown.svg";
 import home from "../../assets/home.svg";
+import Nav from './Nav';
 import { Tabs, TabsHeader, Avatar } from "@material-tailwind/react";
 import {
   FolderIcon,
@@ -13,14 +14,10 @@ import {
 export default function UserPanel() {
   const location = useLocation();
 
-  const [menuDrop, setMenuDrop] = useState(false);
+  const [menuDrop, setMenuDrop] = useState(true);
 
   const toggleMenu = () => {
-    setMenuDrop(true);
-  };
-
-  const closeMenu = () => {
-    setMenuDrop(false);
+    setMenuDrop(!menuDrop);
   };
 
   const data = [
@@ -53,7 +50,7 @@ export default function UserPanel() {
   return (
     <div className="flex h-screen overflow-hidden">
       <div
-        className={`w-1/5 p-5 bg-gray-100 border-r border-gray-200 ${
+        className={`w-1/5 p-5 bg-gray-400 border-r border-gray-100 ${
           menuDrop ? "hidden" : ""
         }`}
         >
@@ -65,20 +62,14 @@ export default function UserPanel() {
               size="lg"
             />
           </div>
-          <button
-            id="open-color-menu"
-            onClick={toggleMenu}
-            className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-x-0.5"
-          >
-            <img src={menu} alt="Menu" className="w-9 h-12" />
-          </button>
+          <h2 className="text-black">NOMBRE USER</h2>
         </div>
         <Link
             to={'/home'}
             className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-x-0.5"
           >
-            <img src={home} alt="Menu" className="w-9 h-12 mb-5 flex items-center" />
-          </Link>
+          <img src={home} alt="Menu" className="w-9 h-12 mb-5 flex items-center" />
+        </Link>
 
         <Tabs value={location.pathname} orientation="vertical">
           <TabsHeader className="w-screen flex h-screen overflow-hidden gap-10 mb-5">
@@ -86,7 +77,7 @@ export default function UserPanel() {
               <Link
                 to={`/user-panel/${value}`}
                 key={value}
-                className="block py-3 px-4 text-gray-600 hover:bg-gray-300 hover:text-gray-800 rounded-md"
+                className="block py-3 px-4 text-black hover:bg-gray-400 hover:text-gray-800 rounded-md"
               >
                 <div className="flex items-center gap-2">
                   {React.createElement(icon, {
@@ -99,15 +90,20 @@ export default function UserPanel() {
           </TabsHeader>
         </Tabs>
       </div>
-      <div className="flex-1 p-2 bg-gray overflow-y-auto">
+      <div className="flex-1 p-4 bg-gray">
+        <div className="flex items-center justify-between mb-5">
+          <button
+            id="open-color-menu"
+            onClick={toggleMenu}
+            className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-x-0.5"
+          >
+            <img src={menu} alt="Menu" className="w-9 h-12" />
+          </button>
+          <Nav />
+        </div>
         <Outlet /> {/* Muestra el contenido de las rutas anidadas */}
       </div>
-      {menuDrop && (
-        <div
-          className="absolute inset-0 bg-black opacity-50"
-          onClick={closeMenu}
-        ></div>
-      )}
     </div>
+  
   );
 }
