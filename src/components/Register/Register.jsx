@@ -72,7 +72,7 @@ export default function Register() {
 
       setTimeout(() => {
         navigate("/signin");
-      }, 4000);
+      }, 3000);
 
       resetUserData(setUserData);
       toast.success("Usuario registrado. Estás siendo redireccionado");
