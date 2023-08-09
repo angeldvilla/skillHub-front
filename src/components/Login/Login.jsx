@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 import { userLogin } from "../../toolkit/Users/usersHandler";
 import { validateUserData } from "../../utils/userDataValidation";
 import passwordEye from "../../assets/password-eye.svg";
@@ -27,7 +29,7 @@ export default function Login() {
     setErrors(validateUserData(name, value, userData));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const hasEmptyValues = Object.values(userData).some(
@@ -40,7 +42,19 @@ export default function Login() {
       return;
     }
 
-    dispatch(userLogin(userData));
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password
+      );
+
+      const accessToken = userCredentials.user.accessToken;
+      dispatch(userLogin(accessToken));
+      console.log("accessToken", accessToken);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (

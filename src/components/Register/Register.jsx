@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postUser } from "../../toolkit/Users/usersHandler";
-import {
-  validateUserData,
-  resetUserData,
-} from "../../utils/userDataValidation";
+import { auth } from "../../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import passwordEye from "../../assets/password-eye.svg";
 import phone from "../../assets/phone.svg";
 import google from "../../assets/google.svg";
@@ -14,13 +12,14 @@ import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { auth } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  validateUserData,
+  resetUserData,
+} from "../../utils/userDataValidation";
 
 export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { error } = useSelector((state) => state.users);
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -53,12 +52,6 @@ export default function Register() {
       return;
     }
 
-    if (error) {
-      toast.error("Email is already in use");
-      return;
-    }
-
-    // Register user in firebase
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -68,7 +61,6 @@ export default function Register() {
       const { accessToken } = userCredentials.user;
 
       const { firstName, lastName, email, phoneNumber } = userData;
-
       const newUser = {
         firstName,
         lastName,
