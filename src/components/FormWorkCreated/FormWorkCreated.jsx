@@ -2,13 +2,11 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { AddWorks, GetAllWorkTypes } from "../../toolkit/sliceWorkPublication";
 import { useParams } from "react-router-dom";
-
-
 import validation from "../Validations/Validations";
 import { postJobs, getTypes } from "../../toolkit/ActionsworkPublications";
+
+import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -47,6 +45,7 @@ export default function FormCreateWork() {
     ability: [],
     image: "",
     price: "",
+
   })
 
   useEffect(() => {
@@ -56,7 +55,7 @@ export default function FormCreateWork() {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    // const parsedValue = name === "price" ? (value === "" ? 0 : parseInt(value, 10)) : value;
+    //?const parsedValue = name === "price" ? (value === "" ? 0 : parseInt(value, 10)) : value;  
 
     setWorkData({
       ...workdata,
@@ -77,7 +76,6 @@ export default function FormCreateWork() {
   function handleSelect(event) {
     const typeworkSelect = event.target.value;
     if (!workdata.ability.includes(typeworkSelect)) {
-
       setWorkData({
         ...workdata,
         ability: [...workdata.ability, typeworkSelect]
@@ -90,10 +88,11 @@ export default function FormCreateWork() {
     dispatch(postJobs(workdata));
 
     if (!workdata.title || !workdata.description || !workdata.price) {
-      toast.error("Complete all fields");
+      toast.error("Completa los datos para continuar");
+    } else if (workdata.ability.length > 3) {
+      toast.error("No pueden haber más de 3 categorias seleccionadas")
     } else {
       console.log("Datos del formulario:", workdata);
-
       dispatch(postJobs(workdata));
       handleReset();
       toast.success("Trabajo creado correctamente");
@@ -104,6 +103,11 @@ export default function FormCreateWork() {
     }
   }
   const handleReset = () => {
+    setTextTittle("");
+    setTextDesciption("");
+    setDirectionValue("");
+    setPriceValue("");
+  
     setWorkData({
       title: "",
       description: "",
@@ -113,9 +117,33 @@ export default function FormCreateWork() {
       price: "",
     });
   };
+  
 
   const [selectWorkType, setSelectWorkType] = useState("");
 
+  //LocalStorage values
+  const [textDesciption, setTextDesciption] = useLocalStorage('text', (''))
+  const [textTttle, setTextTittle] = useLocalStorage('tex1', ' ')
+  const [priceValue, setPriceValue] = useLocalStorage("text2", '')
+  const [directionValue, setDirectionValue] = useLocalStorage("tex3", ' ')
+
+
+  //Para poder seleccionar y borrar las categorias seleccionadas
+  const tiposSelected = workdata.ability.map((cat) => (
+    <div key={cat}>
+      <span>{cat}</span>
+      <span onClick={() => handleDelete(cat)}> x </span>
+    </div>
+  ));
+
+  function handleDelete(cat) {
+    setWorkData({
+      ...workdata,
+      ability: workdata.ability.filter(typ => typ !== cat)
+    })
+  }
+
+  //___________________________________________
 
   return (
     <div>
@@ -136,7 +164,6 @@ export default function FormCreateWork() {
             ¡Postula tu trabajo!
           </h1>
 
-
           <div className="flex flex-col">
             <label htmlFor="title" className="pl-2 mb-1 text-lg">
               Titulo
@@ -144,9 +171,13 @@ export default function FormCreateWork() {
             <input
               type="text"
               name="title"
-              value={workdata.title}
+              value={textTttle}
               placeholder="Que trabajo necesitas"
-              onChange={(event) => handleChange(event)}
+              onChange={(event) => {
+                const newValue = event.target.value;
+                handleChange(event);
+                setTextTittle(newValue)
+              }}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
             {errors.title && <p className="text-red-500">{errors.title}</p>}
@@ -156,11 +187,15 @@ export default function FormCreateWork() {
               Descripción
             </label>
             <textarea
-              value={workdata.description}
+              value={textDesciption}
               name="description"
               placeholder="Necesito persona con capacidad de..."
-              onChange={(event) => handleChange(event)}
-              className="bg-neutral-900 opacity-50 p-4 mb-2 rounded-md w-80 text-neutral-100 outline-none"
+              onChange={(event) => {
+                const newValue = event.target.value;
+                handleChange(event);
+                setTextDesciption(newValue);
+              }}
+              className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             ></textarea>
             {errors.description && <p className="text-red-500">{errors.description}</p>}
 
@@ -173,8 +208,12 @@ export default function FormCreateWork() {
               type="text"
               placeholder="$20"
               name="price"
-              value={workdata.price}
-              onChange={handleChange}
+              value={priceValue}
+              onChange={(event) => {
+                const newValue = event.target.value;
+                handleChange(event);
+                setPriceValue(newValue)
+              }}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
 
@@ -195,6 +234,7 @@ export default function FormCreateWork() {
             <select onChange={(event) => handleSelect(event)}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             >
+              <option> Selecciona una categoría: </option>
               {
                 ability.map((typ, index) => (
                   <option
@@ -206,7 +246,13 @@ export default function FormCreateWork() {
                   </option>
                 ))}
             </select>
-
+            {tiposSelected.length > 0 && (
+              <div>
+                <span>Categorias seleccionadas:</span>
+                {tiposSelected}
+                {workdata.ability.length > 3 && <p style={{ color: "red" }}>¡No puedes seleccionar más de 3 categorías!</p>}
+              </div>
+            )}
             <label htmlFor="image" className="pl-2 mb-1 text-lg">
               Imagen:
             </label>
@@ -225,11 +271,15 @@ export default function FormCreateWork() {
               type="text"
               name="address"
               placeholder="Para servicios físicos"
-              onChange={(event) => handleChange(event)}
+              value={directionValue}
+              onChange={(event) => {
+                const newValue = event.target.value;
+                handleChange(event);
+                setDirectionValue(newValue)
+              }}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
           </div>
-
           <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
             Publicar Trabajo:
           </button>
