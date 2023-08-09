@@ -7,7 +7,11 @@ import JobDetail from "./components/JobDetail/JobDetail";
 import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
-import UserProfile from "./components/UserProfile/UserProfile";
+
+/* ROUTES PANEL USER*/
+import UserPanel from "./components/PanelUser/UserPanel";
+import Profile from "./components/PanelUser/Profile";
+import Settings from "./components/PanelUser/Settings";
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
 /* ------------------------------------------- */
@@ -22,13 +26,20 @@ function App() {
       <Route path="/jobdetail/:id" element={<JobDetail />} />
       <Route path="/CreateWork" element={<FormWorkCreated />} />
       <Route path="/Edit-Work/:id" element={<FormWorkCreated />} />
-      <Route path="/WorkPublications" element={<WorkPublications />} />
       <Route path="/terms-of-use" element={<UnderDevelopment />} />
       <Route path="/privacy-policies" element={<UnderDevelopment />} />
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
       <Route path="/payment-policies" element={<UnderDevelopment />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
-      <Route path="/my-profile" element={<UserProfile />} />
+
+      {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
+      <Route path="/my-profile/" element={<UserPanel />}>
+        <Route path="user" element={<Profile />} />
+        <Route path="WorkPublications" element={<WorkPublications />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+      {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
+      
     </Routes>
   );
 }
