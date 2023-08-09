@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
-import { userLogin } from "../../toolkit/Users/usersHandler";
+import { userLogin } from "../../toolkit/Users/usersSlice";
 import { validateUserData } from "../../utils/userDataValidation";
 import passwordEye from "../../assets/password-eye.svg";
 import google from "../../assets/google.svg";
@@ -51,14 +51,16 @@ export default function Login() {
         userData.password
       );
 
-      const accessToken = userCredentials.user.accessToken;
+      dispatch(userLogin(userCredentials.user));
 
-      dispatch(userLogin(accessToken));
-      console.log("accessToken", accessToken);
+      setUserData({
+        email: "",
+        password: "",
+      });
 
       setTimeout(() => {
         navigate("/home");
-      }, 4000);
+      }, 3000);
 
       toast.success("Estás conectado. Siendo redireccionado...");
     } catch (error) {
