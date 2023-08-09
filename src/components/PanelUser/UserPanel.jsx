@@ -1,18 +1,16 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import Settings  from "./Settings";
 import {
   Tabs,
   TabsHeader,
-  TabsBody,
   Tab,
-  TabPanel,
 } from "@material-tailwind/react";
 import {
   FolderIcon,
   UserCircleIcon,
   Cog6ToothIcon,
-  CreditCardIcon
+  CreditCardIcon,
+  HomeModernIcon
 } from "@heroicons/react/24/solid";
 
 export default function UserPanel() {
@@ -20,6 +18,12 @@ export default function UserPanel() {
   const location = useLocation();
  
   const data = [
+ /*    {
+      label: "Home",
+      value: "home",
+      icon: HomeModernIcon,
+      desc: `PANEL DE PERFIL`,
+    }, */
     {
       label: "Perfil",
       value: "user",
@@ -43,13 +47,13 @@ export default function UserPanel() {
         value: "memberShip",
         icon: CreditCardIcon,
         desc: `HAZTE MIEMBRO`,
-      },
+    },
   ];
   return (
     <div className="flex">
-
     <Tabs value={location.pathname} orientation="vertical">
       <TabsHeader className="w-40">
+      <Link to={'/home'}>Home</Link>
         {data.map(({ label, value, icon }) => (
           <Link
             to={`/my-profile/${value}`}
