@@ -33,8 +33,8 @@ function App() {
       <Route path="/contact-us" element={<UnderDevelopment />} />
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
-      <Route path="/my-profile/" element={<UserPanel />}>
-        <Route path="user" element={<Profile />} />
+      <Route path="/user-panel/" element={<UserPanel />}>
+        {<Route path="my-profile" element={<Profile />} />}
         <Route path="WorkPublications" element={<WorkPublications />} />
         <Route path="settings" element={<Settings />} />
       </Route>
