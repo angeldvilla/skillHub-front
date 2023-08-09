@@ -58,31 +58,26 @@ export default function Register() {
         userData.email,
         userData.password
       );
-      const { accessToken } = userCredentials.user;
 
       const { firstName, lastName, email, phoneNumber } = userData;
       const newUser = {
+        uid: userCredentials.user.uid,
         firstName,
         lastName,
         email,
         phoneNumber,
-        accessToken,
       };
 
       dispatch(postUser(newUser));
-
-      console.log("newUser", newUser);
 
       setTimeout(() => {
         navigate("/signin");
       }, 4000);
 
       resetUserData(setUserData);
-      toast.success("User created successfully");
+      toast.success("Usuario registrado. Estás siendo redireccionado");
 
-      setTimeout(() => {
-        toast.success("You are being redirected to the login page");
-      }, 1500);
+      return userCredentials;
     } catch (error) {
       toast.error(error.message);
     }
