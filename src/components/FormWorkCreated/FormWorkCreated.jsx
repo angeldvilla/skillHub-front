@@ -103,15 +103,21 @@ export default function FormCreateWork() {
     }
   }
   const handleReset = () => {
+    setTextTittle("");
+    setTextDesciption("");
+    setDirectionValue("");
+    setPriceValue("");
+  
     setWorkData({
-      title: setTextTittle(""),
-      description: setTextDesciption(""),
+      title: "",
+      description: "",
       ability: [],
       image: "",
-      address: setDirectionValue(""),
-      price: setPriceValue(""),
+      address: "",
+      price: "",
     });
   };
+  
 
   const [selectWorkType, setSelectWorkType] = useState("");
 
