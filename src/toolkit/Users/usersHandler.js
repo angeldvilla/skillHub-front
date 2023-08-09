@@ -31,17 +31,14 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
   }
 });
 
-export const userLogin = createAsyncThunk(
-  "users/userLogin",
-  async (userData) => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3002/user/login",
-        userData
-      );
-      return data;
-    } catch (error) {
-      throw new Error(error);
-    }
+export const userLogin = createAsyncThunk("users/userLogin", async (token) => {
+  try {
+    const { data } = await axios.post(
+      "http://localhost:3002/user/login",
+      token
+    );
+    return data;
+  } catch (error) {
+    throw new Error(error);
   }
-);
+});
