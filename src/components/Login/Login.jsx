@@ -5,13 +5,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { userLogin } from "../../toolkit/Users/usersSlice";
 import { validateUserData } from "../../utils/userDataValidation";
+import { ShowMessage } from "../ShowMessage/ShowMessage";
 import passwordEye from "../../assets/password-eye.svg";
 import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -40,7 +39,7 @@ export default function Login() {
     const hasErrors = Object.keys(errors).length;
 
     if (hasEmptyValues || hasErrors) {
-      toast.error("Complete all fields");
+      ShowMessage("Completa todos los campos", "error");
       return;
     }
 
@@ -66,9 +65,27 @@ export default function Login() {
         navigate("/home");
       }, 2000);
 
-      toast.success(`Bienvenido ${userCredentials.user.email}`);
+      ShowMessage(`Bienvenido ${userCredentials.user.email}`);
     } catch (error) {
-      toast.error(error.message);
+      switch (error.code) {
+        case "auth/wrong-password":
+          ShowMessage("Contraseña incorrecta", "error");
+          break;
+        case "auth/user-not-found":
+          ShowMessage("Usuario no encontrado", "error");
+          break;
+        case "auth/too-many-requests":
+          ShowMessage("Demasiadas peticiones", "error");
+          break;
+        case "auth/invalid-email":
+          ShowMessage("Email invalido", "error");
+          break;
+        case "auth/user-disabled":
+          ShowMessage("Usuario desactivado", "error");
+          break;
+        default:
+          ShowMessage("Algo salio mal", "error");
+      }
     }
   };
 
@@ -146,7 +163,6 @@ export default function Login() {
           />
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 }
