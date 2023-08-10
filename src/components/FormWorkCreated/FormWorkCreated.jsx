@@ -13,7 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Components
-import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
 //_______________________________________
@@ -147,7 +146,6 @@ export default function FormCreateWork() {
 
   return (
     <div>
-      <Header />
       <div className="flex flex-col items-center justify-center my-8">
         <div className="relative">
           <button
