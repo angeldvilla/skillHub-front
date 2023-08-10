@@ -13,7 +13,6 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import {
-  PaperClipIcon,
   UserCircleIcon,
   HeartIcon,
   MapPinIcon,
@@ -40,7 +39,7 @@ const profileMenuItems = [
   },
 
   {
-    label: "Premium",
+    label: "Suscripción",
     value: "memberShip",
     icon: CreditCardIcon,
   },

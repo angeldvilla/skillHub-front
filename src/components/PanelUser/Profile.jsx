@@ -29,7 +29,7 @@ export default function Profile() {
  
   return (
     <div className="mt-8">
-      <h1 className="flex justify-center items-center mb-10">BIENVENIDO @USERNAME</h1>
+      <h1 className="flex justify-center items-center mb-10">VISTA GENERAL DE LA CUENTA</h1>
       <Accordion open={open === 1} icon={<Icon id={1} open={open} />} >
         <AccordionHeader onClick={() => handleOpen(1)} className="text-white hover:text-gray-500">What is Material Tailwind?</AccordionHeader>
         <AccordionBody className="text-white">

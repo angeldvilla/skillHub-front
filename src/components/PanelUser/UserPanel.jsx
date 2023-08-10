@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import menu from "../../assets/menuDropDown.svg";
 import home from "../../assets/home.svg";
 import Nav from './Nav';
-import { Tabs, TabsHeader, Avatar } from "@material-tailwind/react";
+import { Tabs, TabsHeader, Avatar, Typography } from "@material-tailwind/react";
 import {
   FolderIcon,
   UserCircleIcon,
@@ -52,7 +52,7 @@ export default function UserPanel() {
     },
 
     {
-      label: "Premium",
+      label: "Suscripción",
       value: "memberShip",
       icon: CreditCardIcon,
       active: location.pathname.includes("memberShip"),
@@ -91,27 +91,47 @@ export default function UserPanel() {
         </a>
 
         <Tabs value={location.pathname} orientation="vertical">
-          <TabsHeader className="w-screen flex h-screen overflow-hidden gap-5 mb-5 bg-gray-400">
-            {data.map(({ label, value, icon, active }) => (
-              <a
-                href={`/user-panel/${value}`}
-                key={value}
-                className={`block py-3 px-4  hover:bg-gray-300 hover:text-gray-800 rounded-md transition-colors duration-300 ${
-                  active
-                    ? "text-black bg-gray-500 hover:bg-gray-500 translate-x-3 delay-150 hover:text-gray-800"
-                    : "text-black hover:bg-gray-400 hover:text-gray-800"
-                }`}
+        <TabsHeader className="w-screen flex h-screen overflow-hidden gap-10 mb-5 text-black bg-gray-400">
+          {data.map(({ label, value, icon, active }, key) => {
+            const isLastItem = key === data.length - 1;
+            return (
+
+            <Link
+              key={key} 
+              to={`/user-panel/${value}`}
+              className={`block py-3 px-4 hover:bg-gray-500 hover:text-gray-800 rounded-md transition-colors duration-300 ${
+                active
+                  ? " bg-gray-500 translate-x-3"
+                  : "text-black hover:bg-gray-400 hover:text-gray-800"
+              } ${
+                isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                {React.createElement(icon, {
+                  className: `w-5 h-5 ${isLastItem ? "text-red-500" : ""}` ,
+                  
+                })}
+                
+                <Typography
+                as="span"
+                variant="large"
+                className="font-normal"
+                color={isLastItem ? "red" : "inherit"}
               >
-                  {React.createElement(icon, {
-                    className: "w-5 h-5",
-                  })
-                   }
-                  {label}
-              </a>
-            ))}
-          </TabsHeader>
+                {label}
+              </Typography>
+              </div>
+            </Link>
+            );
+          })}
+
+        </TabsHeader>
         </Tabs>
       </div>
+
       <div className="flex-1 p-4 bg-gray">
         <div className="flex items-center justify-between mb-5">
           <button
