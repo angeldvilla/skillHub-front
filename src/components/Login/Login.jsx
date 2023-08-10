@@ -51,7 +51,11 @@ export default function Login() {
         userData.password
       );
 
-      dispatch(userLogin(userCredentials.user));
+      const credentials = {
+        uid: userCredentials.user.uid,
+        accessToken: userCredentials.user.accessToken,
+      };
+      dispatch(userLogin(credentials));
 
       setUserData({
         email: "",
@@ -62,7 +66,9 @@ export default function Login() {
         navigate("/home");
       }, 3000);
 
-      toast.success("Estás conectado. Siendo redireccionado...");
+      toast.success(
+        `Bienvenido ${userCredentials.user.email}. Estás siendo redireccionado...`
+      );
     } catch (error) {
       toast.error(error.message);
     }
