@@ -82,7 +82,7 @@ const ProfileMenu = () => {
           />
 
           <ChevronDownIcon
-            strokeWidth={2.5}
+            strokeWidth={5.5}
             className={`h-3 w-3 transition-transform ${
               isMenuOpen ? "rotate-180" : ""
             }`}
@@ -161,7 +161,7 @@ const NavList = () => {
           className="font-normal"
         >
           {
-            <MenuItem className="flex items-center gap-2 lg:rounded-full text-lg">
+            <MenuItem className="flex items-center gap-2 lg:rounded-full text-lg text-black">
               {React.createElement(icon, { className: "h-[24px] w-[24px]" })}{" "}
               {label}
             </MenuItem>
