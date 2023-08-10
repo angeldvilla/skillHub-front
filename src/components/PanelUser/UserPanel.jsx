@@ -137,7 +137,7 @@ export default function UserPanel() {
           <button
             id="open-color-menu"
             onClick={toggleMenu}
-            className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-x-0.5"
+            className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-x-0.5 mr-2 -ml-1"
           >
             <img src={menu} alt="Menu" className="w-9 h-12" />
           </button>

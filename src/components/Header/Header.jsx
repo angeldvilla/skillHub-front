@@ -174,7 +174,7 @@ export default function Header() {
             alt="skillHub Logo"
           />
         </a>
-        <div className="absolute top-11 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+        <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
         </div>
         <IconButton
@@ -186,12 +186,12 @@ export default function Header() {
         >
           <Bars2Icon className="h-6 w-6" />
         </IconButton>
-        <MobileNav open={dropDownOpen} className="overflow-scroll">
-          <NavList />
-        </MobileNav>
       </div>
       <ProfileMenu />
     </div>
+        <MobileNav open={dropDownOpen} className="overflow-scroll">
+          <NavList />
+        </MobileNav>
 </div>
   );
 }

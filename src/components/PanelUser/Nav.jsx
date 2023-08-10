@@ -188,7 +188,8 @@ export default function ComplexNavbar() {
 
   return (
     <Navbar className="max-w-screen bg-gray-200 lg:rounded-md lg:pl-6">
-      <div className="relative mx-auto flex items-center text-blue-gray-900 ">
+      <div className="w-full flex justify-between items-center px-4 py-2 text-blue-gray-900 ">
+      <div className="flex items-center">
         <a href="/home" className="gap-9">
           <img
             src={logoSkillHub}
@@ -196,18 +197,19 @@ export default function ComplexNavbar() {
             alt="skillHub Logo"
           />
         </a>
+          <IconButton
+            size="sm"
+            color="blue-gray"
+            variant="text"
+            onClick={toggleIsNavOpen}
+            className="ml-10 lg:hidden"
+          >
+            <Bars2Icon className="h-6 w-6" />
+          </IconButton>
+        </div>
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
         </div>
-        <IconButton
-          size="sm"
-          color="blue-gray"
-          variant="text"
-          onClick={toggleIsNavOpen}
-          className="ml-auto mr-2 lg:hidden"
-        >
-          <Bars2Icon className="h-6 w-6" />
-        </IconButton>
 
         <ProfileMenu />
       </div>
