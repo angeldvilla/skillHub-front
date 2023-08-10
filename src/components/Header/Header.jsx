@@ -1,16 +1,171 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  Navbar,
+  MobileNav,
+  Typography,
+  Button,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Avatar,
+  IconButton,
+} from "@material-tailwind/react";
+import {
+  PaperClipIcon,
+  UserCircleIcon,
+  HeartIcon,
+  MapPinIcon,
+  ChevronDownIcon,
+  ArrowUpRightIcon,
+  Bars2Icon,
+} from "@heroicons/react/24/outline";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import userProfile from "../../assets/user-profile.svg";
+
+const profileMenuItems = [
+  {
+    label: "Iniciar Sesión",
+    value: "signin",
+    icon: UserCircleIcon,
+  },
+  {
+    label: "Registrarse",
+    value: "signup",
+    icon: ArrowUpRightIcon
+,
+  },
+];
+
+const ProfileMenu = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  return (
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <MenuHandler>
+        <Button
+          variant="text"
+          color="blue-gray"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+        >
+          
+          <Avatar
+            variant="circular"
+            size="md"
+            alt="tania andrew"
+            className="border border-blue-800 p-0.5"
+            src={userProfile}
+          />
+
+          <ChevronDownIcon
+            strokeWidth={2.5}
+            className={`h-3 w-3 transition-transform ${
+              isMenuOpen ? "rotate-180" : ""
+            }`}
+          />
+        </Button>
+      </MenuHandler>
+      <MenuList className="p-1">
+        {profileMenuItems.map(({ label, icon, value }, key) => {
+          const isLastItem = key === profileMenuItems.length - 1;
+          return (
+            <a
+            key={key}
+            href={`/${value}`}
+            >
+              {
+            <MenuItem
+              key={label}
+              onClick={closeMenu}
+              className={`flex items-center gap-2 rounded ${
+                isLastItem
+                  ? "hover:bg-blue-500/10 focus:bg-blue-500/10 active:bg-blue-500/10"
+                  : ""
+              }`}
+            >
+              {React.createElement(icon, {
+                className: `h-4 w-4 ${isLastItem ? "text-blue-500" : ""}`,
+                strokeWidth: 2,
+              })}
+              <Typography
+                as="span"
+                variant="large"
+                className="font-normal"
+                color={isLastItem ? "blue" : "inherit"}
+              >
+                {label}
+              </Typography>
+            </MenuItem>
+              }
+            </a>
+          );
+        })}
+      </MenuList>
+    </Menu>
+  );
+};
+
+// Nav List component
+const navListItems = [
+  {
+    label: "Favoritos",
+    value: "favorites",
+    icon: HeartIcon,
+  },
+/*   {
+    label: "Publicar Servicio",
+    value: "CreateWork",
+    icon: PaperClipIcon,
+  }, */
+  {
+    label: "Ubicación",
+    value: "ubication",
+    icon: MapPinIcon,
+  },
+
+];
+
+const NavList = () => {
+  return (
+    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
+      {navListItems.map(({ label, icon, value }, key) => (
+        <a
+          key={key}
+          href={`/${value}`}
+        >
+          {
+            <MenuItem className="flex items-center gap-2 lg:rounded-full text-lg">
+              {React.createElement(icon, { className: "h-[24px] w-[24px]" })}{" "}
+              {label}
+            </MenuItem>
+          }
+        </a>
+      ))}
+    </ul>
+  );
+};
 
 export default function Header() {
   const [dropDownOpen, setDropDownOpen] = useState(false);
 
   const toggleDropdown = () => {
-    setDropDownOpen(!dropDownOpen);
+    setDropDownOpen((cur) => !cur);
   };
 
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setDropDownOpen(false)
+    )
+  }, [])
+
   return (
-    <nav className="flex items-center justify-between px-4 py-2 font-sans bg-gray-500">
+    <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
+    <div className="flex items-center justify-between ">
       <div className="flex items-center space-x-4">
         <a href="/" className="gap-9">
           <img
@@ -19,45 +174,24 @@ export default function Header() {
             alt="skillHub Logo"
           />
         </a>
-      </div>
-
-      <div className="flex space-x-20 flex-grow justify-center">
-        <a className="text-white-800 hover:bg-slate-600 rounded-md transform transition-transform duration-300 hover:-translate-y-0.5">
-          FAVORITOS
-        </a>
-        <a
-          href="/CreateWork"
-          className="text-white-800 hover:bg-slate-600 rounded-md transform transition-transform duration-300 hover:-translate-y-0.5"
-        >
-          PUBLICAR SERVICIO
-        </a>
-        <a className="text-white-800 hover:bg-slate-600 rounded-md transform transition-transform duration-300 hover:-translate-y-0.5">
-          UBICACIÓN
-        </a>
-      </div>
-
-      <div className="relative">
-        <div className="avatar">
-          <button
-            id="open-color-menu"
-            onClick={toggleDropdown}
-            className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-y-0.5"
-          >
-            <img src={userProfile} alt="User Profile" />
-          </button>
+        <div className="absolute top-11 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+          <NavList />
         </div>
-        {dropDownOpen && (
-          <div className="dropdown-list absolute right-0 mt-2 bg-slate-600 border rounded-lg shadow-lg">
-            <a href="/signin" className="dropdown-item block px-4 py-2 text-white hover:text-black">
-              INICIAR SESIÓN
-            </a>
-            <hr className="my-2" />
-            <a href="/signup" className="dropdown-item block px-4 py-2 text-white hover:text-black">
-              REGISTRARSE
-            </a>
-          </div>
-        )}
+        <IconButton
+          size="sm"
+          color="blue-gray"
+          variant="text"
+          onClick={toggleDropdown}
+          className="ml-auto mr-2 lg:hidden"
+        >
+          <Bars2Icon className="h-6 w-6" />
+        </IconButton>
+        <MobileNav open={dropDownOpen} className="overflow-scroll">
+          <NavList />
+        </MobileNav>
       </div>
-    </nav>
+      <ProfileMenu />
+    </div>
+</div>
   );
 }

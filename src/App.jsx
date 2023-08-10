@@ -24,8 +24,9 @@ function App() {
       <Route path="/signin" element={<Login />} />
       <Route path="/signup" element={<Register />} />
       <Route path="/jobdetail/:id" element={<JobDetail />} />
-      <Route path="/CreateWork" element={<FormWorkCreated />} />
-      <Route path="/Edit-Work/:id" element={<FormWorkCreated />} />
+      <Route path="Edit-Work/:id" element={<FormWorkCreated />} />
+
+      {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/terms-of-use" element={<UnderDevelopment />} />
       <Route path="/privacy-policies" element={<UnderDevelopment />} />
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
@@ -36,10 +37,11 @@ function App() {
       <Route path="/user-panel/" element={<UserPanel />}>
         {<Route path="my-profile" element={<Profile />} />}
         <Route path="WorkPublications" element={<WorkPublications />} />
+        <Route path="CreateWork" element={<FormWorkCreated />} />
         <Route path="settings" element={<Settings />} />
       </Route>
-      {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       
+
     </Routes>
   );
 }

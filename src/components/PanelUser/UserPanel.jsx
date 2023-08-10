@@ -9,6 +9,8 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
   CreditCardIcon,
+  PaperClipIcon,
+  PowerIcon,
 } from "@heroicons/react/24/solid";
 
 export default function UserPanel() {
@@ -25,32 +27,49 @@ export default function UserPanel() {
       label: "Perfil",
       value: "my-profile",
       icon: UserCircleIcon,
-      desc: "PANEL DE PERFIL",
+      active: location.pathname.includes("my-profile"),
     },
+
     {
       label: "Mis Servicios",
       value: "WorkPublications",
       icon: FolderIcon,
-      desc: "SERVICIOS PUBLICADOS POR EL USUARIO",
+      active: location.pathname.includes("WorkPublications"),
     },
+
+    {
+      label: "Publicar Servicio",
+      value: "CreateWork",
+      icon: PaperClipIcon,
+      active: location.pathname.includes("CreateWork"),
+    },
+
     {
       label: "Ajustes",
       value: "settings",
       icon: Cog6ToothIcon,
-      desc: "EDITAR INFORMACION DE USUARIO",
+      active: location.pathname.includes("settings"),
     },
+
     {
       label: "Premium",
       value: "memberShip",
       icon: CreditCardIcon,
-      desc: "HAZTE MIEMBRO",
+      active: location.pathname.includes("memberShip"),
+    },
+
+    {
+      label: "Cerrar Sesión",
+      value: "logout",
+      icon: PowerIcon,
+      active: location.pathname.includes("logout"),
     },
   ];
 
   return (
     <div className="flex h-screen overflow-hidden">
       <div
-        className={`w-1/5 p-5 bg-gray-400 border-r border-gray-100 ${
+        className={`w-1/5 p-5 bg-gray-400 border-r border-gray-200 ${
           menuDrop ? "hidden" : ""
         }`}
         >
@@ -64,28 +83,31 @@ export default function UserPanel() {
           </div>
           <h2 className="text-black">NOMBRE USER</h2>
         </div>
-        <Link
-            to={'/home'}
+        <a
+            href={'/home'}
             className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-x-0.5"
           >
           <img src={home} alt="Menu" className="w-9 h-12 mb-5 flex items-center" />
-        </Link>
+        </a>
 
         <Tabs value={location.pathname} orientation="vertical">
-          <TabsHeader className="w-screen flex h-screen overflow-hidden gap-10 mb-5">
-            {data.map(({ label, value, icon }) => (
-              <Link
-                to={`/user-panel/${value}`}
+          <TabsHeader className="w-screen flex h-screen overflow-hidden gap-5 mb-5 bg-gray-400">
+            {data.map(({ label, value, icon, active }) => (
+              <a
+                href={`/user-panel/${value}`}
                 key={value}
-                className="block py-3 px-4 text-black hover:bg-gray-400 hover:text-gray-800 rounded-md"
+                className={`block py-3 px-4  hover:bg-gray-300 hover:text-gray-800 rounded-md transition-colors duration-300 ${
+                  active
+                    ? "text-black bg-gray-500 hover:bg-gray-500 translate-x-3 delay-150 hover:text-gray-800"
+                    : "text-black hover:bg-gray-400 hover:text-gray-800"
+                }`}
               >
-                <div className="flex items-center gap-2">
                   {React.createElement(icon, {
                     className: "w-5 h-5",
-                  })}
+                  })
+                   }
                   {label}
-                </div>
-              </Link>
+              </a>
             ))}
           </TabsHeader>
         </Tabs>
@@ -103,6 +125,7 @@ export default function UserPanel() {
         </div>
         <Outlet /> {/* Muestra el contenido de las rutas anidadas */}
       </div>
+      
     </div>
   
   );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import {
   Navbar,
@@ -30,10 +29,13 @@ import {
 const profileMenuItems = [
   {
     label: "Mi Perfil",
+    value: "my-profile",
     icon: UserCircleIcon,
   },
+
   {
     label: "Mis Servicios",
+    value: "WorkPublications",
     icon: FolderIcon,
   },
 
@@ -42,12 +44,16 @@ const profileMenuItems = [
     value: "memberShip",
     icon: CreditCardIcon,
   },
+
   {
     label: "Editar Perfil",
+    value: "settings",
     icon: Cog6ToothIcon,
   },
+
   {
     label: "Cerrar Sesión",
+    value: "logout",
     icon: PowerIcon,
   },
 ];
@@ -85,9 +91,14 @@ const ProfileMenu = () => {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon, value }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
+            <a
+            key={key}
+            href={`/user-panel/${value}`}
+            >
+             {
             <MenuItem
               key={label}
               onClick={closeMenu}
@@ -110,6 +121,8 @@ const ProfileMenu = () => {
                 {label}
               </Typography>
             </MenuItem>
+             }
+            </a>
           );
         })}
       </MenuList>
@@ -121,14 +134,17 @@ const ProfileMenu = () => {
 const navListItems = [
   {
     label: "Favoritos",
+    value: "favorites",
     icon: HeartIcon,
   },
-  {
+/*   {
     label: "Publicar Servicio",
+    value: "CreateWork",
     icon: PaperClipIcon,
-  },
+  }, */
   {
     label: "Ubicación",
+    value: "ubication",
     icon: MapPinIcon,
   },
 
@@ -137,22 +153,21 @@ const navListItems = [
 const NavList = () => {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      {navListItems.map(({ label, icon }, key) => (
-        <Typography
+      {navListItems.map(({ label, icon, value }, key) => (
+        <a
           key={key}
-          as="a"
-          href="#"
-          variant="text-xl"
+          href={`/${value}`}
+          variant="large"
           color="blue-gray"
           className="font-normal"
         >
           {
-            <MenuItem className="flex items-center gap-2 lg:rounded-full">
-              {React.createElement(icon, { className: "h-[20px] w-[20px]" })}{" "}
+            <MenuItem className="flex items-center gap-2 lg:rounded-full text-lg">
+              {React.createElement(icon, { className: "h-[24px] w-[24px]" })}{" "}
               {label}
             </MenuItem>
           }
-        </Typography>
+        </a>
       ))}
     </ul>
   );
@@ -173,7 +188,7 @@ export default function ComplexNavbar() {
   }, []);
 
   return (
-    <Navbar className="max-w-screen bg-gray-200 ">{/* className="mx-auto max-w-screen-xl p-2 lg:rounded-md lg:pl-6 relative ml-64" */}
+    <Navbar className="max-w-screen bg-gray-200 lg:rounded-md lg:pl-6">
       <div className="relative mx-auto flex items-center text-blue-gray-900 ">
         <a href="/home" className="gap-9">
           <img
