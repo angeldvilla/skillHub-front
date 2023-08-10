@@ -6,14 +6,14 @@ const initialState = {
   user: {},
   isLoading: false,
   error: null,
-  accessToken: null,
+  userCredentials: null,
 };
 export const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
     userLogin: (state, { payload }) => {
-      state.user = payload;
+      state.userCredentials = payload;
     },
   },
   extraReducers: (builder) => {
