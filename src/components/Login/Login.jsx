@@ -84,7 +84,7 @@ export default function Login() {
           ShowMessage("Usuario desactivado", "error");
           break;
         default:
-          ShowMessage("Algo salio mal", "error");
+          ShowMessage("Ops, algo salió mal", "error");
       }
     }
   };

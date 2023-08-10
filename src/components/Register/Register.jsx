@@ -74,22 +74,25 @@ export default function Register() {
       }, 3000);
 
       resetUserData(setUserData);
-      ShowMessage("Usuario registrado. Estás siendo redireccionado");
+      ShowMessage("Has sido registrado correctamente");
+      setTimeout(() => {
+        ShowMessage("Estás siendo redirigido");
+      }, 1000);
 
       return userCredentials;
     } catch (error) {
       switch (error.code) {
         case "auth/email-already-in-use":
-          ShowMessage("Email already in use", "error");
+          ShowMessage("Email en uso", "error");
           break;
         case "auth/invalid-email":
-          ShowMessage("Invalid email", "error");
+          ShowMessage("Email inválido", "error");
           break;
         case "auth/weak-password":
-          ShowMessage("Weak password", "error");
+          ShowMessage("Contraseña demasiado débil", "error");
           break;
         default:
-          ShowMessage("Something went wrong", "error");
+          ShowMessage("Ops, algo salió mal", "error");
       }
     }
   };
@@ -105,7 +108,7 @@ export default function Register() {
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-10 rounded-lg shadow-neutral-900 shadow-lg"
       >
-        <h1 className="text-3xl text-center text-white mt-1 mb-8">SIGN UP</h1>
+        <h1 className="text-3xl text-center text-white mt-1 mb-8">REGISTRO</h1>
         <div className="flex flex-col">
           {/* First Name */}
           <div className="flex flex-col">
@@ -113,7 +116,7 @@ export default function Register() {
               htmlFor="firstName"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              First name
+              Nombre
             </label>
             <input
               type="text"
@@ -135,7 +138,7 @@ export default function Register() {
               htmlFor="lastName"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              Last name
+              Apellido
             </label>
             <input
               type="text"
@@ -179,7 +182,7 @@ export default function Register() {
               htmlFor="phoneNumber"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              Phone number
+              Número de telefono
             </label>
             <div className="relative">
               <input
@@ -204,7 +207,7 @@ export default function Register() {
               htmlFor="password"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              Password
+              Contraseña
             </label>
             <div className="relative">
               <input
@@ -232,7 +235,7 @@ export default function Register() {
               htmlFor="confirmPassword"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              Confirm password
+              Confirmar contraseña
             </label>
             <div className="relative">
               <input
@@ -258,20 +261,20 @@ export default function Register() {
         {/* Buttons */}
         <div className="flex flex-col">
           <button className="p-2 mt-10 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
-            Sign up
+            Registrarse
           </button>
           <button
             type="button"
             onClick={handleReset}
             className="p-2 mt-3 mb-12 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
           >
-            Reset form
+            Reiniciar
           </button>
         </div>
 
         {/* Authentication */}
         <div className="bg-gray-900 w-64 h-0.5 mb-5"></div>
-        <h4 className="text-lg mb-5">Or continue with</h4>
+        <h4 className="text-lg mb-5">O continúa con</h4>
         <div className="flex justify-center gap-6">
           <img
             src={google}
