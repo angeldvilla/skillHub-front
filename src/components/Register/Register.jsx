@@ -10,8 +10,7 @@ import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ShowMessage } from "../ShowMessage/ShowMessage";
 import {
   validateUserData,
   resetUserData,
@@ -48,7 +47,7 @@ export default function Register() {
     const hasErrors = Object.keys(errors).length;
 
     if (hasEmptyValues || hasErrors) {
-      toast.error("Complete all fields");
+      ShowMessage("Complete all fields", "error");
       return;
     }
 
@@ -75,11 +74,23 @@ export default function Register() {
       }, 3000);
 
       resetUserData(setUserData);
-      toast.success("Usuario registrado. Estás siendo redireccionado");
+      ShowMessage("Usuario registrado. Estás siendo redireccionado");
 
       return userCredentials;
     } catch (error) {
-      toast.error(error.message);
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          ShowMessage("Email already in use", "error");
+          break;
+        case "auth/invalid-email":
+          ShowMessage("Invalid email", "error");
+          break;
+        case "auth/weak-password":
+          ShowMessage("Weak password", "error");
+          break;
+        default:
+          ShowMessage("Something went wrong", "error");
+      }
     }
   };
 
@@ -279,7 +290,6 @@ export default function Register() {
           />
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 }
