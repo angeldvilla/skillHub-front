@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import menu from "../../assets/menuDropDown.svg";
-import home from "../../assets/home.svg";
 import Nav from './Nav';
 import { Tabs, TabsHeader, Avatar, Typography } from "@material-tailwind/react";
 import {
@@ -11,9 +10,13 @@ import {
   CreditCardIcon,
   PaperClipIcon,
   PowerIcon,
+  HomeIcon
 } from "@heroicons/react/24/solid";
 
 export default function UserPanel() {
+  
+  const id = "64d3efe260fdca3d74ec9808";
+
   const location = useLocation();
 
   const [menuDrop, setMenuDrop] = useState(true);
@@ -23,6 +26,14 @@ export default function UserPanel() {
   };
 
   const data = [
+
+    {
+      label: "Inicio",
+      value: "home",
+      icon: HomeIcon,
+      active: location.pathname.includes("home"),
+    },
+
     {
       label: "Perfil",
       value: "my-profile",
@@ -84,12 +95,12 @@ export default function UserPanel() {
           </div>
           <h2 className="text-black">NOMBRE USER</h2>
         </div>
-        <a
+        {/* <a
             href={'/home'}
             className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-x-0.5"
           >
           <img src={home} alt="Menu" className="w-9 h-12 mb-5 flex items-center" />
-        </a>
+        </a> */}
 
         <Tabs value={location.pathname} orientation="vertical">
         <TabsHeader className="w-screen flex h-screen overflow-hidden gap-10 mb-5 text-black bg-gray-400">
@@ -99,7 +110,7 @@ export default function UserPanel() {
 
             <Link
               key={key} 
-              to={`/user-panel/${value}`}
+              to={`/user-panel/${value}/${id}`}
               className={`block py-3 px-4 hover:bg-gray-500 hover:text-gray-800 rounded-md transition-colors duration-300 ${
                 active
                   ? " bg-gray-500 translate-x-3"
@@ -108,7 +119,8 @@ export default function UserPanel() {
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                   : ""
-              }`}
+              }`
+            }
             >
               <div className="flex items-center gap-2">
                 {React.createElement(icon, {

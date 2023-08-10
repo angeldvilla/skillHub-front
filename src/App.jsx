@@ -7,11 +7,10 @@ import JobDetail from "./components/JobDetail/JobDetail";
 import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
-
-/* ROUTES PANEL USER*/
 import UserPanel from "./components/PanelUser/UserPanel";
 import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
+
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
 /* ------------------------------------------- */
@@ -24,7 +23,6 @@ function App() {
       <Route path="/signin" element={<Login />} />
       <Route path="/signup" element={<Register />} />
       <Route path="/jobdetail/:id" element={<JobDetail />} />
-      <Route path="Edit-Work/:id" element={<FormWorkCreated />} />
 
       {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/terms-of-use" element={<UnderDevelopment />} />
@@ -34,14 +32,13 @@ function App() {
       <Route path="/contact-us" element={<UnderDevelopment />} />
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
-      <Route path="/user-panel/" element={<UserPanel />}>
-        {<Route path="my-profile" element={<Profile />} />}
+      <Route path="/user-panel/:id/*" element={<UserPanel/>}>
+        <Route path="home" element={<Home />} />
+        <Route path="my-profile" element={<Profile  />} />
         <Route path="WorkPublications" element={<WorkPublications />} />
         <Route path="CreateWork" element={<FormWorkCreated />} />
-        <Route path="settings" element={<Settings />} />
+        <Route path="settings" element={<Settings  />} />
       </Route>
-      
-
     </Routes>
   );
 }

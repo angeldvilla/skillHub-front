@@ -58,6 +58,7 @@ const profileMenuItems = [
 ];
 
 const ProfileMenu = () => {
+  const id = "64d3efe260fdca3d74ec9808";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => {
@@ -95,7 +96,7 @@ const ProfileMenu = () => {
           return (
             <a
             key={key}
-            href={`/user-panel/${value}`}
+            href={`/user-panel/${value}/${id}`}
             >
              {
             <MenuItem

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   MobileNav,
@@ -23,10 +24,11 @@ import {
 import logoSkillHub from "../../assets/skillHub.jpg";
 import userProfile from "../../assets/user-profile.svg";
 
+
 const profileMenuItems = [
   {
     label: "Iniciar Sesión",
-    value: "signin",
+    value: "home",
     icon: UserCircleIcon,
   },
   {
@@ -43,6 +45,8 @@ const ProfileMenu = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  const id = "64d3efe260fdca3d74ec9808";
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -73,9 +77,9 @@ const ProfileMenu = () => {
         {profileMenuItems.map(({ label, icon, value }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <a
+            <Link
             key={key}
-            href={`/${value}`}
+            to={`/user-panel/${value}/${id}`}
             >
               {
             <MenuItem
@@ -101,7 +105,7 @@ const ProfileMenu = () => {
               </Typography>
             </MenuItem>
               }
-            </a>
+            </Link>
           );
         })}
       </MenuList>
