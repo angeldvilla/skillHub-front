@@ -64,11 +64,9 @@ export default function Login() {
 
       setTimeout(() => {
         navigate("/home");
-      }, 3000);
+      }, 2000);
 
-      toast.success(
-        `Bienvenido ${userCredentials.user.email}. Estás siendo redireccionado...`
-      );
+      toast.success(`Bienvenido ${userCredentials.user.email}`);
     } catch (error) {
       toast.error(error.message);
     }
