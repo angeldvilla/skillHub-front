@@ -89,7 +89,7 @@ export default function FormCreateWork() {
     event.preventDefault();
     dispatch(postJobs(workdata));
 
-    if (!workdata.title || !workdata.description || !workdata.price) {
+    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image) {
       toast.error("Completa los datos para continuar");
     } else if (workdata.ability.length > 3) {
       toast.error("No pueden haber más de 3 categorias seleccionadas")
@@ -149,7 +149,6 @@ export default function FormCreateWork() {
     })
   }
 
-
 //Subir imagenes a cloudinary
   async function uploadImage(files) {
     console.log(files[0]);
@@ -170,6 +169,18 @@ export default function FormCreateWork() {
         console.log("Error en el componente UploadImage en cludinary", error);
     }
  }
+
+ // Previsualización de la imagen
+ let previewImage = workdata.image ? (
+  <span style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+    <span>Imagen Seleccionada</span>
+    <img
+      src={workdata.image}
+      alt="Previsualización"
+      style={{ maxWidth: "200px", height: "200px", margin: "auto" }}
+    />
+  </span>
+) : null;
 
 
 
@@ -300,6 +311,11 @@ export default function FormCreateWork() {
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
 
+            
+            {previewImage}
+            <br />
+
+      
             <label htmlFor="address" className="pl-2 mb-1 text-lg">
               Dirección:
             </label>

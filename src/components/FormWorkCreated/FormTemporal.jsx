@@ -26,16 +26,29 @@ const FormTemporal = () => {
             console.log("Error en el componente UploadImage en cludinary", error);
         }
     }
-    return (
+
+
+    let previewImage = workdata.img ? (
         <div>
-            <h1> Form temporal </h1>
-            <h3>Pruebas de Cloudinary</h3>
-            <form>
-                <input type="file" onChange={(event) => { uploadImage(event.target.files) }}></input>
-            </form>
+          <span>Previsualización imagen</span>
+          <img
+            src={workdata.img}
+            alt="Previsualización"
+            style={{ maxWidth: "20%", height: "20%" }}
+          />
         </div>
-    )
-}
-
-
-export default FormTemporal
+      ) : null;
+    
+      return (
+        <div>
+          <h1> Form temporal </h1>
+          <h3>Pruebas de Cloudinary</h3>
+          <form>
+            <input type="file" onChange={(event) => { uploadImage(event.target.files) }}></input>
+          </form>
+          {previewImage}
+        </div>
+      );
+    };
+    
+    export default FormTemporal;
