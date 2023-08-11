@@ -73,8 +73,8 @@
       return async (dispatch) => {
         try {
           dispatch(startIsLoading());
-  ///const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
-          const { data } = await axios(`http://localhost:3002/user`);
+        const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
+          
           dispatch(getUsers(data));
           
       

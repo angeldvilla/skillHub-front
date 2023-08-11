@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   work: [],
   users:[],
+  resultPago:{},
   filterWork: [],
   filterWork2: [],
   filterWork3: [],
@@ -114,7 +115,11 @@ export const workSlice = createSlice({
       state.users = action.payload
     },
 
-    //!TRAER TODOS LOS USUARIOS
+    //!PAGO
+    postPagos:(state, action)=>{
+      state.resultPago= action.payload
+
+    }
     
   },
 });
