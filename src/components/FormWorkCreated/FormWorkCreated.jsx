@@ -72,9 +72,6 @@ export default function FormCreateWork() {
     });
   }
 
-
-
-
   function handleSelect(event) {
     const typeworkSelect = event.target.value;
     if (!workdata.ability.includes(typeworkSelect)) {
@@ -87,12 +84,12 @@ export default function FormCreateWork() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch(postJobs(workdata));
-
-    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image) {
+    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image  || !workdata.ability || !workdata.address) {
       toast.error("Completa los datos para continuar");
     } else if (workdata.ability.length > 3) {
       toast.error("No pueden haber más de 3 categorias seleccionadas")
+    } else if (workdata.ability.length === 0) {
+      toast.error("Selecciona al menos una categoría")
     } else {
       console.log("Datos del formulario:", workdata);
       dispatch(postJobs(workdata));
@@ -104,6 +101,11 @@ export default function FormCreateWork() {
       }, 3000);
     }
   }
+  //LocalStorage values
+  const [textDesciption, setTextDesciption] = useLocalStorage('text', (''))
+  const [textTttle, setTextTittle] = useLocalStorage('tex1', ' ')
+  const [priceValue, setPriceValue] = useLocalStorage("text2", '')
+  const [directionValue, setDirectionValue] = useLocalStorage("tex3", ' ')
 
 
   const handleReset = () => {
@@ -121,15 +123,24 @@ export default function FormCreateWork() {
       price: "",
     });
   };
+  useEffect(() => {
+    if (textTttle || textDesciption || priceValue || directionValue) {
+      setWorkData((prevData) => ({
+        ...prevData,
+        title: textTttle,
+        description: textDesciption,
+        price: priceValue,
+        address: directionValue,
+      }));
+    }
+  }, []);
+
+
+  //_________________________________________________________________________________
   
 
   const [selectWorkType, setSelectWorkType] = useState("");
 
-  //LocalStorage values
-  const [textDesciption, setTextDesciption] = useLocalStorage('text', (''))
-  const [textTttle, setTextTittle] = useLocalStorage('tex1', ' ')
-  const [priceValue, setPriceValue] = useLocalStorage("text2", '')
-  const [directionValue, setDirectionValue] = useLocalStorage("tex3", ' ')
 
 
   //Para poder seleccionar y borrar las categorias seleccionadas
@@ -181,6 +192,7 @@ export default function FormCreateWork() {
     />
   </span>
 ) : null;
+
 
 
 
