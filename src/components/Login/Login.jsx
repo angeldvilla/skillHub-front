@@ -38,6 +38,16 @@ export default function Login() {
   const handleOnClick = async (e) => {
     const platform = e.currentTarget.getAttribute("data-platform");
 
+    const hasEmptyValues = Object.values(userData).some(
+      (value) => value === ""
+    );
+    const hasErrors = Object.keys(errors).length;
+
+    if (platform === "email" && (hasEmptyValues || hasErrors)) {
+      ShowMessage("Datos no validos", "error");
+      return;
+    }
+
     try {
       switch (platform) {
         case "google":
@@ -62,8 +72,10 @@ export default function Login() {
         case "facebook":
           console.log("Facebook");
           break;
-        default:
+        case "email":
           console.log("Email");
+          break;
+        default:
           break;
       }
     } catch (error) {
@@ -73,20 +85,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const hasEmptyValues = Object.values(userData).some(
-      (value) => value === ""
-    );
-    const hasErrors = Object.keys(errors).length;
-
-    if (hasEmptyValues || hasErrors) {
-      const platform = e.currentTarget.getAttribute("data-platform");
-      if (platform === "google") {
-        ShowMessage("Completa todos los campos", "error");
-        return;
-      }
-      return;
-    }
+    const platform = e.currentTarget.getAttribute("data-platform");
 
     try {
       const userCredentials = await signInWithEmailAndPassword(
@@ -112,24 +111,26 @@ export default function Login() {
 
       ShowMessage(`Bienvenido ${userCredentials.user.email}`);
     } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
-          ShowMessage("Contraseña incorrecta", "error");
-          break;
-        case "auth/user-not-found":
-          ShowMessage("Usuario no encontrado", "error");
-          break;
-        case "auth/too-many-requests":
-          ShowMessage("Demasiadas peticiones", "error");
-          break;
-        case "auth/invalid-email":
-          ShowMessage("Email invalido", "error");
-          break;
-        case "auth/user-disabled":
-          ShowMessage("Usuario desactivado", "error");
-          break;
-        default:
-          ShowMessage("Ops, algo salió mal", "error");
+      if (platform === "google" || platform === "email") {
+        switch (error.code) {
+          case "auth/wrong-password":
+            ShowMessage("Contraseña incorrecta", "error");
+            break;
+          case "auth/user-not-found":
+            ShowMessage("Usuario no encontrado", "error");
+            break;
+          case "auth/too-many-requests":
+            ShowMessage("Demasiadas peticiones", "error");
+            break;
+          case "auth/invalid-email":
+            ShowMessage("Email invalido", "error");
+            break;
+          case "auth/user-disabled":
+            ShowMessage("Usuario desactivado", "error");
+            break;
+          default:
+            ShowMessage("Ops, algo salió mal", "error");
+        }
       }
     }
   };
@@ -183,7 +184,11 @@ export default function Login() {
           </div>
         </div>
 
-        <button className="p-2 mt-10 mb-12 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
+        <button
+          data-platform="email"
+          onClick={handleOnClick}
+          className="p-2 mt-10 mb-12 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition"
+        >
           Iniciar sesión
         </button>
         <div className="bg-slate-500 w-56 h-0.5 mb-5"></div>
