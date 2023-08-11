@@ -47,6 +47,16 @@ export default function Register() {
   const handleOnClick = async (e) => {
     const platform = e.currentTarget.getAttribute("data-platform");
 
+    const hasEmptyValues = Object.values(userData).some(
+      (value) => value === ""
+    );
+    const hasErrors = Object.keys(errors).length;
+
+    if (platform === "email" && (hasEmptyValues || hasErrors)) {
+      ShowMessage("Datos no validos", "error");
+      return;
+    }
+
     try {
       switch (platform) {
         case "google":
@@ -71,8 +81,10 @@ export default function Register() {
         case "facebook":
           console.log("Facebook");
           break;
-        default:
+        case "email":
           console.log("Email");
+          break;
+        default:
           break;
       }
     } catch (error) {
@@ -82,20 +94,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const hasEmptyValues = Object.values(userData).some(
-      (value) => value === ""
-    );
-    const hasErrors = Object.keys(errors).length;
-
-    if (hasEmptyValues || hasErrors) {
-      const platform = e.currentTarget.getAttribute("data-platform");
-      if (platform === "google") {
-        ShowMessage("Completa todos los campos", "error");
-        return;
-      }
-      return;
-    }
+    const platform = e.currentTarget.getAttribute("data-platform");
 
     try {
       const userCredentials = await createUserWithEmailAndPassword(
@@ -127,18 +126,20 @@ export default function Register() {
 
       return userCredentials;
     } catch (error) {
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          ShowMessage("Email en uso", "error");
-          break;
-        case "auth/invalid-email":
-          ShowMessage("Email inválido", "error");
-          break;
-        case "auth/weak-password":
-          ShowMessage("Contraseña demasiado débil", "error");
-          break;
-        default:
-          ShowMessage("Ops, algo salió mal", "error");
+      if (platform === "google" || platform === "email") {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            ShowMessage("Email en uso", "error");
+            break;
+          case "auth/invalid-email":
+            ShowMessage("Email inválido", "error");
+            break;
+          case "auth/weak-password":
+            ShowMessage("Contraseña demasiado débil", "error");
+            break;
+          default:
+            ShowMessage("Ops, algo salió mal", "error");
+        }
       }
     }
   };
@@ -306,7 +307,11 @@ export default function Register() {
 
         {/* Buttons */}
         <div className="flex flex-col">
-          <button className="p-2 mt-10 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
+          <button
+            data-platform="email"
+            onClick={handleOnClick}
+            className="p-2 mt-10 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition"
+          >
             Registrarse
           </button>
           <button
