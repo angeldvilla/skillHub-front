@@ -1,26 +1,30 @@
+/* eslint-disable no-case-declarations */
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postUser } from "../../toolkit/Users/usersHandler";
 import {
-  validateUserData,
-  resetUserData,
-} from "../../utils/userDataValidation";
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../firebase";
+import { userLogin } from "../../toolkit/Users/usersSlice";
+import { ShowMessage } from "../ShowMessage/ShowMessage";
 import passwordEye from "../../assets/password-eye.svg";
 import phone from "../../assets/phone.svg";
 import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-// import { auth } from "../../firebase";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  validateUserData,
+  resetUserData,
+} from "../../utils/userDataValidation";
 
 export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { error } = useSelector((state) => state.users);
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -40,58 +44,104 @@ export default function Register() {
     setErrors(validateUserData(name, value, userData));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleOnClick = async (e) => {
+    const platform = e.currentTarget.getAttribute("data-platform");
 
     const hasEmptyValues = Object.values(userData).some(
       (value) => value === ""
     );
     const hasErrors = Object.keys(errors).length;
 
-    if (hasEmptyValues || hasErrors) {
-      toast.error("Complete all fields");
+    if (platform === "email" && (hasEmptyValues || hasErrors)) {
+      ShowMessage("Datos no validos", "error");
       return;
     }
 
-    const { firstName, lastName, email, phoneNumber, password } = userData;
+    try {
+      switch (platform) {
+        case "google":
+          const googleProvider = new GoogleAuthProvider();
+          const userCredentials = await signInWithPopup(auth, googleProvider);
 
-    const newUser = {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      password,
-    };
+          const googleCredentials = {
+            uid: userCredentials.user.uid,
+            accessToken: userCredentials.user.accessToken,
+          };
+          dispatch(userLogin(googleCredentials));
 
-    dispatch(postUser(newUser));
+          setTimeout(() => {
+            navigate("/home");
+          }, 2000);
 
-    if (error) {
-      toast.error("Email is already in use");
-      return;
+          ShowMessage(`Bienvenido ${userCredentials.user.displayName}`);
+          break;
+        case "github":
+          console.log("GitHub");
+          break;
+        case "facebook":
+          console.log("Facebook");
+          break;
+        case "email":
+          console.log("Email");
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      ShowMessage("Ops, algo salió mal", "error");
     }
+  };
 
-    // // Register user in firebase
-    // try {
-    //   const userCredentials = await createUserWithEmailAndPassword(
-    //     auth,
-    //     userData.email,
-    //     userData.password
-    //   );
-    //   const accessToken = userCredentials.user.accessToken;
-    //   console.log("accessToken", accessToken);
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const platform = e.currentTarget.getAttribute("data-platform");
 
-    setTimeout(() => {
-      navigate("/signin");
-    }, 4000);
-    resetUserData(setUserData);
-    toast.success("User created successfully");
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password
+      );
 
-    setTimeout(() => {
-      toast.success("You are being redirected to the login page");
-    }, 1500);
+      const { firstName, lastName, email, phoneNumber } = userData;
+      const newUser = {
+        uid: userCredentials.user.uid,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+      };
+
+      dispatch(postUser(newUser));
+
+      setTimeout(() => {
+        navigate("/home");
+      }, 3000);
+
+      resetUserData(setUserData);
+      ShowMessage("Has sido registrado correctamente");
+      setTimeout(() => {
+        ShowMessage(`Bienvenido ${userCredentials.user.email}`);
+      }, 1000);
+
+      return userCredentials;
+    } catch (error) {
+      if (platform === "google" || platform === "email") {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            ShowMessage("Email en uso", "error");
+            break;
+          case "auth/invalid-email":
+            ShowMessage("Email inválido", "error");
+            break;
+          case "auth/weak-password":
+            ShowMessage("Contraseña demasiado débil", "error");
+            break;
+          default:
+            ShowMessage("Ops, algo salió mal", "error");
+        }
+      }
+    }
   };
 
   const handleReset = () => {
@@ -105,7 +155,7 @@ export default function Register() {
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-10 rounded-lg shadow-neutral-900 shadow-lg"
       >
-        <h1 className="text-3xl text-center text-white mt-1 mb-8">SIGN UP</h1>
+        <h1 className="text-3xl text-center text-white mt-1 mb-8">REGISTRO</h1>
         <div className="flex flex-col">
           {/* First Name */}
           <div className="flex flex-col">
@@ -113,7 +163,7 @@ export default function Register() {
               htmlFor="firstName"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              First name
+              Nombre
             </label>
             <input
               type="text"
@@ -135,7 +185,7 @@ export default function Register() {
               htmlFor="lastName"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              Last name
+              Apellido
             </label>
             <input
               type="text"
@@ -179,7 +229,7 @@ export default function Register() {
               htmlFor="phoneNumber"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              Phone number
+              Número de telefono
             </label>
             <div className="relative">
               <input
@@ -204,7 +254,7 @@ export default function Register() {
               htmlFor="password"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              Password
+              Contraseña
             </label>
             <div className="relative">
               <input
@@ -232,7 +282,7 @@ export default function Register() {
               htmlFor="confirmPassword"
               className="pl-2 mb-1 text-lg text-slate-300"
             >
-              Confirm password
+              Confirmar contraseña
             </label>
             <div className="relative">
               <input
@@ -257,40 +307,55 @@ export default function Register() {
 
         {/* Buttons */}
         <div className="flex flex-col">
-          <button className="p-2 mt-10 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
-            Sign up
+          <button
+            data-platform="email"
+            onClick={handleOnClick}
+            className="p-2 mt-10 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition"
+          >
+            Registrarse
           </button>
           <button
             type="button"
             onClick={handleReset}
             className="p-2 mt-3 mb-12 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
           >
-            Reset form
+            Reiniciar
           </button>
         </div>
 
         {/* Authentication */}
         <div className="bg-gray-900 w-64 h-0.5 mb-5"></div>
-        <h4 className="text-lg mb-5">Or continue with</h4>
+        <h4 className="text-lg mb-5">O continúa con</h4>
         <div className="flex justify-center gap-6">
-          <img
-            src={google}
-            alt="google-logo"
-            className="w-9 hover:cursor-pointer transition"
-          />
-          <img
-            src={facebook}
-            alt="facebook-logo"
-            className="w-10 hover:cursor-pointer transition"
-          />
-          <img
-            src={github}
-            alt="github-logo"
-            className="w-10 hover:cursor-pointer transition"
-          />
+          <button data-platform="google" onClick={handleOnClick}>
+            <img
+              src={google}
+              alt="google-logo"
+              className="w-9 hover:cursor-pointer transition"
+            />
+          </button>
+          <button
+            data-platform="facebook"
+            onClick={() => ShowMessage("Próximamente")}
+          >
+            <img
+              src={facebook}
+              alt="facebook-logo"
+              className="w-10 hover:cursor-pointer transition"
+            />
+          </button>
+          <button
+            data-platform="github"
+            onClick={() => ShowMessage("Próximamente")}
+          >
+            <img
+              src={github}
+              alt="github-logo"
+              className="w-10 hover:cursor-pointer transition"
+            />
+          </button>
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 }

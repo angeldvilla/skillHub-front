@@ -5,15 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import validation from "../Validations/Validations";
 import { postJobs, getTypes } from "../../toolkit/ActionsworkPublications";
-
 import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 // Components
-import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
 //_______________________________________
@@ -66,11 +65,14 @@ export default function FormCreateWork() {
       ...workdata,
       [name]: value,
     }));
+
     console.log("Datos del formulario:", {
       ...workdata,
       [name]: value,
     });
   }
+
+
 
 
   function handleSelect(event) {
@@ -87,7 +89,7 @@ export default function FormCreateWork() {
     event.preventDefault();
     dispatch(postJobs(workdata));
 
-    if (!workdata.title || !workdata.description || !workdata.price) {
+    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image) {
       toast.error("Completa los datos para continuar");
     } else if (workdata.ability.length > 3) {
       toast.error("No pueden haber más de 3 categorias seleccionadas")
@@ -102,6 +104,8 @@ export default function FormCreateWork() {
       }, 3000);
     }
   }
+
+
   const handleReset = () => {
     setTextTittle("");
     setTextDesciption("");
@@ -132,7 +136,9 @@ export default function FormCreateWork() {
   const tiposSelected = workdata.ability.map((cat) => (
     <div key={cat}>
       <span>{cat}</span>
-      <span onClick={() => handleDelete(cat)}> x </span>
+      <button
+       onClick={() => handleDelete(cat)}
+       className="p-0.5 ml-1 bg-gray-800 text-white rounded-md w-6 h-6 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-sm transition text-xs flex items-center justify-center"       > x </button>
     </div>
   ));
 
@@ -143,11 +149,47 @@ export default function FormCreateWork() {
     })
   }
 
+//Subir imagenes a cloudinary
+  async function uploadImage(files) {
+    console.log(files[0]);
+    const imageFormData = new FormData()
+    imageFormData.append("file", files[0])
+    imageFormData.append("upload_preset", "PostWorks")
+    try {
+        const response = await axios.post("https://api.cloudinary.com/v1_1/dko4cptdy/upload", imageFormData);
+        const data = response.data.secure_url;
+        console.log("Esta es la respuesta de la data", data);
+        // Actualizar el estado de manera inmutable
+         setWorkData(prevData => ({
+            ...prevData,
+            image: data
+        }));
+        console.log("Esta es la nueva info de setWorkData en img", workdata.image);
+    } catch (error) {
+        console.log("Error en el componente UploadImage en cludinary", error);
+    }
+ }
+
+ // Previsualización de la imagen
+ let previewImage = workdata.image ? (
+  <span style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+    <span>Imagen Seleccionada</span>
+    <img
+      src={workdata.image}
+      alt="Previsualización"
+      style={{ maxWidth: "200px", height: "200px", margin: "auto" }}
+    />
+  </span>
+) : null;
+
+
+
+
+
   //___________________________________________
 
   return (
     <div>
-      <Header />
       <div className="flex flex-col items-center justify-center my-8">
         <div className="relative">
           <button
@@ -253,17 +295,27 @@ export default function FormCreateWork() {
                 {workdata.ability.length > 3 && <p style={{ color: "red" }}>¡No puedes seleccionar más de 3 categorías!</p>}
               </div>
             )}
+
+
             <label htmlFor="image" className="pl-2 mb-1 text-lg">
               Imagen:
             </label>
             <input
-              type="text"
+              type="file"
               name="image"
               placeholder="Ingresa URL de imagen"
-              onChange={handleChange}
+              onChange={(event) => {
+                handleChange(event);
+                uploadImage(event.target.files)
+              }}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
 
+            
+            {previewImage}
+            <br />
+
+      
             <label htmlFor="address" className="pl-2 mb-1 text-lg">
               Dirección:
             </label>
