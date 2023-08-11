@@ -66,3 +66,20 @@
       }
     }
   };
+
+    //!PAGAR A MERCADO PAGO
+
+    export const postMercadoPago = (id) => {
+      return async (dispatch) => {
+        try {
+          dispatch(startIsLoading());
+  ///const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
+          const { data } = await axios(`http://localhost:3002/user`);
+          dispatch(getUsers(data));
+          
+      
+        } catch (error) {
+          throw Error("Error al obtener el detalle del trabajo", error);
+        }
+      }
+    };

@@ -109,11 +109,13 @@ export const workSlice = createSlice({
       state.detail = {};
     },
 
-      //!TRAER TODOS LOS USUARIOS
+    //!TRAER TODOS LOS USUARIOS
     getUsers: (state, action) => {
       state.users = action.payload
     },
 
+    //!TRAER TODOS LOS USUARIOS
+    
   },
 });
 
