@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import menu from "../../assets/menuDropDown.svg";
 import Nav from './Nav';
 import {useDispatch, useSelector} from 'react-redux';
-import { getUsersFromMongo } from "../../toolkit/Users/usersHandler";
+import { getUser } from "../../toolkit/Users/usersHandler";
 import { Tabs, TabsHeader, Avatar, Typography } from "@material-tailwind/react";
 import {
   FolderIcon,
@@ -31,12 +31,10 @@ export default function UserPanel() {
   };
 
   useEffect(() => {
-    dispatch(getUsersFromMongo())
+    dispatch(getUser(id))
   },[dispatch, id])
 
-   const  {users}  = useSelector(state => state.users);
-
-   const userAuth = users.find(u => u._id === id);
+   const  { user }  = useSelector(state => state.users);
 
   const data = [
 
@@ -108,7 +106,7 @@ export default function UserPanel() {
             />
             </a>
           </div>
-          <h2 className="text-black">{userAuth.firstName}</h2>
+          <h2 className="text-black">{user.firstName} {user.lastName}</h2>
         </div>
 
         <Tabs value={location.pathname} orientation="vertical">
