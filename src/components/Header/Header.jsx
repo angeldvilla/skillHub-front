@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  Navbar,
   MobileNav,
   Typography,
   Button,
@@ -13,7 +12,6 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import {
-  PaperClipIcon,
   UserCircleIcon,
   HeartIcon,
   MapPinIcon,
@@ -60,7 +58,7 @@ const ProfileMenu = () => {
           <Avatar
             variant="circular"
             size="md"
-            alt="tania andrew"
+            alt="User"
             className="border border-blue-800 p-0.5"
             src={userProfile}
           />
@@ -79,7 +77,7 @@ const ProfileMenu = () => {
           return (
             <Link
             key={key}
-            to={`/user-panel/${value}/${id}`}
+            to={`/user-panel/${id}/${value}`}
             >
               {
             <MenuItem
@@ -120,11 +118,6 @@ const navListItems = [
     value: "favorites",
     icon: HeartIcon,
   },
-/*   {
-    label: "Publicar Servicio",
-    value: "CreateWork",
-    icon: PaperClipIcon,
-  }, */
   {
     label: "Ubicación",
     value: "ubication",

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import menu from "../../assets/menuDropDown.svg";
 import Nav from './Nav';
+import {useDispatch, useSelector} from 'react-redux';
+import { getUsersFromMongo } from "../../toolkit/Users/usersHandler";
 import { Tabs, TabsHeader, Avatar, Typography } from "@material-tailwind/react";
 import {
   FolderIcon,
@@ -14,16 +16,29 @@ import {
 } from "@heroicons/react/24/solid";
 
 export default function UserPanel() {
+
+  const dispatch = useDispatch();
   
   const id = "64d3efe260fdca3d74ec9808";
 
   const location = useLocation();
+  console.log(location.pathname);
 
-  const [menuDrop, setMenuDrop] = useState(true);
+  const [menuDrop, setMenuDrop] = useState(false);
 
   const toggleMenu = () => {
     setMenuDrop(!menuDrop);
   };
+
+  useEffect(() => {
+    dispatch(getUsersFromMongo)
+  },[dispatch, id])
+
+   const  {users}  = useSelector(state => state.users);
+   console.log(users);
+
+   const userAuth = users.find(u => u._id === id);
+   console.log(userAuth);
 
   const data = [
 
@@ -86,21 +101,17 @@ export default function UserPanel() {
         >
         <div className="mb-10 flex justify-between items-center">
           <div>
+            <a href={`/user-panel/${id}/home`}>
             <Avatar
               src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
               alt="avatar"
               size="lg"
               className="border border-blue-800 p-0.5"
             />
+            </a>
           </div>
-          <h2 className="text-black">NOMBRE USER</h2>
+          <h2 className="text-black">{users.firstName}</h2>
         </div>
-        {/* <a
-            href={'/home'}
-            className="focus:outline-none hover:transform transition-transform duration-300 hover:-translate-x-0.5"
-          >
-          <img src={home} alt="Menu" className="w-9 h-12 mb-5 flex items-center" />
-        </a> */}
 
         <Tabs value={location.pathname} orientation="vertical">
         <TabsHeader className="w-screen flex h-screen overflow-hidden gap-10 mb-5 text-black bg-gray-400">
@@ -110,7 +121,7 @@ export default function UserPanel() {
 
             <Link
               key={key} 
-              to={`/user-panel/${value}/${id}`}
+              to={`/user-panel/${id}/${value}`}
               className={`block py-3 px-4 hover:bg-gray-500 hover:text-gray-800 rounded-md transition-colors duration-300 ${
                 active
                   ? " bg-gray-500 translate-x-3"
@@ -154,7 +165,7 @@ export default function UserPanel() {
           >
             <img src={menu} alt="Menu" className="w-9 h-12" />
           </button>
-          <Nav />
+         <Nav/> 
         </div>
         <Outlet /> {/* Muestra el contenido de las rutas anidadas */}
       </div>

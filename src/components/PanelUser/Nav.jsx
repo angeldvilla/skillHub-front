@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import {
-  Navbar,
   MobileNav,
   Typography,
   Button,
@@ -58,13 +57,14 @@ const profileMenuItems = [
 ];
 
 const ProfileMenu = () => {
-  const id = "64d3efe260fdca3d74ec9808";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-
+  
+  const id = "64d3efe260fdca3d74ec9808";
+  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -77,13 +77,13 @@ const ProfileMenu = () => {
           <Avatar
             variant="circular"
             size="md"
-            alt="tania andrew"
+            alt="User Profile"
             className="border border-blue-600 p-0.5"
             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
           />
 
           <ChevronDownIcon
-            strokeWidth={5.5}
+            strokeWidth={9.5}
             className={`h-3 w-3 transition-transform ${
               isMenuOpen ? "rotate-180" : ""
             }`}
@@ -96,7 +96,7 @@ const ProfileMenu = () => {
           return (
             <a
             key={key}
-            href={`/user-panel/${value}/${id}`}
+            href={`/user-panel/${id}/${value}`}
             >
              {
             <MenuItem
@@ -137,11 +137,6 @@ const navListItems = [
     value: "favorites",
     icon: HeartIcon,
   },
-/*   {
-    label: "Publicar Servicio",
-    value: "CreateWork",
-    icon: PaperClipIcon,
-  }, */
   {
     label: "Ubicación",
     value: "ubication",
@@ -188,35 +183,34 @@ export default function ComplexNavbar() {
   }, []);
 
   return (
-    <Navbar className="max-w-screen bg-gray-200 lg:rounded-md lg:pl-6">
-      <div className="w-full flex justify-between items-center px-4 py-2 text-blue-gray-900 ">
-      <div className="flex items-center">
-        <a href="/home" className="gap-9">
+   <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
+      <div className="flex items-center justify-between ">
+      <div className="flex items-center space-x-4">
+        <a href="" className="gap-9">
           <img
             src={logoSkillHub}
-            className="w-20 h-auto rounded-full border-4 border-sky-500 mt-2"
+            className="w-20 h-auto rounded-full border-4 border-sky-500 mt-"
             alt="skillHub Logo"
           />
         </a>
+        <div className="absolute top-16 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+          <NavList />
+        </div>
           <IconButton
             size="sm"
             color="blue-gray"
             variant="text"
             onClick={toggleIsNavOpen}
-            className="ml-10 lg:hidden"
+            className="ml-auto mr-2 lg:hidden"
           >
             <Bars2Icon className="h-6 w-6" />
           </IconButton>
         </div>
-        <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-          <NavList />
-        </div>
-
         <ProfileMenu />
       </div>
       <MobileNav open={isNavOpen} className="overflow-scroll">
         <NavList />
       </MobileNav>
-    </Navbar>
+    </div>
   );
 }

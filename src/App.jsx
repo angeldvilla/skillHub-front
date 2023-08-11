@@ -8,6 +8,7 @@ import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
 import UserPanel from "./components/PanelUser/UserPanel";
+import HomeUser from "./components/PanelUser/HomeUser";
 import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
 
@@ -16,6 +17,7 @@ import { Routes, Route } from "react-router-dom";
 /* ------------------------------------------- */
 
 function App() {
+
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
@@ -33,9 +35,10 @@ function App() {
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*" element={<UserPanel/>}>
-        <Route path="home" element={<Home />} />
+        <Route path="home" element={<HomeUser />} />
         <Route path="my-profile" element={<Profile  />} />
         <Route path="WorkPublications" element={<WorkPublications />} />
+        <Route path="Edit-Work" element={<FormWorkCreated />} />
         <Route path="CreateWork" element={<FormWorkCreated />} />
         <Route path="settings" element={<Settings  />} />
       </Route>
