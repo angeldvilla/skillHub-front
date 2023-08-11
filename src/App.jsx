@@ -9,6 +9,7 @@ import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
+import FormTemporal from "./components/FormWorkCreated/FormTemporal";
 /* ------------------------------------------- */
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
       <Route path="/payment-policies" element={<UnderDevelopment />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
+      <Route path="/TemporalForm" element={<FormTemporal />} />
     </Routes>
   );
 }
