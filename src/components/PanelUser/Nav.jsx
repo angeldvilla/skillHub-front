@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import logoSkillHub from "../../assets/skillHub.jpg";
 import {
   MobileNav,
   Typography,
@@ -16,36 +16,55 @@ import {
   HeartIcon,
   MapPinIcon,
   ChevronDownIcon,
-  ArrowUpRightIcon,
+  Cog6ToothIcon,
+  FolderIcon,
+  PowerIcon,
   Bars2Icon,
+  CreditCardIcon,
 } from "@heroicons/react/24/outline";
-import logoSkillHub from "../../assets/skillHub.jpg";
-import userProfile from "../../assets/user-profile.svg";
 
-
+// profile menu component
 const profileMenuItems = [
   {
-    label: "Iniciar Sesión",
-    value: "home",
+    label: "Mi Perfil",
+    value: "my-profile",
     icon: UserCircleIcon,
   },
+
   {
-    label: "Registrarse",
-    value: "signup",
-    icon: ArrowUpRightIcon
-,
+    label: "Mis Servicios",
+    value: "WorkPublications",
+    icon: FolderIcon,
+  },
+
+  {
+    label: "Suscripción",
+    value: "memberShip",
+    icon: CreditCardIcon,
+  },
+
+  {
+    label: "Editar Perfil",
+    value: "settings",
+    icon: Cog6ToothIcon,
+  },
+
+  {
+    label: "Cerrar Sesión",
+    value: "logout",
+    icon: PowerIcon,
   },
 ];
 
 const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-
+  
   const id = "64d3efe260fdca3d74ec9808";
-
+  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -58,14 +77,14 @@ const ProfileMenu = () => {
           <Avatar
             variant="circular"
             size="md"
-            alt="User"
-            className="border border-blue-800 p-0.5"
-            src={userProfile}
+            alt="User Profile"
+            className="border border-blue-600 p-0.5"
+            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
           />
 
           <ChevronDownIcon
             strokeWidth={9.5}
-            className={`h-3 w-3 transition-transform p-0.5 ${
+            className={`h-3 w-3 transition-transform ${
               isMenuOpen ? "rotate-180" : ""
             }`}
           />
@@ -75,35 +94,35 @@ const ProfileMenu = () => {
         {profileMenuItems.map(({ label, icon, value }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <Link
+            <a
             key={key}
-            to={`/user-panel/${id}/${value}`}
+            href={`/user-panel/${id}/${value}`}
             >
-              {
+             {
             <MenuItem
               key={label}
               onClick={closeMenu}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
-                  ? "hover:bg-blue-500/10 focus:bg-blue-500/10 active:bg-blue-500/10"
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                   : ""
               }`}
             >
               {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-blue-500" : ""}`,
+                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
                 strokeWidth: 2,
               })}
               <Typography
                 as="span"
-                variant="large"
+                variant="small"
                 className="font-normal"
-                color={isLastItem ? "blue" : "inherit"}
+                color={isLastItem ? "red" : "inherit"}
               >
                 {label}
               </Typography>
             </MenuItem>
-              }
-            </Link>
+             }
+            </a>
           );
         })}
       </MenuList>
@@ -133,6 +152,9 @@ const NavList = () => {
         <a
           key={key}
           href={`/${value}`}
+          variant="large"
+          color="blue-gray"
+          className="font-normal"
         >
           {
             <MenuItem className="flex items-center gap-2 lg:rounded-full text-lg text-black">
@@ -146,49 +168,49 @@ const NavList = () => {
   );
 };
 
-export default function Header() {
-  const [dropDownOpen, setDropDownOpen] = useState(false);
+export default function ComplexNavbar() {
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropDownOpen((cur) => !cur);
+  const toggleIsNavOpen = () => {
+    setIsNavOpen((cur) => !cur);
   };
 
   useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setDropDownOpen(false)
-    )
-  }, [])
+      () => window.innerWidth >= 960 && setIsNavOpen(false)
+    );
+  }, []);
 
   return (
-    <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
-    <div className="flex items-center justify-between ">
+   <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
+      <div className="flex items-center justify-between ">
       <div className="flex items-center space-x-4">
-        <a href="/" className="gap-9">
+        <a href="" className="gap-9">
           <img
             src={logoSkillHub}
-            className="w-20 h-auto rounded-full border-4 border-sky-500 mt-2"
+            className="w-20 h-auto rounded-full border-4 border-sky-500 mt-"
             alt="skillHub Logo"
           />
         </a>
-        <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+        <div className="absolute top-16 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
         </div>
-        <IconButton
-          size="sm"
-          color="blue-gray"
-          variant="text"
-          onClick={toggleDropdown}
-          className="ml-auto mr-2 lg:hidden"
-        >
-          <Bars2Icon className="h-6 w-6" />
-        </IconButton>
+          <IconButton
+            size="sm"
+            color="blue-gray"
+            variant="text"
+            onClick={toggleIsNavOpen}
+            className="ml-auto mr-2 lg:hidden"
+          >
+            <Bars2Icon className="h-6 w-6" />
+          </IconButton>
+        </div>
+        <ProfileMenu />
       </div>
-      <ProfileMenu />
+      <MobileNav open={isNavOpen} className="overflow-scroll">
+        <NavList />
+      </MobileNav>
     </div>
-        <MobileNav open={dropDownOpen} className="overflow-scroll">
-          <NavList />
-        </MobileNav>
-</div>
   );
 }
