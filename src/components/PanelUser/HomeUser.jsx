@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork } from "../../toolkit/thunks";
 
-import Header from "../Header/Header";
 import Card from "../Cards/Card";
 import Filters from "../filters/Filters";
 import Footer from "../Footer/Footer";
 import Paginated from "../Paginated/Paginated";
 
-export default function Home() {
+export default function HomeUser() {
   const dispatch = useDispatch();
 
   const { work, isLoading } = useSelector((state) => state.work);
@@ -34,7 +33,6 @@ export default function Home() {
 
   return (
     <div className="relative justify-center items-center h-screen font-mono">
-      <Header/>
       <Filters setIndex={setIndex} setPage={setPage} />
       <span className="ml-64">Loading:{isLoading ? "True" : "False"}</span>
       <Paginated
