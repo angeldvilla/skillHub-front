@@ -11,6 +11,7 @@ import UserPanel from "./components/PanelUser/UserPanel";
 import HomeUser from "./components/PanelUser/HomeUser";
 import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
+import FormTemporal from "./components/FormWorkCreated/FormTemporal";
 
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
@@ -37,9 +38,10 @@ function App() {
       <Route path="/user-panel/:id/*" element={<UserPanel/>}>
         <Route path="home" element={<HomeUser />} />
         <Route path="my-profile" element={<Profile  />} />
-        <Route path="WorkPublications" element={<WorkPublications />} />
-        <Route path="Edit-Work" element={<FormWorkCreated />} />
         <Route path="CreateWork" element={<FormWorkCreated />} />
+        <Route path="TemporalForm" element={<FormTemporal />} />
+        <Route path="Edit-Work" element={<FormWorkCreated />} />
+        <Route path="WorkPublications" element={<WorkPublications />} />
         <Route path="settings" element={<Settings  />} />
       </Route>
     </Routes>

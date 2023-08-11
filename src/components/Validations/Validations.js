@@ -14,7 +14,6 @@ const validation = (data) => {
   } else if (prohibideWorks.test(data.description.toLowerCase())) {
     errors.description = "Prohibido";
   }
-
   return errors;
 };
 
