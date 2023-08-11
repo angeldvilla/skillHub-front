@@ -31,14 +31,12 @@ export default function UserPanel() {
   };
 
   useEffect(() => {
-    dispatch(getUsersFromMongo)
+    dispatch(getUsersFromMongo())
   },[dispatch, id])
 
    const  {users}  = useSelector(state => state.users);
-   console.log(users);
 
    const userAuth = users.find(u => u._id === id);
-   console.log(userAuth);
 
   const data = [
 
@@ -110,7 +108,7 @@ export default function UserPanel() {
             />
             </a>
           </div>
-          <h2 className="text-black">{users.firstName}</h2>
+          <h2 className="text-black">{userAuth.firstName}</h2>
         </div>
 
         <Tabs value={location.pathname} orientation="vertical">
@@ -167,7 +165,9 @@ export default function UserPanel() {
           </button>
          <Nav/> 
         </div>
+        <div className="flex-1 p-4 bg-gray" style={{ overflowY: "auto", maxHeight: "calc(100vh - 65px)" }}>
         <Outlet /> {/* Muestra el contenido de las rutas anidadas */}
+        </div>
       </div>
       
     </div>
