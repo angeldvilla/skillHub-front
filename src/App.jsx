@@ -9,6 +9,8 @@ import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
+import MercadoPago from "./components/mercadoPago/MercadoPago";
+import Message from "./components/mercadoPago/Message";
 /* ------------------------------------------- */
 
 function App() {
@@ -27,6 +29,10 @@ function App() {
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
       <Route path="/payment-policies" element={<UnderDevelopment />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
+
+      <Route path="/mercadoPago" element={<MercadoPago />} />
+      <Route path="/mensage_Pago" element={<Message />} />
+      
     </Routes>
   );
 }
