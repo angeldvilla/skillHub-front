@@ -1,16 +1,22 @@
+/* eslint-disable no-case-declarations */
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postUser } from "../../toolkit/Users/usersHandler";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { userLogin } from "../../toolkit/Users/usersSlice";
+import { ShowMessage } from "../ShowMessage/ShowMessage";
 import passwordEye from "../../assets/password-eye.svg";
 import phone from "../../assets/phone.svg";
 import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import email from "../../assets/email.png";
-import { ShowMessage } from "../ShowMessage/ShowMessage";
 import {
   validateUserData,
   resetUserData,
@@ -38,6 +44,42 @@ export default function Register() {
     setErrors(validateUserData(name, value, userData));
   };
 
+  const handleOnClick = async (e) => {
+    const platform = e.currentTarget.getAttribute("data-platform");
+
+    try {
+      switch (platform) {
+        case "google":
+          const googleProvider = new GoogleAuthProvider();
+          const userCredentials = await signInWithPopup(auth, googleProvider);
+
+          const googleCredentials = {
+            uid: userCredentials.user.uid,
+            accessToken: userCredentials.user.accessToken,
+          };
+          dispatch(userLogin(googleCredentials));
+
+          setTimeout(() => {
+            navigate("/home");
+          }, 2000);
+
+          ShowMessage(`Bienvenido ${userCredentials.user.displayName}`);
+          break;
+        case "github":
+          console.log("GitHub");
+          break;
+        case "facebook":
+          console.log("Facebook");
+          break;
+        default:
+          console.log("Email");
+          break;
+      }
+    } catch (error) {
+      ShowMessage("Ops, algo salió mal", "error");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,7 +89,11 @@ export default function Register() {
     const hasErrors = Object.keys(errors).length;
 
     if (hasEmptyValues || hasErrors) {
-      ShowMessage("Complete all fields", "error");
+      const platform = e.currentTarget.getAttribute("data-platform");
+      if (platform === "google") {
+        ShowMessage("Completa todos los campos", "error");
+        return;
+      }
       return;
     }
 
@@ -70,13 +116,13 @@ export default function Register() {
       dispatch(postUser(newUser));
 
       setTimeout(() => {
-        navigate("/signin");
+        navigate("/home");
       }, 3000);
 
       resetUserData(setUserData);
       ShowMessage("Has sido registrado correctamente");
       setTimeout(() => {
-        ShowMessage("Estás siendo redirigido");
+        ShowMessage(`Bienvenido ${userCredentials.user.email}`);
       }, 1000);
 
       return userCredentials;
@@ -276,21 +322,33 @@ export default function Register() {
         <div className="bg-gray-900 w-64 h-0.5 mb-5"></div>
         <h4 className="text-lg mb-5">O continúa con</h4>
         <div className="flex justify-center gap-6">
-          <img
-            src={google}
-            alt="google-logo"
-            className="w-9 hover:cursor-pointer transition"
-          />
-          <img
-            src={facebook}
-            alt="facebook-logo"
-            className="w-10 hover:cursor-pointer transition"
-          />
-          <img
-            src={github}
-            alt="github-logo"
-            className="w-10 hover:cursor-pointer transition"
-          />
+          <button data-platform="google" onClick={handleOnClick}>
+            <img
+              src={google}
+              alt="google-logo"
+              className="w-9 hover:cursor-pointer transition"
+            />
+          </button>
+          <button
+            data-platform="facebook"
+            onClick={() => ShowMessage("Próximamente")}
+          >
+            <img
+              src={facebook}
+              alt="facebook-logo"
+              className="w-10 hover:cursor-pointer transition"
+            />
+          </button>
+          <button
+            data-platform="github"
+            onClick={() => ShowMessage("Próximamente")}
+          >
+            <img
+              src={github}
+              alt="github-logo"
+              className="w-10 hover:cursor-pointer transition"
+            />
+          </button>
         </div>
       </form>
     </div>

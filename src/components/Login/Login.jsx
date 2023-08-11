@@ -1,7 +1,12 @@
+/* eslint-disable no-case-declarations */
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../../firebase";
 import { userLogin } from "../../toolkit/Users/usersSlice";
 import { validateUserData } from "../../utils/userDataValidation";
@@ -30,6 +35,42 @@ export default function Login() {
     setErrors(validateUserData(name, value, userData));
   };
 
+  const handleOnClick = async (e) => {
+    const platform = e.currentTarget.getAttribute("data-platform");
+
+    try {
+      switch (platform) {
+        case "google":
+          const googleProvider = new GoogleAuthProvider();
+          const userCredentials = await signInWithPopup(auth, googleProvider);
+
+          const googleCredentials = {
+            uid: userCredentials.user.uid,
+            accessToken: userCredentials.user.accessToken,
+          };
+          dispatch(userLogin(googleCredentials));
+
+          setTimeout(() => {
+            navigate("/home");
+          }, 2000);
+
+          ShowMessage(`Bienvenido ${userCredentials.user.displayName}`);
+          break;
+        case "github":
+          console.log("GitHub");
+          break;
+        case "facebook":
+          console.log("Facebook");
+          break;
+        default:
+          console.log("Email");
+          break;
+      }
+    } catch (error) {
+      ShowMessage("Ops, algo salió mal", "error");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,7 +80,11 @@ export default function Login() {
     const hasErrors = Object.keys(errors).length;
 
     if (hasEmptyValues || hasErrors) {
-      ShowMessage("Completa todos los campos", "error");
+      const platform = e.currentTarget.getAttribute("data-platform");
+      if (platform === "google") {
+        ShowMessage("Completa todos los campos", "error");
+        return;
+      }
       return;
     }
 
@@ -109,7 +154,7 @@ export default function Login() {
         {/* Email */}
         <div className="flex flex-col">
           <label htmlFor="email" className="pl-2 mb-1 text-lg">
-            EMAIL
+            Email
           </label>
           <div className="relative">
             <input
@@ -124,7 +169,7 @@ export default function Login() {
 
           {/* Password */}
           <label htmlFor="password" className="pl-2 mb-1 text-lg">
-            PASSWORD
+            Contraseña
           </label>
           <div className="relative">
             <input
@@ -139,28 +184,40 @@ export default function Login() {
         </div>
 
         <button className="p-2 mt-10 mb-12 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
-          INICIAR SESION
+          Iniciar sesión
         </button>
         <div className="bg-slate-500 w-56 h-0.5 mb-5"></div>
 
         {/* Authentication */}
-        <h4 className="text-lg mb-5">O CONTINUAR CON</h4>
+        <h4 className="text-lg mb-5">O continúa con</h4>
         <div className="flex justify-center gap-6">
-          <img
-            src={google}
-            alt="google-logo"
-            className="w-9 hover:cursor-pointer transition"
-          />
-          <img
-            src={facebook}
-            alt="facebook-logo"
-            className="w-10 hover:cursor-pointer transition"
-          />
-          <img
-            src={github}
-            alt="github-logo"
-            className="w-10 hover:cursor-pointer transition"
-          />
+          <button data-platform="google" onClick={handleOnClick}>
+            <img
+              src={google}
+              alt="google-logo"
+              className="w-9 hover:cursor-pointer transition"
+            />
+          </button>
+          <button
+            data-platform="facebook"
+            onClick={() => ShowMessage("Próximamente")}
+          >
+            <img
+              src={facebook}
+              alt="facebook-logo"
+              className="w-10 hover:cursor-pointer transition"
+            />
+          </button>
+          <button
+            data-platform="github"
+            onClick={() => ShowMessage("Próximamente")}
+          >
+            <img
+              src={github}
+              alt="github-logo"
+              className="w-10 hover:cursor-pointer transition"
+            />
+          </button>
         </div>
       </form>
     </div>
