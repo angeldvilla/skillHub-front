@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getWork } from "../../toolkit/thunks";
-import { getUser, getUsers } from "../../toolkit/Users/usersHandler";
-import { userSlice } from "../../toolkit/Users/usersSlice";
+import { getUser } from "../../toolkit/Users/usersHandler";
 
 import Header from "../Header/Header";
 import Nav from "../PanelUser/Nav";
@@ -19,11 +18,7 @@ export default function Home() {
   
   const dispatch = useDispatch();
 
-  /* const {users}  = useSelector(state => state.users);
-
-  const authUser = users.find(u => u.uid === id); */
-
-  const  { userCredentials }  = useSelector(state => state[userSlice.name]);
+  const  { userCredentials }  = useSelector(state => state.users);
 
   const { work, isLoading } = useSelector((state) => state.work);
 
@@ -43,15 +38,16 @@ export default function Home() {
   //----------
 
   useEffect(() => {
-    dispatch(getUsers());
-    /* dispatch(getUser(id)); */
     dispatch(getWork());
-  }, []);
+    dispatch(getUser(id));
+  }, [id]);
 
 
   return (
     <div className="relative justify-center items-center h-screen">
-      {isLoading ? <Loader/> : (
+      {isLoading 
+      ? <Loader/> 
+      : (
         <div>
         {
           userCredentials && userCredentials.uid === id ? <Nav/> : <Header/>

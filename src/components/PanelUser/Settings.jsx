@@ -4,9 +4,14 @@ import {
   ListItemSuffix,
   Card,
   IconButton,
-  Input
+  Input,
 } from "@material-tailwind/react";
- 
+import { useEffect } from "react";
+import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../toolkit/Users/usersHandler";
+import Nav from "./Nav";
+
 function TrashIcon() {
   return (
     <svg
@@ -23,45 +28,63 @@ function TrashIcon() {
     </svg>
   );
 }
- 
-export default function Settings() {
-  return (
-    <div className="flex justify-center mt-32">
-    <Card className="w-96 justify-center items-center">
-      <List>
-        <ListItem ripple={false} className="py-1 pr-1 pl-4">
-          Item One
-          <ListItemSuffix>
-            <IconButton variant="text" color="blue-gray">
-              <TrashIcon />
-            </IconButton>
-          </ListItemSuffix>
-        </ListItem>
-        <ListItem ripple={false} className="py-1 pr-1 pl-4">
-          Item Two
-          <ListItemSuffix>
-            <IconButton variant="text" color="blue-gray">
-              <TrashIcon />
-            </IconButton>
-          </ListItemSuffix>
-        </ListItem>
-        <ListItem ripple={false} className="py-1 pr-1 pl-4">
-          Item Three
-          <ListItemSuffix>
-            <IconButton variant="text" color="blue-gray">
-              <TrashIcon />
-            </IconButton>
-          </ListItemSuffix>
-        </ListItem>
-      </List>
-    <div className="flex w-72 flex-col gap-6 mt-5 mb-10">
-    <Input color="blue" label="Input Blue" />
-    <Input color="purple" label="Input Purple" />
-    <Input color="indigo" label="Input Indigo" />
-    <Input color="teal" label="Input Teal" />
-  </div>
-    </Card>
 
-  </div>
+export default function Settings() {
+  const { id } = useParams();
+
+  const { userCredentials } = useSelector((state) => state.users);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser(id));
+  }, [id]);
+
+  return (
+    <div className="relative justify-center items-center h-screen">
+      {userCredentials && userCredentials.uid === id ? (
+        <div>
+          <Nav />
+          <Card className="w-72 mx-auto flex flex-col items-center text-center mt-10">
+            <List>
+              <ListItem ripple={false} className="py-1 pr-1 pl-4">
+                Item One
+                <ListItemSuffix>
+                  <IconButton variant="text" color="blue-gray">
+                    <TrashIcon />
+                  </IconButton>
+                </ListItemSuffix>
+              </ListItem>
+              <ListItem ripple={false} className="py-1 pr-1 pl-4">
+                Item Two
+                <ListItemSuffix>
+                  <IconButton variant="text" color="blue-gray">
+                    <TrashIcon />
+                  </IconButton>
+                </ListItemSuffix>
+              </ListItem>
+              <ListItem ripple={false} className="py-1 pr-1 pl-4">
+                Item Three
+                <ListItemSuffix>
+                  <IconButton variant="text" color="blue-gray">
+                    <TrashIcon />
+                  </IconButton>
+                </ListItemSuffix>
+              </ListItem>
+            </List>
+            <div className="flex w-72 flex-col gap-6 mt-5 mb-10">
+              <Input color="blue" label="Input Blue" />
+              <Input color="purple" label="Input Purple" />
+              <Input color="indigo" label="Input Indigo" />
+              <Input color="teal" label="Input Teal" />
+            </div>
+          </Card>
+        </div>
+      ) : (
+        <div className="w-72 mx-auto flex flex-col items-center text-center mt-64">
+          <h1>NO PODES ACCEDER MENOR</h1>
+        </div>
+      )}
+    </div>
   );
 }

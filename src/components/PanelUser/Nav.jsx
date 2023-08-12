@@ -181,11 +181,7 @@ const NavList = () => {
 export default function Nav() {
   const { id } = useParams();
 
-  const { users } = useSelector(state => state.users);
-
-  const userAuth = users.find(user => user.uid === id)
-
- /*  const  { userCredentials }  = useSelector(state => state[userSlice.name]); */ 
+  const  { user }  = useSelector(state => state.users);
 
   const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -198,7 +194,7 @@ export default function Nav() {
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
-  }, [id]);
+  }, []);
 
 
   return (
@@ -226,7 +222,7 @@ export default function Nav() {
             <Bars2Icon className="h-6 w-6" />
           </IconButton>
         </div>
-        <ProfileMenu userAuth={userAuth} />
+        <ProfileMenu userAuth={user} />
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
