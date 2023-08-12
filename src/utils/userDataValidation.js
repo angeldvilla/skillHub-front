@@ -68,6 +68,8 @@ export const validateUserData = (input, value, userData) => {
         errors.confirmPassword = "Debe tener al menos 8 caractéres";
       } else if (value !== userData.password) {
         errors.confirmPassword = "Las contraseñas no coinciden";
+      } else {
+        errors.confirmPassword = "";
       }
       break;
 
