@@ -23,12 +23,15 @@ const CardItem = ({ _id, title, image, address, price, ability }) => (
         <Typography variant="h4" color="blue-gray" className="mb-2">
           {title.charAt(0).toUpperCase() + title.slice(1)}
         </Typography>
-        <div className="flex items-center justify-evenly mt-6">
+        <div className="flex items-center justify-between mt-6">
           <div className="mb-3 flex items-center gap-1">
             <Typography color="gray" className="text-center font-normal">
               <img src={ubication} alt="location" className="w-8" />
             </Typography>
-            <Typography color="gray" className="text-center  font-normal">
+            <Typography color="gray" className="text-center font-semibold">
+              Ubicación:
+            </Typography>
+            <Typography color="gray" className="text-center font-normal">
               {address.charAt(0).toUpperCase() + address.slice(1)}
             </Typography>
           </div>
@@ -36,10 +39,14 @@ const CardItem = ({ _id, title, image, address, price, ability }) => (
             <Typography color="gray" className="text-center font-normal">
               <img src={moneyBag} alt="moneyBag" className="w-9" />
             </Typography>
-            <Typography color="gray" className="text-center  font-normal">
+            <Typography color="gray" className="text-center font-semibold">
+              Precio:
+            </Typography>
+            <Typography color="gray" className="text-center ">
               {price}
             </Typography>
           </div>
+          <div></div>
         </div>
       </CardBody>
       <a href={`/jobDetail/${_id}`}>
