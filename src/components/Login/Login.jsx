@@ -78,7 +78,7 @@ export default function Login() {
           });
           break;
         case "email":
-          console.log("Email");
+          handleSubmit(e);
           break;
         default:
           break;
@@ -194,7 +194,7 @@ export default function Login() {
             <Button
               data-platform="google"
               onClick={handleOnClick}
-              ripple="dark"
+              ripple={true}
               color="white"
             >
               <img src={google} alt="google-logo" className="w-6" />
@@ -202,7 +202,7 @@ export default function Login() {
             <Button
               data-platform="facebook"
               onClick={handleOnClick}
-              ripple="dark"
+              ripple={true}
               color="white"
             >
               <img src={facebook} alt="facebook-logo" className="w-6" />
@@ -210,7 +210,7 @@ export default function Login() {
             <Button
               data-platform="github"
               onClick={handleOnClick}
-              ripple="dark"
+              ripple={true}
               color="white"
             >
               <img src={github} alt="github-logo" className="w-6" />
