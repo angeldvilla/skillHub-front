@@ -72,9 +72,6 @@ export default function FormCreateWork() {
     });
   }
 
-
-
-
   function handleSelect(event) {
     const typeworkSelect = event.target.value;
     if (!workdata.ability.includes(typeworkSelect)) {
@@ -87,12 +84,12 @@ export default function FormCreateWork() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch(postJobs(workdata));
-
-    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image) {
+    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image  || !workdata.ability || !workdata.address) {
       toast.error("Completa los datos para continuar");
     } else if (workdata.ability.length > 3) {
       toast.error("No pueden haber más de 3 categorias seleccionadas")
+    } else if (workdata.ability.length === 0) {
+      toast.error("Selecciona al menos una categoria")
     } else {
       console.log("Datos del formulario:", workdata);
       dispatch(postJobs(workdata));
@@ -104,10 +101,15 @@ export default function FormCreateWork() {
       }, 3000);
     }
   }
+  //LocalStorage values
+  const [textDesciption, setTextDesciption] = useLocalStorage('text', (''))
+  const [textTitle, setTextTitle] = useLocalStorage('tex1', ' ')
+  const [priceValue, setPriceValue] = useLocalStorage("text2", '')
+  const [directionValue, setDirectionValue] = useLocalStorage("tex3", ' ')
 
 
   const handleReset = () => {
-    setTextTittle("");
+    setTextTitle("");
     setTextDesciption("");
     setDirectionValue("");
     setPriceValue("");
@@ -121,15 +123,24 @@ export default function FormCreateWork() {
       price: "",
     });
   };
+  useEffect(() => {
+    if (textTitle || textDesciption || priceValue || directionValue) {
+      setWorkData((prevData) => ({
+        ...prevData,
+        title: textTitle,
+        description: textDesciption,
+        price: priceValue,
+        address: directionValue,
+      }));
+    }
+  }, []);
+
+
+  //_________________________________________________________________________________
   
 
   const [selectWorkType, setSelectWorkType] = useState("");
 
-  //LocalStorage values
-  const [textDesciption, setTextDesciption] = useLocalStorage('text', (''))
-  const [textTttle, setTextTittle] = useLocalStorage('tex1', ' ')
-  const [priceValue, setPriceValue] = useLocalStorage("text2", '')
-  const [directionValue, setDirectionValue] = useLocalStorage("tex3", ' ')
 
 
   //Para poder seleccionar y borrar las categorias seleccionadas
@@ -156,7 +167,7 @@ export default function FormCreateWork() {
     imageFormData.append("file", files[0])
     imageFormData.append("upload_preset", "PostWorks")
     try {
-        const response = await axios.post("https://api.cloudinary.com/v1_1/dko4cptdy/upload", imageFormData);
+        const response = await axios.post("https://api.cloudinary.com/v1_1/dvr9giaia/upload", imageFormData);
         const data = response.data.secure_url;
         console.log("Esta es la respuesta de la data", data);
         // Actualizar el estado de manera inmutable
@@ -181,6 +192,7 @@ export default function FormCreateWork() {
     />
   </span>
 ) : null;
+
 
 
 
@@ -213,12 +225,12 @@ export default function FormCreateWork() {
             <input
               type="text"
               name="title"
-              value={textTttle}
+              value={textTitle}
               placeholder="Que trabajo necesitas"
               onChange={(event) => {
                 const newValue = event.target.value;
                 handleChange(event);
-                setTextTittle(newValue)
+                setTextTitle(newValue)
               }}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
