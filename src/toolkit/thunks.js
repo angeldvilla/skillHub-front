@@ -1,4 +1,4 @@
-  import { allWork, getWorkName, startIsLoading, detailWork, getUsers } from "./slice";
+  import { allWork, getWorkName, startIsLoading, detailWork, getUsers,postPagos } from "./slice";
   import axios from "axios";
 
   const URL_API = "http://localhost:3001/empleador";
@@ -69,13 +69,13 @@
 
     //!PAGAR A MERCADO PAGO
 
-    export const postMercadoPago = (id) => {
+    export const postMercadoPago = (id,client) => {
       return async (dispatch) => {
         try {
           dispatch(startIsLoading());
+
         const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
-          
-          dispatch(getUsers(data));
+          dispatch(postPagos(data));
           
       
         } catch (error) {
@@ -83,3 +83,22 @@
         }
       }
     };
+
+       //!RECIBIR NOTIFICACION DE LA COMPRA
+      export const ticket = async(payment_id)=>{
+        return async (dispatch) => {
+          
+          const result = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`,{
+            headers:{
+              "Content-Type":"application/json",
+              Authorization: "Bearer APP_USR-3794840370968199-080911-7b9fef42d07f6a0b234247b2ba3fe539-1445113711"
+            }
+          })
+          dispatch(postPagos(result));
+            
+        
+          } 
+        }
+
+      
+    

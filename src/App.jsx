@@ -11,10 +11,13 @@ import UserPanel from "./components/PanelUser/UserPanel";
 import HomeUser from "./components/PanelUser/HomeUser";
 import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
+import MercadoPago from "./components/mercadoPago/MercadoPago";
 
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
 import FormTemporal from "./components/FormWorkCreated/FormTemporal";
+import Mensaje from "./components/mercadoPago/Mensaje";
+import Next from "./components/mercadoPago/Next";
 /* ------------------------------------------- */
 
 function App() {
@@ -34,6 +37,11 @@ function App() {
       <Route path="/payment-policies" element={<UnderDevelopment />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
       <Route path="/TemporalForm" element={<FormTemporal />} />
+
+      <Route path="/mercadoPago" element={<MercadoPago />} />
+      <Route path="/mensaje/:payment_id" element={<Mensaje />} />
+      <Route path="/next/:payment_id" element={<Next />} />
+  
     </Routes>
   );
 }

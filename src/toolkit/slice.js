@@ -133,7 +133,8 @@ export const {
   filterTypeWork,
   detailWork,
   resetDetail,
-  getUsers
+  getUsers,
+  postPagos
 } = workSlice.actions;
 
 //export default workSlice.reducer
