@@ -1,63 +1,65 @@
-import React, { useState } from "react";
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
-
-function Icon({ id, open }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      className={`${id === open ? "rotate-180" : ""} h-5 w-5 transition-transform`}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-    </svg>
-  );
-}
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { getUsers } from "../../toolkit/Users/usersHandler";
+import { Input } from "@material-tailwind/react";
+import UploadPhoto from "./UploadPhoto";
+import Nav from "./Nav";
 
 export default function Profile() {
-  const [open, setOpen] = useState(0);
- 
-  const handleOpen = (value) => {
-    setOpen(open === value ? 0 : value);
-  }
- 
+  const { id } = useParams();
+
+  const dispatch = useDispatch();
+
+  const { users } = useSelector((state) => state.users);
+
+  const userAuth = users.find((user) => user.uid === id);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
+
   return (
-    <div className="mt-8">
-      <h1 className="flex justify-center items-center mb-10">VISTA GENERAL DE LA CUENTA</h1>
-      <Accordion open={open === 1} icon={<Icon id={1} open={open} />} >
-        <AccordionHeader onClick={() => handleOpen(1)} className="text-white hover:text-gray-500">What is Material Tailwind?</AccordionHeader>
-        <AccordionBody className="text-white">
-          We&apos;re not always in the position that we want to be at. We&apos;re constantly
-          growing. We&apos;re constantly making mistakes. We&apos;re constantly trying to express
-          ourselves and actualize our dreams.
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(2)} className="text-white hover:text-gray-500">
-          How to use Material Tailwind?
-        </AccordionHeader>
-        <AccordionBody className="text-white">
-          We&apos;re not always in the position that we want to be at. We&apos;re constantly
-          growing. We&apos;re constantly making mistakes. We&apos;re constantly trying to express
-          ourselves and actualize our dreams.
-        </AccordionBody>
-      </Accordion>
-      <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(3)} className="text-white hover:text-gray-500">
-          What can I do with Material Tailwind?
-        </AccordionHeader>
-        <AccordionBody className="text-white">
-          We&apos;re not always in the position that we want to be at. We&apos;re constantly
-          growing. We&apos;re constantly making mistakes. We&apos;re constantly trying to express
-          ourselves and actualize our dreams.
-        </AccordionBody>
-      </Accordion>
+    <div className="relative justify-center items-center h-screen">
+      <Nav />
+      <div className="w-72 mx-auto flex flex-col items-center text-center mt-10">
+        <h1 className="mb-10">VISTA GENERAL DE LA CUENTA</h1>
+        <h2 className="mb-10">Perfil</h2>
+
+        <span className="mb-5">Nombre</span>
+        <Input
+          label="Nombre"
+          value={userAuth?.firstName || ""}
+          disabled
+          className="flex justify-center items-center text-center"
+        />
+
+        <span className="mt-5 mb-5">Apellido</span>
+        <Input
+          label="Apellido"
+          value={userAuth?.lastName || ""}
+          disabled
+          className="flex justify-center items-center text-center"
+        />
+
+        <span className="mt-5 mb-5">Correo Electronico</span>
+        <Input
+          label="Apellido"
+          value={userAuth?.email || ""}
+          disabled
+          className="flex justify-center items-center text-center"
+        />
+
+        <span className="mt-5 mb-5">Numero Celular</span>
+        <Input
+          label="Apellido"
+          value={userAuth?.phoneNumber || ""}
+          disabled
+          className="flex justify-center items-center text-center"
+        />
+        <span className="mt-10 mb-5">Agregar Foto de Perfil</span>
+        <UploadPhoto />
+      </div>
     </div>
   );
 }

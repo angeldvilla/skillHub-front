@@ -59,9 +59,13 @@ export default function Login() {
             accessToken: userCredentials.user.accessToken,
           };
           dispatch(userLogin(googleCredentials));
+          
+          // Almacena las credenciales en el Local Storage
+          localStorage.setItem('userCredentials', JSON.stringify(googleCredentials));
 
           setTimeout(() => {
-            navigate("/home");
+            const uid = googleCredentials.uid;
+            navigate(`/user-panel/${uid}/home`);
           }, 2000);
 
           ShowMessage(`Bienvenido ${userCredentials.user.displayName}`);
@@ -99,6 +103,9 @@ export default function Login() {
         accessToken: userCredentials.user.accessToken,
       };
       dispatch(userLogin(credentials));
+       
+      // Almacena las credenciales en el Local Storage
+       localStorage.setItem('userCredentials', JSON.stringify(credentials));
 
       setUserData({
         email: "",
@@ -106,7 +113,8 @@ export default function Login() {
       });
 
       setTimeout(() => {
-        navigate("/home");
+        const uid = credentials.uid
+        navigate(`/user-panel/${uid}/home`);
       }, 2000);
 
       ShowMessage(`Bienvenido ${userCredentials.user.email}`);

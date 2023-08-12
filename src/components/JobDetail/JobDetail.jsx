@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork, getDetailWork, detailReset } from "../../toolkit/thunks";
-import { getUser } from "../../toolkit/Users/usersHandler";
+import { getUsers } from "../../toolkit/Users/usersHandler";
 import { userSlice } from "../../toolkit/Users/usersSlice";
 /* -------------- */
 /* COMPONENTS */
@@ -27,16 +27,18 @@ export default function JobDetail() {
 
   const { work, detail, isLoading } = useSelector((state) => state.work);
 
-  const { user } = useSelector((state) => state[userSlice.name]);
+  const { users } = useSelector((state) => state[userSlice.name]);
+
+  const infoUser = users.find(user => user._id === detail.users)
 
   useEffect(() => {
     !work.length && dispatch(getWork());
-    !user.length && dispatch(getUser());
+    !users.length && dispatch(getUsers());
     dispatch(getDetailWork(id));
     return () => {
       dispatch(detailReset());
     };
-  }, [dispatch, id, work.length, user.length]);
+  }, [dispatch, id, work.length, users.length]);
 
   const images = [detail?.image, garden1, garden2, garden3];
 
@@ -97,7 +99,7 @@ export default function JobDetail() {
                   Número de Teléfono
                 </h3>
                 <p className="p-5 bg-slate-700 rounded-md">
-                  {"+"} {user?.phoneNumber}
+                  {"+"} {infoUser?.phoneNumber}
                 </p>
                 <img
                   src={phone}

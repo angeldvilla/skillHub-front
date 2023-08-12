@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getUsers, getUser, postUser } from "./usersHandler";
 
+const storedCredentials = JSON.parse(localStorage.getItem('userCredentials'));
+
 const initialState = {
   users: [],
   user: {},
   isLoading: false,
   error: null,
-  userCredentials: null,
+  userCredentials: storedCredentials || null,
 };
 export const userSlice = createSlice({
   name: "users",

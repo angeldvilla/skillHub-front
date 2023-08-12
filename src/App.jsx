@@ -7,8 +7,6 @@ import JobDetail from "./components/JobDetail/JobDetail";
 import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
-import UserPanel from "./components/PanelUser/UserPanel";
-import HomeUser from "./components/PanelUser/HomeUser";
 import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
 
@@ -34,13 +32,14 @@ function App() {
       <Route path="/contact-us" element={<UnderDevelopment />} />
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
-      <Route path="/user-panel/:id/*" element={<UserPanel/>}>
-        <Route path="home" element={<HomeUser />} />
+      <Route path="/user-panel/:id/*">
+        <Route path="home" element={<Home />} />
         <Route path="my-profile" element={<Profile  />} />
         <Route path="CreateWork" element={<FormWorkCreated />} />
         <Route path="Edit-Work" element={<FormWorkCreated />} />
         <Route path="WorkPublications" element={<WorkPublications />} />
         <Route path="settings" element={<Settings  />} />
+        
       </Route>
     </Routes>
   );
