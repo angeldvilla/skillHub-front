@@ -11,11 +11,11 @@ export const validateUserData = (input, value, userData) => {
   switch (input) {
     case FIRSTNAME:
       if (!value) {
-        errors.firstName = "First name is required";
+        errors.firstName = "Nombre requerido";
       } else if (!/^[a-zA-Z]+(?: [a-zA-Z]+)?$/.test(value)) {
-        errors.firstName = "First name can only contain letters";
-      } else if (value.length > 20) {
-        errors.firstName = "Must be less than 20 characters";
+        errors.firstName = "Solo puede contener letras";
+      } else if (value.length > 30) {
+        errors.firstName = "Debe tener menos de 30 caractéres";
       }
       break;
 
@@ -23,53 +23,53 @@ export const validateUserData = (input, value, userData) => {
       if (!value) {
         errors.lastName = "Last name is required";
       } else if (!/^[a-zA-Z]+(?: [a-zA-Z]+)?$/.test(value)) {
-        errors.lastName = "Last name can only contain letters";
-      } else if (value.length > 20) {
-        errors.lastName = "Must be less than 20 characters";
+        errors.lastName = "Debe contener solo letras";
+      } else if (value.length > 30) {
+        errors.lastName = "Debe tener menos de 30 caractéres";
       }
       break;
 
     case EMAIL:
       if (!value) {
-        errors.email = "Email is required";
+        errors.email = "Se requiere un email";
       } else if (
         !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
       ) {
-        errors.email = "Invalid email address";
-      } else if (value.length > 20) {
-        errors.email = "Must be less than 20 characters";
+        errors.email = "Email inválido";
+      } else if (value.length > 30) {
+        errors.email = "Debe tener menos de 30 caractéres";
       }
       break;
 
     case PHONENUMBER:
       if (!value) {
-        errors.phoneNumber = "Phone number is required";
+        errors.phoneNumber = "Se requiere un número de teléfono";
       } else if (isNaN(value)) {
-        errors.phoneNumber = "Phone number must be a number";
+        errors.phoneNumber = "Debe ser un número";
       } else if (value < 0) {
-        errors.phoneNumber = "Phone number must be a positive number";
-      } else if (value.length < 10) {
-        errors.phoneNumber = "Must be at least 10 characters";
-      } else if (value.length > 20) {
-        errors.phoneNumber = "Must be less than 20 characters";
+        errors.phoneNumber = "No es un número válido";
+      } else if (value.length !== 10) {
+        errors.phoneNumber = "Debe tener 10 caractéres";
       }
       break;
 
     case PASSWORD:
       if (!value) {
-        errors.password = "Password is required";
+        errors.password = "Se requiere una contraseña";
       } else if (value.length < 8) {
-        errors.password = "Must be at least 8 characters";
+        errors.password = "Debe tener al menos 8 caractéres";
       }
       break;
 
     case CONFIRMPASSWORD:
       if (!value) {
-        errors.confirmPassword = "Confirm password is required";
+        errors.confirmPassword = "Se requiere confirmar la contraseña";
       } else if (value.length < 8) {
-        errors.confirmPassword = "Must be at least 8 characters";
+        errors.confirmPassword = "Debe tener al menos 8 caractéres";
       } else if (value !== userData.password) {
-        errors.confirmPassword = "Passwords do not match";
+        errors.confirmPassword = "Las contraseñas no coinciden";
+      } else {
+        errors.confirmPassword = "";
       }
       break;
 
