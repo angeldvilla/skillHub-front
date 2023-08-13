@@ -188,7 +188,7 @@ export default function Register() {
               onChange={handleChange}
             />
             {errors.firstName && (
-              <span className="text-center text-red-500 mb-1">
+              <span className="text-center text-sm text-red-500">
                 {errors.firstName}
               </span>
             )}
@@ -204,7 +204,7 @@ export default function Register() {
               onChange={handleChange}
             />
             {errors.lastName && (
-              <span className="text-center text-red-500 mb-1">
+              <span className="text-center text-sm text-red-500">
                 {errors.lastName}
               </span>
             )}
@@ -220,7 +220,7 @@ export default function Register() {
               onChange={handleChange}
             />
             {errors.email && (
-              <span className="text-center text-red-500 mb-1">
+              <span className="text-center text-sm text-red-500">
                 {errors.email}
               </span>
             )}
@@ -236,7 +236,7 @@ export default function Register() {
               onChange={handleChange}
             />
             {errors.phoneNumber && (
-              <span className="text-center text-red-500 mb-1">
+              <span className="text-center text-sm text-red-500">
                 {errors.phoneNumber}
               </span>
             )}
@@ -252,7 +252,7 @@ export default function Register() {
               onChange={handleChange}
             />
             {errors.password && (
-              <span className="text-center text-red-500 mb-1">
+              <span className="text-center text-sm text-red-500">
                 {errors.password}
               </span>
             )}
@@ -267,12 +267,12 @@ export default function Register() {
               value={userData.confirmPassword}
               onChange={handleChange}
             />
+            {errors.confirmPassword && (
+              <span className="text-center text-sm text-red-500">
+                {errors.confirmPassword}
+              </span>
+            )}
           </div>
-          {errors.confirmPassword && (
-            <span className="text-center text-red-500 mb-1">
-              {errors.confirmPassword}
-            </span>
-          )}
 
           {/* Buttons */}
           <div className="flex flex-col">
