@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork } from "../../toolkit/thunks";
 
@@ -11,49 +11,26 @@ import Paginated from "../Paginated/Paginated";
 export default function Home() {
   const dispatch = useDispatch();
 
-  const { work, isLoading } = useSelector((state) => state.work);
+  const { work, isLoading, currentPage } = useSelector((state) => state.work);
 
-  const numberOfWorks = work.length;
-
-  //paginado
-  const [index, setIndex] = useState(0); // se crea este estado dentro de "HomePage" con la finalidad de pasarlo por props al componente "Nav" y utilizarlo, pero el uso principal de este hook es en el componente "Paginado"
-
-  const [workForPage, setWorkForPage] = useState(3);
-  const [page, setPage] = useState(1);
-
-  const inicio = (page - 1) * workForPage;
-
-  const final = inicio + workForPage;
-
-  const works = work.slice(inicio, final);
-  //----------
+  const worksPerPage = 8;
+  const totalPages = Math.ceil(work.length / worksPerPage);
 
   useEffect(() => {
     dispatch(getWork());
-  }, []);
+  }, [dispatch]);
+
+  const indexOfLastWork = currentPage * worksPerPage;
+  const indexOfFirstWork = indexOfLastWork - worksPerPage;
+  const currentWorks = work.slice(indexOfFirstWork, indexOfLastWork);
 
   return (
-    <div className="relative justify-center items-center h-screen font-mono">
-      <Header/>
-      <Filters setIndex={setIndex} setPage={setPage} />
-      <span className="ml-64">Loading:{isLoading ? "True" : "False"}</span>
-      <Paginated
-        numberOfWorks={numberOfWorks}
-        workForPage={workForPage}
-        page={page}
-        setPage={setPage}
-        index={index}
-        setIndex={setIndex}
-      />
-      <Card work={works} />
-      <Paginated
-        numberOfWorks={numberOfWorks}
-        workForPage={workForPage}
-        page={page}
-        setPage={setPage}
-        index={index}
-        setIndex={setIndex}
-      />
+    <div className="flex flex-col justify-center items-center">
+      <Header />
+      <Filters />
+      <Paginated totalPages={totalPages} />
+      <Card work={currentWorks} />
+      <Paginated totalPages={totalPages} />
       <Footer />
     </div>
   );
