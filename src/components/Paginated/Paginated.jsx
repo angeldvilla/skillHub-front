@@ -1,76 +1,90 @@
-import React from "react";
-import "./paginado.css";
+/* eslint-disable react/prop-types */
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../../toolkit/slice";
+import { Button, IconButton } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
-export default function Paginated({
-  numberOfWorks,
-  page,
-  workForPage,
-  setPage,
-  index,
-  setIndex,
-}) {
-  const pageNumber = [];
-  for (let i = 1; i <= Math.ceil(numberOfWorks / workForPage); i++) {
-    pageNumber.push(i);
-  }
+export default function Paginate({ totalPages }) {
+  const { currentPage } = useSelector((state) => state.work);
+  const dispatch = useDispatch();
 
-  const numBotones = 3;
-
-  const pagePrevius = () => {
-    setIndex(index - numBotones);
-    if (page % numBotones === 0)
-      setPage(numBotones * (Math.trunc(page / numBotones) - 2) + 1);
-    else setPage(numBotones * (Math.trunc(page / numBotones) - 1) + 1);
+  const handlePageChange = (currentPage) => {
+    if (currentPage >= 1 && currentPage <= totalPages) {
+      dispatch(setCurrentPage(currentPage));
+    }
   };
 
-  const pageNext = () => {
-    setIndex(index + numBotones);
-    const suma = page + numBotones;
-    if (suma % numBotones === 0)
-      setPage(numBotones * (suma / numBotones - 1) + 1);
-    else setPage(numBotones * Math.trunc(suma / numBotones) + 1);
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const visiblePageCount = 5;
+    const startPage = Math.max(
+      1,
+      currentPage - Math.floor(visiblePageCount / 2)
+    );
+    const endPage = Math.min(totalPages, startPage + visiblePageCount - 1);
+
+    for (let page = startPage; page <= endPage; page++) {
+      const isActive = currentPage === page ? "active" : "";
+      pageNumbers.push(
+        <IconButton
+          key={page}
+          variant={isActive ? "filled" : "text"}
+          color={isActive ? "blue-gray" : "gray"}
+          onClick={() => handlePageChange(page)}
+          className={`${
+            isActive
+              ? "bg-black text-white transition-all duration-200"
+              : "text-black hover:bg-gray-300 transition-all duration-200"
+          }`}
+        >
+          {page}
+        </IconButton>
+      );
+    }
+    return pageNumbers;
   };
 
-  const specificPage = (page) => {
-    setPage(page);
-  };
   return (
-    <div className="conteiner-paginado">
-      <button
-        className={`${
-          page <= numBotones ? "atras-adelante-desactive" : "atras-adelante"
-        }`}
-        onClick={pagePrevius}
-        disabled={page <= 1}
+    <div className="flex justify-center py-6 bg-gray-100 w-full">
+      <Button
+        variant="text"
+        color="gray"
+        disabled={currentPage === 1}
+        className="flex items-center gap-2 text-black hover:bg-gray-300"
+        onClick={() => handlePageChange(1)}
       >
-        {"<<"}
-      </button>
-      {pageNumber
-        .map((noPage) => (
-          <button
-            key={noPage}
-            onClick={() => specificPage(noPage)}
-            className={`${noPage === page ? "btn-page-active" : "btn-page"}`}
-          >
-            {noPage}
-          </button>
-        ))
-        .slice(index, index + numBotones)}
-      <button
-        className={`${
-          pageNumber.length % numBotones === 0 &&
-          page >= pageNumber.length - (numBotones - 1)
-            ? "atras-adelante-desactive"
-            : page >=
-              numBotones * Math.trunc(pageNumber.length / numBotones) + 1
-            ? "atras-adelante-desactive"
-            : "atras-adelante"
-        }`}
-        onClick={pageNext}
-        disabled={page >= pageNumber.length}
+        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
+        First
+      </Button>
+      <Button
+        variant="text"
+        color="gray"
+        disabled={currentPage === 1}
+        className="flex items-center gap-2 text-black hover:bg-gray-300"
+        onClick={() => handlePageChange(currentPage - 1)}
       >
-        {">>"}
-      </button>
+        Prev
+      </Button>
+      {renderPageNumbers()}
+      <Button
+        variant="text"
+        color="gray"
+        disabled={totalPages === currentPage}
+        className="flex items-center gap-2 text-black hover:bg-gray-300"
+        onClick={() => handlePageChange(currentPage + 1)}
+      >
+        Next
+      </Button>
+      <Button
+        variant="text"
+        color="gray"
+        disabled={totalPages === currentPage}
+        className="flex items-center gap-2 text-black hover:bg-gray-300"
+        onClick={() => handlePageChange(totalPages)}
+      >
+        Last
+        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+      </Button>
     </div>
   );
 }

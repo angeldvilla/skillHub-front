@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { getWork } from "../../toolkit/thunks";
 import { getUser } from "../../toolkit/Users/usersHandler";
 
@@ -18,61 +18,34 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const { userCredentials } = useSelector((state) => state.users);
+  const { work, isLoading, currentPage } = useSelector((state) => state.work);
 
-  const { work, isLoading } = useSelector((state) => state.work);
-
-  const numberOfWorks = work.length;
-
-  //paginado
-  const [index, setIndex] = useState(0); // se crea este estado dentro de "HomePage" con la finalidad de pasarlo por props al componente "Nav" y utilizarlo, pero el uso principal de este hook es en el componente "Paginado"
-
-  const [workForPage, setWorkForPage] = useState(15);
-  const [page, setPage] = useState(1);
-
-  const inicio = (page - 1) * workForPage;
-
-  const final = inicio + workForPage;
-
-  const works = work.slice(inicio, final);
-  //----------
+  const worksPerPage = 8;
+  const totalPages = Math.ceil(work.length / worksPerPage);
 
   useEffect(() => {
     dispatch(getWork());
     if (userCredentials && userCredentials.uid === id) {
       dispatch(getUser(id));
     }
-  }, [id, userCredentials]);
+  }, [dispatch, id, userCredentials]);
+
+  const indexOfLastWork = currentPage * worksPerPage;
+  const indexOfFirstWork = indexOfLastWork - worksPerPage;
+  const currentWorks = work.slice(indexOfFirstWork, indexOfLastWork);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
-    <div className="relative justify-center items-center h-screen">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div>
-          {userCredentials && userCredentials.uid === id ? <Nav /> : <Header />}
-          <div>
-            <Filters setIndex={setIndex} setPage={setPage} />
-            <Paginated
-              numberOfWorks={numberOfWorks}
-              workForPage={workForPage}
-              page={page}
-              setPage={setPage}
-              index={index}
-              setIndex={setIndex}
-            />
-            <Card work={works} />
-            <Paginated
-              numberOfWorks={numberOfWorks}
-              workForPage={workForPage}
-              page={page}
-              setPage={setPage}
-              index={index}
-              setIndex={setIndex}
-            />
-            <Footer />
-          </div>
-        </div>
-      )}
+    <div className="flex flex-col justify-center items-center">
+      {userCredentials && userCredentials.uid === id ? <Nav /> : <Header />}
+      <Filters />
+      <Paginated totalPages={totalPages} />
+      <Card work={currentWorks} />
+      <Paginated totalPages={totalPages} />
+      <Footer />
     </div>
   );
 }
