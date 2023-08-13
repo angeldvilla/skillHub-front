@@ -9,11 +9,19 @@ import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
 import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
+
+import MercadoPago from "./components/mercadoPago/MercadoPago";
+
+/* ------------------------------------------- */
+
+import FormTemporal from "./components/FormWorkCreated/FormTemporal";
+import Next from "./components/mercadoPago/Next";
 import Error404 from "./components/error404/Error404";
 
 /* ------------------------------------------- */
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 /* ------------------------------------------- */
 
 function App() {
@@ -35,6 +43,11 @@ function App() {
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
       <Route path="/payment-policies" element={<UnderDevelopment />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
+      <Route path="/TemporalForm" element={<FormTemporal />} />
+
+      <Route path="/mercadoPago" element={<MercadoPago />} />
+      <Route path="/next/:payment_id" element={<Next />} />
+  
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
@@ -46,6 +59,7 @@ function App() {
         <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/home" replace />} />
         <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/home" replace />} />
       </Route> 
+
     </Routes>
   );
 }
