@@ -30,3 +30,10 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
     throw new Error(error);
   }
 });
+
+
+export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  return null;
+});

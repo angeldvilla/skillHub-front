@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import validation from "../Validations/Validations";
 import { postJobs, getTypes } from "../../toolkit/ActionsworkPublications";
 import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
+import { getUser } from "../../toolkit/Users/usersHandler";
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -50,7 +51,8 @@ export default function FormCreateWork() {
 
   useEffect(() => {
     dispatch(getTypes());
-  }, [dispatch])
+    dispatch(getUser(id))
+  }, [dispatch, id])
 
   function handleChange(event) {
     const { name, value } = event.target;

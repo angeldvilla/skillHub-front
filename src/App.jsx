@@ -34,13 +34,14 @@ function App() {
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
         <Route path="home" element={<Home />} />
+        <Route path="jobdetail/:id" element={<JobDetail />} />
         <Route path="my-profile" element={<Profile  />} />
         <Route path="CreateWork" element={<FormWorkCreated />} />
         <Route path="Edit-Work" element={<FormWorkCreated />} />
         <Route path="WorkPublications" element={<WorkPublications />} />
         <Route path="settings" element={<Settings  />} />
-        
       </Route>
+      
     </Routes>
   );
 }

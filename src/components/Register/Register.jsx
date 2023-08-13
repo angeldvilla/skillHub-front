@@ -70,7 +70,8 @@ export default function Register() {
           dispatch(userLogin(googleCredentials));
 
           setTimeout(() => {
-            navigate("/signin");
+            const uid = googleCredentials.uid;
+            navigate(`/user-panel/${uid}/home`);
           }, 2000);
 
           ShowMessage(`Bienvenido ${userCredentials.user.displayName}`);

@@ -8,8 +8,28 @@ import {
 } from "@material-tailwind/react";
 import moneyBag from "../../assets/moneyBag.svg";
 import ubication from "../../assets/ubication.svg";
+import { useEffect } from "react";
+import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../toolkit/Users/usersHandler";
 
-const CardItem = ({ _id, title, image, address, price, ability }) => (
+
+const CardItem = ({ _id, title, image, address, price, ability }) => {
+
+  const { id } = useParams(); 
+
+  const dispatch = useDispatch();
+
+  const { userCredentials } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (userCredentials && userCredentials.uid === id) {
+      dispatch(getUser(id));
+    }
+  }, [id, userCredentials])
+
+  return (
+
   <Card className="flex justfiy-center w-full max-w-[26rem] shadow-lg hover:shadow-lg hover:shadow-gray-400 transition-all duration-300 ">
     <div className="flex flex-col justify-center">
       <CardHeader floated={false} color="blue-gray">
@@ -49,9 +69,9 @@ const CardItem = ({ _id, title, image, address, price, ability }) => (
           <div></div>
         </div>
       </CardBody>
-      <a href={`/jobDetail/${_id}`}>
+      <a href={userCredentials && userCredentials.uid === id ? (`/user-panel/${id}/jobDetail/${_id}`) : (`/jobDetail/${_id}`)}>
         <Button
-          variant="h2"
+          variant="filled"
           className="flex items-center gap-2 text-gray-800 text-xs font-semibold bg-transparent shadow-none hover:shadow-none hover:bg-gray-200"
         >
           Conocer más
@@ -73,6 +93,9 @@ const CardItem = ({ _id, title, image, address, price, ability }) => (
       </a>
     </div>
   </Card>
-);
+  );
+
+
+}
 
 export default CardItem;

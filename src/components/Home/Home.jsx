@@ -39,15 +39,16 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getWork());
-    dispatch(getUser(id));
-  }, [id]);
+    if (userCredentials && userCredentials.uid === id) {
+      dispatch(getUser(id));
+    }
+  }, [id, userCredentials]);
 
 
   return (
     <div className="relative justify-center items-center h-screen">
       {isLoading 
-      ? <Loader/> 
-      : (
+      ? <Loader/> : (
         <div>
         {
           userCredentials && userCredentials.uid === id ? <Nav/> : <Header/>

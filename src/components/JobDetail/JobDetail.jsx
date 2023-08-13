@@ -2,55 +2,59 @@ import React, { useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork, getDetailWork, detailReset } from "../../toolkit/thunks";
-import { getUsers } from "../../toolkit/Users/usersHandler";
-import { userSlice } from "../../toolkit/Users/usersSlice";
+import { getUser, getUsers } from "../../toolkit/Users/usersHandler";
 /* -------------- */
 /* COMPONENTS */
+import Nav from "../PanelUser/Nav";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import Loader from "../Loader/Loader";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
 /* -------------- */
 
 /* ASSESTS */
-import garden1 from "../../assets/garden1.jpg";
-import garden2 from "../../assets/garden2.jpg";
-import garden3 from "../../assets/garden3.webp";
 import phone from "../../assets/phone.svg";
 import dollarSign from "../../assets/dollar-sign.svg";
 import location from "../../assets/location.svg";
 /* -------------- */
 
 export default function JobDetail() {
+
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
   const { work, detail, isLoading } = useSelector((state) => state.work);
 
-  const { users } = useSelector((state) => state[userSlice.name]);
+  const { users, user, userCredentials } = useSelector((state) => state.users);
 
   const infoUser = users.find(user => user._id === detail.users)
 
   useEffect(() => {
     !work.length && dispatch(getWork());
     !users.length && dispatch(getUsers());
+    !user.length && dispatch(getUser(id));
     dispatch(getDetailWork(id));
     return () => {
       dispatch(detailReset());
     };
-  }, [dispatch, id, work.length, users.length]);
+  }, [dispatch, id, work.length, users.length ,user.length]);
 
-  const images = [detail?.image, garden1, garden2, garden3];
+  const images = [detail?.image];
 
   return (
     <div>
-      {isLoading && <p>LOADING...</p>}
-      <Header />
+      {isLoading && <Loader/>}
+      
+      {
+        userCredentials && userCredentials.uid === id ? <Nav/> : <Header />
+      }
 
-      <div className="flex flex-col justify-center items-center py-5 bg-gray-800 rounded-lg m-auto font-mono">
+      <div className="flex flex-col justify-center items-center py-5 bg-gray-800 rounded-lg m-auto">
         <div>
           <NavLink
-            to={"/home"}
+            to={ userCredentials && userCredentials.uid === id ? (`/user-panel/${id}/home`) : ("/home")
+            }
             className="bg-blue-900 hover:bg-blue-700 text-white text-center p-2 w-full mb-5 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
           >
             {"<<"}

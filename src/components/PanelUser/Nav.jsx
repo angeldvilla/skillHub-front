@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import userProfile from "../../assets/user-profile.svg";
+import { logoutUser } from "../../toolkit/Users/usersHandler";
 
 import {
   Collapse,
@@ -29,7 +30,27 @@ import {
   PaperClipIcon,
 } from "@heroicons/react/24/outline";
 
+
 const ProfileMenu = ({ userAuth }) => {
+
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    localStorage.removeItem("userCredentials");
+    navigate("/home");
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
   
   // profile menu component
   const profileMenuItems = [
@@ -68,16 +89,9 @@ const ProfileMenu = ({ userAuth }) => {
       label: "Cerrar Sesión",
       value: "logout",
       icon: PowerIcon,
+      onclick: () => handleLogout(),
     },
   ]
-
-  const { id } = useParams();
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -143,6 +157,17 @@ const ProfileMenu = ({ userAuth }) => {
 };
 
 const NavList = () => {
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    localStorage.removeItem("userCredentials");
+    navigate("/home");
+  };
+
   // Nav List component
   const navListItems = [
     {
@@ -155,12 +180,19 @@ const NavList = () => {
       value: "ubication",
       icon: MapPinIcon,
     },
+    {
+      label: "Cerrar Sesión",
+      value: "home",
+      onclick: () => handleLogout(),
+      icon: PowerIcon
+    }
   ];
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      {navListItems.map(({ label, icon, value }, key) => (
+      {navListItems.map(({ label, icon, value, onclick }, key) => (
         <a
           key={key}
+          onClick={onclick}
           href={`/${value}`}
           variant="large"
           color="blue-gray"
@@ -188,7 +220,7 @@ export default function Nav() {
   const toggleIsNavOpen = () => {
     setIsNavOpen((cur) => !cur);
   };
-
+  
   useEffect(() => {
     window.addEventListener(
       "resize",
@@ -208,7 +240,6 @@ export default function Nav() {
               alt="skillHub Logo"
             />
           </a>
-            <a href="/home">LOGOUT</a>
           <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
             <NavList />
           </div>
