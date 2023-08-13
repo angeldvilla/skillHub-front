@@ -28,13 +28,6 @@ import { useSelector } from "react-redux";
 function App() {
   const { userCredentials } = useSelector((state) => state.users);
 
-  useEffect(() => {
-    // Si el usuario está logueado, reemplaza la ruta actual en el historial
-    if (userCredentials) {
-      window.history.replaceState(null, "", `/user-panel/${userCredentials.uid}/home`);
-    }
-  }, [userCredentials]);
-
   return (
     <Routes>
       

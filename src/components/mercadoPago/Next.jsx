@@ -2,6 +2,7 @@ import React, { useEffect, useState }from 'react'
 import {useParams } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 //require("dotenv").config();
 
 
@@ -48,7 +49,7 @@ const Next = () => {
   <div>
     TU pago se ralizó con exito
     <br/>
-    {datos===null?"cargando":<button onClick={handleGuardarDatos}> next</button>}
+    {datos===null?<Loader/>:<button onClick={handleGuardarDatos}> next</button>}
 
   </div>
   )
