@@ -66,6 +66,7 @@ function App() {
         <Route path="Edit-Work" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/error404" replace />} />
         <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/error404" replace />} />
         <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/error404" replace />} />
+        <Route path="memberShip" element={userCredentials ? <MercadoPago/> : <Navigate to="/error404" replace />} />
       </Route> 
 
     </Routes>
