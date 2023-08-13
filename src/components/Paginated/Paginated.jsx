@@ -45,7 +45,7 @@ export default function Paginate({ totalPages }) {
   };
 
   return (
-    <div className="flex py-4">
+    <div className="flex justify-center py-6 bg-gray-100 w-full">
       <Button
         variant="text"
         color="gray"
