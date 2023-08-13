@@ -1,7 +1,7 @@
 import React, { isValidElement } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect , useRef} from "react";
+import { useDispatch, useSelector  } from "react-redux";
 import { useParams } from "react-router-dom";
 import validation from "../Validations/Validations";
 import { postJobs, getTypes } from "../../toolkit/ActionsworkPublications";
@@ -22,11 +22,15 @@ const maxSiseMB = 2 * 1024 * 1024; // Tamaño de 1mb para las fotos
 
 export default function FormCreateWork() {
 
-  // const works = useSelector((state) => state.formwork.allPublicationsWork)
+  //  const allWorkTypes = useSelector((state) => state.formwork.allPublicationsWork)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ability = useSelector((state) => state.formwork.allWorkTypes)
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
+  const [fileSelected, setFileSelected] = useState(false); //Soluciona el filed seleccionado
+  const fileInputRef = useRef(null);
+
+
 
 
   // const params = useParams()
@@ -136,6 +140,12 @@ export default function FormCreateWork() {
     setTextDesciption("");
     setDirectionValue("");
     setPriceValue("");
+    setFileSelected(false);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+
 
     setWorkData({
       title: "",
@@ -206,6 +216,7 @@ export default function FormCreateWork() {
         } catch (error) {
           console.log("Error en el componente UploadImage en cludinary", error);
         }
+        setFileSelected(true);
       } else {
         setErrors({
           ...errors,
@@ -373,13 +384,15 @@ export default function FormCreateWork() {
             <input
               type="file"
               name="image"
-              placeholder="Ingresa URL de imagen"
               onChange={(event) => {
                 handleChange(event);
                 uploadImage(event.target.files)
               }}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
+              ref={fileInputRef}
             />
+            {fileSelected && <p>Archivo seleccionado</p>}
+
 
             {previewImage}
             {errors.image && (
