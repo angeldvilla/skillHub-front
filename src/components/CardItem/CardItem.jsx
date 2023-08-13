@@ -35,7 +35,7 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
         </CardHeader>
         <CardBody>
           <Typography variant="h6" color="gray" className="mb-4 uppercase">
-            {ability[0]}
+            {ability.map(element=><li>{element}</li>)}
           </Typography>
           <Typography variant="h4" color="blue-gray" className="mb-2">
             {title.charAt(0).toUpperCase() + title.slice(1)}
