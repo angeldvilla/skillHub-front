@@ -13,12 +13,11 @@ import Paginated from "../Paginated/Paginated";
 import Loader from "../Loader/Loader";
 
 export default function Home() {
-
   const { id } = useParams();
-  
+
   const dispatch = useDispatch();
 
-  const  { userCredentials }  = useSelector(state => state.users);
+  const { userCredentials } = useSelector((state) => state.users);
 
   const { work, isLoading } = useSelector((state) => state.work);
 
@@ -44,16 +43,14 @@ export default function Home() {
     }
   }, [id, userCredentials]);
 
-
   return (
     <div className="relative justify-center items-center h-screen">
-      {isLoading 
-      ? <Loader/> : (
+      {isLoading ? (
+        <Loader />
+      ) : (
         <div>
-        {
-          userCredentials && userCredentials.uid === id ? <Nav/> : <Header/>
-        }
-            <div>
+          {userCredentials && userCredentials.uid === id ? <Nav /> : <Header />}
+          <div>
             <Filters setIndex={setIndex} setPage={setPage} />
             <Paginated
               numberOfWorks={numberOfWorks}
@@ -73,10 +70,9 @@ export default function Home() {
               setIndex={setIndex}
             />
             <Footer />
-            </div>
+          </div>
         </div>
-      )
-    }
+      )}
     </div>
   );
 }

@@ -30,32 +30,21 @@ import {
   PaperClipIcon,
 } from "@heroicons/react/24/outline";
 
-
-const ProfileMenu = ({ userAuth }) => {
-
+const ProfileMenu = ({ userAuth, handleLogout }) => {
   const { id } = useParams();
 
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-    localStorage.removeItem("userCredentials");
-    navigate("/home");
-  };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-  
+
   // profile menu component
   const profileMenuItems = [
     {
-      label: `${userAuth ? `${userAuth?.firstName} ${userAuth?.lastName}` : ""}`,
+      label: `${
+        userAuth ? `${userAuth?.firstName} ${userAuth?.lastName}` : ""
+      }`,
       value: "my-profile",
       icon: UserCircleIcon,
     },
@@ -87,11 +76,11 @@ const ProfileMenu = ({ userAuth }) => {
     },
     {
       label: "Cerrar Sesión",
-      value: "logout",
+      value: "home",
       icon: PowerIcon,
-      onclick: () => handleLogout(),
+      onclick: handleLogout,
     },
-  ]
+  ];
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -118,37 +107,53 @@ const ProfileMenu = ({ userAuth }) => {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon, value }, key) => {
+        {profileMenuItems.map(({ label, icon, value, onclick }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
 
           return (
-            <a key={key} href={`/user-panel/${id}/${value}`}>
-              {
+            <div key={key}>
+              {isLastItem ? (
                 <MenuItem
                   key={label}
-                  onClick={closeMenu}
-                  className={`flex items-center gap-2 rounded ${
-                    isLastItem
-                      ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                      : ""
-                  }`}
+                  onClick={handleLogout}
+                  className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
                 >
                   {React.createElement(icon, {
-                    className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                    className: `h-4 w-4 text-red-500`,
                     strokeWidth: 2,
                   })}
 
                   <Typography
                     as="span"
                     variant="small"
-                    className="font-normal"
-                    color={isLastItem ? "red" : "inherit"}
+                    className="font-normal text-red-500"
                   >
                     {label}
                   </Typography>
                 </MenuItem>
-              }
-            </a>
+              ) : (
+                <a key={key} href={`/user-panel/${id}/${value}`}>
+                  <MenuItem
+                    key={label}
+                    onClick={onclick || closeMenu}
+                    className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
+                  >
+                    {React.createElement(icon, {
+                      className: `h-4 w-4`,
+                      strokeWidth: 2,
+                    })}
+
+                    <Typography
+                      as="span"
+                      variant="small"
+                      className="font-normal"
+                    >
+                      {label}
+                    </Typography>
+                  </MenuItem>
+                </a>
+              )}
+            </div>
           );
         })}
       </MenuList>
@@ -157,17 +162,6 @@ const ProfileMenu = ({ userAuth }) => {
 };
 
 const NavList = () => {
-
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-  
-  const handleLogout = () => {
-    dispatch(logoutUser());
-    localStorage.removeItem("userCredentials");
-    navigate("/home");
-  };
-
   // Nav List component
   const navListItems = [
     {
@@ -180,19 +174,12 @@ const NavList = () => {
       value: "ubication",
       icon: MapPinIcon,
     },
-    {
-      label: "Cerrar Sesión",
-      value: "home",
-      onclick: () => handleLogout(),
-      icon: PowerIcon
-    }
   ];
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      {navListItems.map(({ label, icon, value, onclick }, key) => (
+      {navListItems.map(({ label, icon, value }, key) => (
         <a
           key={key}
-          onClick={onclick}
           href={`/${value}`}
           variant="large"
           color="blue-gray"
@@ -213,21 +200,29 @@ const NavList = () => {
 export default function Nav() {
   const { id } = useParams();
 
-  const  { user }  = useSelector(state => state.users);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.users);
 
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const toggleIsNavOpen = () => {
     setIsNavOpen((cur) => !cur);
   };
-  
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/home", { replace: true });
+  };
+
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
-
 
   return (
     <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
@@ -253,7 +248,7 @@ export default function Nav() {
             <Bars2Icon className="h-6 w-6" />
           </IconButton>
         </div>
-        <ProfileMenu userAuth={user} />
+        <ProfileMenu userAuth={user} handleLogout={handleLogout} />
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />

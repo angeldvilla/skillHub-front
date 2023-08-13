@@ -33,7 +33,6 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
 
 
 export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
+  localStorage.removeItem("userCredentials");
   return null;
 });

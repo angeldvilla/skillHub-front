@@ -11,16 +11,19 @@ import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
 
 /* ------------------------------------------- */
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 /* ------------------------------------------- */
 
 function App() {
+  const { userCredentials } = useSelector((state) => state.users);
 
   return (
     <Routes>
+      
       <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/signin" element={<Login />} />
+      <Route path="/signin" element={<Login /> } />
       <Route path="/signup" element={<Register />} />
       <Route path="/jobdetail/:id" element={<JobDetail />} />
 
@@ -33,15 +36,14 @@ function App() {
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
-        <Route path="home" element={<Home />} />
-        <Route path="jobdetail/:id" element={<JobDetail />} />
-        <Route path="my-profile" element={<Profile  />} />
-        <Route path="CreateWork" element={<FormWorkCreated />} />
-        <Route path="Edit-Work" element={<FormWorkCreated />} />
-        <Route path="WorkPublications" element={<WorkPublications />} />
-        <Route path="settings" element={<Settings  />} />
-      </Route>
-      
+        <Route path="home" element={userCredentials ? <Home /> : <Navigate to="/home" replace />} />
+        <Route path="jobdetail/:id" element={userCredentials ? <JobDetail /> : <Navigate to="/home" replace />} />
+        <Route path="my-profile" element={userCredentials ? <Profile /> : <Navigate to="/home" replace />} />
+        <Route path="CreateWork" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
+        <Route path="Edit-Work" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
+        <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/home" replace />} />
+        <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/home" replace />} />
+      </Route> 
     </Routes>
   );
 }
