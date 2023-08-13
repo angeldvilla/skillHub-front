@@ -7,23 +7,24 @@ import JobDetail from "./components/JobDetail/JobDetail";
 import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
-import UserPanel from "./components/PanelUser/UserPanel";
-import HomeUser from "./components/PanelUser/HomeUser";
 import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
 import Error404 from "./components/error404/Error404";
 
 /* ------------------------------------------- */
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 /* ------------------------------------------- */
 
 function App() {
+  const { userCredentials } = useSelector((state) => state.users);
 
   return (
     <Routes>
+      
       <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/signin" element={<Login />} />
+      <Route path="/signin" element={<Login /> } />
       <Route path="/signup" element={<Register />} />
       <Route path="/jobdetail/:id" element={<JobDetail />} />
       <Route path="/error404" element={<Error404 />} />
@@ -36,14 +37,15 @@ function App() {
       <Route path="/contact-us" element={<UnderDevelopment />} />
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
-      <Route path="/user-panel/:id/*" element={<UserPanel/>}>
-        <Route path="home" element={<HomeUser />} />
-        <Route path="my-profile" element={<Profile  />} />
-        <Route path="CreateWork" element={<FormWorkCreated />} />
-        <Route path="Edit-Work" element={<FormWorkCreated />} />
-        <Route path="WorkPublications" element={<WorkPublications />} />
-        <Route path="settings" element={<Settings  />} />
-      </Route>
+      <Route path="/user-panel/:id/*">
+        <Route path="home" element={userCredentials ? <Home /> : <Navigate to="/home" replace />} />
+        <Route path="jobdetail/:id" element={userCredentials ? <JobDetail /> : <Navigate to="/home" replace />} />
+        <Route path="my-profile" element={userCredentials ? <Profile /> : <Navigate to="/home" replace />} />
+        <Route path="CreateWork" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
+        <Route path="Edit-Work" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
+        <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/home" replace />} />
+        <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/home" replace />} />
+      </Route> 
     </Routes>
   );
 }

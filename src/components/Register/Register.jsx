@@ -70,7 +70,8 @@ export default function Register() {
           dispatch(userLogin(googleCredentials));
 
           setTimeout(() => {
-            navigate("/home");
+            const uid = googleCredentials.uid;
+            navigate(`/user-panel/${uid}/home`);
           }, 2000);
 
           ShowMessage(`Bienvenido ${userCredentials.user.displayName}`);
@@ -115,7 +116,8 @@ export default function Register() {
       dispatch(postUser(newUser));
 
       setTimeout(() => {
-        navigate("/home");
+        const uid = newUser.uid;
+        navigate(`/user-panel/${uid}/home`);
       }, 3000);
 
       resetUserData(setUserData);

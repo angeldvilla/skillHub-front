@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import validation from "../Validations/Validations";
 import { postJobs, getTypes } from "../../toolkit/ActionsworkPublications";
 import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
+import { getUser } from "../../toolkit/Users/usersHandler";
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -14,6 +15,7 @@ import axios from "axios";
 
 // Components
 import Footer from "../Footer/Footer";
+import Nav from "../PanelUser/Nav";
 
 //_______________________________________
 
@@ -22,7 +24,9 @@ const maxSiseMB = 2 * 1024 * 1024; // Tamaño de 1mb para las fotos
 
 export default function FormCreateWork() {
 
+  // const works = useSelector((state) => state.formwork.allPublicationsWork)
   //  const allWorkTypes = useSelector((state) => state.formwork.allPublicationsWork)
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ability = useSelector((state) => state.formwork.allWorkTypes)
@@ -56,9 +60,9 @@ export default function FormCreateWork() {
   })
 
   useEffect(() => {
-    dispatch(getTypes())
-  }, [dispatch])
-
+    dispatch(getTypes());
+    dispatch(getUser(id))
+  }, [dispatch, id])
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -122,7 +126,7 @@ export default function FormCreateWork() {
       toast.success("Trabajo creado correctamente");
 
       setTimeout(() => {
-        navigate("/home");
+        navigate(`/user-panel/${id}/home`);
       }, 3000);
     }
   }
@@ -241,17 +245,15 @@ export default function FormCreateWork() {
     </span>
   ) : null;
 
-
-
-
   //___________________________________________
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center my-8">
-        <div className="relative">
+      <div className="flex flex-col items-center justify-center">
+        <Nav />
+        <div className="relative mt-5">
           <button
-            onClick={() => navigate("/home")}
+            onClick={() => navigate(`/user-panel/${id}/home`)}
             className="absolute right-32 px-4 py-1 bg-gray-700 rounded-md hover:cursor-pointer hover:bg-gray-600 transition-all"
           >
             {"<<"}
@@ -259,8 +261,8 @@ export default function FormCreateWork() {
         </div>
 
         <form onSubmit={(event) => handleSubmit(event)}
-          className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-6 rounded-lg shadow-neutral-900 shadow-lg" >
-          <h1 className="text-3xl text-center text-white mb-7 mt-4">
+          className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-6 rounded-lg shadow-neutral-900 shadow-lg mb-5" >
+          <h1 className="text-3xl text-center text-white mb-7 mt-6">
             ¡Postula tu trabajo!
           </h1>
 
