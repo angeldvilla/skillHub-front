@@ -10,7 +10,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../../firebase";
 import { userLogin } from "../../toolkit/Users/usersSlice";
-import { ShowMessage } from "../ShowMessage/ShowMessage";
+import { Toaster, toast } from "sonner";
+import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import passwordEye from "../../assets/password-eye.svg";
 import phone from "../../assets/phone.svg";
 import google from "../../assets/google.svg";
@@ -53,7 +54,7 @@ export default function Register() {
     const hasErrors = Object.keys(errors).length;
 
     if (platform === "email" && (hasEmptyValues || hasErrors)) {
-      ShowMessage("Datos no validos", "error");
+      toast.error("Datos no validos");
       return;
     }
 
@@ -73,13 +74,19 @@ export default function Register() {
             navigate("/home");
           }, 2000);
 
-          ShowMessage(`Bienvenido ${userCredentials.user.displayName}`);
+          toast.message("Bienvenido", {
+            description: userCredentials.user.displayName,
+          });
           break;
         case "github":
-          console.log("GitHub");
+          toast.message("GitHub", {
+            description: "Próximamente",
+          });
           break;
         case "facebook":
-          console.log("Facebook");
+          toast.message("Facebook", {
+            description: "Próximamente",
+          });
           break;
         case "email":
           console.log("Email");
@@ -88,7 +95,7 @@ export default function Register() {
           break;
       }
     } catch (error) {
-      ShowMessage("Ops, algo salió mal", "error");
+      toast.error("Ups, algo salió mal");
     }
   };
 
@@ -116,29 +123,28 @@ export default function Register() {
 
       setTimeout(() => {
         navigate("/home");
-      }, 3000);
+      }, 2000);
 
       resetUserData(setUserData);
-      ShowMessage("Has sido registrado correctamente");
-      setTimeout(() => {
-        ShowMessage(`Bienvenido ${userCredentials.user.email}`);
-      }, 1000);
+      toast.message("Bienvenido", {
+        description: userCredentials.user.email,
+      });
 
       return userCredentials;
     } catch (error) {
       if (platform === "google" || platform === "email") {
         switch (error.code) {
           case "auth/email-already-in-use":
-            ShowMessage("Email en uso", "error");
+            toast.error("Email en uso");
             break;
           case "auth/invalid-email":
-            ShowMessage("Email inválido", "error");
+            toast.error("Email inválido");
             break;
           case "auth/weak-password":
-            ShowMessage("Contraseña demasiado débil", "error");
+            toast.error("Contraseña demasiado débil");
             break;
           default:
-            ShowMessage("Ops, algo salió mal", "error");
+            toast.error("Ups, algo salió mal");
         }
       }
     }
@@ -326,36 +332,34 @@ export default function Register() {
         {/* Authentication */}
         <div className="bg-gray-900 w-64 h-0.5 mb-5"></div>
         <h4 className="text-lg mb-5">O continúa con</h4>
-        <div className="flex justify-center gap-6">
-          <button data-platform="google" onClick={handleOnClick}>
-            <img
-              src={google}
-              alt="google-logo"
-              className="w-9 hover:cursor-pointer transition"
-            />
-          </button>
-          <button
+        <div className="flex justify-center gap-4 mt-2">
+          <Button
+            data-platform="google"
+            onClick={handleOnClick}
+            ripple="dark"
+            color="white"
+          >
+            <img src={google} alt="google-logo" className="w-6" />
+          </Button>
+          <Button
             data-platform="facebook"
-            onClick={() => ShowMessage("Próximamente")}
+            onClick={handleOnClick}
+            ripple="dark"
+            color="white"
           >
-            <img
-              src={facebook}
-              alt="facebook-logo"
-              className="w-10 hover:cursor-pointer transition"
-            />
-          </button>
-          <button
+            <img src={facebook} alt="facebook-logo" className="w-6" />
+          </Button>
+          <Button
             data-platform="github"
-            onClick={() => ShowMessage("Próximamente")}
+            onClick={handleOnClick}
+            ripple="dark"
+            color="white"
           >
-            <img
-              src={github}
-              alt="github-logo"
-              className="w-10 hover:cursor-pointer transition"
-            />
-          </button>
+            <img src={github} alt="github-logo" className="w-6" />
+          </Button>
         </div>
       </form>
+      <Toaster richColors closeButton />
     </div>
   );
 }
