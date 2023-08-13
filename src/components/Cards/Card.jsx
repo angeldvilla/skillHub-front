@@ -2,12 +2,10 @@
 import CardItem from "../CardItem/CardItem";
 
 const Card = ({ work }) => (
-  <div className="flex flex-wrap justify-center ml-32 font-sans">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 m-32 rounded-md gap-32 mt-10 items-center">
-      {work.map((job) => (
-        <CardItem key={job._id} {...job} />
-      ))}
-    </div>
+  <div className="grid place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-5">
+    {work.map((job) => (
+      <CardItem key={job._id} {...job} />
+    ))}
   </div>
 );
 
