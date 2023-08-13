@@ -12,12 +12,9 @@ import { auth } from "../../firebase";
 import { userLogin } from "../../toolkit/Users/usersSlice";
 import { Toaster, toast } from "sonner";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import passwordEye from "../../assets/password-eye.svg";
-import phone from "../../assets/phone.svg";
 import google from "../../assets/google.svg";
 import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
-import email from "../../assets/email.png";
 import {
   validateUserData,
   resetUserData,
@@ -69,6 +66,13 @@ export default function Register() {
             accessToken: userCredentials.user.accessToken,
           };
           dispatch(userLogin(googleCredentials));
+          setErrors({});
+          resetUserData(setUserData);
+
+          localStorage.setItem(
+            "userCredentials",
+            JSON.stringify(googleCredentials)
+          );
 
           setTimeout(() => {
             const uid = googleCredentials.uid;
@@ -121,16 +125,24 @@ export default function Register() {
       };
 
       dispatch(postUser(newUser));
+      toast.message("Bienvenido", {
+        description: userCredentials.user.email,
+      });
+
+      localStorage.setItem(
+        "userCredentials",
+        JSON.stringify({
+          uid: userCredentials.user.uid,
+          accessToken: userCredentials.user.accessToken,
+        })
+      );
 
       setTimeout(() => {
         const uid = newUser.uid;
         navigate(`/user-panel/${uid}/home`);
-      }, 3000);
+      }, 2000);
 
       resetUserData(setUserData);
-      toast.message("Bienvenido", {
-        description: userCredentials.user.email,
-      });
 
       return userCredentials;
     } catch (error) {
@@ -158,209 +170,168 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-10 rounded-lg shadow-neutral-900 shadow-lg"
-      >
-        <h1 className="text-3xl text-center text-white mt-1 mb-8">REGISTRO</h1>
-        <div className="flex flex-col">
-          {/* First Name */}
-          <div className="flex flex-col">
-            <label
-              htmlFor="firstName"
-              className="pl-2 mb-1 text-lg text-slate-300"
-            >
-              Nombre
-            </label>
-            <input
+    <div className="flex flex-col items-center justify-center h-screen font-sans">
+      <Card shadow={false} className="bg-[#f8fafc] p-4 py-10 w-96">
+        <Typography variant="h4" color="blue-gray" className="mb-2">
+          Registrarse
+        </Typography>
+        <form onSubmit={handleSubmit} className="mt-4 mb-4">
+          <div className="mb-4 flex flex-col gap-4">
+            {/* First Name */}
+            <Input
               type="text"
+              size="lg"
+              label="Nombre"
+              color="black"
               name="firstName"
               value={userData.firstName}
               onChange={handleChange}
-              className="bg-neutral-900 opacity-50 p-1.5 mb-3 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
             {errors.firstName && (
               <span className="text-center text-red-500 mb-1">
                 {errors.firstName}
               </span>
             )}
-          </div>
 
-          {/* Last Name */}
-          <div className="flex flex-col">
-            <label
-              htmlFor="lastName"
-              className="pl-2 mb-1 text-lg text-slate-300"
-            >
-              Apellido
-            </label>
-            <input
+            {/* Last Name */}
+            <Input
               type="text"
+              size="lg"
+              label="Apellido"
+              color="black"
               name="lastName"
               value={userData.lastName}
               onChange={handleChange}
-              className="bg-neutral-900 opacity-50 p-1.5 mb-3 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
             {errors.lastName && (
               <span className="text-center text-red-500 mb-1">
                 {errors.lastName}
               </span>
             )}
-          </div>
 
-          {/* Email */}
-          <div className="flex flex-col">
-            <label htmlFor="email" className="pl-2 mb-1 text-lg text-slate-300">
-              Email
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                name="email"
-                value={userData.email}
-                onChange={handleChange}
-                className="bg-neutral-900 opacity-50 p-1.5 mb-3 rounded-md w-80 text-neutral-100 text-center outline-none"
-              />
-              <img src={email} className="absolute top-0 right-1 w-9 h-9" />
-            </div>
+            {/* Email */}
+            <Input
+              type="text"
+              size="lg"
+              label="Email"
+              color="black"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+            />
             {errors.email && (
               <span className="text-center text-red-500 mb-1">
                 {errors.email}
               </span>
             )}
-          </div>
 
-          {/* Phone Number */}
-          <div className="flex flex-col">
-            <label
-              htmlFor="phoneNumber"
-              className="pl-2 mb-1 text-lg text-slate-300"
-            >
-              Número de telefono
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                name="phoneNumber"
-                value={userData.phoneNumber}
-                onChange={handleChange}
-                className="bg-neutral-900 opacity-50 p-1.5 mb-3 rounded-md w-80 text-neutral-100 text-center outline-none"
-              />
-              <img src={phone} className="absolute top-0 right-1 w-6 h-9" />
-            </div>
+            {/* Phone Number */}
+            <Input
+              type="text"
+              size="lg"
+              label="Número de teléfono"
+              color="black"
+              name="phoneNumber"
+              value={userData.phoneNumber}
+              onChange={handleChange}
+            />
             {errors.phoneNumber && (
               <span className="text-center text-red-500 mb-1">
                 {errors.phoneNumber}
               </span>
             )}
-          </div>
 
-          {/* Password */}
-          <div className="flex flex-col">
-            <label
-              htmlFor="password"
-              className="pl-2 mb-1 text-lg text-slate-300"
-            >
-              Contraseña
-            </label>
-            <div className="relative">
-              <input
-                type="password"
-                name="password"
-                value={userData.password}
-                onChange={handleChange}
-                className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-              />
-              <img
-                src={passwordEye}
-                className="absolute top-0 right-1 w-7 h-9"
-              />
-            </div>
+            {/* Password */}
+            <Input
+              type="text"
+              size="lg"
+              label="Password"
+              color="black"
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+            />
             {errors.password && (
               <span className="text-center text-red-500 mb-1">
                 {errors.password}
               </span>
             )}
-          </div>
 
-          {/* Confirm Password */}
+            {/* Confirm Password */}
+            <Input
+              type="text"
+              size="lg"
+              label="Confirm password"
+              color="black"
+              name="confirmPassword"
+              value={userData.confirmPassword}
+              onChange={handleChange}
+            />
+          </div>
+          {errors.confirmPassword && (
+            <span className="text-center text-red-500 mb-1">
+              {errors.confirmPassword}
+            </span>
+          )}
+
+          {/* Buttons */}
           <div className="flex flex-col">
-            <label
-              htmlFor="confirmPassword"
-              className="pl-2 mb-1 text-lg text-slate-300"
+            <button
+              data-platform="email"
+              onClick={handleOnClick}
+              className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-gray-500 transition-all font-semibold"
             >
-              Confirmar contraseña
-            </label>
-            <div className="relative">
-              <input
-                type="password"
-                name="confirmPassword"
-                value={userData.confirmPassword}
-                onChange={handleChange}
-                className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-              />
-              <img
-                src={passwordEye}
-                className="absolute top-0 right-1 w-7 h-9"
-              />
-            </div>
-            {errors.confirmPassword && (
-              <span className="text-center text-red-500 mb-1">
-                {errors.confirmPassword}
-              </span>
-            )}
+              Registrarse
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="w-full mt-2 bg-gray-700 rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-gray-500 transition-all font-semibold"
+            >
+              Reiniciar
+            </button>
           </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="flex flex-col">
-          <button
-            data-platform="email"
-            onClick={handleOnClick}
-            className="p-2 mt-10 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition"
-          >
-            Registrarse
-          </button>
-          <button
-            type="button"
-            onClick={handleReset}
-            className="p-2 mt-3 mb-12 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
-          >
-            Reiniciar
-          </button>
-        </div>
+          <Typography color="gray" className="mt-4 text-center font-normal">
+            ¿Ya tienes una cuenta?{" "}
+            <a href="/signin" className="font-semibold text-gray-600">
+              Ingresa
+            </a>
+          </Typography>
+        </form>
 
         {/* Authentication */}
-        <div className="bg-gray-900 w-64 h-0.5 mb-5"></div>
-        <h4 className="text-lg mb-5">O continúa con</h4>
-        <div className="flex justify-center gap-4 mt-2">
-          <Button
-            data-platform="google"
-            onClick={handleOnClick}
-            ripple="dark"
-            color="white"
-          >
-            <img src={google} alt="google-logo" className="w-6" />
-          </Button>
-          <Button
-            data-platform="facebook"
-            onClick={handleOnClick}
-            ripple="dark"
-            color="white"
-          >
-            <img src={facebook} alt="facebook-logo" className="w-6" />
-          </Button>
-          <Button
-            data-platform="github"
-            onClick={handleOnClick}
-            ripple="dark"
-            color="white"
-          >
-            <img src={github} alt="github-logo" className="w-6" />
-          </Button>
+        <div className="mt-4">
+          <Typography className="text-center text-gray-600">
+            O continúa con
+          </Typography>
+          <div className="flex justify-center gap-4 mt-2">
+            <Button
+              data-platform="google"
+              onClick={handleOnClick}
+              ripple={true}
+              color="white"
+            >
+              <img src={google} alt="google-logo" className="w-6" />
+            </Button>
+            <Button
+              data-platform="facebook"
+              onClick={handleOnClick}
+              ripple={true}
+              color="white"
+            >
+              <img src={facebook} alt="facebook-logo" className="w-6" />
+            </Button>
+            <Button
+              data-platform="github"
+              onClick={handleOnClick}
+              ripple={true}
+              color="white"
+            >
+              <img src={github} alt="github-logo" className="w-6" />
+            </Button>
+          </div>
         </div>
-      </form>
+      </Card>
       <Toaster richColors closeButton />
     </div>
   );
