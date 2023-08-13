@@ -58,9 +58,12 @@ export default function Login() {
             accessToken: userCredentials.user.accessToken,
           };
           dispatch(userLogin(googleCredentials));
-          
+
           // Almacena las credenciales en el Local Storage
-          localStorage.setItem('userCredentials', JSON.stringify(googleCredentials));
+          localStorage.setItem(
+            "userCredentials",
+            JSON.stringify(googleCredentials)
+          );
 
           setTimeout(() => {
             const uid = googleCredentials.uid;
@@ -108,23 +111,23 @@ export default function Login() {
         accessToken: userCredentials.user.accessToken,
       };
       dispatch(userLogin(credentials));
-       
+
       // Almacena las credenciales en el Local Storage
-       localStorage.setItem('userCredentials', JSON.stringify(credentials));
+      localStorage.setItem("userCredentials", JSON.stringify(credentials));
 
       setUserData({
         email: "",
         password: "",
       });
 
-      setTimeout(() => {
-        const uid = credentials.uid
-        navigate(`/user-panel/${uid}/home`);
-      }, 2000);
-
       toast.message("Bienvenido", {
         description: userCredentials.user.email,
       });
+
+      setTimeout(() => {
+        const uid = credentials.uid;
+        navigate(`/user-panel/${uid}/home`);
+      }, 2000);
     } catch (error) {
       if (platform === "google" || platform === "email") {
         switch (error.code) {
