@@ -120,6 +120,7 @@ export const workSlice = createSlice({
       state.work = action.payload;
       state.filterWork = action.payload;
       state.filterWork2 = action.payload;
+      state.isLoading = false;
     },
 
     detailWork: (state, action) => {

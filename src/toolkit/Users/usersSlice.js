@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUsers, getUser, postUser } from "./usersHandler";
+import { getUsers, getUser, postUser, logoutUser } from "./usersHandler";
+
+const storedCredentials = JSON.parse(localStorage.getItem("userCredentials"));
 
 const initialState = {
   users: [],
   user: {},
   isLoading: false,
   error: null,
-  userCredentials: null,
+  userCredentials: storedCredentials || null,
 };
 export const userSlice = createSlice({
   name: "users",
@@ -59,6 +61,21 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(postUser.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = error.message;
+      })
+
+      // Logout User
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(logoutUser.fulfilled, (state, { payload }) => {
+        state.userCredentials = payload
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(logoutUser.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = error.message;
       });

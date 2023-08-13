@@ -71,7 +71,8 @@ export default function Register() {
           dispatch(userLogin(googleCredentials));
 
           setTimeout(() => {
-            navigate("/home");
+            const uid = googleCredentials.uid;
+            navigate(`/user-panel/${uid}/home`);
           }, 2000);
 
           toast.message("Bienvenido", {
@@ -122,8 +123,9 @@ export default function Register() {
       dispatch(postUser(newUser));
 
       setTimeout(() => {
-        navigate("/home");
-      }, 2000);
+        const uid = newUser.uid;
+        navigate(`/user-panel/${uid}/home`);
+      }, 3000);
 
       resetUserData(setUserData);
       toast.message("Bienvenido", {

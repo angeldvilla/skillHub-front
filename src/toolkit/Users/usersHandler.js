@@ -30,3 +30,9 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
     throw new Error(error);
   }
 });
+
+
+export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
+  localStorage.removeItem("userCredentials");
+  return null;
+});
