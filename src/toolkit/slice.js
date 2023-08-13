@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   work: [],
+  users: [],
   filterWork: [],
   filterWork2: [],
   filterWork3: [],
@@ -137,6 +138,10 @@ export const workSlice = createSlice({
       state.currentPage = payload;
       state.error = null;
     },
+    //!TRAER TODOS LOS USUARIOS
+    getUsers: (state, action) => {
+      state.users = action.payload;
+    },
   },
 });
 
@@ -150,6 +155,8 @@ export const {
   detailWork,
   resetDetail,
   setCurrentPage,
+  getUsers,
+  postPagos,
 } = workSlice.actions;
 
 //export default workSlice.reducer
