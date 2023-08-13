@@ -7,7 +7,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../toolkit/Users/usersHandler";
 import Nav from "./Nav";
@@ -38,7 +38,7 @@ export default function Settings() {
 
   useEffect(() => {
     dispatch(getUser(id));
-  }, [id]);
+  }, [dispatch, id]);
 
   return (
     <div className="relative justify-center items-center h-screen">
