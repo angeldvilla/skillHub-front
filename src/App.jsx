@@ -9,6 +9,7 @@ import WorkPublications from "./components/WorkPublications/WorkPublications";
 import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
 import Profile from "./components/PanelUser/Profile";
 import Settings from "./components/PanelUser/Settings";
+import Error404 from "./components/error404/Error404";
 
 /* ------------------------------------------- */
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -26,6 +27,7 @@ function App() {
       <Route path="/signin" element={<Login /> } />
       <Route path="/signup" element={<Register />} />
       <Route path="/jobdetail/:id" element={<JobDetail />} />
+      <Route path="/error404" element={<Error404 />} />
 
       {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/terms-of-use" element={<UnderDevelopment />} />
