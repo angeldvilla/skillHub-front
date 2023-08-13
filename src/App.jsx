@@ -16,7 +16,6 @@ import MercadoPago from "./components/mercadoPago/MercadoPago";
 /* ------------------------------------------- */
 import { Routes, Route } from "react-router-dom";
 import FormTemporal from "./components/FormWorkCreated/FormTemporal";
-import Mensaje from "./components/mercadoPago/Mensaje";
 import Next from "./components/mercadoPago/Next";
 /* ------------------------------------------- */
 
@@ -39,7 +38,6 @@ function App() {
       <Route path="/TemporalForm" element={<FormTemporal />} />
 
       <Route path="/mercadoPago" element={<MercadoPago />} />
-      <Route path="/mensaje/:payment_id" element={<Mensaje />} />
       <Route path="/next/:payment_id" element={<Next />} />
   
     </Routes>

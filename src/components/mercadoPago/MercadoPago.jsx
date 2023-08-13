@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
     Card,
     CardHeader,
@@ -9,20 +10,10 @@ import {
     Button,
   } from "@material-tailwind/react";
 import axios from 'axios';
-import { useDispatch} from 'react-redux';
-import { postMercadoPago } from '../../toolkit/thunks';
-
-import { useLocation } from 'react-router';
-
-
 
 const MercadoPago = () => {
-    const {search} = useLocation()
-    
-    console.log(search)
 
- 
-    const dispatch= useDispatch()
+    const navigate = useNavigate()
 
     const plan = [{
         id:1,
@@ -67,23 +58,20 @@ const MercadoPago = () => {
 
     const id ="64cf388150a7167b36bb1bd4"
 
- 
-
     const handleBuy = async(element)=>{
-        const client = {
-            plan:element.plan,
-            price:element.pago,
-            user:id
+        if(element.plan === "PRUEBA") navigate("/contact-us")
+        else{
+            const client = {
+                plan:element.plan,
+                price:element.pago,
+                user:id
+            }
+            const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
+            
+            return window.location.href=data.response.preferenceUrl
+            }
         }
 
-            const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
-            //console.log(data.body.init_point)
-            return window.location.href=data.preferenceUrl 
-    }
-
-       
-
-    
 
   return (
     <div className='flex justify-end mt-64 gap-5 mr-32'>

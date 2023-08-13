@@ -1,44 +1,57 @@
 import React, { useEffect, useState }from 'react'
 import {useParams } from "react-router-dom";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+//require("dotenv").config();
+
 
 const Next = () => {
-    const { payment_id } = useParams();
-    console.log(payment_id)
+  const access_token = import.meta.env.VITE_MERCADOPAGO_KEY
 
-    const [datos,setDatos] =useState([])
+  const navigate = useNavigate()
 
-    useEffect(() => {
-        const busqieda=async()=>{
-            const result = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`,{
-            headers:{
-              "Content-Type":"application/json",
-              Authorization: "Bearer APP_USR-3794840370968199-080911-7b9fef42d07f6a0b234247b2ba3fe539-1445113711"
-            }
-          })
-          
+  const { payment_id } = useParams();
 
-          const resultModificados={
-            compra_Id:result.data.id,
-            status: result.data.status,
-            description:result.data.description,
-            info:result.data.additional_info.items,
-            id_user:result.data.metadata
+  const [datos,setDatos] =useState([])
 
+
+  useEffect(() => {
+      const busqieda=async()=>{
+          const result = await axios.get(`https://api.mercadopago.com/v1/payments/${payment_id}`,{
+          headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${access_token}`
           }
-          console.log(resultModificados)
-
+        })
+          
+      const resultModificados={
+        compra_Id:result.data.id,
+        state: result.data.status,
+        plan:result.data.additional_info.items[0].title,
+        price:result.data.additional_info.items[0].unit_price,
+        user:result.data.metadata.user_id
+        }
         setDatos(resultModificados)
-
         }
         busqieda()
-        
       }, [payment_id]);
 
+  const handleGuardarDatos=()=>{
+    const saveData=async()=>{
+      await axios.post(`http://localhost:3002/payment/save`,datos)
+    }
+    saveData()
+    navigate("/TemporalForm")
+  }
 
+  return (
+  <div>
+    TU pago se ralizó con exito
+    <br/>
+    {datos===null?"cargando":<button onClick={handleGuardarDatos}> next</button>}
 
-
-  return <div>{datos===null?"cargando":"ok"}</div>
+  </div>
+  )
 }
 
 export default Next
