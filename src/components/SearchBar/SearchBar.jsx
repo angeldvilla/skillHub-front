@@ -4,7 +4,7 @@ import { getWorkForName } from "../../toolkit/thunks";
 
 export default function SearchBar({setIndex, setPage}) {
   const dispatch = useDispatch();
-  const [work, setWork] = useState();
+  const [work, setWork] = useState("");
 
   const handleChange = (event) => {
     setWork(event.target.value)
