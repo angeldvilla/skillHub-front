@@ -1,4 +1,4 @@
-import React from "react";
+import React, { isValidElement } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,16 +17,20 @@ import Footer from "../Footer/Footer";
 
 //_______________________________________
 
-const WorkPerTime = ["Hora", "Precio fijo"];
+const WorkPerTime = ["/Hora", "/Fijo"];
+const maxSiseMB = 2 * 1024 * 1024; // Tamaño de 1mb para las fotos
 
 export default function FormCreateWork() {
 
   // const works = useSelector((state) => state.formwork.allPublicationsWork)
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ability = useSelector((state) => state.formwork.allWorkTypes)
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
+
+
   // const params = useParams()
+
 
   const [workdata, setWorkData] = useState({
     title: "",
@@ -81,18 +85,35 @@ export default function FormCreateWork() {
       })
     }
   }
-
   function handleSubmit(event) {
     event.preventDefault();
-    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image  || !workdata.ability || !workdata.address) {
+
+    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image || !workdata.address) {
       toast.error("Completa los datos para continuar");
-    } else if (workdata.ability.length > 3) {
-      toast.error("No pueden haber más de 3 categorias seleccionadas")
+    } else if (!selectedPaymentOption) {
+      toast.error("Selecciona una opción de pago (Hora o Precio fijo)");
     } else if (workdata.ability.length === 0) {
-      toast.error("Selecciona al menos una categoria")
+      toast.error("Selecciona al menos una categoría");
+    } else if (workdata.ability.length > 3) {
+      toast.error("No pueden haber más de 3 categorías seleccionadas");
+    } else if (workdata.title.length > 40){
+      toast.error("El titulo debe tener maximo 40 caracteres");
+    }else if (workdata.description.length > 200){
+      toast.error("La descripción debe tener maximo 200 caracteres");
+    } else if (errors.image === "El tamaño de la imagen debe ser inferior a 3MB") {
+      toast.error("El peso de la imagen debe ser de máximo 3MB");
+    } else if (errors.title === "Prohibido" || errors.description === "Prohibido") {
+      toast.error("No está permitido escribir este tipo de servicios");
     } else {
-      console.log("Datos del formulario:", workdata);
-      dispatch(postJobs(workdata));
+      // Concatenar la opción de pago al precio
+      const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
+      const updatedWorkData = {
+        ...workdata,
+        price: finalPrice,
+      };
+
+      console.log("Datos del formulario:", updatedWorkData);
+      dispatch(postJobs(updatedWorkData));
       handleReset();
       toast.success("Trabajo creado correctamente");
 
@@ -101,6 +122,8 @@ export default function FormCreateWork() {
       }, 3000);
     }
   }
+
+
   //LocalStorage values
   const [textDesciption, setTextDesciption] = useLocalStorage('text', (''))
   const [textTitle, setTextTitle] = useLocalStorage('tex1', ' ')
@@ -113,7 +136,7 @@ export default function FormCreateWork() {
     setTextDesciption("");
     setDirectionValue("");
     setPriceValue("");
-  
+
     setWorkData({
       title: "",
       description: "",
@@ -136,20 +159,15 @@ export default function FormCreateWork() {
   }, []);
 
 
-  //_________________________________________________________________________________
-  
-
   const [selectWorkType, setSelectWorkType] = useState("");
-
-
 
   //Para poder seleccionar y borrar las categorias seleccionadas
   const tiposSelected = workdata.ability.map((cat) => (
     <div key={cat}>
       <span>{cat}</span>
       <button
-       onClick={() => handleDelete(cat)}
-       className="p-0.5 ml-1 bg-gray-800 text-white rounded-md w-6 h-6 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-sm transition text-xs flex items-center justify-center"       > x </button>
+        onClick={() => handleDelete(cat)}
+        className="p-0.5 ml-1 bg-gray-800 text-white rounded-md w-6 h-6 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-sm transition text-xs flex items-center justify-center"       > x </button>
     </div>
   ));
 
@@ -160,40 +178,57 @@ export default function FormCreateWork() {
     })
   }
 
-//Subir imagenes a cloudinary
+  //Subir imagenes a cloudinary
+
   async function uploadImage(files) {
+    const selectedFile = files[0];
     console.log(files[0]);
-    const imageFormData = new FormData()
-    imageFormData.append("file", files[0])
-    imageFormData.append("upload_preset", "PostWorks")
-    try {
-        const response = await axios.post("https://api.cloudinary.com/v1_1/dvr9giaia/upload", imageFormData);
-        const data = response.data.secure_url;
-        console.log("Esta es la respuesta de la data", data);
-        // Actualizar el estado de manera inmutable
-         setWorkData(prevData => ({
+
+    if (selectedFile) {
+      if (selectedFile.size < maxSiseMB) {
+        setErrors({
+          ...errors,
+          image: ""
+        });
+        const imageFormData = new FormData();
+        imageFormData.append("file", files[0]);
+        imageFormData.append("upload_preset", "PostWorks");
+        try {
+          const response = await axios.post("https://api.cloudinary.com/v1_1/dvr9giaia/upload", imageFormData);
+          const data = response.data.secure_url;
+          console.log("Esta es la respuesta de la data", data);
+          // Actualizar el estado de manera inmutable
+          setWorkData(prevData => ({
             ...prevData,
             image: data
-        }));
-        console.log("Esta es la nueva info de setWorkData en img", workdata.image);
-    } catch (error) {
-        console.log("Error en el componente UploadImage en cludinary", error);
+          }));
+          console.log("Esta es la nueva info de setWorkData en img", workdata.image);
+        } catch (error) {
+          console.log("Error en el componente UploadImage en cludinary", error);
+        }
+      } else {
+        setErrors({
+          ...errors,
+          image: "El tamaño de la imagen debe ser inferior a 3MB"
+        });
+      }
     }
- }
-
- // Previsualización de la imagen
- let previewImage = workdata.image ? (
-  <span style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-    <span>Imagen Seleccionada</span>
-    <img
-      src={workdata.image}
-      alt="Previsualización"
-      style={{ maxWidth: "200px", height: "200px", margin: "auto" }}
-    />
-  </span>
-) : null;
+  }
 
 
+
+
+  // Previsualización de la imagen
+  let previewImage = workdata.image ? (
+    <span style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+      <span>Imagen Seleccionada</span>
+      <img
+        src={workdata.image}
+        alt="Previsualización"
+        style={{ maxWidth: "200px", height: "200px", margin: "auto" }}
+      />
+    </span>
+  ) : null;
 
 
 
@@ -274,21 +309,26 @@ export default function FormCreateWork() {
             <label htmlFor="payment" className="pl-2 mb-1 text-lg">
               Pago
             </label>
-            <select className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
+            <select
+              className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
+              onChange={(event) => setSelectedPaymentOption(event.target.value)}
+              value={selectedPaymentOption}
             >
+              <option value="">Selecciona una opción de pago</option>
               {WorkPerTime.map((work, index) => (
                 <option key={index} value={work}>
                   {work}
                 </option>
               ))}
             </select>
+
             <label htmlFor="ability" className="pl-2 mb-1 text-lg">
               Categoria
             </label>
             <select onChange={(event) => handleSelect(event)}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             >
-              <option> Selecciona una categoría: </option>
+              <option value=""> Selecciona una categoría: </option>
               {
                 ability.map((typ, index) => (
                   <option
@@ -309,25 +349,8 @@ export default function FormCreateWork() {
             )}
 
 
-            <label htmlFor="image" className="pl-2 mb-1 text-lg">
-              Imagen:
-            </label>
-            <input
-              type="file"
-              name="image"
-              placeholder="Ingresa URL de imagen"
-              onChange={(event) => {
-                handleChange(event);
-                uploadImage(event.target.files)
-              }}
-              className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-            />
-
-            
-            {previewImage}
             <br />
 
-      
             <label htmlFor="address" className="pl-2 mb-1 text-lg">
               Dirección:
             </label>
@@ -343,6 +366,26 @@ export default function FormCreateWork() {
               }}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
+
+            <label htmlFor="image" className="pl-2 mb-1 text-lg">
+              Imagen:
+            </label>
+            <input
+              type="file"
+              name="image"
+              placeholder="Ingresa URL de imagen"
+              onChange={(event) => {
+                handleChange(event);
+                uploadImage(event.target.files)
+              }}
+              className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
+            />
+
+            {previewImage}
+            {errors.image && (
+              <span style={{ color: "red" }}>{errors.image}</span>
+            )}
+
           </div>
           <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
             Publicar Trabajo:
