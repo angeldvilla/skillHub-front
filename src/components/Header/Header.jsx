@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import logoSkillHub from "../../assets/skillHub.jpg";
+import userProfile from "../../assets/user-profile.svg";
 import {
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   Menu,
@@ -19,14 +21,12 @@ import {
   ArrowUpRightIcon,
   Bars2Icon,
 } from "@heroicons/react/24/outline";
-import logoSkillHub from "../../assets/skillHub.jpg";
-import userProfile from "../../assets/user-profile.svg";
 
 
 const profileMenuItems = [
   {
     label: "Iniciar Sesión",
-    value: "home",
+    value: "signin",
     icon: UserCircleIcon,
   },
   {
@@ -43,8 +43,6 @@ const ProfileMenu = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-
-  const id = "64d3efe260fdca3d74ec9808";
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -77,7 +75,7 @@ const ProfileMenu = () => {
           return (
             <Link
             key={key}
-            to={`/user-panel/${id}/${value}`}
+            to={`/${value}`}
             >
               {
             <MenuItem
@@ -95,7 +93,7 @@ const ProfileMenu = () => {
               })}
               <Typography
                 as="span"
-                variant="large"
+                variant="paragraph"
                 className="font-normal"
                 color={isLastItem ? "blue" : "inherit"}
               >
@@ -186,9 +184,9 @@ export default function Header() {
       </div>
       <ProfileMenu />
     </div>
-        <MobileNav open={dropDownOpen} className="overflow-scroll">
+        <Collapse open={dropDownOpen} className="overflow-scroll">
           <NavList />
-        </MobileNav>
+        </Collapse>
 </div>
   );
 }
