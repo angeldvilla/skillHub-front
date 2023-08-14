@@ -1,4 +1,5 @@
-  import { allWork, getWorkName, startIsLoading, detailWork, getUsers,postPagos } from "./slice";
+  import { createAsyncThunk } from "@reduxjs/toolkit";
+import { allWork, getWorkName, startIsLoading, detailWork, postPagos,  } from "./slice";
   import axios from "axios";
 
   const URL_API = "http://localhost:3001/empleador";
@@ -51,21 +52,17 @@
     }
   }
 
-  //!TRAER TODOS LOS USUARIOS
-  export const getAllUsers = (id) => {
-    return async (dispatch) => {
-      try {
-        dispatch(startIsLoading());
+export const reviews =  createAsyncThunk ("score/sendScore", async(score) => {
 
-        const { data } = await axios(`http://localhost:3002/user`);
-        dispatch(getUsers(data));
-        
+    try {
+      const { data } = await axios.post('http://localhost:3002/reviews', score)
+      return data
+      
+    } catch (error) {
+      console.log("error")
     
-      } catch (error) {
-        throw Error("Error al obtener el detalle del trabajo", error);
-      }
-    }
-  };
+  }
+})
 
       
     
