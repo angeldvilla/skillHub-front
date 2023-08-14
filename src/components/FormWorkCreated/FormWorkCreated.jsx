@@ -37,7 +37,7 @@ export default function FormCreateWork() {
   const fileInputRef = useRef(null);
   const params =  useParams()
   const TodosLostrabajos = useSelector((state) => state.work.work);
-
+  const { userCredentials } = useSelector(state => state.users);
 
 
 
@@ -65,7 +65,9 @@ export default function FormCreateWork() {
 
   useEffect(() => {
     dispatch(getTypes());
-    dispatch(getUser(id))
+    if(userCredentials && userCredentials.uid === id){
+      dispatch(getUser(id))
+    }
     // dispatch(getWork());
   }, [dispatch, id])
 
