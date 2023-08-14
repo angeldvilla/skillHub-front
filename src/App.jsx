@@ -61,14 +61,77 @@ function App() {
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
-        <Route path="home" element={userCredentials ? <Home /> : <Navigate to="/home" replace />} />
-        <Route path="jobdetail/:id" element={userCredentials ? <JobDetail /> : <Navigate to="/home" replace />} />
-        <Route path="my-profile" element={userCredentials ? <Profile /> : <Navigate to="/home" replace />} />
-        <Route path="CreateWork" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
-        <Route path="Edit-Work" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
-        <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/home" replace />} />
-        <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/home" replace />} />
-      </Route> 
+
+        <Route
+          path="home"
+          element={userCredentials ? <Home /> : <Navigate to="/home" replace />}
+        />
+
+        <Route
+          path="jobdetail/:id"
+          element={
+            userCredentials ? (
+              <JobDetail />
+            ) : (
+              <Navigate to="/error404" replace />
+            )
+          }
+        />
+        <Route
+          path="my-profile"
+          element={
+            userCredentials ? <Profile /> : <Navigate to="/error404" replace />
+          }
+        />
+        <Route
+          path="CreateWork"
+          element={
+            userCredentials ? (
+              <FormWorkCreated />
+            ) : (
+              <Navigate to="/error404" replace />
+            )
+          }
+        />
+        <Route
+          path="Edit-Work/:id"
+          element={
+            userCredentials ? (
+              <FormWorkCreated />
+            ) : (
+              <Navigate to="/error404" replace />
+            )
+          }
+        />
+        <Route
+          path="WorkPublications"
+          element={
+            userCredentials ? (
+              <WorkPublications />
+            ) : (
+              <Navigate to="/error404" replace />
+            )
+          }
+        />
+
+        <Route
+          path="memberShip"
+          element={
+            userCredentials ? (
+              <MercadoPago />
+            ) : (
+              <Navigate to="/error404" replace />
+            )
+          }
+        />
+
+        <Route
+          path="next/:payment_id"
+          element={
+            userCredentials ? <Next /> : <Navigate to="/error404" replace />
+          }
+        />
+      </Route>
     </Routes>
   );
 }
