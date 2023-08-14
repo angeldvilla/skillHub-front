@@ -57,8 +57,7 @@ function App() {
       <Route path="/contact-us" element={<UnderDevelopment />} />
       <Route path="/TemporalForm" element={<FormTemporal />} />
 
-      <Route path="/mercadoPago" element={<MercadoPago />} />
-      <Route path="/next/:payment_id" element={<Next />} />
+      
   
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
@@ -71,6 +70,8 @@ function App() {
         <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/error404" replace />} />
         <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/error404" replace />} />
         <Route path="memberShip" element={userCredentials ? <MercadoPago/> : <Navigate to="/error404" replace />} />
+
+        <Route path="next/:payment_id" element={userCredentials ? <Next /> : <Navigate to="/error404" replace />} />
       </Route> 
 
     </Routes>
