@@ -65,9 +65,24 @@ export default function Register() {
             uid: userCredentials.user.uid,
             accessToken: userCredentials.user.accessToken,
           };
+          const displayName = userCredentials.user.displayName;
+          const [firstName, lastName] = displayName.split(' ');
+          const phoneNumber = "3015487655";
+          const userAuth = {
+            uid: googleCredentials.uid,
+            firstName: firstName, 
+            lastName: lastName, 
+            email: userCredentials.user.email,
+            phoneNumber: phoneNumber,
+          };
+          dispatch(postUser(userAuth));
           dispatch(userLogin(googleCredentials));
           setErrors({});
           resetUserData(setUserData);
+          
+          toast.message("Bienvenido", {
+            description: userCredentials.user.displayName,
+          });
 
           localStorage.setItem(
             "userCredentials",
@@ -79,9 +94,7 @@ export default function Register() {
             navigate(`/user-panel/${uid}/home`);
           }, 2000);
 
-          toast.message("Bienvenido", {
-            description: userCredentials.user.displayName,
-          });
+         
           break;
         case "github":
           toast.message("GitHub", {
@@ -336,3 +349,4 @@ export default function Register() {
     </div>
   );
 }
+
