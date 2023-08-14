@@ -71,7 +71,6 @@ const MercadoPago = () => {
                 user:id
             }
             const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
-            console.log(data);
             
             return window.location.href=data.preferenceUrl
             }

@@ -38,8 +38,9 @@ const Next = () => {
       }, [payment_id]);
 
   const handleGuardarDatos=()=>{
+    
     const saveData=async()=>{
-      await axios.post(`http://localhost:3002/payment/save`,datos)
+      return await axios.post("http://localhost:3002/payment/save",datos)
     }
     saveData()
     navigate("/TemporalForm")
