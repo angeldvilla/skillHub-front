@@ -23,21 +23,21 @@ import {
 } from "@heroicons/react/24/outline";
 
 
-const profileMenuItems = [
-  {
-    label: "Iniciar Sesión",
-    value: "signin",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Registrarse",
-    value: "signup",
-    icon: ArrowUpRightIcon
-,
-  },
-];
 
 const ProfileMenu = () => {
+  const profileMenuItems = [
+    {
+      label: "Iniciar Sesión",
+      value: "signin",
+      icon: UserCircleIcon,
+    },
+    {
+      label: "Registrarse",
+      value: "signup",
+      icon: ArrowUpRightIcon
+  ,
+    },
+  ];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => {
@@ -109,22 +109,22 @@ const ProfileMenu = () => {
   );
 };
 
-// Nav List component
-const navListItems = [
-  {
-    label: "Favoritos",
-    value: "favorites",
-    icon: HeartIcon,
-  },
-  {
-    label: "Ubicación",
-    value: "ubication",
-    icon: MapPinIcon,
-  },
 
-];
-
-const NavList = () => {
+/* const NavList = () => {
+  // Nav List component
+  const navListItems = [
+    {
+      label: "Favoritos",
+      value: "favorites",
+      icon: HeartIcon,
+    },
+    {
+      label: "Ubicación",
+      value: "ubication",
+      icon: MapPinIcon,
+    },
+  
+  ];
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {navListItems.map(({ label, icon, value }, key) => (
@@ -142,7 +142,7 @@ const NavList = () => {
       ))}
     </ul>
   );
-};
+}; */
 
 export default function Header() {
   const [dropDownOpen, setDropDownOpen] = useState(false);
@@ -170,7 +170,7 @@ export default function Header() {
           />
         </a>
         <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-          <NavList />
+          {/* <NavList /> */}
         </div>
         <IconButton
           size="sm"
@@ -184,9 +184,9 @@ export default function Header() {
       </div>
       <ProfileMenu />
     </div>
-        <Collapse open={dropDownOpen} className="overflow-scroll">
-          <NavList />
-        </Collapse>
+        {/*<Collapse open={dropDownOpen} className="overflow-scroll">
+           <NavList /> 
+        </Collapse>*/}
 </div>
   );
 }

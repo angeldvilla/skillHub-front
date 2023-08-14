@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getUser } from "../../toolkit/Users/usersHandler";
 import { Input } from "@material-tailwind/react";
-import UploadPhoto from "./UploadPhoto";
 import Nav from "./Nav";
+import UploadPhoto from "./UploadPhoto";
 
 export default function Profile() {
   const { id } = useParams();
@@ -44,7 +44,7 @@ export default function Profile() {
 
             <span className="mt-5 mb-5">Correo Electronico</span>
             <Input
-              label="Apellido"
+              label="Correo Electronico"
               value={user?.email || ""}
               disabled
               className="flex justify-center items-center text-center"
@@ -52,13 +52,13 @@ export default function Profile() {
 
             <span className="mt-5 mb-5">Numero Celular</span>
             <Input
-              label="Apellido"
+              label="Numero Celular"
               value={user?.phoneNumber || ""}
               disabled
               className="flex justify-center items-center text-center"
             />
-            <span className="mt-10 mb-5">Agregar Foto de Perfil</span>
-            <UploadPhoto />
+            {/* <span className="mt-10 mb-5">Agregar Foto de Perfil</span>
+            <UploadPhoto /> */}
           </div>
         </div>
       ) : (
