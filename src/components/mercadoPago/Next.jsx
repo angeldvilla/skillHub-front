@@ -14,6 +14,7 @@ const Next = () => {
   const { payment_id } = useParams();
 
   const [datos,setDatos] =useState([])
+  const [id_client,setId_client] =useState("")
 
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const Next = () => {
             Authorization: `Bearer ${access_token}`
           }
         })
+      
           
       const resultModificados={
         compra_Id:result.data.id,
@@ -33,6 +35,7 @@ const Next = () => {
         user:result.data.metadata.user_id
         }
         setDatos(resultModificados)
+        setId_client(result.data.metadata.user_id) // id del cliente
         }
         busqieda()
       }, [payment_id]);
@@ -43,7 +46,7 @@ const Next = () => {
       return await axios.post("http://localhost:3002/payment/save",datos)
     }
     saveData()
-    navigate("/TemporalForm")
+    navigate(`/user-panel/${id_client}/createWork`)
   }
 
   return (

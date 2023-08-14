@@ -58,11 +58,6 @@ function App() {
       <Route path="/TemporalForm" element={<FormTemporal />} />
 
 
-   
-        <Route path="/next/:payment_id" element={<Next />} />
-
-  
-
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
         <Route path="home" element={<Home />} />
