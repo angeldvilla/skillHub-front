@@ -2,7 +2,7 @@ import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 
 export default function Score() {
-  const [rating, setRating] = useState(0); // Corregido: Inicializar el estado con 0
+  const [rating, setRating] = useState(0); 
 
   return (
     <div>
@@ -15,7 +15,7 @@ export default function Score() {
               name="rating"
               className="hidden"
               value={ratingValue}
-              onClick={() => setRating(ratingValue)} // Corregido: Usar setRating correctamente
+              onClick={() => setRating(ratingValue)}
             />
             <FaStar
               className={`${
