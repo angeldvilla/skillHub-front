@@ -40,6 +40,13 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
           <Typography variant="h4" color="blue-gray" className="mb-2">
             {title.charAt(0).toUpperCase() + title.slice(1)}
           </Typography>
+          <div className="flex items-center gap-4 my-4">
+            {ability.map((ability, index) => (
+              <Typography key={index} variant="h6" color="gray" className="">
+                {" > "} {ability}
+              </Typography>
+            ))}
+          </div>
           <div className="flex items-center justify-between mt-6">
             <div className="mb-3 flex items-center gap-1">
               <Typography color="gray" className="text-center font-normal">
