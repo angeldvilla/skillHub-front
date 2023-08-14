@@ -1,23 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const allPublicationsWork = [
-    {
-        id: "64d026bc2e300d5a0a6b2479",
-        title: "Lavar terraza ",
-        description: "Se necesita una persona para lavar una terraza de 6*15",
-        price: "25000",
-        ability: "Limpieza interiores",
-        image: "",
-        address: "Cali,Col",
-        phone: "3057189737",
-        users: "",
-      }
-]
-
 export const WorkPublicationSlice = createSlice({
     name: "formwork",
     initialState: {
-        allPublicationsWork,
+        allPublicationsWork : [],
         allWorkTypes : []
     },
     reducers: {

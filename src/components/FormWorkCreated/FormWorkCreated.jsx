@@ -22,17 +22,21 @@ import Nav from "../PanelUser/Nav";
 const WorkPerTime = ["/Hora", "/Fijo"];
 const maxSiseMB = 2 * 1024 * 1024; // Tamaño de 1mb para las fotos
 
+
 export default function FormCreateWork() {
 
   // const works = useSelector((state) => state.formwork.allPublicationsWork)
   //  const allWorkTypes = useSelector((state) => state.formwork.allPublicationsWork)
   const { id } = useParams();
   const dispatch = useDispatch();
+  const dispatch2= useDispatch();
   const navigate = useNavigate();
   const ability = useSelector((state) => state.formwork.allWorkTypes)
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [fileSelected, setFileSelected] = useState(false); //Soluciona el filed seleccionado
   const fileInputRef = useRef(null);
+  const params =  useParams()
+  const TodosLostrabajos = useSelector((state) => state.work.work);
 
 
 
@@ -62,6 +66,7 @@ export default function FormCreateWork() {
   useEffect(() => {
     dispatch(getTypes());
     dispatch(getUser(id))
+    // dispatch(getWork());
   }, [dispatch, id])
 
   function handleChange(event) {
@@ -244,6 +249,18 @@ export default function FormCreateWork() {
       />
     </span>
   ) : null;
+
+
+  //Editar tarea 
+  // useEffect(() => {
+  //    dispatch2(getWork());
+  // }, [dispatch])
+
+  useEffect(() => {
+console.log("Este es el params",params)
+console.log("Todos los trabajos", TodosLostrabajos);
+  }, [])
+
 
   //___________________________________________
 

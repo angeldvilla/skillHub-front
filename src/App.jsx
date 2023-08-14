@@ -61,6 +61,7 @@ function App() {
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
+
         <Route
           path="home"
           element={userCredentials ? <Home /> : <Navigate to="/home" replace />}
@@ -93,7 +94,7 @@ function App() {
           }
         />
         <Route
-          path="Edit-Work"
+          path="Edit-Work/:id"
           element={
             userCredentials ? (
               <FormWorkCreated />
