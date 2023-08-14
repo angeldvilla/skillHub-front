@@ -1,6 +1,8 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getUser } from "../../toolkit/Users/usersHandler";
+import Nav from '../PanelUser/Nav';
 import {
     Card,
     CardHeader,
@@ -54,12 +56,14 @@ const MercadoPago = () => {
 
        //todo-->Necesitamos recibir el id del usuario
 
-    const {resultPago} = useSelector(state=>state.work)
+    const {userCredentials} = useSelector(state=>state.users);
 
-    const id ="64cf388150a7167b36bb1bd4"
+    const dispatch = useDispatch();
+
+    const { id } = useParams();
 
     const handleBuy = async(element)=>{
-        if(element.plan === "PRUEBA") navigate("/contact-us")
+        if(element.plan === "PRUEBA") navigate(`/user-panel/${id}/CreateWork`)
         else{
             const client = {
                 plan:element.plan,
@@ -68,14 +72,19 @@ const MercadoPago = () => {
             }
             const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
             
-            return window.location.href=data.response.preferenceUrl
+            return window.location.href=data.preferenceUrl
             }
         }
-
+    useEffect(() => {
+        if (userCredentials && userCredentials.uid === id) {
+            dispatch(getUser(id));
+        }
+    }, [id, userCredentials]);
 
   return (
-    <div className='flex justify-end mt-64 gap-5 mr-32'>
-
+    <div className="relative justify-center items-center h-screen">
+        <Nav/>
+        <div className="flex justify-center mx-auto mt-20 gap-5 ">
         {plan.map((element,index)=>{
             return(
             <Card key={index} color="gray" variant="gradient" className="w-full max-w-[20rem] p-8">
@@ -133,6 +142,7 @@ const MercadoPago = () => {
 
             )
         })}
+        </div>
     </div>
 
   )

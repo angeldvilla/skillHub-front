@@ -2,6 +2,7 @@ import React, { useEffect, useState }from 'react'
 import {useParams } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 //require("dotenv").config();
 
 
@@ -13,6 +14,7 @@ const Next = () => {
   const { payment_id } = useParams();
 
   const [datos,setDatos] =useState([])
+  const [id_client,setId_client] =useState("")
 
 
   useEffect(() => {
@@ -23,6 +25,7 @@ const Next = () => {
             Authorization: `Bearer ${access_token}`
           }
         })
+      
           
       const resultModificados={
         compra_Id:result.data.id,
@@ -32,23 +35,25 @@ const Next = () => {
         user:result.data.metadata.user_id
         }
         setDatos(resultModificados)
+        setId_client(result.data.metadata.user_id) // id del cliente
         }
         busqieda()
       }, [payment_id]);
 
   const handleGuardarDatos=()=>{
+    
     const saveData=async()=>{
-      await axios.post(`http://localhost:3002/payment/save`,datos)
+      return await axios.post("http://localhost:3002/payment/save",datos)
     }
     saveData()
-    navigate("/TemporalForm")
+    navigate(`/user-panel/${id_client}/createWork`)
   }
 
   return (
   <div>
     TU pago se ralizó con exito
     <br/>
-    {datos===null?"cargando":<button onClick={handleGuardarDatos}> next</button>}
+    {datos===null?<Loader/>:<button onClick={handleGuardarDatos}> next</button>}
 
   </div>
   )

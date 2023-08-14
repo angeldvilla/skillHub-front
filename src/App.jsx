@@ -19,13 +19,25 @@ import Next from "./components/mercadoPago/Next";
 import Error404 from "./components/error404/Error404";
 
 /* ------------------------------------------- */
-import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 /* ------------------------------------------- */
 
 function App() {
   const { userCredentials } = useSelector((state) => state.users);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+
+  // Redirecciona si el usuario intenta acceder a rutas no permitidas mientras las credenciales están cargadas
+  useEffect(() => {
+    if (userCredentials && !location.pathname.startsWith(`/user-panel/${userCredentials.uid}`)) {
+      // Redirige a la página permitida, por ejemplo, a /user-panel/:id/home
+      navigate(`/user-panel/${userCredentials.uid}/home`);
+    }
+  }, [userCredentials, location]);
 
   return (
     <Routes>
@@ -45,19 +57,19 @@ function App() {
       <Route path="/contact-us" element={<UnderDevelopment />} />
       <Route path="/TemporalForm" element={<FormTemporal />} />
 
-      <Route path="/mercadoPago" element={<MercadoPago />} />
-      <Route path="/next/:payment_id" element={<Next />} />
-  
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
-        <Route path="home" element={userCredentials ? <Home /> : <Navigate to="/home" replace />} />
-        <Route path="jobdetail/:id" element={userCredentials ? <JobDetail /> : <Navigate to="/home" replace />} />
-        <Route path="my-profile" element={userCredentials ? <Profile /> : <Navigate to="/home" replace />} />
-        <Route path="CreateWork" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
-        <Route path="Edit-Work" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
-        <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/home" replace />} />
-        <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/home" replace />} />
+        <Route path="home" element={<Home />} />
+        <Route path="jobdetail/:id" element={userCredentials ? <JobDetail /> : <Navigate to="/error404" replace />} />
+        <Route path="my-profile" element={userCredentials ? <Profile /> : <Navigate to="/error404" replace />} />
+        <Route path="CreateWork" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/error404" replace />} />
+        <Route path="Edit-Work" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/error404" replace />} />
+        <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/error404" replace />} />
+        <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/error404" replace />} />
+        <Route path="memberShip" element={userCredentials ? <MercadoPago/> : <Navigate to="/error404" replace />} />
+
+        <Route path="next/:payment_id" element={userCredentials ? <Next /> : <Navigate to="/error404" replace />} />
       </Route> 
 
     </Routes>
