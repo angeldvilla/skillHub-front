@@ -215,7 +215,7 @@ export default function Nav() {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    navigate("/home", { replace: true });
+      navigate('/home');
   };
 
   useEffect(() => {
