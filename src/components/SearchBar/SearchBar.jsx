@@ -16,7 +16,7 @@ export default function SearchBar() {
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       dispatch(getWorkForName(work));
-      setCurrentPage(1);
+      dispatch(setCurrentPage(1));
       setWork("");
     }
   };
@@ -29,7 +29,7 @@ export default function SearchBar() {
         value={work}
         onChange={handleChange}
         onKeyDown={handleKeyPress}
-        className="!border !border-gray-300 bg-gray-200 text-center text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
+        className="!border !border-gray-300 bg-white text-center text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
         labelProps={{
           className: "hidden",
         }}

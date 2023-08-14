@@ -41,9 +41,9 @@ export default function LandingPage() {
             </a>
           </Link>
 
-          <a href="#" className="text-white-800">
+          {/* <a href="#" className="text-white-800">
             CONTACT
-          </a>
+          </a> */}
         </div>
 
         <div className="flex space-x-7 justify-end">

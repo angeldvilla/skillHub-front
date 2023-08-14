@@ -25,22 +25,22 @@ export default function Filters() {
 
   const handleOrdertitle = (event) => {
     dispatch(filterName(event.target.value));
-    setCurrentPage(1);
+    dispatch(setCurrentPage(1));
   };
 
   const handleFilterPrice = (event) => {
     dispatch(filterPrice(event.target.value));
-    setCurrentPage(1);
+    dispatch(setCurrentPage(1));
   };
 
   const handleFilterTypeWork = (event) => {
     dispatch(filterTypeWork(event.target.value));
-    setCurrentPage(1);
+    dispatch(setCurrentPage(1));
   };
 
   const resetFilters = () => {
     dispatch(getWork());
-    setCurrentPage(1);
+    dispatch(setCurrentPage(1));
   };
 
   return (

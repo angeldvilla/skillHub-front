@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   work: [],
-  users: [],
   filterWork: [],
   filterWork2: [],
   filterWork3: [],
@@ -137,10 +136,6 @@ export const workSlice = createSlice({
     setCurrentPage: (state, { payload }) => {
       state.currentPage = payload;
       state.error = null;
-    },
-    //!TRAER TODOS LOS USUARIOS
-    getUsers: (state, action) => {
-      state.users = action.payload;
     },
   },
 });

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork } from "../../toolkit/thunks";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
+import { getUser } from "../../toolkit/Users/usersHandler";
 import Nav from "../PanelUser/Nav";
 import Footer from "../Footer/Footer";
 import { ToastContainer } from "react-toastify";
@@ -18,21 +19,24 @@ import ubication from "../../assets/ubication.svg";
 
 export default function WorkPublication() {
 
-    const uid = "64d55605618ef0fjjj329b982f3";
+    const { id } = useParams();
+
+    const { userCredentials } = useSelector(state => state.users);
     
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getWork());
-    }, []);
+        if(userCredentials && userCredentials.uid === id){
+        dispatch(getUser(id));
+        }
+    }, [dispatch, id, userCredentials]);
 
     const TodosLostrabajos = useSelector((state) => state.work.work);
     const TodosLosId = TodosLostrabajos.filter(trabajo => trabajo.id)
-    console.log("Estos son los id de todos los trabajos", TodosLosId);
 
-    const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === uid);
+    const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
 
     const totalWorks = trabajosDelUsuario.length;
-    console.log("Estos son los trabajos totales.lenght", totalWorks);
 
 
 
@@ -51,7 +55,7 @@ export default function WorkPublication() {
                     <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
                     > No tienes trabajos creados </h1>
                     <br />
-                    <NavLink to="/CreateWork">
+                    <NavLink to={`/user-panel/${id}/createWork`}>
                         <button className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
                         >
                             Crear trabajo</button>
