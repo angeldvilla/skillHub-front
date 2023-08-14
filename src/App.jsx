@@ -11,9 +11,8 @@ import Profile from "./components/PanelUser/Profile";
 import MercadoPago from "./components/mercadoPago/MercadoPago";
 import Next from "./components/mercadoPago/Next";
 import Error404 from "./components/error404/Error404";
-/* ------------------------------------------- */
-/* import Settings from "./components/PanelUser/Settings"; */
 import AbautUs from "./components/AbautUs/AbautUs";
+/* ------------------------------------------- */
 
 /* ------------------------------------------- */
 import { useEffect } from "react";
