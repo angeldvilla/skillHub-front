@@ -63,7 +63,7 @@ export default function LandingPage() {
           Get Started!
         </Link>
 
-        <h3 className="text-white font-bold mt-8">Don't have an account?</h3>
+        <h3 className="text-white font-bold mt-8"> Don't have an account?</h3>
         <Link to="/signup" className="text-blue-500 font-bold mb-9">
           Sign Up Here
         </Link>

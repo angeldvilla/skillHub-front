@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork, getDetailWork, detailReset } from "../../toolkit/thunks";
@@ -9,6 +9,7 @@ import { userSlice } from "../../toolkit/Users/usersSlice";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
+import Score from "../Score/Score"
 /* -------------- */
 
 /* ASSESTS */
@@ -65,7 +66,7 @@ export default function JobDetail() {
           <p className="mb-10 p-5 bg-slate-700 rounded-md">
             {detail?.description}
           </p>
-
+           <Score />   
           {/* Category */}
           <div className="mb-10">
             <h3 className="text-xl pt-2 mb-4 font-semibold">Categoria</h3>
