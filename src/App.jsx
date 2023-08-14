@@ -41,7 +41,7 @@ function App() {
         <Route path="home" element={userCredentials ? <Home /> : <Navigate to="/home" replace />} />
         <Route path="jobdetail/:id" element={userCredentials ? <JobDetail /> : <Navigate to="/home" replace />} />
         <Route path="my-profile" element={userCredentials ? <Profile /> : <Navigate to="/home" replace />} />
-        <Route path="CreateWork:_id" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
+        <Route path="CreateWork" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
         <Route path="Edit-Work/:id" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/home" replace />} />
         <Route path="WorkPublications" element={userCredentials ? <WorkPublications /> : <Navigate to="/home" replace />} />
         <Route path="settings" element={userCredentials ? <Settings /> : <Navigate to="/home" replace />} />
