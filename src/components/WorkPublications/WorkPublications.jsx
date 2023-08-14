@@ -18,7 +18,7 @@ import ubication from "../../assets/ubication.svg";
 
 export default function WorkPublication() {
 
-    const uid = "64d55605618ef0f329b982f3";
+    const uid = "64d55605618ef0fjjj329b982f3";
     
     const dispatch = useDispatch();
     useEffect(() => {
@@ -38,15 +38,19 @@ export default function WorkPublication() {
 
     return (
       <div>
-        <div  >
+        <div>
             <Nav />
             <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
              > {`Total trabajos publicados: ${totalWorks}`}</h1>
 
+             <div className="flex items-center  gap-10  justify-center mb-28">
+                
+
             {totalWorks === 0 ? (
-                <div>
+                <div className="flex items-center   justify-center mb-96">
                     <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-                    > No se tienen trabajos creados</h1>
+                    > No tienes trabajos creados </h1>
+                    <br />
                     <NavLink to="/CreateWork">
                         <button className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
                         >
@@ -55,7 +59,7 @@ export default function WorkPublication() {
                 </div>
             ) : (
                 trabajosDelUsuario.map((trabajo, index) => (
-                    <Card key={index} className="flex justify-center w-full max-w-[26rem] shadow-lg hover:shadow-lg hover:shadow-gray-400 transition-all duration-300">
+                    <Card key={index} className="flex justify-center w-full max-w-[26rem] shadow-lg hover:shadow-lg hover:shadow-gray-400 transition-all duration-300 ">
                         <div className="flex flex-col justify-center">
                             <CardHeader floated={false} color="blue-gray">
                                 <img src={trabajo.image[0]} alt="job-image" className="w-96 h-64" />
@@ -122,9 +126,11 @@ export default function WorkPublication() {
                 ))
             )}
         </div>
+        </div>
         <Footer />
         <ToastContainer />
         </div>
+        
     );
 }
 
