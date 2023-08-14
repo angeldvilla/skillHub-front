@@ -59,6 +59,10 @@ export default function Login() {
           };
           dispatch(userLogin(googleCredentials));
 
+          toast.message("Bienvenido", {
+            description: userCredentials.user.displayName,
+          });
+
           // Almacena las credenciales en el Local Storage
           localStorage.setItem(
             "userCredentials",
@@ -70,9 +74,6 @@ export default function Login() {
             navigate(`/user-panel/${uid}/home`);
           }, 2000);
 
-          toast.message("Bienvenido", {
-            description: userCredentials.user.displayName,
-          });
           break;
         case "github":
           toast.message("GitHub", {
