@@ -15,7 +15,7 @@ const link = {
   gitErik: "https://github.com/angeldvilla",
   likedinErik: "https://www.linkedin.com/in/erik-torres-sacha-a93498200/",
   gitAriel: "https://github.com/NoistNT",
-  likedinAriel: "",
+  likedinAriel: "https://linkedin.com/in/ariel-piazzano",
 };
 const people = [
   {
