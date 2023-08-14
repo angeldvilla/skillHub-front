@@ -6,13 +6,20 @@ import Cerrajero from "../../assets/Cerrajero.jpeg";
 import Jardinero from "../../assets/Jardinero.jpg";
 import Electricista from "../../assets/electrician.webp";
 import Diseñador from "../../assets/Designer.avif";
+
 /* ------------------------ */
 
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 
 export default function LandingPage() {
-  const images = [backgroundImage, Diseñador, Jardinero, Electricista, Cerrajero];
+  const images = [
+    backgroundImage,
+    Diseñador,
+    Jardinero,
+    Electricista,
+    Cerrajero,
+  ];
 
   return (
     <div className="relative justify-center items-center h-screen bg-gray-800">
@@ -28,9 +35,12 @@ export default function LandingPage() {
         </div>
 
         <div className="flex space-x-7">
-          <a href="#" className="text-white-800 w-24">
-            ABOUT US
-          </a>
+          <Link to="/abautUs">
+            <a className="text-white-800 w-24">
+              ABOUT US
+            </a>
+          </Link>
+
           <a href="#" className="text-white-800">
             CONTACT
           </a>
@@ -47,15 +57,16 @@ export default function LandingPage() {
       </nav>
 
       <div className="min-h-screen flex flex-col items-center justify-center pt-16 bg-gray-800">
-        
         <h1 className="text-3xl text-white font-bold mt-20">
           Welcome To SkillHub
         </h1>
 
-        <p className="text-white font-bold mt-2 mb-6">Connecting With Talent!</p>
-        
-        <ImageCarousel images={images}/>
-        
+        <p className="text-white font-bold mt-2 mb-6">
+          Connecting With Talent!
+        </p>
+
+        <ImageCarousel images={images} />
+
         <Link
           to="/home"
           className="bg-blue-800 hover:bg-sky-700 text-white px-4 py-2 rounded-full hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5 mt-7 mb-6"
@@ -63,7 +74,7 @@ export default function LandingPage() {
           Get Started!
         </Link>
 
-        <h3 className="text-white font-bold mt-8">Don't have an account?</h3>
+        <h3 className="text-white font-bold mt-8"> Don't have an account?</h3>
         <Link to="/signup" className="text-blue-500 font-bold mb-9">
           Sign Up Here
         </Link>

@@ -21,7 +21,7 @@ export const validateUserData = (input, value, userData) => {
 
     case LASTNAME:
       if (!value) {
-        errors.lastName = "Last name is required";
+        errors.lastName = "Apellido requerido";
       } else if (!/^[a-zA-Z]+(?: [a-zA-Z]+)?$/.test(value)) {
         errors.lastName = "Debe contener solo letras";
       } else if (value.length > 30) {
