@@ -20,20 +20,23 @@ import Error404 from "./components/error404/Error404";
 
 /* ------------------------------------------- */
 import { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 /* ------------------------------------------- */
 
 function App() {
   const { userCredentials } = useSelector((state) => state.users);
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  // Redirecciona si el usuario intenta acceder a rutas no permitidas mientras las credenciales están cargadas
   useEffect(() => {
-    // Si el usuario está logueado, reemplaza la ruta actual en el historial
-    if (userCredentials) {
-      window.history.replaceState(null, "", `/user-panel/${userCredentials.uid}/home`);
+    if (userCredentials && !location.pathname.startsWith(`/user-panel/${userCredentials.uid}`)) {
+      // Redirige a la página permitida, por ejemplo, a /user-panel/:id/home
+      navigate(`/user-panel/${userCredentials.uid}/home`);
     }
-  }, [userCredentials]);
+  }, [userCredentials, location]);
 
   return (
     <Routes>
@@ -59,7 +62,7 @@ function App() {
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
-        <Route path="home" element={userCredentials ? <Home /> : <Navigate to="/error404" replace />} />
+        <Route path="home" element={<Home />} />
         <Route path="jobdetail/:id" element={userCredentials ? <JobDetail /> : <Navigate to="/error404" replace />} />
         <Route path="my-profile" element={userCredentials ? <Profile /> : <Navigate to="/error404" replace />} />
         <Route path="CreateWork" element={userCredentials ? <FormWorkCreated /> : <Navigate to="/error404" replace />} />
