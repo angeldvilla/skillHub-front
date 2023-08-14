@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import userProfile from "../../assets/user-profile.svg";
@@ -64,11 +65,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
       value: "CreateWork",
       icon: PaperClipIcon,
     },
-    {
-      label: "Ajustes",
-      value: "settings",
-      icon: Cog6ToothIcon,
-    },
+
     {
       label: "Suscripción",
       value: "memberShip",
@@ -76,7 +73,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
     },
     {
       label: "Cerrar Sesión",
-      value: "home",
+      value: "signin",
       icon: PowerIcon,
       onclick: handleLogout,
     },
@@ -95,7 +92,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
             size="md"
             alt="User Profile"
             className="border border-blue-600 p-0.5"
-            src={userProfile}
+            src={userAuth?.photoURL || userProfile}
           />
 
           <ChevronDownIcon
@@ -161,7 +158,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
   );
 };
 
-const NavList = () => {
+/* const NavList = () => {
   // Nav List component
   const navListItems = [
     {
@@ -195,7 +192,7 @@ const NavList = () => {
       ))}
     </ul>
   );
-};
+}; */
 
 export default function Nav() {
   const { id } = useParams();
@@ -214,7 +211,7 @@ export default function Nav() {
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    navigate("/home", { replace: true });
+      navigate('/signin');
   };
 
   useEffect(() => {
@@ -236,7 +233,7 @@ export default function Nav() {
             />
           </a>
           <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-            <NavList />
+            {/* <NavList /> */}
           </div>
           <IconButton
             size="sm"
@@ -250,9 +247,9 @@ export default function Nav() {
         </div>
         <ProfileMenu userAuth={user} handleLogout={handleLogout} />
       </div>
-      <Collapse open={isNavOpen} className="overflow-scroll">
-        <NavList />
-      </Collapse>
+      {/*<Collapse open={isNavOpen} className="overflow-scroll">
+         <NavList /> 
+      </Collapse>*/}
     </div>
   );
 }

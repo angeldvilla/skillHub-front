@@ -1,4 +1,5 @@
-  import { allWork, getWorkName, startIsLoading, detailWork } from "./slice";
+  import { createAsyncThunk } from "@reduxjs/toolkit";
+import { allWork, getWorkName, startIsLoading, detailWork, postPagos,  } from "./slice";
   import axios from "axios";
 
   const URL_API = "http://localhost:3001/empleador";
@@ -50,3 +51,18 @@
       type: "work/resetDetail"
     }
   }
+
+export const reviews =  createAsyncThunk ("score/sendScore", async(score) => {
+
+    try {
+      const { data } = await axios.post('http://localhost:3002/reviews', score)
+      return data
+      
+    } catch (error) {
+      console.log("error")
+    
+  }
+})
+
+      
+    
