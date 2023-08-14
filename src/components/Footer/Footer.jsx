@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import mercadopago from "../../assets/mercadopago.png";
 import { Toaster, toast } from "sonner";
 
@@ -6,6 +5,7 @@ export default function Footer() {
   const handleOnClick = (e) => {
     toast.message(e.target.name, { description: "Próximamente" });
   };
+
   return (
     <footer className="bg-gray-900 text-gray-400 text-sm pt-8 w-full">
       <div className="flex flex-col flex-wrap items-center md:flex-nowrap md:flex-row md:justify-between md:mx-8 lg:mx-12 xl:justify-between xl:mx-32 2xl:mx-48">
@@ -37,12 +37,13 @@ export default function Footer() {
         >
           POLÍTICAS DE PAGO
         </button>
-        <Link
-          to="/contact-us"
+        <button
+          name="Contacto"
+          onClick={handleOnClick}
           className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12"
         >
           CONTÁCTANOS
-        </Link>
+        </button>
       </div>
       <div className="md:flex md:flex-row md:justify-around md:px-4 xl:mx-32 xl:mt-8 2xl:mx-64">
         <div className="flex justify-center">
