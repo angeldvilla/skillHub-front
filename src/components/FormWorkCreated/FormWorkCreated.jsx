@@ -128,7 +128,7 @@ export default function FormCreateWork() {
       };
 
       console.log("Datos del formulario:", updatedWorkData);
-      dispatch(postJobs(updatedWorkData));
+      dispatch(postJobs(updatedWorkData, id));
       handleReset();
       toast.success("Trabajo creado correctamente");
 

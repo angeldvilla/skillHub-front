@@ -2,10 +2,10 @@ import axios from "axios"
 import { AddWorks } from "./sliceWorkPublication"
 import { GetAllWorkTypes } from "./sliceWorkPublication"
 
-const idUsuario = ""
 
-export const postJobs = (workdata) => (dispatch) => {
-    axios.post(`http://localhost:3001/empleador/${idUsuario}`, workdata)
+
+export const postJobs = (workdata, id) => (dispatch) => {
+    axios.post(`http://localhost:3001/empleador/${id}`, workdata)
         .then(res => dispatch(AddWorks(res.data.results)))
         .catch(error => console.log("Error con postWokrs", error))
 }
