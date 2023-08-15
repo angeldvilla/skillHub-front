@@ -12,14 +12,18 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../toolkit/Users/usersHandler";
+import { Link } from "react-router-dom";
+import { text } from "@cloudinary/url-gen/qualifiers/source";
 
 const CardItem = ({ _id, title, image, address, price, ability }) => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
-  const { userCredentials } = useSelector((state) => state.users);
-
+  const TodosLostrabajos = useSelector((state) => state.work.work);
+  const {user, userCredentials } = useSelector((state) => state.users);
+  console.log(user)
+ 
   useEffect(() => {
     if (userCredentials && userCredentials.uid === id) {
       dispatch(getUser(id));
@@ -101,6 +105,34 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
             </svg>
           </Button>
         </a>
+        
+  <Link
+    to={`https://api.whatsapp.com/send?phone=${user?.phoneNumber || ""}`}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Button
+      variant="filled"
+      className="flex items-center gap-2 text-gray-800 text-xs font-semibold bg-transparent shadow-none hover:shadow-none hover:bg-gray-200"
+    >
+      Contactar por WhatsApp 
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+        className="h-4 w-4"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+        />
+      </svg>
+    </Button>
+  </Link>
+       
       </div>
     </Card>
   );
