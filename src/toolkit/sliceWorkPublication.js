@@ -8,7 +8,7 @@ export const WorkPublicationSlice = createSlice({
     },
     reducers: {
         AddWorks:(state, action) => {
-            state.allPublicationsWork.push(action.payload)
+            state.allPublicationsWork.push(action.payload) 
         },
         GetAllWorkTypes: (state, action) => {
             state.allWorkTypes = action.payload
