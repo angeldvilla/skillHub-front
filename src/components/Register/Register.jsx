@@ -104,14 +104,11 @@ export default function Register() {
               'RY2Fv-D-bvjhDwd_H' 
             );
 
-          console.log('Correo enviado:', emailJSResponse);
-
           setTimeout(() => {
             const uid = googleCredentials.uid;
             navigate(`/user-panel/${uid}/home`);
           }, 2000);
-
-         
+          
           break;
         case "github":
           toast.message("GitHub", {
@@ -167,7 +164,6 @@ export default function Register() {
         })
       );
 
-      
       // Envío del correo
       const registerParams = {
         to_email: userData.email,
@@ -175,14 +171,10 @@ export default function Register() {
         user_last_name: userData.lastName
       };
 
-      const emailJSResponse = await emailjs.send('service_lfymgxc', 'template_fi0kha4',registerParams)
-      .then((result) => {
-        console.log(result.text);
-      }, (error) => {
-        console.log(error.text);
-      });
-
-      console.log('Correo enviado:', emailJSResponse);
+      const emailJSResponse = await emailjs.send('service_lfymgxc', 
+        'template_fi0kha4',
+        registerParams,
+        'RY2Fv-D-bvjhDwd_H');
 
       setTimeout(() => {
         const uid = newUser.uid;
