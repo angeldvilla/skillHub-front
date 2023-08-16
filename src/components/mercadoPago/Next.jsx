@@ -65,7 +65,7 @@ const Next = () => {
         <Loader />
       ) : (
         <div>
-         <Button className = 'bg-white' variant="outlined" color='black' onClick={handleGuardarDatos}>NEXT</Button>
+         <Button className = 'bg-white' variant="outlined" color='black' onClick={handleGuardarDatos}>CONTINUAR</Button>
          </div>
       )}
     </div>
