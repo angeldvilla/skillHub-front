@@ -32,7 +32,7 @@ export default function WorkPublication() {
     }, [dispatch, id, userCredentials]);
 
     const TodosLostrabajos = useSelector((state) => state.work.work);
-    const TodosLosId = TodosLostrabajos.filter(trabajo => trabajo.id)
+    const TodosLosId = TodosLostrabajos.filter(trabajo => trabajo.idUser)
 
     const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
 

@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getUsers = createAsyncThunk("users/getUsers", async () => {
   try {
-    const { data } = await axios.get("http://localhost:3002/user");
+    const { data } = await axios.get("https://skillhub-back-production.up.railway.app/user");
     return data;
   } catch (error) {
     throw new Error(error);
@@ -12,7 +12,7 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
 
 export const getUser = createAsyncThunk("users/getUser", async (id) => {
   try {
-    const { data } = await axios.get(`http://localhost:3002/user/${id}`);
+    const { data } = await axios.get(`https://skillhub-back-production.up.railway.app/user/${id}`);
     return data;
   } catch (error) {
     throw new Error(error);
@@ -22,7 +22,7 @@ export const getUser = createAsyncThunk("users/getUser", async (id) => {
 export const postUser = createAsyncThunk("users/postUser", async (userData) => {
   try {
     const { data } = await axios.post(
-      "http://localhost:3002/user/register",
+      "https://skillhub-back-production.up.railway.app/user/register",
       userData
     );
     return data;
