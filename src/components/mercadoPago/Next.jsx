@@ -3,7 +3,10 @@ import {useParams } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
+import logoSkillHub from "../../assets/skillHub.jpg";
+import { Button } from "@material-tailwind/react";
 import emailjs from '@emailjs/browser';
+
 
 const Next = () => {
   // Token
@@ -77,13 +80,23 @@ const Next = () => {
     }
 
   return (
-  <div>
-    TU pago se ralizó con exito
-    <br/>
-    {datos===null?<Loader/>:<button onClick={handleGuardarDatos}> next</button>}
-
-  </div>
-  )
+    <div className="container" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "100vh", backgroundColor: "black", color: "lightblue" }}>
+      <img src={logoSkillHub} alt="Logo de la empresa" style={{ width: "300px", marginBottom: "20px" }} />
+      <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
+        ¡Listo para llevar tus propuestas al mundo!
+      </p>
+      <p className="description" style={{ fontSize: "18px", marginBottom: "20px", width: "50%", textAlign: "center"}}>
+        En SkillHub, nos complace brindarte una experiencia excepcional. Contáctanos ante cualquier consulta o inquietud.
+      </p>
+      {datos === null ? (
+        <Loader />
+      ) : (
+        <div>
+         <Button className = 'bg-white' variant="outlined" color='black' onClick={handleGuardarDatos}>CONTINUAR</Button>
+         </div>
+      )}
+    </div>
+  );
 }
 
 export default Next
