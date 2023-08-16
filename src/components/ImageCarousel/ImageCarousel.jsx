@@ -7,6 +7,7 @@ const ImageCarousel = ({ images }) => {
     maxWidth: "1280px",
     margin: "0 auto",
     padding: "0 20px",
+    zIndex: -1,
   };
 
   const imageStyles = {

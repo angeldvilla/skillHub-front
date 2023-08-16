@@ -2,14 +2,14 @@
     text-align:center;
     margin-left: 30px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-top: 5%;
-   
+    margin-top: 15%;
 }
  .bodyStyle h1{
     font-family:Georgia, 'Times New Roman', Times, serif;
     font-size: 80px;
     color: greenyellow;
     text-align:center;
+    margin-top: 1em;
 }
 
 .quienesStyle:hover{
@@ -20,17 +20,15 @@
 .bodyStyle p{
     text-align:center;
     font-size: 25px;
-    width:50%;/* Ancho del cuadrado */
-    height: 250px; /* Alto del cuadrado */
+    width: 40em;/* Ancho del cuadrado */
+    height: 22em; /* Alto del cuadrado */
     overflow: hidden; 
     display: flex; /* Usar flexbox para centrar el contenido */
     justify-content: center; /* Centrar horizontalmente */
     align-items: center; /* Centrar verticalmente */
-    margin-top: 3%;
-    margin-left: 25%;
-    color:rgb(113, 117, 117);
-    margin-bottom: 10%;
-
+    margin-left: 12em;
+    color:rgb(255, 255, 255);
+    margin-bottom: 5em;
 }
 .imagenStyle{
     margin-left: 45%; 

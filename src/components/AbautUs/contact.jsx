@@ -130,10 +130,10 @@ const people = [
 
 export default function Contacto() {
   return (
-    <div>
-      <div className="flex flex-col flex-wrap items-center md:flex-nowrap md:flex-row md:justify-between md:mx-8 lg:mx-12 xl:justify-between xl:mx-32 2xl:mx-48">
-        <div>
-          <div data-aos="zoom-out-right">
+    <div >
+      <div className="flex flex-col flex-wrap items-center md:flex-nowrap md:flex-row md:justify-between md:mx-8 lg:mx-12 xl:justify-between xl:mx-32 2xl:mx-48 ">
+        <div className="z-[-1]">
+          <div data-aos="zoom-out-right" className="z-[-1]">
             <h1>Nuestro Equipo</h1>
             <div
               className="quienesStyle"
@@ -141,7 +141,7 @@ export default function Contacto() {
               data-aos-easing="ease-out-cubic"
               data-aos-duration="2000"
             >
-              <Link to={"/home"}>
+              <a href={"/"}>
                 <img
                   className="logoSkill"
                   src={
@@ -149,7 +149,7 @@ export default function Contacto() {
                   }
                   alt="imagenLogoSkillHub"
                 />
-              </Link>
+              </a>
             </div>
           </div>
         </div>

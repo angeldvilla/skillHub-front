@@ -1,5 +1,3 @@
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 import "../AbautUs/Abaut.css";
 import images from "./imagen/images.jpg";
 
@@ -7,9 +5,8 @@ import Contacto from "./contact";
 
 function AbautUs() {
   return (
-    <div>
+    <div className="z-[-1]">
       <div className="bodyStyle">
-        <Header />
         <div
           className="quienesStyle"
           data-aos="flip-left"
@@ -57,7 +54,6 @@ function AbautUs() {
           <Contacto />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
