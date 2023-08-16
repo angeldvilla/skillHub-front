@@ -98,10 +98,10 @@ export default function Register() {
             };
 
             const emailJSResponse = await emailjs.send(
-              'service_lfymgxc', // ID de tu servicio en EmailJS
-              'template_fi0kha4', // ID de tu plantilla en EmailJS
+              'service_lfymgxc',
+              'template_fi0kha4', 
               authUser,
-              'RY2Fv-D-bvjhDwd_H' // Tu usuario ID en EmailJS
+              'RY2Fv-D-bvjhDwd_H' 
             );
 
           console.log('Correo enviado:', emailJSResponse);
