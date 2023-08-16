@@ -19,6 +19,7 @@ import {
   validateUserData,
   resetUserData,
 } from "../../utils/userDataValidation";
+import emailjs from '@emailjs/browser';
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -89,6 +90,22 @@ export default function Register() {
             JSON.stringify(googleCredentials)
           );
 
+            // Envío del correo
+            const authUser = {
+              to_email: userCredentials.user.email,
+              user_first_name: firstName,
+              user_last_name: lastName
+            };
+
+            const emailJSResponse = await emailjs.send(
+              'service_lfymgxc', // ID de tu servicio en EmailJS
+              'template_fi0kha4', // ID de tu plantilla en EmailJS
+              authUser,
+              'RY2Fv-D-bvjhDwd_H' // Tu usuario ID en EmailJS
+            );
+
+          console.log('Correo enviado:', emailJSResponse);
+
           setTimeout(() => {
             const uid = googleCredentials.uid;
             navigate(`/user-panel/${uid}/home`);
@@ -150,6 +167,23 @@ export default function Register() {
         })
       );
 
+      
+      // Envío del correo
+      const registerParams = {
+        to_email: userData.email,
+        user_first_name: userData.firstName,
+        user_last_name: userData.lastName
+      };
+
+      const emailJSResponse = await emailjs.send('service_lfymgxc', 'template_fi0kha4',registerParams)
+      .then((result) => {
+        console.log(result.text);
+      }, (error) => {
+        console.log(error.text);
+      });
+
+      console.log('Correo enviado:', emailJSResponse);
+
       setTimeout(() => {
         const uid = newUser.uid;
         navigate(`/user-panel/${uid}/home`);
@@ -174,6 +208,7 @@ export default function Register() {
             toast.error("Ups, algo salió mal");
         }
       }
+      console.error('Error al enviar el correo:', error);
     }
   };
 
