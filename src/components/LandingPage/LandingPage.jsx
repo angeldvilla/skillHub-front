@@ -57,24 +57,19 @@ export default function LandingPage() {
         </div>
 
         <div className="flex ml-52 space-x-10 items-center">
-          <NavLink to="/home">
+          <NavLink to="/home" className="hover:translate-x-2 transition-transform duration-300 ease-in-out">
             <a className="text-white w-24" data-aos="fade-down">
               Inicio
             </a>
           </NavLink>
 
-         {/*  <Link to="/abautUs">
-            <a className="text-white w-24" data-aos="fade-down">
-              Sobre Nosotros
-            </a>
-          </Link> */}
-          <span>
+          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out">
             <a href="#about-us" className="text-white w-24" data-aos="fade-down">
             Sobre Nosotros
           </a>
           </span> 
 
-          <span>
+          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out">
             <a href="#contact" className="text-white w-24" data-aos="fade-down">
             Contactanos
           </a>
@@ -123,7 +118,7 @@ export default function LandingPage() {
           <AbautUs/>
         </div>
 
-        <div id="contact" className="min-h-screen flex flex-col items-center justify-center pt-16">
+        <div id="contact" className="min-h-screen flex flex-col items-center justify-center pt-16 ">
     <h2 className="text-2xl font-bold text-white mb-4" data-aos="fade-down">
       Contacto
     </h2>
