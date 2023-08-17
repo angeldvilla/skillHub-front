@@ -4,7 +4,8 @@ import { useState, useEffect , useRef} from "react";
 import { useDispatch, useSelector  } from "react-redux";
 import { useParams } from "react-router-dom";
 import validation from "../Validations/Validations";
-import { postJobs, getTypes } from "../../toolkit/ActionsworkPublications";
+import { postJobs, getTypes, } from "../../toolkit/ActionsworkPublications";
+import {  getDetailWork } from "../../toolkit/thunks";
 import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
 import { getUser } from "../../toolkit/Users/usersHandler";
 
@@ -16,11 +17,12 @@ import axios from "axios";
 // Components
 import Footer from "../Footer/Footer";
 import Nav from "../PanelUser/Nav";
+import { setId } from "@material-tailwind/react/components/Tabs/TabsContext";
 
 //_______________________________________
 
 const WorkPerTime = ["/Hora", "/Fijo"];
-const maxSiseMB = 2 * 1024 * 1024; // Tamaño de 1mb para las fotos
+const maxSiseMB = 3 * 1024 * 1024; // Tamaño de 3mb para las fotos
 
 
 export default function FormCreateWork() {
@@ -36,15 +38,22 @@ export default function FormCreateWork() {
   const [fileSelected, setFileSelected] = useState(false); //Soluciona el filed seleccionado
   const fileInputRef = useRef(null);
   const params =  useParams()
-  const TodosLostrabajos = useSelector((state) => state.work.work);
+   const TodosLostrabajos = useSelector((state) => state.work.work);
+  // const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
   const { userCredentials } = useSelector(state => state.users);
-
-
-
-  // const params = useParams()
+  
 
 
   const [workdata, setWorkData] = useState({
+    title: "",
+    description: "",
+    address: "",
+    ability: [],
+    image: "",
+    price: "",
+  });
+
+  const [workdata2, setWorkData2] = useState({
     title: "",
     description: "",
     address: "",
@@ -63,13 +72,16 @@ export default function FormCreateWork() {
 
   })
 
+
+
   useEffect(() => {
     dispatch(getTypes());
     if(userCredentials && userCredentials.uid === id){
-      dispatch(getUser(id))
+      dispatch(getDetailWork(id))
+      dispatch(getUser(id));
+
     }
-    // dispatch(getWork());
-  }, [dispatch, id])
+  }, [dispatch, id, userCredentials])
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -100,6 +112,7 @@ export default function FormCreateWork() {
       })
     }
   }
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -125,6 +138,7 @@ export default function FormCreateWork() {
       const updatedWorkData = {
         ...workdata,
         price: finalPrice,
+        
       };
 
       console.log("Datos del formulario:", updatedWorkData);
@@ -167,6 +181,7 @@ export default function FormCreateWork() {
       price: "",
     });
   };
+  
   useEffect(() => {
     if (textTitle || textDesciption || priceValue || directionValue) {
       setWorkData((prevData) => ({
@@ -238,8 +253,6 @@ export default function FormCreateWork() {
   }
 
 
-
-
   // Previsualización de la imagen
   let previewImage = workdata.image ? (
     <span style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
@@ -253,21 +266,81 @@ export default function FormCreateWork() {
   ) : null;
 
 
-  //Editar tarea 
-  // useEffect(() => {
-  //    dispatch2(getWork());
-  // }, [dispatch])
+  //Editar tarea
 
+
+
+  const {detail} = useSelector(state => state.work)
+//!HASTA ACÁ
+  console.log("Todos los trabajos", TodosLostrabajos);
+ 
+  const trabajoFiltrado = TodosLostrabajos.find(trabajo => trabajo._id === id); // Usa find en lugar de filter para obtener un solo objeto
   useEffect(() => {
-console.log("Este es el params",params)
-console.log("Todos los trabajos", TodosLostrabajos);
-  }, [])
+    if (trabajoFiltrado) {
+      setWorkData({
+        title: trabajoFiltrado.title,
+        description: trabajoFiltrado.description,
+        address: trabajoFiltrado.address,
+        ability: trabajoFiltrado.ability,
+        image: trabajoFiltrado.image,
+        price: trabajoFiltrado.price,
+      });
+      console.log("Este es el trabao Filtrado", trabajoFiltrado);
+    }
+  }, [trabajoFiltrado, id]);
+
+  console.log("Esta es la imagen del trabajo Filtrado cuando sale del componente", trabajoFiltrado);
 
 
+//   const detallesito = detail
+  
+//   dispatch(getDetailWork(id))
+
+//   useEffect (()=> {
+// if(id) {
+//   console.log("Detallesito", detallesito);
+// }
+// }, [])
+
+console.log("Este es el DETAIL", detail);
+
+  
+
+
+// useEffect(()=>{
+ 
+//    setWorkData2({
+//     title: detail.title,
+//     description: detail.description,
+//     address: detail.address,
+//     ability: "OLI",
+//     image: [detail.image],
+//     price: detail.price,
+//    })
+  
+// },[])
+
+// Valifacion susbscripción
+
+const [pay, setPay] = useState([]);
+  useEffect(() => {
+    const getPayment = async () => {
+      try {
+        const { data } = await axios("http://localhost:3002/payment/");
+        setPay(data);
+      } catch (error) {
+        console.error("Error al obtener los pagos:", error);
+      }
+    };
+    getPayment();
+  }, [id]);
+  const filterSuscripcion = pay
+  .filter(({ subscription }) => subscription === true)
   //___________________________________________
 
   return (
     <div>
+      {filterSuscripcion.length > 0 ? 
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">
@@ -292,7 +365,7 @@ console.log("Todos los trabajos", TodosLostrabajos);
             <input
               type="text"
               name="title"
-              value={textTitle}
+              value={trabajoFiltrado ? workdata.title : textTitle}
               placeholder="Que trabajo necesitas"
               onChange={(event) => {
                 const newValue = event.target.value;
@@ -308,7 +381,7 @@ console.log("Todos los trabajos", TodosLostrabajos);
               Descripción
             </label>
             <textarea
-              value={textDesciption}
+              value={trabajoFiltrado ? workdata.description : textDesciption}
               name="description"
               placeholder="Necesito persona con capacidad de..."
               onChange={(event) => {
@@ -329,7 +402,7 @@ console.log("Todos los trabajos", TodosLostrabajos);
               type="text"
               placeholder="$20"
               name="price"
-              value={priceValue}
+              value={trabajoFiltrado ? workdata.price :priceValue}
               onChange={(event) => {
                 const newValue = event.target.value;
                 handleChange(event);
@@ -390,7 +463,7 @@ console.log("Todos los trabajos", TodosLostrabajos);
               type="text"
               name="address"
               placeholder="Para servicios físicos"
-              value={directionValue}
+              value={trabajoFiltrado ? workdata.address :directionValue}
               onChange={(event) => {
                 const newValue = event.target.value;
                 handleChange(event);
@@ -433,6 +506,11 @@ console.log("Todos los trabajos", TodosLostrabajos);
           </button>
         </form>
       </div>
+      : (
+        <div>
+          <h1>NO hay suscripcion</h1>
+        </div>
+      )}
       <Footer />
       <ToastContainer />
     </div>

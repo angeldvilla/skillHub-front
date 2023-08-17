@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getWork } from "../../toolkit/thunks";
 import { Link, NavLink, useParams } from "react-router-dom";
 import { getUser } from "../../toolkit/Users/usersHandler";
+import {  getDetailWork } from "../../toolkit/thunks";
+
 import Nav from "../PanelUser/Nav";
 import Footer from "../Footer/Footer";
 import { ToastContainer } from "react-toastify";
@@ -20,10 +22,9 @@ import ubication from "../../assets/ubication.svg";
 export default function WorkPublication() {
 
     const { id } = useParams();
-
     const { userCredentials } = useSelector(state => state.users);
-    
     const dispatch = useDispatch();
+    
     useEffect(() => {
         dispatch(getWork());
         if(userCredentials && userCredentials.uid === id){
@@ -35,10 +36,15 @@ export default function WorkPublication() {
     const TodosLosId = TodosLostrabajos.filter(trabajo => trabajo.idUser)
 
     const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
+    console.log("id del trabajo encontrado", trabajosDelUsuario);
 
     const totalWorks = trabajosDelUsuario.length;
 
+    function handleClick () {
+        dispatch(getWork())
+    }
 
+  
 
     return (
       <div>
@@ -102,11 +108,13 @@ export default function WorkPublication() {
                                     <div></div>
                                 </div>
                             </CardBody>
-                            <Link to={`/user-panel/64d55605618ef0f329b982f3/Edit-Work/${trabajo._id}`}>
+                            <Link to={`/user-panel/${id}/Edit-Work/${trabajo._id}`}>
 
                                 <Button
+                                
                                     variant="filled"
                                     className="flex items-center gap-2 text-gray-800 text-xs font-semibold bg-transparent shadow-none hover:shadow-none hover:bg-gray-200"
+                                    onClick={handleClick}
                                 >
                                     Editar
                                     <svg
@@ -116,6 +124,7 @@ export default function WorkPublication() {
                                         stroke="currentColor"
                                         strokeWidth={2}
                                         className="h-4 w-4"
+                                      
                                     >
                                         <path
                                             strokeLinecap="round"
@@ -125,6 +134,7 @@ export default function WorkPublication() {
                                     </svg>
                                 </Button>
                                 </Link>
+                                <button>Eliminar Trabajo</button>
                         </div>
                     </Card>
                 ))

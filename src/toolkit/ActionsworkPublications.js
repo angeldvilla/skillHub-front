@@ -21,3 +21,14 @@ export const getTypes = () => {
         }
     }
 }
+
+// export const deleteWokrs = (trabajo) => {
+   
+//     return async function (dispatch){
+//         try {
+//             await axios.delete("http://localista:3002/empleador/${idusuario}")
+//         } catch (error) {
+            
+//         }
+//     }
+// }
