@@ -11,8 +11,12 @@ import Profile from "./components/PanelUser/Profile";
 import MercadoPago from "./components/mercadoPago/MercadoPago";
 import Next from "./components/mercadoPago/Next";
 import Error404 from "./components/error404/Error404";
-import AbautUs from "./components/AbautUs/AbautUs";
-import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv"
+import AbautUs from "./components/AbautUs/Abimport PoliticasDePriv from "./components/ComponentesFooter/
+  
+
+
+import Dashboard from "./components/Dashboard/Dashboard";
+
 /* ------------------------------------------- */
 
 /* ------------------------------------------- */
@@ -41,7 +45,7 @@ function App() {
       // Redirige a la página permitida
       navigate(`/user-panel/${userCredentials.uid}/home`);
     }
-  }, [userCredentials, location]);
+  }, [userCredentials, location, navigate]);
 
   return (
     <Routes>
@@ -51,7 +55,8 @@ function App() {
       <Route path="/signup" element={<Register />} />
       <Route path="/jobdetail/:id" element={<JobDetail />} />
       <Route path="/error404" element={<Error404 />} />
-      <Route path="/abautUs" element={<AbautUs/>} />
+      <Route path="/abautUs" element={<AbautUs />} />
+      <Route path="/dashboard" element={<Dashboard />} />
 
       {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/privacy-policies" element={< PoliticasDePriv/>} />
@@ -62,7 +67,6 @@ function App() {
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
-
         <Route
           path="home"
           element={userCredentials ? <Home /> : <Navigate to="/home" replace />}
