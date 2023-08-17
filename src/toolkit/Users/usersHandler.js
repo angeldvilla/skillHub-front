@@ -36,3 +36,13 @@ export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
   localStorage.removeItem("userCredentials");
   return null;
 });
+
+
+export const Payment = createAsyncThunk("users/Payment", async () => {
+  try {
+    const { data } = await axios.get("http://localhost:3001/payment");
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
