@@ -78,10 +78,10 @@ export default function FormCreateWork() {
     dispatch(getTypes());
     if(userCredentials && userCredentials.uid === id){
       dispatch(getDetailWork(id))
+      dispatch(getUser(id));
 
-     
     }
-  }, [dispatch, id])
+  }, [dispatch, id, userCredentials])
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -320,11 +320,27 @@ console.log("Este es el DETAIL", detail);
   
 // },[])
 
+// Valifacion susbscripción
 
+const [pay, setPay] = useState([]);
+  useEffect(() => {
+    const getPayment = async () => {
+      try {
+        const { data } = await axios("http://localhost:3002/payment/");
+        setPay(data);
+      } catch (error) {
+        console.error("Error al obtener los pagos:", error);
+      }
+    };
+    getPayment();
+  }, [id]);
+  const filterSuscripcion = pay
+  .filter(({ subscription }) => subscription === true)
   //___________________________________________
 
   return (
     <div>
+      {filterSuscripcion.length > 0 ? 
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">
@@ -490,6 +506,11 @@ console.log("Este es el DETAIL", detail);
           </button>
         </form>
       </div>
+      : (
+        <div>
+          <h1>NO hay suscripcion</h1>
+        </div>
+      )}
       <Footer />
       <ToastContainer />
     </div>

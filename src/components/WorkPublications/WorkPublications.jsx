@@ -46,7 +46,6 @@ export default function WorkPublication() {
 
   
 
-
     return (
       <div>
         <div>
@@ -135,6 +134,7 @@ export default function WorkPublication() {
                                     </svg>
                                 </Button>
                                 </Link>
+                                <button>Eliminar Trabajo</button>
                         </div>
                     </Card>
                 ))
