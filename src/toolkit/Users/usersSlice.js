@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUsers, getUser, postUser, logoutUser } from "./usersHandler";
+import {
+  getUsers,
+  getUsersByName,
+  getUser,
+  postUser,
+  logoutUser,
+} from "./usersHandler";
 
 const storedCredentials = JSON.parse(localStorage.getItem("userCredentials"));
 
@@ -32,6 +38,21 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(getUsers.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = error.message;
+      })
+
+      // Get users by name
+      .addCase(getUsersByName.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getUsersByName.fulfilled, (state, { payload }) => {
+        state.users = payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getUsersByName.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = error.message;
       })
@@ -71,7 +92,7 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(logoutUser.fulfilled, (state, { payload }) => {
-        state.userCredentials = payload
+        state.userCredentials = payload;
         state.isLoading = false;
         state.error = null;
       })
