@@ -19,19 +19,19 @@ const MercadoPago = () => {
 
     const plan = [{
         id:1,
-        plan:"PRUEBA",
-        pago:0,
+        plan:"BASE",
+        pago:9.99,
         beneficios:["5 publicaciones"]
     },
     {   id:2,
-        plan:"PLATINO",
-        pago:10,
-        beneficios:["20 publicaciones","Otro beneficio"]
+        plan:"ESTÁNDAR",
+        pago:19.99,
+        beneficios:["15 publicaciones"]
     },
     {   id:3,
-        plan:"ORO",
-        pago:15,
-        beneficios:["publicaciones ilimitados0","Otro beneficio","Otro beneficio","Otro beneficio"]
+        plan:"PREMIUM",
+        pago:29.99,
+        beneficios:["Publicaciones ilimitados"]
     }
 ]
 
@@ -63,8 +63,6 @@ const MercadoPago = () => {
     const { id } = useParams();
 
     const handleBuy = async(element)=>{
-        if(element.plan === "PRUEBA") navigate(`/user-panel/${id}/CreateWork`)
-        else{
             const client = {
                 plan:element.plan,
                 price:element.pago,
@@ -73,7 +71,7 @@ const MercadoPago = () => {
             const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
             
             return window.location.href=data.preferenceUrl
-            }
+            
         }
     useEffect(() => {
         if (userCredentials && userCredentials.uid === id) {
