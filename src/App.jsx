@@ -12,6 +12,7 @@ import MercadoPago from "./components/mercadoPago/MercadoPago";
 import Next from "./components/mercadoPago/Next";
 import Error404 from "./components/error404/Error404";
 import AbautUs from "./components/AbautUs/AbautUs";
+import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv"
 /* ------------------------------------------- */
 
 /* ------------------------------------------- */
@@ -53,8 +54,8 @@ function App() {
       <Route path="/abautUs" element={<AbautUs/>} />
 
       {/* RUTAS DE FOOTER EN PROCESO */}
+      <Route path="/privacy-policies" element={< PoliticasDePriv/>} />
       <Route path="/terms-of-use" element={<UnderDevelopment />} />
-      <Route path="/privacy-policies" element={<UnderDevelopment />} />
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
       <Route path="/payment-policies" element={<UnderDevelopment />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />

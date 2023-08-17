@@ -1,0 +1,72 @@
+.containerPolitici{
+text-align: center;
+
+}
+
+.containerPolitici h1{
+    font-size: 50px;
+}
+.containerPolitici h3{
+    font-size: 30px;
+}
+.containerOp h4{
+    font-size: 30px;
+    margin-bottom: 5%;
+    margin-top: 10%;
+
+}
+.spanStyle span{
+    font-size: 20px;
+   
+
+}
+.ulStyle ul{
+    text-align: justify;
+}
+.containerBackgrond{
+
+background-color: #daf7f793; 
+  padding: 20px; 
+  border-radius: 10px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  
+}
+.boton {
+
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f0f0f0; /* Color de fondo neutro */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333; /* Color de texto neutro */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .boton:hover {
+    background-color: #ccc; /* Cambio de color al pasar el mouse */
+    color: #000; /* Cambio de color de texto al pasar el mouse */
+  }
+  .boton-container{
+    
+display: flex;
+justify-content: flex-start;
+
+
+margin-left: 20px;
+  }
+  .iconStyle h1{
+        
+display: flex;
+justify-content:center;
+margin-bottom: 30px;
+
+  }
+  .iconStyle h3{
+    display: flex;
+justify-content:center;
+margin-bottom: 30px;
+margin-top: 10px;
+  }
