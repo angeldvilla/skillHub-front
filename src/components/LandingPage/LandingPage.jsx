@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "aos/dist/aos.css";
 import backgroundImage from "../../assets/backgroundImage.jpg";
 import logoSkillHub from "../../assets/skillHub.jpg";
@@ -9,7 +9,8 @@ import Jardinero from "../../assets/Jardinero.jpg";
 import Electricista from "../../assets/electrician.webp";
 import Diseñador from "../../assets/Designer.avif";
 import Footer from "../Footer/Footer";
-import AbautUs from '../AbautUs/AbautUs'
+import AbautUs from "../AbautUs/AbautUs";
+import Contact from "./sectionContact";
 
 export default function LandingPage() {
   const images = [
@@ -20,10 +21,9 @@ export default function LandingPage() {
     Cerrajero,
   ];
 
-
   return (
-    <div className="flex flex-col min-h-screen">
-          <style>
+    <div className="flex flex-col min-h-screen relative">
+      <style>
         {`
           /* Estilos de scroll */
           ::-webkit-scrollbar {
@@ -33,148 +33,126 @@ export default function LandingPage() {
             background: #f1f1f1;
           }
           ::-webkit-scrollbar-thumb {
-            background: #49595b;
+            background: #7e7e7e;
             border-radius: 4px;
           }
           ::-webkit-scrollbar-thumb:hover {
-            background: #42b0e3;
+            background: #2f2f2fbd;
           }
         `}
       </style>
-      <div
-        className="fixed top-0 left-0 w-full h-screen blur brightness-50"
-        style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", backgroundPosition: "center", zIndex: -1 }}
+      <section>
+        <div
+        className="fixed top-0 left-0 w-full h-screen bg-cover bg-center bg-fixed blur brightness-50 z-[-1]"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
       ></div>
-      <nav className="fixed top-0 left-0 right-0 px-4 py-2 flex items-center justify-between bg-opacity-75 backdrop-blur-md">
-      <div className="flex items-center space-x-4">
-          <a href="/" className="gap-9">
-            <img
-              src={logoSkillHub}
-              className="sticky -top-16 w-20 h-auto rounded-full border-4 border-sky-500 mt-2"
-              alt="skillHub Logo"
-            />
-          </a>
-        </div>
-
-        <div className="flex ml-52 space-x-10 items-center">
-          <NavLink to="/home" className="hover:translate-x-2 transition-transform duration-300 ease-in-out">
-            <a className="text-white w-24" data-aos="fade-down">
-              Inicio
+        <div className="fixed top-0 left-0 right-0 px-14 py-2 flex items-center justify-between bg-white">
+          <div className="flex items-center space-x-4">
+            <a href="" className="gap-9">
+              <img
+                src={logoSkillHub}
+                className="-top-16 w-20 h-auto rounded-full border-2 border-black mt-2"
+                alt="skillHub Logo"
+              />
             </a>
-          </NavLink>
+          </div>
+          <div className="flex ml-52 space-x-10 items-center">
+            <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
+              <a href="" className="text-black w-1/2" data-aos="fade-down">
+                Inicio
+              </a>
+            </span>
+            <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
+              <a href="/home" className="text-black w-24" data-aos="fade-down">
+                Servicios
+              </a>
+            </span>
+            <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
+              <a
+                href="#about-us"
+                className="text-black w-24"
+                data-aos="fade-down"
+              >
+                Sobre Nosotros
+              </a>
+            </span>
+            <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
+              <a
+                href="#contact"
+                className="text-black w-24"
+                data-aos="fade-down"
+              >
+                Contáctanos
+              </a>
+            </span>
+          </div>
+          <div className="flex space-x-5 justify-end">
+            <NavLink
+              to="/signin"
+              className="text-blue-700 text-lg hover:text-blue-500 px-4 py-2 transform transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              Iniciar Sesión
+            </NavLink>
+            <NavLink
+              to="/signup"
+              className="bg-blue-700 hover:bg-blue-600 text-white text-center px-4 py-2 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              Regístrate
+            </NavLink>
+          </div>
+        </div>
+        <div className="flex text-center mt-40">
+          <div className="flex justify-between items-center w-4/5 mx-auto">
+            {/* Columna Izquierda */}
+            <div className="w-1/2">
+              <h1 className="text-5xl font-extrabold mb-4" data-aos="fade-down">
+                ¡Bienvenidos a SkillHub!
+              </h1>
+              <p className="text-lg font-semibold mb-8" data-aos="fade-up">
+                Tu Centro de Habilidades
+              </p>
+              <NavLink to="/home" className="bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5">
+                Ver ahora
+              </NavLink>
+            </div>
 
-          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out">
-            <a href="#about-us" className="text-white w-24" data-aos="fade-down">
+            {/* Columna Derecha */}
+            <div className="w-1/2 z-[-1]">
+              <ImageCarousel images={images} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN SOBRE NOSOTROS */}
+      <section id="about-us" className="bg-black py-16">
+        <div className="container mx-auto">
+          <h2
+            className="text-3xl font-semibold text-center mb-8"
+            data-aos="fade-up"
+          >
             Sobre Nosotros
-          </a>
-          </span> 
-
-          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out">
-            <a href="#contact" className="text-white w-24" data-aos="fade-down">
-            Contactanos
-          </a>
-          </span>
+          </h2>
+          <AbautUs />
         </div>
-    
-        <div className="flex space-x-7 justify-end">
-          <Link
-            to="/signin"
-            className="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
+      </section>
+
+      {/* SECCIÓN DE CONTACTO */}
+      <section id="contact" className="py-16">
+        <div className="container mx-auto">
+          <h2
+            className="text-3xl font-semibold text-center mb-8"
+            data-aos="fade-up"
           >
-            Iniciar Sesión
-          </Link>
-          <Link
-            to="/signup"
-            className="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
-          >
-            Registrate
-          </Link>
+            Contáctanos
+          </h2>
+          <Contact />
         </div>
-      </nav>
-      <div className="min-h-screen flex flex-col items-center justify-center pt-16">
-        <h1
-          className="text-3xl text-white font-bold mt-20"
-          data-aos="fade-down"
-        >
-          Bienvenidos a SkillHub
-        </h1>
-        <p
-          className="text-white font-bold mt-2 mb-6"
-          data-aos="fade-up"
-        >
-          Centro de Habilidades!
-        </p>
-        <ImageCarousel images={images} />
-     {/*    <Link
-          to="/home"
-          className="bg-blue-800 hover:bg-sky-700 text-white px-4 py-2 rounded-full hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5 mt-7 mb-6"
-          data-aos="fade-up"
-        >
-          Get Started!
-        </Link> */}
-      
-        <div className="flex flex-col min-h-screen">
-        <div id="about-us" data-aos-duration="2000" className="min-h-screen flex flex-col items-center justify-center pt-16">
-          <AbautUs/>
-        </div>
+      </section>
 
-        <div id="contact" className="min-h-screen flex flex-col items-center justify-center pt-16 ">
-    <h2 className="text-2xl font-bold text-white mb-4" data-aos="fade-down">
-      Contacto
-    </h2>
-    <form className="w-1/2 bg-white p-6 rounded-lg shadow-md" data-aos="fade-up">
-      <div className="mb-4">
-        <label className="block text-black font-bold mb-2" htmlFor="name">
-          Nombre
-        </label>
-        <input
-          className="w-full p-2 border border-white bg-gray-800 rounded-md text-white"
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Nombre"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-black font-bold mb-2" htmlFor="email">
-          Correo Electrónico
-        </label>
-        <input
-          className="w-full p-2 border border-white bg-gray-800 rounded-md text-white"
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Correo Electrónico"
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-black font-bold mb-2" htmlFor="message">
-          Mensaje
-        </label>
-        <textarea
-          className="w-full p-2 border border-white bg-gray-800 rounded-md text-white"
-          id="message"
-          name="message"
-          rows="4"
-          placeholder="Escribe tu mensaje aquí"
-          required
-        ></textarea>
-      </div>
-      <button
-        type="submit"
-        className="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full hover:bg-sky-700 transform transition-transform duration-200 hover:-translate-y-0.5"
-      >
-        Enviar
-      </button>
-    </form>
-  </div>
-      
-        </div>
-
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }
