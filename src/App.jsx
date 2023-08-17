@@ -12,7 +12,7 @@ import MercadoPago from "./components/mercadoPago/MercadoPago";
 import Next from "./components/mercadoPago/Next";
 import Error404 from "./components/error404/Error404";
 import AbautUs from "./components/AbautUs/AbautUs";
-import Dashboard from "./components/Dashboard/Dashboard";
+import Dashboard from "./components/Admin/Dashboard/Dashboard";
 /* ------------------------------------------- */
 
 /* ------------------------------------------- */
