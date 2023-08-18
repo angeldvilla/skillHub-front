@@ -15,6 +15,7 @@ import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Toaster, toast } from "sonner";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -26,6 +27,12 @@ export default function Login() {
   });
 
   const [errors, setErrors] = useState({});
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -171,15 +178,27 @@ export default function Login() {
               value={userData.email}
               onChange={handleChange}
             />
-            <Input
-              type="password"
-              size="lg"
-              label="Contraseña"
-              color="black"
-              name="password"
-              value={userData.password}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                size="lg"
+                label="Contraseña"
+                color="black"
+                name="password"
+                value={userData.password}
+                onChange={handleChange}
+              />
+              <span
+                className="cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-6 w-5 text-black" />
+                ) : (
+                  <EyeIcon className="h-6 w-5 text-black" />
+                )}
+              </span>
+            </div>
           </div>
           <button
             data-platform="email"
