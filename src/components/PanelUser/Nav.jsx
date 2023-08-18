@@ -222,7 +222,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
+    <div className="w-full bg-gray-100 lg:rounded-md lg:pl-6 px-4 py-2">
       <div className="flex items-center justify-between ">
         <div className="flex items-center space-x-4">
           <a href={`/user-panel/${id}/home`} className="gap-9">
@@ -247,9 +247,9 @@ export default function Nav() {
         </div>
         <ProfileMenu userAuth={user} handleLogout={handleLogout} />
       </div>
-      {/*<Collapse open={isNavOpen} className="overflow-scroll">
+      <Collapse open={isNavOpen} className="overflow-scroll">
          <NavList /> 
-      </Collapse>*/}
+      </Collapse>
     </div>
   );
 }
