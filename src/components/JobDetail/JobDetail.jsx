@@ -1,5 +1,5 @@
-import  { useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork, getDetailWork, detailReset } from "../../toolkit/thunks";
 import { getUser, getUsers } from "../../toolkit/Users/usersHandler";
@@ -10,26 +10,22 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Loader from "../Loader/Loader";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
-import Score from "../Score/Score"
 /* -------------- */
 
 /* ASSESTS */
 import phone from "../../assets/phone.svg";
 import dollarSign from "../../assets/dollar-sign.svg";
 import location from "../../assets/location.svg";
+import { Button } from "@material-tailwind/react";
 /* -------------- */
 
 export default function JobDetail() {
-
   const { id } = useParams();
-
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { work, detail, isLoading } = useSelector((state) => state.work);
-
   const { users, user, userCredentials } = useSelector((state) => state.users);
-
-  const infoUser = users.find(user => user._id === detail.users)
+  const infoUser = users.find((user) => user._id === detail.users);
 
   useEffect(() => {
     !work.length && dispatch(getWork());
@@ -39,96 +35,111 @@ export default function JobDetail() {
     return () => {
       dispatch(detailReset());
     };
-  }, [dispatch, id, work.length, users.length ,user.length]);
+  }, [dispatch, id, work.length, users.length, user.length]);
 
   const images = [detail?.image];
 
-  return (
-    <div>
-      {isLoading && <Loader/>}
-      
-      {
-        userCredentials && userCredentials.uid === id ? <Nav/> : <Header />
-      }
+  const handleClick = () => {
+    userCredentials && userCredentials.uid === id
+      ? navigate(`/user-panel/${id}/home`)
+      : navigate("/home");
+  };
 
-      <div className="flex flex-col justify-center items-center py-5 bg-gray-800 rounded-lg m-auto">
-        <div>
-          <NavLink
-            to={ userCredentials && userCredentials.uid === id ? (`/user-panel/${id}/home`) : ("/home")
-            }
-            className="bg-blue-900 hover:bg-blue-700 text-white text-center p-2 w-full mb-5 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
-          >
+  return (
+    <div className="flex flex-col justify-center items-center">
+      {isLoading && <Loader />}
+
+      {userCredentials && userCredentials.uid === id ? <Nav /> : <Header />}
+
+      <div className="max-w-screen-2xl bg-gray-50 font-sans m-5 pb-1 shadow-md border-2 border-gray-200 rounded-md">
+        <div className="px-4">
+          <Button onClick={handleClick} className="w-96 mb-4">
             {"<<"}
-          </NavLink>
+          </Button>
         </div>
 
-        <h1 className="bg-slate-900 text-3xl text-center mb-9 px-5 py-12 rounded-md xl:w-[65%]">
-          {detail?.title}
-        </h1>
-
-        <div className="px-5 max-w-7xl text-md">
-          {/* Job Description. */}
-          <h3 className="text-xl pt-2 mb-4 font-semibold">Descripción</h3>
-          <p className="mb-10 p-5 bg-slate-700 rounded-md">
-            {detail?.description}
-          </p>
-           <Score />   
-          {/* Category */}
-          <div className="mb-10">
-            <h3 className="text-xl pt-2 mb-4 font-semibold">Categoria</h3>
-            <ul className="flex flex-col gap-6 p-5 bg-slate-700 rounded-md">
-              {detail.ability?.map((skill, index) => (
-                <li key={index}>
-                  {">"} {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex flex-col justify-evenly mb-5 md:flex-row md:justify-between">
-            {/* Location */}
-            <div className="relative mt-10">
-              <h3 className="mb-4 ml-8 text-xl font-semibold">Ubicación</h3>
-              <p className="p-5 bg-slate-700 rounded-md">{detail?.address}</p>
-              <img
-                src={location}
-                alt="location-logo"
-                className="absolute top-0 left-0 w-7"
-              />
+        <div className="flex flex-row">
+          <div className="flex flex-col px-4 text-md gap-5">
+            {/* Category */}
+            <div className="p-5 bg-gray-200 rounded-md">
+              <h3 className="text-xl font-semibold mb-4">Categoría</h3>
+              <ul className="px-2">
+                {detail.ability?.map((skill, index) => (
+                  <li key={index}>
+                    {">"} {skill}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="flex flex-row justify-evenly  mt-10 mb-5 md:gap-20 lg:gap-32 lg:mr-20">
+            <div className="p-5 bg-gray-200 rounded-md">
+              {/* Job Description. */}
+              <h3 className="text-xl font-semibold mb-4">Descripción</h3>
+              <p className="px-2">
+                {"> "}
+                {detail?.description}
+              </p>
+            </div>
+
+            <div className="flex flex-col text-md gap-5 w-full">
+              {/* Location */}
+              <div className="p-5 bg-gray-200 rounded-md">
+                <div className="relative">
+                  <h3 className="text-xl font-semibold mb-4">Ubicación</h3>
+                  <img
+                    src={location}
+                    alt="location-logo"
+                    className="absolute top-0 right-0 w-6"
+                  />
+                  <p className="px-2">
+                    {"> "}
+                    {detail?.address}
+                  </p>
+                </div>
+              </div>
+
               {/* Phone number */}
-              <div className="relative">
-                <h3 className="mb-4 ml-5 text-xl font-semibold text-center">
-                  Número de Teléfono
-                </h3>
-                <p className="p-5 bg-slate-700 rounded-md">
-                  {"+"} {infoUser?.phoneNumber}
-                </p>
-                <img
-                  src={phone}
-                  alt="phone-logo"
-                  className="absolute top-0 left-0 w-6 h-6"
-                />
+              <div className="p-5 bg-gray-200 rounded-md">
+                <div className="relative">
+                  <img
+                    src={phone}
+                    alt="phone-logo"
+                    className="absolute top-0 right-0 w-5"
+                  />
+                  <h3 className="text-xl font-semibold mb-4">
+                    Número de Teléfono
+                  </h3>
+
+                  <p className="px-2">
+                    {"> +"} {infoUser?.phoneNumber}
+                  </p>
+                </div>
               </div>
 
               {/* Wage */}
-              <div className="relative">
-                <h3 className="mb-4 ml-5 text-xl text-center font-semibold">
-                  Precio
-                </h3>
-                <p className="p-5 bg-slate-700 rounded-md">{detail?.price}</p>
-                <img
-                  src={dollarSign}
-                  alt="dollar-sign"
-                  className="absolute top-0 left-0 w-6"
-                />
+              <div className="p-5 bg-gray-200 rounded-md">
+                <div className="relative">
+                  <img
+                    src={dollarSign}
+                    alt="dollar-sign"
+                    className="absolute top-0 right-0 w-6"
+                  />
+                  <h3 className="text-xl font-semibold mb-4">Precio</h3>
+
+                  <p className="px-2">
+                    {"> "} {detail?.price}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
+          <div className="flex flex-col items-center gap-12">
+            <h1 className="text-4xl text-center font-semibold">
+              {detail?.title}
+            </h1>
+            <ImageCarousel images={images} />
+          </div>
         </div>
-        <ImageCarousel images={images} />
       </div>
       <Footer />
     </div>
