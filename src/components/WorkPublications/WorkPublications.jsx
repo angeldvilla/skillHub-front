@@ -19,6 +19,7 @@ import {
 } from "@material-tailwind/react";
 import moneyBag from "../../assets/moneyBag.svg";
 import ubication from "../../assets/ubication.svg";
+import { toast } from "sonner";
 
 
 export default function WorkPublication() {
@@ -52,8 +53,11 @@ export default function WorkPublication() {
     }
     function eliminar(trabajoId) {
         console.log("ID del trabajo a eliminar:", trabajoId);
-        dispatch(deleteWokrs(trabajoId)); // Pasa solo el ID del trabajo, no el objeto completo
-        navigate(`/user-panel/${id}/WorkPublications`)
+        dispatch(deleteWokrs(trabajoId)); // Pasa solo el ID del trabajo
+        toast.error("Trabajo borrado correctamente");
+        setTimeout(() => {
+            navigate(`/user-panel/${id}/home`);
+          }, 3000);
 
     }
     

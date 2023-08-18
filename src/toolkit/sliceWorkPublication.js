@@ -15,11 +15,14 @@ export const WorkPublicationSlice = createSlice({
           },
           DeleteWorks: (state, action) => {
             state.allPublicationsWork = state.allPublicationsWork.filter(work => work._id !== action.payload);
+        },
+        EditWorks: (state, action) => {
+            state.allPublicationsWork.push(action.payload)
         }
         
     }
 })
 
-export const {AddWorks, DeleteWorks, GetAllWorkTypes} = WorkPublicationSlice.actions 
+export const {AddWorks, DeleteWorks, GetAllWorkTypes, EditWorks} = WorkPublicationSlice.actions 
 
 export default WorkPublicationSlice.reducer //Aquí mando todo lo que contiene el reducer

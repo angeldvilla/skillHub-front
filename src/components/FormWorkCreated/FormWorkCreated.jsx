@@ -4,7 +4,7 @@ import { useState, useEffect , useRef} from "react";
 import { useDispatch, useSelector  } from "react-redux";
 import { useParams } from "react-router-dom";
 import validation from "../Validations/Validations";
-import { postJobs, getTypes, } from "../../toolkit/ActionsworkPublications";
+import { postJobs, getTypes, editPost } from "../../toolkit/ActionsworkPublications";
 import {  getDetailWork } from "../../toolkit/thunks";
 import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
 import { getUser } from "../../toolkit/Users/usersHandler";
@@ -41,6 +41,9 @@ export default function FormCreateWork() {
    const TodosLostrabajos = useSelector((state) => state.work.work);
   // const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
   const { userCredentials } = useSelector(state => state.users);
+  const trabajoFiltrado = TodosLostrabajos.find(trabajo => trabajo._id === id); // Usa find en lugar de filter para obtener un solo objeto
+  const {detail} = useSelector(state => state.work)
+
   
 
 
@@ -116,40 +119,81 @@ export default function FormCreateWork() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (!workdata.title || !workdata.description || !workdata.price || !workdata.image || !workdata.address) {
-      toast.error("Completa los datos para continuar");
-    } else if (!selectedPaymentOption) {
-      toast.error("Selecciona una opción de pago (Hora o Precio fijo)");
-    } else if (workdata.ability.length === 0) {
-      toast.error("Selecciona al menos una categoría");
-    } else if (workdata.ability.length > 3) {
-      toast.error("No pueden haber más de 3 categorías seleccionadas");
-    } else if (workdata.title.length > 40){
-      toast.error("El titulo debe tener maximo 40 caracteres");
-    }else if (workdata.description.length > 200){
-      toast.error("La descripción debe tener maximo 200 caracteres");
-    } else if (errors.image === "El tamaño de la imagen debe ser inferior a 3MB") {
-      toast.error("El peso de la imagen debe ser de máximo 3MB");
-    } else if (errors.title === "Prohibido" || errors.description === "Prohibido") {
-      toast.error("No está permitido escribir este tipo de servicios");
+    let updatedWorkData;
+
+    if (trabajoFiltrado) {
+      if (!workdata.title || !workdata.description || !workdata.price || !workdata.image || !workdata.address) {
+        toast.error("Completa los datos para continuar");
+      } else if (!selectedPaymentOption) {
+        toast.error("Selecciona una opción de pago (Hora o Precio fijo)");
+      } else if (workdata.ability.length === 0) {
+        toast.error("Selecciona al menos una categoría");
+      } else if (workdata.ability.length > 3) {
+        toast.error("No pueden haber más de 3 categorías seleccionadas");
+      } else if (workdata.title.length > 40){
+        toast.error("El titulo debe tener maximo 40 caracteres");
+      }else if (workdata.description.length > 200){
+        toast.error("La descripción debe tener maximo 200 caracteres");
+      } else if (errors.image === "El tamaño de la imagen debe ser inferior a 3MB") {
+        toast.error("El peso de la imagen debe ser de máximo 3MB");
+      } else if (errors.title === "Prohibido" || errors.description === "Prohibido") {
+        toast.error("No está permitido escribir este tipo de servicios");
+      } else {
+        // Concatenar la opción de pago al precio
+        const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
+         updatedWorkData = {
+          ...workdata,
+          price: finalPrice,
+          
+        };
+  
+        console.log("Datos del formulario Azctualizado", updatedWorkData);
+        dispatch(editPost(updatedWorkData, id));
+        handleReset();
+        toast.success("Trabajo Editado correctamente");
+  
+        setTimeout(() => {
+          navigate(`/user-panel/${id}/home`);
+        }, 3000);
+      }
     } else {
-      // Concatenar la opción de pago al precio
-      const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
-      const updatedWorkData = {
-        ...workdata,
-        price: finalPrice,
-        
-      };
-
-      console.log("Datos del formulario:", updatedWorkData);
-      dispatch(postJobs(updatedWorkData, id));
-      handleReset();
-      toast.success("Trabajo creado correctamente");
-
-      setTimeout(() => {
-        navigate(`/user-panel/${id}/home`);
-      }, 3000);
+      if (!workdata.title || !workdata.description || !workdata.price || !workdata.image || !workdata.address) {
+        toast.error("Completa los datos para continuar");
+      } else if (!selectedPaymentOption) {
+        toast.error("Selecciona una opción de pago (Hora o Precio fijo)");
+      } else if (workdata.ability.length === 0) {
+        toast.error("Selecciona al menos una categoría");
+      } else if (workdata.ability.length > 3) {
+        toast.error("No pueden haber más de 3 categorías seleccionadas");
+      } else if (workdata.title.length > 40){
+        toast.error("El titulo debe tener maximo 40 caracteres");
+      }else if (workdata.description.length > 200){
+        toast.error("La descripción debe tener maximo 200 caracteres");
+      } else if (errors.image === "El tamaño de la imagen debe ser inferior a 3MB") {
+        toast.error("El peso de la imagen debe ser de máximo 3MB");
+      } else if (errors.title === "Prohibido" || errors.description === "Prohibido") {
+        toast.error("No está permitido escribir este tipo de servicios");
+      } else {
+        // Concatenar la opción de pago al precio
+        const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
+         updatedWorkData = {
+          ...workdata,
+          price: finalPrice,
+          
+        };
+  
+        console.log("Datos del formulario:", updatedWorkData);
+        dispatch(postJobs(updatedWorkData, id));
+        handleReset();
+        toast.success("Trabajo creado correctamente");
+  
+        setTimeout(() => {
+          navigate(`/user-panel/${id}/WorkPublications`);
+        }, 3000);
+      }
     }
+
+
   }
 
 
@@ -270,11 +314,10 @@ export default function FormCreateWork() {
 
 
 
-  const {detail} = useSelector(state => state.work)
+  
 //!HASTA ACÁ
   console.log("Todos los trabajos", TodosLostrabajos);
  
-  const trabajoFiltrado = TodosLostrabajos.find(trabajo => trabajo._id === id); // Usa find en lugar de filter para obtener un solo objeto
   useEffect(() => {
     if (trabajoFiltrado) {
       setWorkData({
@@ -292,33 +335,10 @@ export default function FormCreateWork() {
   console.log("Esta es la imagen del trabajo Filtrado cuando sale del componente", trabajoFiltrado);
 
 
-//   const detallesito = detail
-  
-//   dispatch(getDetailWork(id))
 
-//   useEffect (()=> {
-// if(id) {
-//   console.log("Detallesito", detallesito);
-// }
-// }, [])
 
 console.log("Este es el DETAIL", detail);
 
-  
-
-
-// useEffect(()=>{
- 
-//    setWorkData2({
-//     title: detail.title,
-//     description: detail.description,
-//     address: detail.address,
-//     ability: "OLI",
-//     image: [detail.image],
-//     price: detail.price,
-//    })
-  
-// },[])
 
 // Valifacion susbscripción
 
@@ -340,7 +360,7 @@ const [pay, setPay] = useState([]);
 
   return (
     <div>
-      {filterSuscripcion.length > 0 ? 
+      {/* {filterSuscripcion.length > 0 ?  */}
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">
@@ -506,11 +526,11 @@ const [pay, setPay] = useState([]);
           </button>
         </form>
       </div>
-      : (
+      {/* : (
         <div>
           <h1>NO hay suscripcion</h1>
-        </div>
-      )}
+        </div> */}
+      
       <Footer />
       <ToastContainer />
     </div>

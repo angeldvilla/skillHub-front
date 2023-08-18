@@ -1,5 +1,5 @@
 import axios from "axios"
-import { AddWorks } from "./sliceWorkPublication"
+import { AddWorks, EditWorks } from "./sliceWorkPublication"
 import { GetAllWorkTypes, DeleteWorks } from "./sliceWorkPublication"
 import { json } from "react-router-dom"
 
@@ -38,9 +38,11 @@ export const deleteWokrs = (trabajoId) => {
 };
 
 
-// export const deleteWokrs = (trabajoId) => {
-//     axios.delete(`http://localhost:3001/empleador/${trabajoId}`, trabajoId)
-//     .then(res => dispatch(DeleteWorks(trabajoId)))
-//     .catch(error => console.log("Error con Eliminar", error))
-// };
+export const editPost = (workdata, id) => (dispatch) => {
+    axios.put(`http://localhost:3001/empleador/${id}`, workdata)
+        .then(res => dispatch(EditWorks(res.data.results)))
+        .catch(error => console.log("Error con EditWorks", error.response))
+}
+
+
 
