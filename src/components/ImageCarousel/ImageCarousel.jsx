@@ -7,7 +7,6 @@ const ImageCarousel = ({ images }) => {
     maxWidth: "1280px",
     margin: "0 auto",
     padding: "0 20px",
-    zIndex: -1,
   };
 
   const imageStyles = {
@@ -19,7 +18,7 @@ const ImageCarousel = ({ images }) => {
 
   const arrowStyles = {
     position: "absolute",
-    zIndex: 2,
+    zIndex: 1,
     top: "50%",
     transform: "translateY(-50%)",
     cursor: "pointer",

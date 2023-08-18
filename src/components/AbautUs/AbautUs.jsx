@@ -5,22 +5,22 @@ import Contacto from "./contact";
 
 function AbautUs() {
   return (
-    <div className="z-[-1]">
-      <div className="bodyStyle">
+    <div>
+
+    
+    <div className="aboutUsContainer">
+      <div className="leftColumn">
         <div
           className="quienesStyle"
-          data-aos="flip-left"
-          data-aos-easing="ease-out-cubic"
-          data-aos-duration="2000"
+          data-aos="fade-left"
+          data-aos-offset="300"
+          data-aos-easing="ease-in-sine"
         >
-          <div>
-            <div>
-              <img className="imagenStyle" src={images} alt="imgHenry" />
-            </div>
-            <h1>Quienes Somos </h1>
+          <div className="imagenStyle">
+            <img src={images} alt="imgHenry" />
           </div>
-          <p>
-            Somos un grupo unido de compañeros, nos encontramos en la
+          <h1>Quienes Somos</h1>
+          <p>Somos un grupo unido de compañeros, nos encontramos en la
             emocionante etapa final de nuestro bootcamp en Henry. A lo largo de
             este desafiante viaje, hemos compartido conocimientos, superado
             obstáculos y construido una amistad. Ahora, estamos inmersos en la
@@ -31,8 +31,10 @@ function AbautUs() {
             transformadora de nuestras vidas.
           </p>
         </div>
+      </div>
+      <div className="rightColumn">
         <div
-          className="skillStyle"
+          className="quienesStyle"
           data-aos="fade-right"
           data-aos-offset="300"
           data-aos-easing="ease-in-sine"
@@ -50,11 +52,13 @@ function AbautUs() {
           </p>
         </div>
 
-        <div>
-          <Contacto />
-        </div>
       </div>
     </div>
+    <div>
+        <Contacto />
+    </div>
+    
+  </div>
   );
 }
 
