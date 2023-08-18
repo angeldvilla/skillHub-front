@@ -7,7 +7,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-400 text-sm pt-8 w-full">
+    <footer className="bg-blue-800 text-gray-400 text-sm pt-8 w-full">
       <div className="flex flex-col flex-wrap items-center md:flex-nowrap md:flex-row md:justify-between md:mx-8 lg:mx-12 xl:justify-between xl:mx-32 2xl:mx-48">
         <button
           name="Términos de uso"
