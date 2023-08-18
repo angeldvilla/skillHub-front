@@ -10,7 +10,6 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Loader from "../Loader/Loader";
 import ImageCarousel from "../ImageCarousel/ImageCarousel";
-import Score from "../Score/Score";
 /* -------------- */
 
 /* ASSESTS */
@@ -134,12 +133,11 @@ export default function JobDetail() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-center items-center gap-12">
+          <div className="flex flex-col items-center gap-12">
             <h1 className="text-4xl text-center font-semibold">
               {detail?.title}
             </h1>
             <ImageCarousel images={images} />
-            <Score />
           </div>
         </div>
       </div>
