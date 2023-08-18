@@ -73,7 +73,7 @@ export default function Footer() {
           </p>
         </div>
       </div>
-      <Toaster />
+      <Toaster closeButton />
     </footer>
   );
 }
