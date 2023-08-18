@@ -1,5 +1,6 @@
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import "../AbautUs/Abaut.css";
 
 const link = {
   gitMagali: "https://github.com/Magali18",
@@ -11,8 +12,9 @@ const link = {
   gitMaia: "https://github.com/maiariaboypujadas",
   likedinMaia: "https://www.linkedin.com/in/maia-riaboy-pujadas-39379520a/",
   gitAngel: "https://github.com/angeldvilla",
-  likedinAngel: "",
-  gitErik: "https://github.com/angeldvilla",
+  likedinAngel:
+    "https://www.linkedin.com/in/angel-david-villa-luján-b4a669288/",
+  gitErik: "https://github.com/ETorresSacha",
   likedinErik: "https://www.linkedin.com/in/erik-torres-sacha-a93498200/",
   gitAriel: "https://github.com/NoistNT",
   likedinAriel: "https://linkedin.com/in/ariel-piazzano",
@@ -23,12 +25,12 @@ const people = [
 
     gitHub: (
       <Link to={link.gitAngel}>
-        <AiFillGithub />
+        <AiFillGithub/>
       </Link>
     ),
     linkedin: (
       <Link to={link.likedinAngel}>
-        <AiFillLinkedin />
+        <AiFillLinkedin/>
       </Link>
     ),
     imageUrl:
@@ -131,48 +133,25 @@ const people = [
 export default function Contacto() {
   return (
     <div>
-      <div className="flex flex-col flex-wrap items-center md:flex-nowrap md:flex-row md:justify-between md:mx-8 lg:mx-12 xl:justify-between xl:mx-32 2xl:mx-48">
-        <div>
-          <div data-aos="zoom-out-right">
-            <h1>Nuestro Equipo</h1>
-            <div
-              className="quienesStyle"
-              data-aos="flip-left"
-              data-aos-easing="ease-out-cubic"
-              data-aos-duration="2000"
-            >
-              <Link to={"/home"}>
-                <img
-                  className="logoSkill"
-                  src={
-                    "https://res.cloudinary.com/dvr9giaia/image/upload/v1691931744/LogostiposPropios/skillHub_d22v7s.jpg"
-                  }
-                  alt="imagenLogoSkillHub"
-                />
-              </Link>
-            </div>
-          </div>
+        <div className="quienesStyle">
+          <h1>Nuestro Equipo</h1>
         </div>
-        <ul
-          role="list"
-          className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2"
-        >
+
+        <div className="teamCardContainer">
           {people.map((person) => (
-            <li key={person.name}>
-              <div data-aos="zoom-out-right" className="imagenStyle">
-                <img src={person.imageUrl} alt={person.name} />
-                <div className="nameStyle">
-                  <h1>{person.name}</h1>
-                  <h1 className="centerLink">
-                    {person.gitHub}
-                    {person.linkedin}
-                  </h1>
-                </div>
+            <div className="teamCard" key={person.name}>
+              <img src={person.imageUrl} alt={person.name} />
+              <div className="nameSection">
+                <h1 className="nameStyle">{person.name}</h1>
               </div>
-            </li>
+              <div className="centerLink">
+                {person.gitHub}
+                {person.linkedin}
+              </div>
+            </div>
           ))}
-        </ul>
-      </div>
+        </div>
+      
     </div>
   );
 }

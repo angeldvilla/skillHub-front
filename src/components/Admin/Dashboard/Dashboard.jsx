@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../toolkit/Users/usersHandler";
+import { getUsers } from "../../../toolkit/Users/usersHandler";
 import { Button, Card, Typography } from "@material-tailwind/react";
-import { TABLE_HEAD } from "../../utils/dashboard";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import AdminNavbar from "../Admin/AdminNavbar/AdminNavbar";
+import { TABLE_HEAD } from "../../../utils/dashboard";
+import Header from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import AdminNavbar from "../AdminNavbar/AdminNavbar";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
