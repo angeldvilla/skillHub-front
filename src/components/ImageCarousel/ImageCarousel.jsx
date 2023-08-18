@@ -18,7 +18,7 @@ const ImageCarousel = ({ images }) => {
 
   const arrowStyles = {
     position: "absolute",
-    zIndex: 2,
+    zIndex: 1,
     top: "50%",
     transform: "translateY(-50%)",
     cursor: "pointer",
