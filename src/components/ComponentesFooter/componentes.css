@@ -70,3 +70,16 @@ justify-content:center;
 margin-bottom: 30px;
 margin-top: 10px;
   }
+  .iconCondicionesDeUso{
+    font-size: 100px;
+  }
+  .titleServCliente h1{
+    font-size: 30px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+
+  }
+  .museStyle h3{
+    cursor: pointer;
+    color: blueviolet;
+  }

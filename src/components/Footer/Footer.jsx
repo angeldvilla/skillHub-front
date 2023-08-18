@@ -11,14 +11,15 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-400 text-sm pt-8 w-full">
       <div className="flex flex-col flex-wrap items-center md:flex-nowrap md:flex-row md:justify-between md:mx-8 lg:mx-12 xl:justify-between xl:mx-32 2xl:mx-48">
-        <button
-          name="Términos de uso"
-          onClick={handleOnClick}
+      
+        <Link to={'/terms-of-use'}> <button
+          name="Condiciones de uso"
+  
           className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition"
         >
-          TÉRMINOS DE USO
+          Condiciones de uso
         </button>
-      
+        </Link>
           <button
             name="Políticas de privacidad"
             className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12"
