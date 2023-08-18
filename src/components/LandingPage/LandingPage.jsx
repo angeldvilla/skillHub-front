@@ -1,5 +1,5 @@
 import "aos/dist/aos.css";
-import React from "react";
+import React/* , { useState, useEffect }  */from "react";
 import { NavLink } from "react-router-dom";
 import backgroundImage from "../../assets/backgroundImage.jpg";
 import logoSkillHub from "../../assets/skillHub.jpg";
@@ -16,6 +16,24 @@ import Score from "../Score/Score";
 
 export default function LandingPage() {
   const images = [Diseñador, Jardinero, Electricista, Cerrajero];
+
+/*   const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); */
 
   return (
     <div className="flex flex-col min-h-screen relative">
@@ -37,7 +55,12 @@ export default function LandingPage() {
           }
         `}
       </style>
-      <div className="fixed top-0 left-0 right-0 px-14 py-2 flex items-center justify-between bg-white">
+      <div
+        className="fixed top-0 left-0 right-0 px-14 py-2 flex items-center justify-between bg-white"
+        /* {`fixed top-0 left-0 right-0 px-14 py-2 flex items-center justify-between ${scrolling ? "bg-opacity-50 backdrop-blur-xl" : "bg-white"}`} */
+      >
+        <div className="absolute top-0 left-0 right-0 bottom-0 z-[-1]"></div>
+
         <div className="flex items-center space-x-4">
           <a href="" className="gap-9">
             <img
@@ -49,7 +72,7 @@ export default function LandingPage() {
         </div>
         <div className="flex ml-52 space-x-10 items-center">
           <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
-            <a href="#inicio" className="text-black w-1/2" data-aos="fade-down">
+            <a href="#inicio" className="text-black w-24" data-aos="fade-down">
               Inicio
             </a>
           </span>

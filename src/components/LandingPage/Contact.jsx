@@ -9,7 +9,7 @@ const sectionContact = () => {
         data-aos="fade-down"
       >
         <form
-          className="w-1/2 bg-gray-300 p-6 rounded-lg shadow-md border-black"
+          className="mx-auto container w-1/2 bg-gray-300 p-6 rounded-lg shadow-md border-black"
           data-aos="fade-up"
         >
           <h2
@@ -64,7 +64,7 @@ const sectionContact = () => {
           <div>
           <button
             type="submit"
-            className="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full hover:bg-sky-700 transform transition-transform duration-200 hover:-translate-y-0.5"
+            className="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full hover:bg-sky-700 duration-200 hover:-translate-y-0.5"
           >
             Enviar
           </button>
