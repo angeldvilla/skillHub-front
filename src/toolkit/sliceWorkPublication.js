@@ -13,13 +13,10 @@ export const WorkPublicationSlice = createSlice({
         GetAllWorkTypes: (state, action) => {
             state.allWorkTypes = action.payload
           },
-        DeleteWorks: (state, action) => {
-       const findWork =  state.allPublicationsWork.find((work)=> work.id === action.payload)
-
-       if (findWork !== -1) {
-        state.allPublicationsWork.splice(findWork, 1);
-      }
+          DeleteWorks: (state, action) => {
+            state.allPublicationsWork = state.allPublicationsWork.filter(work => work._id !== action.payload);
         }
+        
     }
 })
 

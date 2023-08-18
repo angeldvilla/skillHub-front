@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork } from "../../toolkit/thunks";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { getUser } from "../../toolkit/Users/usersHandler";
 import {  getDetailWork } from "../../toolkit/thunks";
+import { deleteWokrs } from "../../toolkit/ActionsworkPublications";
 
 import Nav from "../PanelUser/Nav";
 import Footer from "../Footer/Footer";
@@ -19,11 +20,13 @@ import {
 import moneyBag from "../../assets/moneyBag.svg";
 import ubication from "../../assets/ubication.svg";
 
+
 export default function WorkPublication() {
 
     const { id } = useParams();
     const { userCredentials } = useSelector(state => state.users);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     useEffect(() => {
         dispatch(getWork());
@@ -40,10 +43,20 @@ export default function WorkPublication() {
 
     const totalWorks = trabajosDelUsuario.length;
 
+
+    const trabajo = trabajosDelUsuario.map ((trab)=> trab._id)
+    console.log("Este es el trabajo individual", trabajo);
+
     function handleClick () {
         dispatch(getWork())
     }
+    function eliminar(trabajoId) {
+        console.log("ID del trabajo a eliminar:", trabajoId);
+        dispatch(deleteWokrs(trabajoId)); // Pasa solo el ID del trabajo, no el objeto completo
+        navigate(`/user-panel/${id}/WorkPublications`)
 
+    }
+    
   
 
     return (
@@ -134,7 +147,8 @@ export default function WorkPublication() {
                                     </svg>
                                 </Button>
                                 </Link>
-                                <button>Eliminar Trabajo</button>
+                                <button onClick={() => eliminar(trabajo._id)}>Eliminar Trabajo</button>
+
                         </div>
                     </Card>
                 ))
