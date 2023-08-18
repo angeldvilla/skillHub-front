@@ -1,5 +1,5 @@
 import "aos/dist/aos.css";
-import React/* , { useState, useEffect }  */from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import backgroundImage from "../../assets/backgroundImage.jpg";
 import logoSkillHub from "../../assets/skillHub.jpg";
@@ -16,24 +16,6 @@ import Score from "../Score/Score";
 
 export default function LandingPage() {
   const images = [Diseñador, Jardinero, Electricista, Cerrajero];
-
-/*   const [scrolling, setScrolling] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolling(true);
-      } else {
-        setScrolling(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []); */
 
   return (
     <div className="flex flex-col min-h-screen relative">
@@ -56,60 +38,60 @@ export default function LandingPage() {
         `}
       </style>
       <div
-        className="fixed top-0 left-0 right-0 px-14 py-2 flex items-center justify-between bg-white"
-        /* {`fixed top-0 left-0 right-0 px-14 py-2 flex items-center justify-between ${scrolling ? "bg-opacity-50 backdrop-blur-xl" : "bg-white"}`} */
+        className="fixed top-0 left-0 right-0 px-14 sm:px-8 py-2 flex items-center justify-between bg-opacity-10 backdrop-blur-xl shadow-2xl" 
       >
         <div className="absolute top-0 left-0 right-0 bottom-0 z-[-1]"></div>
 
-        <div className="flex items-center space-x-4">
-          <a href="" className="gap-9">
+        <div className="flex items-center space-x-2 sm:space-x-4">
+          <a href="" className="gap-2 sm:gap-4">
             <img
               src={logoSkillHub}
-              className="-top-16 w-20 h-auto rounded-full border-2 border-black mt-2"
+              className="-top-10 sm:-top-16 w-20 h-auto rounded-full border-2 border-black mt-1 sm:mt-2"
               alt="skillHub Logo"
             />
           </a>
         </div>
-        <div className="flex ml-52 space-x-10 items-center">
-          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
-            <a href="#inicio" className="text-black w-24" data-aos="fade-down">
+        <div className="flex ml-2 sm:ml-4 space-x-4 sm:space-x-8 items-center">
+          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
+            <a href="#inicio" className="text-white w-16 sm:w-24" data-aos="fade-down">
               Inicio
             </a>
           </span>
-          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
+          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
             <a
               href="#services"
-              className="text-black w-24"
+              className="text-white w-16 sm:w-24"
               data-aos="fade-down"
             >
               Servicios
             </a>
           </span>
-          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
+          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
             <a
               href="#about-us"
-              className="text-black w-24"
+              className="text-white w-16 sm:w-24"
               data-aos="fade-down"
             >
               Sobre Nosotros
             </a>
           </span>
-          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-lg">
-            <a href="#contact" className="text-black w-24" data-aos="fade-down">
+          <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
+            <a href="#contact" className="text-white w-16 sm:w-24" data-aos="fade-down">
               Contáctanos
             </a>
           </span>
         </div>
-        <div className="flex space-x-5 justify-end">
+        <div className="flex space-x-3 sm:space-x-5 justify-end">
           <NavLink
             to="/signin"
-            className="text-blue-700 text-lg hover:text-blue-500 px-4 py-2 transform transition-transform duration-200 hover:-translate-y-0.5"
+            className="bg-white hover:bg-gray-300 text-black text-center px-2 py-1 sm:px-3 sm:py-2 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
           >
             Iniciar Sesión
           </NavLink>
+
           <NavLink
             to="/signup"
-            className="bg-blue-700 hover:bg-blue-600 text-white text-center px-4 py-2 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
+            className="bg-blue-700 hover:bg-blue-600 text-white text-center px-3 py-1 sm:px-4 sm:py-2 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
           >
             Regístrate
           </NavLink>
@@ -118,7 +100,7 @@ export default function LandingPage() {
 
       <section
         id="inicio"
-        className="h-screen flex flex-col justify-center items-center text-white mb-32 "
+        className="h-screen flex flex-col justify-center items-center text-white py-20 sm:mb-32"
       >
         <div
           className="fixed top-0 left-0 w-full h-screen bg-cover bg-center blur brightness-50 z-[-1]"
@@ -127,24 +109,24 @@ export default function LandingPage() {
           }}
         ></div>
 
-        <div className="flex justify-between items-center w-4/5 mx-auto mt-32">
+        <div className="flex flex-col justify-center items-center w-11/12 sm:w-4/5 mx-auto mt-32 sm:mt-32"/* "flex justify-between items-center w-4/5 mx-auto mt-32" */>
           {/* Columna Izquierda */}
-          <div className="w-1/2 mx-auto">
+          <div className="w-full sm:w-1/2 mx-auto">
             <h1
-              className="text-7xl font-extrabold mb-20 text-center gap-6"
+              className="text-4xl sm:text-5xl font-extrabold mb-10 sm:mb-20 text-center gap-4 sm:gap-6"
               data-aos="fade-down"
             >
               ¡Bienvenidos a SkillHub!
             </h1>
           </div>
 
-          <div className="w-1/2 mx-auto">
-            <h2 className="text-3xl font-semibold mb-8" data-aos="fade-up">
+          <div className="w-full sm:w-1/2 mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8" data-aos="fade-up">
               Tu Centro de Habilidades
             </h2>
 
             <span
-              className="text-lg text-center font-medium mb-10 justify-center"
+              className="text-base sm:text-lg text-center font-medium mb-8 sm:mb-10"
               data-aos="fade-up"
             >
               Únete a nuestra comunidad y experimenta la flexibilidad y la
@@ -153,11 +135,10 @@ export default function LandingPage() {
               a ofrecer tus habilidades hoy mismo en SkillHub!
             </span>
 
-            <div className="mt-12">
+            <div className="mt-8 sm:mt-12 justify-center">
               <NavLink
                 to="/home"
-                className="bg-blue-500 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
-                data-aos="fade-up"
+                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
               >
                 Ver ahora
               </NavLink>
@@ -166,7 +147,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-gray-300 py-16 flex justify-center items-center z-[-1]">
+      <section className="bg-gray-300 py-12 sm:py-16 flex justify-center items-center z-[-1]">
         <div className="w-full">
           <ImageCarousel images={images} />
         </div>
