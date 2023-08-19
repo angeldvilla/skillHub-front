@@ -540,11 +540,10 @@ const [pay, setPay] = useState([]);
     
             <div className="flex justify-between w-1/2">
           <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/home`}>
-          <button justifyContent= 'flex-start' color="blue">Ir al inicio</button>
+          <button justifyContent= 'flex-start' className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Ir al inicio</button>
           </NavLink>
           <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/memberShip`}>
-            <button color="blue">Renovar suscripción</button>
-            
+            <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Renovar suscripción</button> 
           </NavLink>
             </div>
     
