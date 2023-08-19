@@ -8,6 +8,7 @@ import Footer from "../../Footer/Footer";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import { async } from "@firebase/util";
 import axios from "axios";
+import Loader from "../../Loader/Loader";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export default function Dashboard() {
   };
 
   return (
-    allUsers.length===0?"cargando":(<div>
+    allUsers.length===0?<Loader/>:(<div>
       <Header />
       <Typography variant="h2" className="text-center my-8">
         Admin Dashboard
@@ -108,8 +109,8 @@ export default function Dashboard() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
-                  >
-                  {pay===undefined || pay.subscription===false?"No":"Si"}
+                  > 
+                  {(pay===undefined || pay.subscription===false) ?"No":"Si"} 
                   </Typography>
                 </td>
                 <td className="p-4">
@@ -118,7 +119,7 @@ export default function Dashboard() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {pay===undefined||pay.subscription===false? "Sin plan":pay.plan}
+                    {(pay===undefined || pay.subscription===false) ? "Sin plan":pay.plan} 
                   </Typography>
                 </td>
                 <td className="p-4">
