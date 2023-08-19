@@ -587,7 +587,7 @@ const [pay, setPay] = useState([]);
         </div>
 
         </div>
-      )}
+      )
 
       <Footer />
       <ToastContainer />
