@@ -158,7 +158,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
 };
 
 const NavList = () => {
-
+  const { userCredentials } = useSelector(state=> state.users);
   // Nav List component
   const navListItems = [
     {

@@ -13,7 +13,7 @@ import Next from "./components/mercadoPago/Next";
 import Error404 from "./components/error404/Error404";
 import AbautUs from "./components/AbautUs/AbautUs";
 import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv"
-import CondicionesDeUso from "./components/Admin/ComponentesFooter/CondicionesDeUso"
+import CondicionesDeUso from "./components/ComponentesFooter/CondicionesDeUso"
 import Dashboard from "./components/Admin/Dashboard/Dashboard"
 
 /* ------------------------------------------- */
