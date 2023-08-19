@@ -8,7 +8,8 @@ import { postJobs, getTypes, editPost } from "../../toolkit/ActionsworkPublicati
 import { getDetailWork } from "../../toolkit/thunks";
 import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
 import { getUser } from "../../toolkit/Users/usersHandler";
-
+import { Link } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
 // Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -339,7 +340,7 @@ export default function FormCreateWork() {
     getPayment();
   }, [id]);
   const filterSuscripcion = pay
-    .filter(({ subscription }) => subscription === true)
+  .filter(({ subscription }) => subscription === true)
   //___________________________________________
 
   return (
@@ -522,11 +523,12 @@ export default function FormCreateWork() {
           </button>
         </form>
       </div>
+
       {/* : (
         <div>
           <h1>NO hay suscripcion</h1>
         </div> */}
-
+      
       <Footer />
       <ToastContainer />
     </div>
