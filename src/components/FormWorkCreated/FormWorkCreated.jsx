@@ -19,6 +19,7 @@ import axios from "axios";
 import Footer from "../Footer/Footer";
 import Nav from "../PanelUser/Nav";
 import { setId } from "@material-tailwind/react/components/Tabs/TabsContext";
+import { async } from "@firebase/util";
 
 //_______________________________________
 
@@ -343,6 +344,35 @@ const [pay, setPay] = useState([]);
   useEffect(() => {
     dispatch(getUser(id));
   }, [dispatch, id]);
+
+
+
+
+
+
+  //! RELACION DE MODELO USUARIOS CON PAYMENT
+
+  const [allUsersPayment,setAllUseersPayment] = useState([])
+  useEffect(() => {
+    const usersPaymentResult = async()=>{ //! la base de datos esta modificado
+      const resultPaymentUser = await axios(`http://localhost:3001/payment/${id}`)
+      setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
+    }
+    usersPaymentResult()
+
+    if(allUsersPayment.length!==0){
+      
+      const dataPay= { pay:allUsersPayment[0]._id}
+      
+      const modifDate=async()=>{
+        const {data} = await axios.put(`http://localhost:3001/user/${id}`,dataPay)
+      }
+      modifDate()
+    }
+  
+  }, [id,allUsersPayment.length]);
+
+
 
   return (
     <div>
