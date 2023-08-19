@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const getUsers = createAsyncThunk("users/getUsers", async () => {
   try {
     const { data } = await axios.get(
-      "https://skillhub-back-production.up.railway.app/user"
+      "https://skillhub-back-production.up.railway.app/user" 
     );
     return data;
   } catch (error) {
@@ -15,7 +15,7 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
 export const getUser = createAsyncThunk("users/getUser", async (id) => {
   try {
     const { data } = await axios.get(
-      `https://skillhub-back-production.up.railway.app/user/${id}`
+      `https://skillhub-back-production.up.railway.app/user/${id}` 
     );
     return data;
   } catch (error) {
@@ -28,7 +28,7 @@ export const getUsersByName = createAsyncThunk(
   async (name) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3002/user?name=${name}`
+        `https://skillhub-back-production.up.railway.app/user?name=${name}`
       );
       return data;
     } catch (error) {
@@ -51,4 +51,14 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
 
 export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
   localStorage.removeItem("userCredentials");
+});
+
+
+export const Payment = createAsyncThunk("users/Payment", async () => {
+  try {
+    const { data } = await axios.get("https://skillhub-back-production.up.railway.app/payment");
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
 });
