@@ -58,7 +58,10 @@ export default function WorkPublication() {
         setTimeout(() => {
             navigate(`/user-panel/${id}/WorkPublications`);
           }, 3000);
+    }
 
+    function timeOfPublicationWork (){
+        
     }
     return (
       <div>
