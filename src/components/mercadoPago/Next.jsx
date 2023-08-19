@@ -45,7 +45,7 @@ const Next = () => {
       setId_client(result.data.metadata.user_id) // id del cliente
 
       //Traemos el usuario de la BD
-        const {data} = await axios.get(`http://localhost:3002/user/${id_client}`)
+        const {data} = await axios.get(`https://skillhub-back-production.up.railway.app/user/${id_client}`)
         setResultUser(data)
         }
 
@@ -57,7 +57,7 @@ const Next = () => {
       //Cargar los datos  a la BD
 
       const saveData=async()=>{
-        return await axios.post("http://localhost:3002/payment/save",datos)
+        return await axios.post("https://skillhub-back-production.up.railway.app/payment/save",datos)
       }
     saveData()
 
