@@ -19,20 +19,19 @@ import {
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
-  HeartIcon,
-  MapPinIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
   FolderIcon,
   PowerIcon,
   Bars2Icon,
   CreditCardIcon,
   HomeIcon,
   PaperClipIcon,
+  ShieldCheckIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
 
 const ProfileMenu = ({ userAuth, handleLogout }) => {
-  const { id } = useParams();
+  const { userCredentials } = useSelector(state => state.users);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -44,7 +43,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
   const profileMenuItems = [
     {
       label: `${
-        userAuth ? `${userAuth?.firstName} ${userAuth?.lastName}` : ""
+        userAuth ? `Bienvenido, ${userAuth?.firstName} ${userAuth?.lastName}` : ""
       }`,
       value: "my-profile",
       icon: UserCircleIcon,
@@ -112,7 +111,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
               {isLastItem ? (
                 <MenuItem
                   key={label}
-                  onClick={handleLogout}
+                  onClick={onclick}
                   className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
                 >
                   {React.createElement(icon, {
@@ -129,11 +128,11 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
                   </Typography>
                 </MenuItem>
               ) : (
-                <a key={key} href={`/user-panel/${id}/${value}`}>
+                <a key={key} href={`/user-panel/${userCredentials.uid}/${value}`}>
                   <MenuItem
                     key={label}
                     onClick={onclick || closeMenu}
-                    className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
+                    className={`flex items-center gap-2 rounded hover:bg-gray-500/10 focus:bg-gray-500/10 active:bg-gray-500/10`}
                   >
                     {React.createElement(icon, {
                       className: `h-4 w-4`,
@@ -158,26 +157,33 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
   );
 };
 
-/* const NavList = () => {
+const NavList = () => {
+
   // Nav List component
   const navListItems = [
     {
-      label: "Favoritos",
-      value: "favorites",
-      icon: HeartIcon,
+      label: "Ayuda",
+      value: "help",
+      icon: QuestionMarkCircleIcon,
     },
     {
-      label: "Ubicación",
-      value: "ubication",
-      icon: MapPinIcon,
+      label: "Soporte",
+      value: "support",
+      icon: ShieldCheckIcon,
+    },
+    {
+      label: "Suscripción",
+      value: "membership",
+      icon: CreditCardIcon,
     },
   ];
+
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {navListItems.map(({ label, icon, value }, key) => (
         <a
           key={key}
-          href={`/${value}`}
+          href={`/user-panel/${userCredentials.uid}/${value}`}
           variant="large"
           color="blue-gray"
           className="font-normal"
@@ -192,16 +198,15 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
       ))}
     </ul>
   );
-}; */
+};
 
 export default function Nav() {
-  const { id } = useParams();
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.users);
+  const { user, userCredentials } = useSelector((state) => state.users);
 
   const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -210,9 +215,15 @@ export default function Nav() {
   };
 
   const handleLogout = () => {
-    dispatch(logoutUser());
-      navigate('/signin');
+    dispatch(logoutUser()); // Despacha la acción de cierre de sesión
   };
+
+  useEffect(() => {
+    // Escuchar el cambio en las credenciales y redirigir después de cerrar sesión
+    if (!userCredentials) {
+      navigate("/signin"); // Redirige al usuario a la página de inicio de sesión
+    }
+  }, [userCredentials]);
 
   useEffect(() => {
     window.addEventListener(
@@ -222,18 +233,18 @@ export default function Nav() {
   }, []);
 
   return (
-    <div className="w-full bg-gray-100 lg:rounded-md lg:pl-6 px-4 py-2">
+    <div className="w-full bg-gray-300 bg-opacity-50 backdrop-blur-xl lg:rounded-md lg:pl-6 px-4 py-2">
       <div className="flex items-center justify-between ">
         <div className="flex items-center space-x-4">
-          <a href={`/user-panel/${id}/home`} className="gap-9">
+          <a href={`/user-panel/${userCredentials.uid}/home`} className="gap-9">
             <img
               src={logoSkillHub}
-              className="w-20 h-auto rounded-full border-4 border-sky-500 mt-"
+              className="w-16 h-auto rounded-full border-2 border-black mt-"
               alt="skillHub Logo"
             />
           </a>
-          <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-            {/* <NavList /> */}
+          <div className="absolute top-10 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+            <NavList />
           </div>
           <IconButton
             size="sm"

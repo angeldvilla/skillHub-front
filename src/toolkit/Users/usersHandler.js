@@ -51,5 +51,4 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
 
 export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
   localStorage.removeItem("userCredentials");
-  return null;
 });

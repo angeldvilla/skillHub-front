@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import { getUser } from "../../toolkit/Users/usersHandler";
 import { Input } from "@material-tailwind/react";
 import Nav from "./Nav";
-import UploadPhoto from "./UploadPhoto";
+import UploadPhoto from "./EditProfile/UploadPhoto";
+import Footer from "../Footer/Footer";
 import axios from "axios";
 import moment from "moment";
 
@@ -84,11 +85,9 @@ export default function Profile() {
   }, [dispatch, id]);
 
   return (
-    <div className="relative justify-center items-center h-screen">
-      {userCredentials && userCredentials.uid === id ? (
-        <div>
+    <div className="relative justify-center items-center h-screen bg-blue-gray-500">
           <Nav />
-          <div className="w-72 mx-auto flex flex-col items-center text-center mt-10">
+          <div className="w-72 mx-auto flex flex-col items-center text-center mt-10 bg-blue-gray-500">
             <h1 className="mb-10">VISTA GENERAL DE LA CUENTA</h1>
             <h2 className="mb-10">Perfil</h2>
 
@@ -124,8 +123,8 @@ export default function Profile() {
               className="flex justify-center items-center text-center"
             />
 
-            {/* <span className="mt-10 mb-5">Agregar Foto de Perfil</span>
-            <UploadPhoto /> */}
+            <span className="mt-10 mb-5">Agregar Foto de Perfil</span>
+            <UploadPhoto />
 
             <span className="mt-5 mb-5">Suscripción</span>
             <Input
@@ -144,12 +143,7 @@ export default function Profile() {
               />
             )}
           </div>
+          <Footer/>
         </div>
-      ) : (
-        <div className="w-72 mx-auto flex flex-col items-center text-center mt-64">
-          <h1>NO PODES ACCEDER MENOR</h1>
-        </div>
-      )}
-    </div>
   );
 }

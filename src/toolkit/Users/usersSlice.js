@@ -94,8 +94,8 @@ export const userSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(logoutUser.fulfilled, (state, { payload }) => {
-        state.userCredentials = payload;
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.userCredentials = null;
         state.isLoading = false;
         state.error = null;
       })
