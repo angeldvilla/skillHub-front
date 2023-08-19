@@ -1,4 +1,5 @@
 # SkillHub Frontend
+-------------------
 <p align="left"> 
 
 <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> 
@@ -34,9 +35,10 @@ alt="EmailJS" width="40" height="40"/> </a>
 alt="Redux Toolkit" width="40" height="40"/> </a> 
 
 </p>
-------------------
+
+----------------------
 Este es el frontend de SkillHub, una aplicación que conecta a personas con habilidades y servicios para facilitar la colaboración y el intercambio de conocimientos. Aquí encontrarás la interfaz de usuario y la interacción del usuario con la funcionalidad de SkillHub.
------------------
+
 ## Tecnologías Utilizadas
 
 - **React.js**: Biblioteca de JavaScript para construir interfaces de usuario.
