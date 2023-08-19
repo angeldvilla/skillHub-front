@@ -1,25 +1,24 @@
 import React, { isValidElement } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useEffect , useRef} from "react";
-import { useDispatch, useSelector  } from "react-redux";
+import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import validation from "../Validations/Validations";
 import { postJobs, getTypes, editPost } from "../../toolkit/ActionsworkPublications";
-import {  getDetailWork } from "../../toolkit/thunks";
+import { getDetailWork } from "../../toolkit/thunks";
 import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
 import { getUser } from "../../toolkit/Users/usersHandler";
-import { Link } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+
 // Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import axios from "axios";
 
 // Components
 import Footer from "../Footer/Footer";
 import Nav from "../PanelUser/Nav";
 import { setId } from "@material-tailwind/react/components/Tabs/TabsContext";
-import { async } from "@firebase/util";
 
 //_______________________________________
 
@@ -33,20 +32,19 @@ export default function FormCreateWork() {
   //  const allWorkTypes = useSelector((state) => state.formwork.allPublicationsWork)
   const { id } = useParams();
   const dispatch = useDispatch();
-  const dispatch2= useDispatch();
+  const dispatch2 = useDispatch();
   const navigate = useNavigate();
   const ability = useSelector((state) => state.formwork.allWorkTypes)
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [fileSelected, setFileSelected] = useState(false); //Soluciona el filed seleccionado
   const fileInputRef = useRef(null);
-  const params =  useParams()
-   const TodosLostrabajos = useSelector((state) => state.work.work);
+  const params = useParams()
+  const TodosLostrabajos = useSelector((state) => state.work.work);
   // const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
   const { userCredentials } = useSelector(state => state.users);
   const trabajoFiltrado = TodosLostrabajos.find(trabajo => trabajo._id === id); // Usa find en lugar de filter para obtener un solo objeto
-  const {detail} = useSelector(state => state.work)
+  const { detail } = useSelector(state => state.work)
 
-  
 
 
   const [workdata, setWorkData] = useState({
@@ -81,7 +79,7 @@ export default function FormCreateWork() {
 
   useEffect(() => {
     dispatch(getTypes());
-    if(userCredentials && userCredentials.uid === id){
+    if (userCredentials && userCredentials.uid === id) {
       dispatch(getDetailWork(id))
       dispatch(getUser(id));
 
@@ -120,84 +118,80 @@ export default function FormCreateWork() {
 
   function handleSubmit(event) {
     event.preventDefault();
-
     let updatedWorkData;
-
-    if (trabajoFiltrado) {
+  
+    const validateFields = () => {
       if (!workdata.title || !workdata.description || !workdata.price || !workdata.image || !workdata.address) {
         toast.error("Completa los datos para continuar");
+        return false;
       } else if (!selectedPaymentOption) {
         toast.error("Selecciona una opción de pago (Hora o Precio fijo)");
+        return false;
       } else if (workdata.ability.length === 0) {
         toast.error("Selecciona al menos una categoría");
+        return false;
       } else if (workdata.ability.length > 3) {
         toast.error("No pueden haber más de 3 categorías seleccionadas");
-      } else if (workdata.title.length > 40){
-        toast.error("El titulo debe tener maximo 40 caracteres");
-      }else if (workdata.description.length > 200){
-        toast.error("La descripción debe tener maximo 200 caracteres");
+        return false;
+      } else if (workdata.title.length > 40) {
+        toast.error("El título debe tener máximo 40 caracteres");
+        return false;
+      } else if (workdata.description.length > 200) {
+        toast.error("La descripción debe tener máximo 200 caracteres");
+        return false;
       } else if (errors.image === "El tamaño de la imagen debe ser inferior a 3MB") {
         toast.error("El peso de la imagen debe ser de máximo 3MB");
+        return false;
       } else if (errors.title === "Prohibido" || errors.description === "Prohibido") {
         toast.error("No está permitido escribir este tipo de servicios");
-      } else {
-        // Concatenar la opción de pago al precio
-        const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
-         updatedWorkData = {
-          ...workdata,
-          price: finalPrice,
-          
-        };
+        return false;
+      }
+      return true;
+    };
   
-        console.log("Datos del formulario Azctualizado", updatedWorkData);
-        dispatch(editPost(updatedWorkData, id));
-        handleReset();
-        toast.success("Trabajo Editado correctamente");
+    if (trabajoFiltrado) {
+      if (validateFields()) {
+        const userConfirmation = window.confirm("Editar, recuerda que no podrás modificar el título después.");
+        if (userConfirmation) {
+          // Concatenar la opción de pago al precio
+          const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
+          updatedWorkData = {
+            ...workdata,
+            price: finalPrice,
+          };
   
-        setTimeout(() => {
-          navigate(`/user-panel/${id}/home`);
-        }, 3000);
+          dispatch(editPost(updatedWorkData, id));
+          handleReset();
+          toast.success("Trabajo Editado correctamente");
+  
+          setTimeout(() => {
+            navigate(`/user-panel/${id}/home`);
+          }, 3000);
+        }
       }
     } else {
-      if (!workdata.title || !workdata.description || !workdata.price || !workdata.image || !workdata.address) {
-        toast.error("Completa los datos para continuar");
-      } else if (!selectedPaymentOption) {
-        toast.error("Selecciona una opción de pago (Hora o Precio fijo)");
-      } else if (workdata.ability.length === 0) {
-        toast.error("Selecciona al menos una categoría");
-      } else if (workdata.ability.length > 3) {
-        toast.error("No pueden haber más de 3 categorías seleccionadas");
-      } else if (workdata.title.length > 40){
-        toast.error("El titulo debe tener maximo 40 caracteres");
-      }else if (workdata.description.length > 200){
-        toast.error("La descripción debe tener maximo 200 caracteres");
-      } else if (errors.image === "El tamaño de la imagen debe ser inferior a 3MB") {
-        toast.error("El peso de la imagen debe ser de máximo 3MB");
-      } else if (errors.title === "Prohibido" || errors.description === "Prohibido") {
-        toast.error("No está permitido escribir este tipo de servicios");
-      } else {
-        // Concatenar la opción de pago al precio
-        const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
-         updatedWorkData = {
-          ...workdata,
-          price: finalPrice,
-          
-        };
+      if (validateFields()) {
+        const userConfirmation = window.confirm("¿Publicar trabajo? Recuerda que no podrás modificar el título después.");
+        if (userConfirmation) {
+          // Concatenar la opción de pago al precio
+          const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
+          updatedWorkData = {
+            ...workdata,
+            price: finalPrice,
+          };
   
-        console.log("Datos del formulario:", updatedWorkData);
-        dispatch(postJobs(updatedWorkData, id));
-        handleReset();
-        toast.success("Trabajo creado correctamente");
+          dispatch(postJobs(updatedWorkData, id));
+          handleReset();
+          toast.success("Trabajo creado correctamente");
   
-        setTimeout(() => {
-          navigate(`/user-panel/${id}/WorkPublications`);
-        }, 3000);
+          setTimeout(() => {
+            navigate(`/user-panel/${id}/WorkPublications`);
+          }, 3000);
+        }
       }
     }
-
-
   }
-
+  
 
   //LocalStorage values
   const [textDesciption, setTextDesciption] = useLocalStorage('text', (''))
@@ -227,7 +221,7 @@ export default function FormCreateWork() {
       price: "",
     });
   };
-  
+
   useEffect(() => {
     if (textTitle || textDesciption || priceValue || directionValue) {
       setWorkData((prevData) => ({
@@ -313,13 +307,8 @@ export default function FormCreateWork() {
 
 
   //Editar tarea
-
-
-
-  
-//!HASTA ACÁ
   console.log("Todos los trabajos", TodosLostrabajos);
- 
+
   useEffect(() => {
     if (trabajoFiltrado) {
       setWorkData({
@@ -333,22 +322,15 @@ export default function FormCreateWork() {
       console.log("Este es el trabao Filtrado", trabajoFiltrado);
     }
   }, [trabajoFiltrado, id]);
-
-  console.log("Esta es la imagen del trabajo Filtrado cuando sale del componente", trabajoFiltrado);
-
+  
 
 
-
-console.log("Este es el DETAIL", detail);
-
-
-// Valifacion susbscripción
-
-const [pay, setPay] = useState([]);
+  // Valifacion susbscripción
+  const [pay, setPay] = useState([]);
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios("https://skillhub-back-production.up.railway.app/payment/");
+        const { data } = await axios("http://localhost:3002/payment/");
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
@@ -357,42 +339,8 @@ const [pay, setPay] = useState([]);
     getPayment();
   }, [id]);
   const filterSuscripcion = pay
-  .filter(({ subscription }) => subscription === true)
-  //---- trae info del usuario ---
-  const { user } = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(getUser(id));
-  }, [dispatch, id]);
-
-
-
-
-
-
-  //! RELACION DE MODELO USUARIOS CON PAYMENT
-
-  const [allUsersPayment,setAllUseersPayment] = useState([])
-  useEffect(() => {
-    const usersPaymentResult = async()=>{ //! la base de datos esta modificado
-      const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
-      setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
-    }
-    usersPaymentResult()
-
-    if(allUsersPayment.length!==0){
-      
-      const dataPay= { pay:allUsersPayment[0]._id}
-      
-      const modifDate=async()=>{
-        const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
-      }
-      modifDate()
-    }
-  
-  }, [id,allUsersPayment.length]);
-
-
+    .filter(({ subscription }) => subscription === true)
+  //___________________________________________
 
   return (
     <div>
@@ -410,9 +358,15 @@ const [pay, setPay] = useState([]);
 
         <form onSubmit={(event) => handleSubmit(event)}
           className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-6 rounded-lg shadow-neutral-900 shadow-lg mb-5" >
-          <h1 className="text-3xl text-center text-white mb-7 mt-6">
+          {trabajoFiltrado ? (
+            <h1 className="text-3xl text-center text-white mb-7 mt-6">
+              Editar
+            </h1>
+
+          ) : <h1 className="text-3xl text-center text-white mb-7 mt-6">
             ¡Postula tu trabajo!
           </h1>
+          }
 
           <div className="flex flex-col">
             <label htmlFor="title" className="pl-2 mb-1 text-lg">
@@ -428,6 +382,7 @@ const [pay, setPay] = useState([]);
                 handleChange(event);
                 setTextTitle(newValue)
               }}
+              readOnly = {trabajoFiltrado}
               className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
             />
             {errors.title && <p className="text-red-500">{errors.title}</p>}
@@ -458,7 +413,7 @@ const [pay, setPay] = useState([]);
               type="text"
               placeholder="$20"
               name="price"
-              value={trabajoFiltrado ? workdata.price :priceValue}
+              value={trabajoFiltrado ? workdata.price : priceValue}
               onChange={(event) => {
                 const newValue = event.target.value;
                 handleChange(event);
@@ -519,7 +474,7 @@ const [pay, setPay] = useState([]);
               type="text"
               name="address"
               placeholder="Para servicios físicos"
-              value={trabajoFiltrado ? workdata.address :directionValue}
+              value={trabajoFiltrado ? workdata.address : directionValue}
               onChange={(event) => {
                 const newValue = event.target.value;
                 handleChange(event);
@@ -550,9 +505,14 @@ const [pay, setPay] = useState([]);
             )}
 
           </div>
-          <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
-            Publicar Trabajo:
-          </button>
+          {trabajoFiltrado ? (
+            <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
+              Editar Trabajo
+            </button>
+
+          ) : <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
+            Publicar Trabajo
+          </button>}
           <button
             type="button"
             onClick={handleReset}
@@ -562,32 +522,10 @@ const [pay, setPay] = useState([]);
           </button>
         </form>
       </div>
-
       {/* : (
         <div>
           <h1>NO hay suscripcion</h1>
         </div> */}
-
-      : (
-    <div className="flex justify-center items-center" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "70vh", backgroundColor: "white", color: "black"}}>
-          <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
-          {user.firstName}, su suscripción ha caducado y ya no tiene acceso a nuestros servicios. Por favor, renueve su plan para continuar disfrutando de nuestros beneficios.
-      </p>
-      <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted nuevamente!</p>
-
-
-        <div className="flex justify-between w-1/2">
-      <Link to={`http://localhost:5173/user-panel/${user?.uid}/home`}>
-      <Button justifyContent= 'flex-start' color="blue">Ir al inicio</Button>
-      </Link>
-      <Link to={`http://localhost:5173/user-panel/${user?.uid}/memberShip`}>
-        <Button color="blue">Renovar suscripción</Button>
-        
-      </Link>
-        </div>
-
-        </div>
-      )
 
       <Footer />
       <ToastContainer />
