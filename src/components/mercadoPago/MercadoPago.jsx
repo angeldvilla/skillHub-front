@@ -65,7 +65,7 @@ const MercadoPago = () => {
     //Verificamos si esta suscripto o no//!FALTA MEJORAR
     useEffect(()=>{
         const verificar = async()=>{
-            const {data} = await axios(`http://localhost:3001/payment/${id}`)
+            const {data} = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
             const suscriptionVerify= data.filter(element=>element.subscription===true)
 
             if(data.length>0 && suscriptionVerify.length===1) return navigate(`/user-panel/${id}/createWork`)
@@ -83,7 +83,7 @@ const MercadoPago = () => {
                 price:element.pago,
                 user:id
             }
-            const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
+            const {data} = await axios.post(`https://skillhub-back-production.up.railway.app/payment/${id}`,client)
             
             return window.location.href=data.preferenceUrl
             

@@ -348,7 +348,7 @@ const [pay, setPay] = useState([]);
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios("http://localhost:3002/payment/");
+        const { data } = await axios("https://skillhub-back-production.up.railway.app/payment/");
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
@@ -375,7 +375,7 @@ const [pay, setPay] = useState([]);
   const [allUsersPayment,setAllUseersPayment] = useState([])
   useEffect(() => {
     const usersPaymentResult = async()=>{ //! la base de datos esta modificado
-      const resultPaymentUser = await axios(`http://localhost:3001/payment/${id}`)
+      const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
       setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
     }
     usersPaymentResult()
@@ -385,7 +385,7 @@ const [pay, setPay] = useState([]);
       const dataPay= { pay:allUsersPayment[0]._id}
       
       const modifDate=async()=>{
-        const {data} = await axios.put(`http://localhost:3001/user/${id}`,dataPay)
+        const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
       }
       modifDate()
     }

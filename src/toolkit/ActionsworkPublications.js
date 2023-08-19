@@ -6,7 +6,7 @@ import { json } from "react-router-dom"
 
 
 export const postJobs = (workdata, id) => (dispatch) => {
-    axios.post(`http://localhost:3002/empleador/${id}`, workdata)  //`https://skillhub-back-production.up.railway.app/empleador/${id}`
+    axios.post(`https://skillhub-back-production.up.railway.app/empleador/${id}`, workdata)  
         .then(res => dispatch(AddWorks(res.data.results)))
         .catch(error => console.log("Error con postWokrs", error))
 }
@@ -15,7 +15,7 @@ export const postJobs = (workdata, id) => (dispatch) => {
 export const getTypes = () => {
     return async function (dispatch) {
         try {
-            let json = await axios.get("http://localhost:3002/empleador/allType") //"https://skillhub-back-production.up.railway.app/empleador/allType"
+            let json = await axios.get("https://skillhub-back-production.up.railway.app/empleador/allType") 
             return dispatch(GetAllWorkTypes(json.data))
         } catch (error) {
             console.log("Error en getTypes", error);
@@ -27,7 +27,7 @@ export const deleteWokrs = (trabajoId) => {
     return async function (dispatch) {
         try {
             console.log("Intentando eliminar trabajo con ID:", trabajoId);
-            const response = await axios.delete(`http://localhost:3001/empleador/${trabajoId}`);
+            const response = await axios.delete(`https://skillhub-back-production.up.railway.app/empleador/${trabajoId}`);
             console.log("Trabajo eliminado:", trabajoId);
             console.log("Respuesta del servidor:", response);
             dispatch(DeleteWorks(trabajoId));
@@ -39,7 +39,7 @@ export const deleteWokrs = (trabajoId) => {
 
 
 export const editPost = (workdata, id) => (dispatch) => {
-    axios.put(`http://localhost:3001/empleador/${id}`, workdata)
+    axios.put(`https://skillhub-back-production.up.railway.app/empleador/${id}`, workdata)
         .then(res => dispatch(EditWorks(res.data.results)))
         .catch(error => console.log("Error con EditWorks", error.response))
 }
