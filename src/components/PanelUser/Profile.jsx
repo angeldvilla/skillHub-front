@@ -8,11 +8,12 @@ import UploadPhoto from "./EditProfile/UploadPhoto";
 import Footer from "../Footer/Footer";
 import axios from "axios";
 import moment from "moment";
+import { Avatar } from "@material-tailwind/react";
 
 export default function Profile() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { user, userCredentials } = useSelector((state) => state.users);
+  const { user } = useSelector((state) => state.users);
   const [pay, setPay] = useState([]);
   const [subscriptionMessage, setSubscriptionMessage] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
@@ -20,7 +21,7 @@ export default function Profile() {
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios("http://localhost:3002/payment/");
+        const { data } = await axios("https://skillhub-back-production.up.railway.app/payment/");
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
@@ -31,14 +32,14 @@ export default function Profile() {
 
 //calcula la fecha de vencimiento de la suscripcion 30 dias posteriores
   const calculateExpirationDate = (createdAt) => {
-    const expirationDate = moment(createdAt).add(0, "days");
+    const expirationDate = moment(createdAt).add(30, "days");
     return expirationDate.format("YYYY-MM-DD");
   };
 //realiza una suscripcion PUT para actualizar la suscripcion a false(cuando termine el vencimiento)
   const handleUpdateSubscription = async (id, createdAt) => {
     const expirationDate = calculateExpirationDate(createdAt);
     try {
-      await axios.put(`http://localhost:3002/payment/${id}`, {
+      await axios.put(`https://skillhub-back-production.up.railway.app/payment/${id}`, {
         subscription: false,
       });
       setPay((prevPay) =>
@@ -91,6 +92,11 @@ export default function Profile() {
             <h1 className="mb-10">VISTA GENERAL DE LA CUENTA</h1>
             <h2 className="mb-10">Perfil</h2>
 
+
+            <Avatar src={user?.image} alt="avatar" size="xl"/>
+            <span className="flex justify-center items-center text-center">Subir Foto</span>
+            <UploadPhoto/>
+
             <span className="mb-5">Nombre</span>
             <Input
               label="Nombre"
@@ -122,9 +128,6 @@ export default function Profile() {
               disabled
               className="flex justify-center items-center text-center"
             />
-
-            <span className="mt-10 mb-5">Agregar Foto de Perfil</span>
-            <UploadPhoto />
 
             <span className="mt-5 mb-5">Suscripción</span>
             <Input
