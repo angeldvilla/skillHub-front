@@ -64,5 +64,16 @@ export const reviews =  createAsyncThunk ("score/sendScore", async(score) => {
   }
 })
 
+export const putUsers = createAsyncThunk ("users/putUsers", async(userPut) => {
+
+
+  try {
+    const { data } = await axios.put('http://localhost:3002/users/status', userPut)
+    return data
+  } catch (error) {
+    console.log("error:", error.message)
+  }
+})
+
       
     
