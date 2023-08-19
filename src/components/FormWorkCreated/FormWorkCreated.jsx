@@ -1,5 +1,5 @@
 import React, { isValidElement } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -325,12 +325,14 @@ export default function FormCreateWork() {
   
 
 
-  // Valifacion susbscripción
-  const [pay, setPay] = useState([]);
+  
+// Valifacion susbscripción
+
+const [pay, setPay] = useState([]);
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios("http://localhost:3002/payment/");
+        const { data } = await axios("https://skillhub-back-production.up.railway.app/payment/");
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
@@ -339,12 +341,18 @@ export default function FormCreateWork() {
     getPayment();
   }, [id]);
   const filterSuscripcion = pay
-    .filter(({ subscription }) => subscription === true)
+  .filter(({ subscription }) => subscription === true)
+  //---- trae info del usuario ---
+  const { user } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(getUser(id));
+  }, [dispatch, id]);
   //___________________________________________
 
   return (
     <div>
-      {/* {filterSuscripcion.length > 0 ?  */}
+      {filterSuscripcion.length > 0 ? 
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">
@@ -522,13 +530,29 @@ export default function FormCreateWork() {
           </button>
         </form>
       </div>
-      {/* : (
-        <div>
-          <h1>NO hay suscripcion</h1>
-        </div> */}
-
+       : (
+        <div className="flex justify-center items-center" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "70vh", backgroundColor: "white", color: "black"}}>
+              <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
+              {user.firstName}, su suscripción ha caducado y ya no tiene acceso a nuestros servicios. Por favor, renueve su plan para continuar disfrutando de nuestros beneficios.
+          </p>
+          <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted nuevamente!</p>
+    
+    
+            <div className="flex justify-between w-1/2">
+          <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/home`}>
+          <button justifyContent= 'flex-start' color="blue">Ir al inicio</button>
+          </NavLink>
+          <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/memberShip`}>
+            <button color="blue">Renovar suscripción</button>
+            
+          </NavLink>
+            </div>
+    
+            </div>
+          )}
       <Footer />
       <ToastContainer />
     </div>
   );
 }
+
