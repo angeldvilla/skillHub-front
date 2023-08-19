@@ -8,8 +8,7 @@ import { postJobs, getTypes, editPost } from "../../toolkit/ActionsworkPublicati
 import { getDetailWork } from "../../toolkit/thunks";
 import { useLocalStorage } from "../UseLocalStorage/UseLocalStorage";
 import { getUser } from "../../toolkit/Users/usersHandler";
-import { Link } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+
 // Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +19,6 @@ import axios from "axios";
 import Footer from "../Footer/Footer";
 import Nav from "../PanelUser/Nav";
 import { setId } from "@material-tailwind/react/components/Tabs/TabsContext";
-import { async } from "@firebase/util";
 
 //_______________________________________
 
@@ -332,7 +330,7 @@ export default function FormCreateWork() {
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios("https://skillhub-back-production.up.railway.app/payment/");
+        const { data } = await axios("http://localhost:3002/payment/");
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
@@ -341,13 +339,8 @@ export default function FormCreateWork() {
     getPayment();
   }, [id]);
   const filterSuscripcion = pay
-  .filter(({ subscription }) => subscription === true)
-  //---- trae info del usuario ---
-  const { user } = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(getUser(id));
-  }, [dispatch, id]);
+    .filter(({ subscription }) => subscription === true)
+  //___________________________________________
 
   return (
     <div>
@@ -529,32 +522,10 @@ export default function FormCreateWork() {
           </button>
         </form>
       </div>
-
       {/* : (
         <div>
           <h1>NO hay suscripcion</h1>
         </div> */}
-
-      : (
-    <div className="flex justify-center items-center" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "70vh", backgroundColor: "white", color: "black"}}>
-          <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
-          {user.firstName}, su suscripción ha caducado y ya no tiene acceso a nuestros servicios. Por favor, renueve su plan para continuar disfrutando de nuestros beneficios.
-      </p>
-      <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted nuevamente!</p>
-
-
-        <div className="flex justify-between w-1/2">
-      <Link to={`http://localhost:5173/user-panel/${user?.uid}/home`}>
-      <Button justifyContent= 'flex-start' color="blue">Ir al inicio</Button>
-      </Link>
-      <Link to={`http://localhost:5173/user-panel/${user?.uid}/memberShip`}>
-        <Button color="blue">Renovar suscripción</Button>
-        
-      </Link>
-        </div>
-
-        </div>
-      )}
 
       <Footer />
       <ToastContainer />
