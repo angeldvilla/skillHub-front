@@ -1,14 +1,14 @@
 # SkillHub Frontend
 
-[![React.js](https://img.shields.io/badge/React.js-latest-blue.svg)](https://reactjs.org/)
+[![React.js](https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-2.x-blue.svg)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-2.x-blue.svg)](https://tailwindcss.com/)
-[![Firebase](https://img.shields.io/badge/Firebase-latest-yellow.svg)](https://firebase.google.com/)
-[![Cloudinary](https://img.shields.io/badge/Cloudinary-2.x-blue.svg)](https://cloudinary.com/)
+[![Tailwind CSS](https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg)](https://tailwindcss.com/)
+[![Firebase](https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg)](https://firebase.google.com/)
+[![Cloudinary](https://www.vectorlogo.zone/logos/cloudifyco/cloudifyco-icon.svg)](https://cloudinary.com/)
 [![MercadoPago](https://img.shields.io/badge/Mercado%20Pago-latest-green.svg)](https://www.mercadopago.com/)
 [![Material Tailwind](https://img.shields.io/badge/Material%20Tailwind-latest-blue.svg)](https://material-tailwind.com/)
 [![Email.js](https://img.shields.io/badge/Email.js-latest-green.svg)](https://www.emailjs.com/)
-[![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-1.x-purple.svg)](https://redux-toolkit.js.org/)
+[![Redux Toolkit](https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg)](https://redux-toolkit.js.org/)
 
 Este es el frontend de SkillHub, una aplicación que conecta a personas con habilidades y servicios para facilitar la colaboración y el intercambio de conocimientos. Aquí encontrarás la interfaz de usuario y la interacción del usuario con la funcionalidad de SkillHub.
 
@@ -46,11 +46,11 @@ Proceso de pago a través de MercadoPago.
 Integración con Email.js para el envío de correos electrónicos.
 Gestión del estado de la aplicación utilizando Redux Toolkit.
 
-...
+----------
 ## Contribución
 Si deseas contribuir a este proyecto, ¡estamos encantados de recibir tus aportaciones! Puedes hacerlo a través de pull requests.
 
 ## Licencia
 Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para obtener más detalles.
-
-## Este README proporciona una descripción detallada de las tecnologías utilizadas, cómo configurar el proyecto, las funcionalidades principales y una visión general de cómo contribuir al proyecto. Puedes personalizarlo aún más según las necesidades de tu proyecto. ¡Espero que te sea útil!
+---------
+Este README proporciona una descripción detallada de las tecnologías utilizadas, cómo configurar el proyecto, las funcionalidades principales y una visión general de cómo contribuir al proyecto. Puedes personalizarlo aún más según las necesidades de tu proyecto. ¡Espero que te sea útil!
