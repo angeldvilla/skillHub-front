@@ -56,13 +56,10 @@ export default function WorkPublication() {
         dispatch(deleteWokrs(trabajoId)); // Pasa solo el ID del trabajo
         toast.error("Trabajo borrado correctamente");
         setTimeout(() => {
-            navigate(`/user-panel/${id}/home`);
+            navigate(`/user-panel/${id}/WorkPublications`);
           }, 3000);
 
     }
-    
-  
-
     return (
       <div>
         <div>
@@ -121,6 +118,8 @@ export default function WorkPublication() {
                                         <Typography color="gray" className="text-center">
                                             {trabajo.price}
                                         </Typography>
+
+          
                                     </div>
                                     <div></div>
                                 </div>
