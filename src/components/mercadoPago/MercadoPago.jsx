@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getUser } from "../../toolkit/Users/usersHandler";
@@ -12,6 +12,7 @@ import {
     Button,
   } from "@material-tailwind/react";
 import axios from 'axios';
+import { async } from '@firebase/util';
 
 const MercadoPago = () => {
 
@@ -19,17 +20,17 @@ const MercadoPago = () => {
 
     const plan = [{
         id:1,
-        plan:"BASE",
+        plan:"BRONCE",
         pago:9.99,
         beneficios:["5 publicaciones"]
     },
     {   id:2,
-        plan:"ESTÁNDAR",
+        plan:"ORO",
         pago:19.99,
         beneficios:["15 publicaciones"]
     },
     {   id:3,
-        plan:"PREMIUM",
+        plan:"PLATINO",
         pago:29.99,
         beneficios:["Publicaciones ilimitados"]
     }
@@ -59,8 +60,22 @@ const MercadoPago = () => {
     const {userCredentials} = useSelector(state=>state.users);
 
     const dispatch = useDispatch();
-
     const { id } = useParams();
+    
+    //Verificamos si esta suscripto o no//!FALTA MEJORAR
+    useEffect(()=>{
+        const verificar = async()=>{
+            const {data} = await axios(`http://localhost:3001/payment/${id}`)
+            const suscriptionVerify= data.filter(element=>element.subscription===true)
+
+            if(data.length>0 && suscriptionVerify.length===1) return navigate(`/user-panel/${id}/createWork`)
+            else if (data.length>0 && suscriptionVerify.length>1) return window.alert("existe dos suscripciones, corregir")
+        }
+        verificar()
+
+    },[])
+
+
 
     const handleBuy = async(element)=>{
             const client = {

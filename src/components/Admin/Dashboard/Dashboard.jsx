@@ -6,22 +6,40 @@ import { TABLE_HEAD } from "../../../utils/dashboard";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
+import { async } from "@firebase/util";
+import axios from "axios";
+import Loader from "../../Loader/Loader";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [userStatus, setUserStatus] = useState(false);
   const { users } = useSelector((state) => state.users);
 
+  const [allUsers,setAllUseers] = useState([])
+
   useEffect(() => {
     dispatch(getUsers());
+
+    const usersPaymentResult = async()=>{ //! la base de datos esta modificado
+      const resultUser = await axios(`http://localhost:3002/user`)
+      setAllUseers(resultUser.data)
+
+    }
+    usersPaymentResult()
+    
   }, [dispatch]);
+  
+  console.log(allUsers)
+    
+
+
 
   const handleOnClick = () => {
     setUserStatus(!userStatus);
   };
 
   return (
-    <div>
+    allUsers.length===0?<Loader/>:(<div>
       <Header />
       <Typography variant="h2" className="text-center my-8">
         Admin Dashboard
@@ -48,8 +66,8 @@ export default function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {users.map(({ firstName, lastName, email, phoneNumber }) => (
-              <tr key={firstName} className="even:bg-blue-gray-100">
+            {allUsers.map(({firstName,lastName,email,phoneNumber,pay},index) => (
+              <tr key={index} className="even:bg-blue-gray-100">
                 <td className="p-4">
                   <Typography
                     variant="small"
@@ -91,8 +109,8 @@ export default function Dashboard() {
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
-                  >
-                    False
+                  > 
+                  {(pay===undefined || pay.subscription===false) ?"No":"Si"} 
                   </Typography>
                 </td>
                 <td className="p-4">
@@ -101,7 +119,7 @@ export default function Dashboard() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    Platinum
+                    {(pay===undefined || pay.subscription===false) ? "Sin plan":pay.plan} 
                   </Typography>
                 </td>
                 <td className="p-4">
@@ -154,6 +172,6 @@ export default function Dashboard() {
         </table>
       </Card>
       <Footer />
-    </div>
+    </div>)
   );
 }
