@@ -109,7 +109,7 @@ export default function Dashboard() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                  {pay===undefined?"No":"Si"}
+                  {pay===undefined || pay.subscription===false?"No":"Si"}
                   </Typography>
                 </td>
                 <td className="p-4">
@@ -118,7 +118,7 @@ export default function Dashboard() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {pay===undefined? "Sin plan":pay.plan}
+                    {pay===undefined||pay.subscription===false? "Sin plan":pay.plan}
                   </Typography>
                 </td>
                 <td className="p-4">
