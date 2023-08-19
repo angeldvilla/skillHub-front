@@ -20,17 +20,17 @@ const MercadoPago = () => {
 
     const plan = [{
         id:1,
-        plan:"BASE",
+        plan:"PLAN BRONCE",
         pago:9.99,
         beneficios:["5 publicaciones"]
     },
     {   id:2,
-        plan:"ESTÁNDAR",
+        plan:"PLAN ORO",
         pago:19.99,
         beneficios:["15 publicaciones"]
     },
     {   id:3,
-        plan:"PREMIUM",
+        plan:"PLAN PLATINO",
         pago:29.99,
         beneficios:["Publicaciones ilimitados"]
     }
