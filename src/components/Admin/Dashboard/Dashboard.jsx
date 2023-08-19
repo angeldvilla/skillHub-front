@@ -6,8 +6,6 @@ import { TABLE_HEAD } from "../../../utils/dashboard";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
-import { async } from "@firebase/util";
-import axios from "axios";
 import Loader from "../../Loader/Loader";
 
 export default function Dashboard() {
@@ -15,31 +13,18 @@ export default function Dashboard() {
   const [userStatus, setUserStatus] = useState(false);
   const { users } = useSelector((state) => state.users);
 
-  const [allUsers,setAllUseers] = useState([])
-
   useEffect(() => {
     dispatch(getUsers());
-
-    const usersPaymentResult = async()=>{ //! la base de datos esta modificado
-      const resultUser = await axios(`http://localhost:3002/user`)
-      setAllUseers(resultUser.data)
-
-    }
-    usersPaymentResult()
     
   }, [dispatch]);
   
-  console.log(allUsers)
-    
-
-
 
   const handleOnClick = () => {
     setUserStatus(!userStatus);
   };
 
   return (
-    allUsers.length===0?<Loader/>:(<div>
+    users.length===0?<Loader/>:(<div>
       <Header />
       <Typography variant="h2" className="text-center my-8">
         Admin Dashboard
@@ -66,7 +51,7 @@ export default function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {allUsers.map(({firstName,lastName,email,phoneNumber,pay},index) => (
+            {users.map(({firstName,lastName,email,phoneNumber,pay},index) => (
               <tr key={index} className="even:bg-blue-gray-100">
                 <td className="p-4">
                   <Typography
