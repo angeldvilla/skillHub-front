@@ -197,6 +197,8 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
 export default function Nav() {
   const { id } = useParams();
 
+  const isAdmin = true
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -220,36 +222,65 @@ export default function Nav() {
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
-
   return (
-    <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
-      <div className="flex items-center justify-between ">
-        <div className="flex items-center space-x-4">
-          <a href={`/user-panel/${id}/home`} className="gap-9">
-            <img
-              src={logoSkillHub}
-              className="w-20 h-auto rounded-full border-4 border-sky-500 mt-"
-              alt="skillHub Logo"
-            />
-          </a>
-          <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-            {/* <NavList /> */}
+    <React.Fragment>
+      {isAdmin ? (
+        <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <a href={`/user-panel/${id}/home`} className="gap-9">
+                <img
+                  src={logoSkillHub}
+                  className="w-20 h-auto rounded-full border-4 border-sky-500 mt-"
+                  alt="skillHub Logo"
+                />
+              </a>
+              <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+                <span className="text-white text-lg">Perfil de Administrador</span>
+              </div>
+              <IconButton
+                size="sm"
+                color="blue-gray"
+                variant="text"
+                onClick={toggleIsNavOpen}
+                className="ml-auto mr-2 lg:hidden"
+              >
+                <Bars2Icon className="h-6 w-6" />
+              </IconButton>
+            </div>
+            <ProfileMenu userAuth={user} handleLogout={handleLogout} />
           </div>
-          <IconButton
-            size="sm"
-            color="blue-gray"
-            variant="text"
-            onClick={toggleIsNavOpen}
-            className="ml-auto mr-2 lg:hidden"
-          >
-            <Bars2Icon className="h-6 w-6" />
-          </IconButton>
         </div>
-        <ProfileMenu userAuth={user} handleLogout={handleLogout} />
-      </div>
-      {/*<Collapse open={isNavOpen} className="overflow-scroll">
-         <NavList /> 
-      </Collapse>*/}
-    </div>
+      ) : (
+        <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <a href={`/user-panel/${id}/home`} className="gap-9">
+                <img
+                  src={logoSkillHub}
+                  className="w-20 h-auto rounded-full border-4 border-sky-500 mt-"
+                  alt="skillHub Logo"
+                />
+              </a>
+              <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+                {/* Additional content */}
+              </div>
+              <IconButton
+                size="sm"
+                color="blue-gray"
+                variant="text"
+                onClick={toggleIsNavOpen}
+                className="ml-auto mr-2 lg:hidden"
+              >
+                <Bars2Icon className="h-6 w-6" />
+              </IconButton>
+            </div>
+            <ProfileMenu userAuth={user} handleLogout={handleLogout} />
+          </div>
+        </div>
+      )}
+    </React.Fragment>
   );
+  
+
 }
