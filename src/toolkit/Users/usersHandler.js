@@ -49,6 +49,18 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
   }
 });
 
+export const putUser = createAsyncThunk("users/putUser", async (id) => {
+   try {
+    const { data } = await axios.put(
+      `https://skillhub-back-production.up.railway.app/user/${id}`
+    );
+    return data;
+   } catch (error) {
+    throw new Error(error);
+   }
+});
+
+
 export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
   localStorage.removeItem("userCredentials");
 });

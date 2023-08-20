@@ -5,6 +5,7 @@ import {
   getUser,
   postUser,
   logoutUser,
+  putUser,
 } from "./usersHandler";
 
 const storedCredentials = JSON.parse(localStorage.getItem("userCredentials"));
@@ -85,6 +86,21 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(postUser.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = error.message;
+      })
+
+       // Put User
+       .addCase(putUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(putUser.fulfilled, (state, { payload }) => {
+        state.user = payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(putUser.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = error.message;
       })

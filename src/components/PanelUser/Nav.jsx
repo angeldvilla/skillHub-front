@@ -31,6 +31,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 const ProfileMenu = ({ userAuth, handleLogout }) => {
+  
   const { userCredentials } = useSelector(state => state.users);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,12 +65,6 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
       value: "CreateWork",
       icon: PaperClipIcon,
     },
-
-    {
-      label: "Suscripción",
-      value: "memberShip",
-      icon: CreditCardIcon,
-    },
     {
       label: "Cerrar Sesión",
       value: "signin",
@@ -91,7 +86,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
             size="md"
             alt="User Profile"
             className="border border-blue-600 p-0.5"
-            src={userAuth?.photoURL || userProfile}
+            src={userAuth?.image || userProfile}
           />
 
           <ChevronDownIcon
@@ -159,6 +154,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
 
 const NavList = () => {
   const { userCredentials } = useSelector(state=> state.users);
+  
   // Nav List component
   const navListItems = [
     {

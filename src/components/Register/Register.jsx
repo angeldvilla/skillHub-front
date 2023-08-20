@@ -88,6 +88,7 @@ export default function Register() {
             lastName: lastName,
             email: userCredentials.user.email,
             phoneNumber: "",
+            image: userCredentials.user.photoURL
           };
           dispatch(postUser(userAuth));
           dispatch(userLogin(googleCredentials));
@@ -162,6 +163,7 @@ export default function Register() {
         lastName,
         email,
         phoneNumber,
+        image: "",
       };
 
       dispatch(postUser(newUser));
