@@ -80,7 +80,7 @@ const Next = () => {
     }
 
   return (
-    <div className="container" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "100vh", backgroundColor: "black", color: "lightblue" }}>
+    <div className="container" style={{ display: "flex", flexDirection: "column", justifycontent: "center", alignItems: "center", minHeight: "100vh", backgroundColor: "black", color: "lightblue" }}>
       <img src={logoSkillHub} alt="Logo de la empresa" style={{ width: "300px", marginBottom: "20px" }} />
       <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
         ¡Listo para llevar tus propuestas al mundo!

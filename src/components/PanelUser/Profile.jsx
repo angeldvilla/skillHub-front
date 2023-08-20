@@ -30,7 +30,7 @@ export default function Profile() {
 
 //calcula la fecha de vencimiento de la suscripcion 30 dias posteriores
   const calculateExpirationDate = (createdAt) => {
-    const expirationDate = moment(createdAt).add(0, "days");
+    const expirationDate = moment(createdAt).add(30, "days");
     return expirationDate.format("YYYY-MM-DD");
   };
 //realiza una suscripcion PUT para actualizar la suscripcion a false(cuando termine el vencimiento)
