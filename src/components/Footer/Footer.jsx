@@ -36,13 +36,16 @@ export default function Footer() {
         >
           POLÍTICAS DE COOKIES
         </button>
+        
+        <Link to="/payment-policies"> 
         <button
           name="Políticas de pago"
-          onClick={handleOnClick}
           className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12 "
         >
-          POLÍTICAS DE PAGO
+          Politicas de Pago
         </button>
+        </Link>
+
         <button
           name="Contacto"
           onClick={handleOnClick}
