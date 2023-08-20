@@ -83,3 +83,55 @@ margin-top: 10px;
     cursor: pointer;
     color: blueviolet;
   }
+  .my-atropos {
+    width: 320px;
+    height: 160px;
+  }
+ .efect{
+  display: block;
+  white-space:nowrap;
+  border-right: 1px solid;
+  width: 55ch;
+  animation:typing 8s steps(80), 
+  blink .6s infinite step-end alternate;
+  overflow:hidden;
+ }
+ @keyframes typing{
+  from{width:0}
+ }
+ @keyframes blink{
+  50% {border-color:transparent}
+ }
+ .bodyStyle{
+  margin-left: 100px;
+ }
+ .bodyStyle h1{
+  text-align:left;
+  font-size: xx-large;
+  margin-top: 60px;
+
+ 
+ }
+
+ .bodyStyle h2{
+  margin-top: 60px;
+
+ }
+ .bodyStyle ul{
+  margin-top: 40px;
+  margin-right: 50px;
+  
+ }
+ .bodyStyle li{
+  font-size: 17px;
+  margin-top: 30px;
+ }
+ .icon{
+  font-size: 30px;
+  
+ }
+ .containerBackgrond{
+  margin-bottom: 200px;
+ }
+
+ 
