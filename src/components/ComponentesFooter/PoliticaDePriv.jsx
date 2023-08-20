@@ -26,7 +26,7 @@ const PoliticaDePriv = () => {
 
             <h1>Politica de Privacidad</h1>
 
-            <h3>Tu privacidad es importante para nosotros</h3>
+            <h3 className="efect">Tu privacidad es importante para nosotros... @SkillHub.netlify.app</h3>
 
             <div className="containerBackgrond">
               <p>
