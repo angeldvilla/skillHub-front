@@ -15,6 +15,7 @@ import AbautUs from "./components/AbautUs/AbautUs";
 import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv"
 import CondicionesDeUso from "./components/ComponentesFooter/CondicionesDeUso"
 import Dashboard from "./components/Admin/Dashboard/Dashboard"
+import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago"
 
 /* ------------------------------------------- */
 
@@ -61,7 +62,7 @@ function App() {
       <Route path="/privacy-policies" element={< PoliticasDePriv/>} />
       <Route path="/terms-of-use" element={<CondicionesDeUso/>} />
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
-      <Route path="/payment-policies" element={<UnderDevelopment />} />
+      <Route path="/payment-policies" element={<PoliticaDePago/>} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}

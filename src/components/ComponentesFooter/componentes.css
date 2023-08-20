@@ -102,4 +102,36 @@ margin-top: 10px;
  @keyframes blink{
   50% {border-color:transparent}
  }
+ .bodyStyle{
+  margin-left: 100px;
+ }
+ .bodyStyle h1{
+  text-align:left;
+  font-size: xx-large;
+  margin-top: 60px;
+
+ 
+ }
+
+ .bodyStyle h2{
+  margin-top: 60px;
+
+ }
+ .bodyStyle ul{
+  margin-top: 40px;
+  margin-right: 50px;
+  
+ }
+ .bodyStyle li{
+  font-size: 17px;
+  margin-top: 30px;
+ }
+ .icon{
+  font-size: 30px;
+  
+ }
+ .containerBackgrond{
+  margin-bottom: 200px;
+ }
+
  
