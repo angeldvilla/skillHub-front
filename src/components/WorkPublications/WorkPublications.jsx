@@ -134,7 +134,7 @@ export default function WorkPublication() {
        }
      }
    } else {
-     return 'No existe suscripción activa';
+     return 'No existe suscripción activa.';
    }
  };
  

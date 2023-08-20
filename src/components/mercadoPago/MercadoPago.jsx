@@ -207,7 +207,7 @@ const handleCancelSubscription = async () => {
             </p>
             <span style={{ fontWeight: 'bold', color: 'black' }}>{filterPlan} Vigente hasta: {resulDate}</span>
           
-          <div className="flex justify-center items-center w-48/2 space-x-8">
+          <div className="flex justify-center items-center w-48/2 space-x-7">
               <Link to={`http://localhost:5173/user-panel/${id}/home`}>
                 <Button color="blue">
                   IR AL INICIO
