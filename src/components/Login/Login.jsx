@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   GoogleAuthProvider,
@@ -16,10 +16,17 @@ import facebook from "../../assets/facebook.svg";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Toaster, toast } from "sonner";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
+import { getUsers, postUser } from "../../toolkit/Users/usersHandler";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { users } = useSelector(state => state.users);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch])
 
   const [userData, setUserData] = useState({
     email: "",
@@ -64,22 +71,60 @@ export default function Login() {
             uid: userCredentials.user.uid,
             accessToken: userCredentials.user.accessToken,
           };
-          dispatch(userLogin(googleCredentials));
 
-          toast.message("Bienvenido", {
-            description: userCredentials.user.displayName,
-          });
+          const displayName = userCredentials.user.displayName;
+          const [firstName, lastName] = displayName.split(" ");
+          const newUser = {
+            uid: googleCredentials.uid,
+            firstName: firstName,
+            lastName: lastName,
+            email: userCredentials.user.email,
+            phoneNumber: "",
+            image: userCredentials.user.photoURL
+          }
+          const userAuth = users.find(user => user.uid === googleCredentials.uid); 
+          if(userAuth){
+            toast.message("Bienvenido", {
+              description: userCredentials.user.displayName,
+            });
 
-          // Almacena las credenciales en el Local Storage
-          localStorage.setItem(
-            "userCredentials",
-            JSON.stringify(googleCredentials)
-          );
+            dispatch(userLogin(googleCredentials));
 
-          setTimeout(() => {
-            const uid = googleCredentials.uid;
-            navigate(`/user-panel/${uid}/home`);
-          }, 2000);
+            // Almacena las credenciales en el Local Storage
+            localStorage.setItem(
+              "userCredentials",
+              JSON.stringify(googleCredentials)
+            );
+
+            setTimeout(() => {
+              const uid = googleCredentials.uid;
+              navigate(`/user-panel/${uid}/home`);
+            }, 2000);
+          } else {
+            // o lo mando a registrarse
+            toast.error("Usuario no encontrado");
+
+            // o bien lo puedo registrar y darle acceso
+            /* 
+            dispatch(postUser(newUser));
+
+            toast.message("Bienvenido", {
+              description: userCredentials.user.displayName,
+            });
+
+            dispatch(userLogin(googleCredentials));
+
+            // Almacena las credenciales en el Local Storage
+            localStorage.setItem(
+              "userCredentials",
+              JSON.stringify(googleCredentials)
+            );
+
+            setTimeout(() => {
+              const uid = googleCredentials.uid;
+              navigate(`/user-panel/${uid}/home`);
+            }, 2000); */
+          }
 
           break;
         case "github":

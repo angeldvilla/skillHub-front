@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { Avatar, Button, Input } from "@material-tailwind/react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import UploadPhoto from "./UploadPhoto";
+import userProfile from "../../../assets/user-profile.svg";
 import { isValidPhoneNumber } from "../../../utils/validPhoneNumber";
-import { putUser } from "../../../toolkit/Users/usersHandler";
+import { getUser, putUser } from "../../../toolkit/Users/usersHandler";
+import { Toaster, toast } from "sonner";
 
-const UserProfileInfo = ({ user }) => {
+const UserProfileInfo = () => {
+
+  const avatarInputRef = useRef(null);
+
   const dispatch = useDispatch();
+
+  const { user } = useSelector(state => state.users);
+  
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -16,6 +25,7 @@ const UserProfileInfo = ({ user }) => {
     lastName: "",
     email: "",
     phoneNumber: "",
+    image: ""
   });
 
   useEffect(() => {
@@ -25,6 +35,7 @@ const UserProfileInfo = ({ user }) => {
         lastName: user?.lastName,
         email: user?.email,
         phoneNumber: user?.phoneNumber,
+        image: user?.image,
       });
     }
   }, [isEditing, user]);
@@ -39,9 +50,25 @@ const UserProfileInfo = ({ user }) => {
   };
 
   // Función para guardar los cambios
-  const handleSaveChanges = () => {
-    dispatch(putUser(user.uid));
-    setIsEditing(false);
+  const handleSaveChanges = async (event) => {
+    event.preventDefault();
+    
+    const editedFields = {
+      firstName: editedUserInfo.firstName,
+      lastName: editedUserInfo.lastName,
+      email: editedUserInfo.email,
+      phoneNumber: editedUserInfo.phoneNumber,
+      image: editedUserInfo.image,
+    };
+
+    dispatch(putUser(user.uid, editedFields));
+
+    toast.success("Cambios Guardados!");
+
+    setTimeout(() => {
+      setIsEditing(false);
+      dispatch(getUser(user.uid))
+    }, 3000);
   };
 
   const cancelEdit = () => {
@@ -51,18 +78,20 @@ const UserProfileInfo = ({ user }) => {
       lastName: user?.lastName,
       email: user?.email,
       phoneNumber: user?.phoneNumber,
+      image: user?.image,
     });
   };
 
   return (
-    <div className="relative sm:mx- py-6 flex items-center justify-center bg-gray-400 bg-opacity-50 rounded-lg shadow-lg sm:mb-20">
+    <div className="relative sm:mx- py-6 flex items-center justify-center bg-gray-300 bg-opacity-75 rounded-lg shadow-lg sm:mb-20">
       {isEditing ? (
         <div className="space-y-10">
           {/* Inputs para edición */}
 
-          <Avatar src={user?.image} alt="avatar" size="xl" />
+         {/*  <Avatar src={user?.image || userProfile} alt="avatar" size="xl" /> */}
 
-          <UploadPhoto />
+          <UploadPhoto user={user} avatarInputRef={avatarInputRef}/>
+
             { editedUserInfo.firstName ? (
                 <Input
                 type="text"
@@ -176,11 +205,12 @@ const UserProfileInfo = ({ user }) => {
               Cancelar
             </Button>
           </div>
+          <Toaster richColors closeButton />
         </div>
       ) : (
         <div className="flex items-center justify-center">
           <div className="flex flex-col items-center justify-center">
-            <Avatar src={user?.image} alt="avatar" size="xl" />
+            <Avatar src={user?.image || userProfile} alt="avatar" size="xl" />
             <div className="justify-center text-black font-medium mb-3">
               <UserInfoLabel label="Nombre" value={user?.firstName} />
               <UserInfoLabel label="Apellido" value={user?.lastName} />

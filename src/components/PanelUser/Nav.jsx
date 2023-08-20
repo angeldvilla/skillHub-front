@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import userProfile from "../../assets/user-profile.svg";
 import { logoutUser } from "../../toolkit/Users/usersHandler";
+import { Toaster, toast } from "sonner";
 
 import {
   Collapse,
@@ -211,15 +212,12 @@ export default function Nav() {
   };
 
   const handleLogout = () => {
-    dispatch(logoutUser()); // Despacha la acción de cierre de sesión
+    toast.message("Hasta pronto! Su sesión ha sido cerrada");
+    setTimeout(() => {
+      dispatch(logoutUser());
+      navigate("/home"); 
+    },2000)
   };
-
-  useEffect(() => {
-    // Escuchar el cambio en las credenciales y redirigir después de cerrar sesión
-    if (!userCredentials) {
-      navigate("/signin"); // Redirige al usuario a la página de inicio de sesión
-    }
-  }, [userCredentials]);
 
   useEffect(() => {
     window.addEventListener(

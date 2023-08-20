@@ -49,14 +49,17 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
   }
 });
 
-export const putUser = createAsyncThunk("users/putUser", async (id) => {
-   try {
-    const { data } = await axios.put(
-      `https://skillhub-back-production.up.railway.app/user/${id}`
-    );
-    return data;
-   } catch (error) {
-    throw new Error(error);
+export const putUser = createAsyncThunk(async (id, userData) => {
+   return async (dispatch) => {
+     try {
+      const { data } = await axios.put(
+        `https://skillhub-back-production.up.railway.app/user/${id}`,
+        userData
+      );
+      dispatch(putUserInfo(data));
+     } catch (error) {
+      throw new Error(error);
+     }
    }
 });
 

@@ -167,6 +167,8 @@ export default function Register() {
       };
 
       dispatch(postUser(newUser));
+      dispatch(userLogin(newUser.uid));
+
       toast.message("Bienvenido", {
         description: userCredentials.user.email,
       });

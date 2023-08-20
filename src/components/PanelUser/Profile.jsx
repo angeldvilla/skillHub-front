@@ -94,14 +94,14 @@ export default function Profile() {
   return (
     <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">
       <Nav />
-      <div className="bg-gray-300 rounded-lg shadow-md p-5 max-w-5xl mx-auto w-full">
+      <div className="p-5 max-w-5xl mx-auto w-full">
         <div className="flex-grow mx-72">
           <h1 className="flex justify-center text-2xl font-bold mb-5">
             PERFIL
           </h1>
-          <UserProfileInfo user={user} />
+          <UserProfileInfo/>
           {/* Plan de suscripción */}
-          <div className="rounded-lg shadow-md p-6 mt-4">
+          <div className="p-6 mt-4">
             <h1 className="flex justify-center text-xl font-bold mb-5">
               TU PLAN
             </h1>
