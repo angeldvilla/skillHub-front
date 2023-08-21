@@ -13,7 +13,8 @@ import {
   } from "@material-tailwind/react";
 import axios from 'axios';
 import { async } from '@firebase/util';
-
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 const MercadoPago = () => {
 
     const navigate = useNavigate()
@@ -62,21 +63,6 @@ const MercadoPago = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     
-    //Verificamos si esta suscripto o no//!FALTA MEJORAR
-    useEffect(()=>{
-        const verificar = async()=>{
-            const {data} = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
-            const suscriptionVerify= data.filter(element=>element.subscription===true)
-
-            if(data.length>0 && suscriptionVerify.length===1) return navigate(`/user-panel/${id}/createWork`)
-            else if (data.length>0 && suscriptionVerify.length>1) return window.alert("existe dos suscripciones, corregir")
-        }
-        verificar()
-
-    },[])
-
-
-
     const handleBuy = async(element)=>{
             const client = {
                 plan:element.plan,
@@ -94,9 +80,61 @@ const MercadoPago = () => {
         }
     }, [id, userCredentials]);
 
+    //------SUSCRIPCIONES----
+    const [pay, setPay] = useState([]);
+  
+
+  useEffect(() => {
+    const getPayment = async () => {
+      try {
+        const { data } = await axios("http://localhost:3002/payment/");
+        setPay(data);
+      } catch (error) {
+        console.error("Error al obtener los pagos:", error);
+      }
+    };
+    getPayment();
+  }, [id]);
+  const filterSuscripcion = pay
+  .filter(({ subscription }) => subscription === true)
+
+  //console.log(filterSuscripcion)
+  const filterPlan = pay
+  .filter(({ subscription }) => subscription === true)
+  .map(({plan}) => plan)
+  const filterCreate = pay
+  .filter(({ subscription }) => subscription === true)
+  .map(({createdAt}) => createdAt.split("T")[0])
+  const calculateExpirationDate = (filterCreate) => {
+    const expirationDate = moment(filterCreate).add(30, "days");
+    return expirationDate.format("YYYY-MM-DD");
+  };
+  const resulDate = calculateExpirationDate();
+const handleCancelSubscription = async () => {
+  try {
+    const currentSubscription = pay.find(({ subscription }) => subscription === true);
+    if (currentSubscription) {
+      const paymentId = currentSubscription._id;
+      await axios.put(`https://skillhub-back-production.up.railway.app/payment/${paymentId}`, {
+        subscription: false,
+      });
+      setPay(prevPay =>
+        prevPay.map(payment =>
+          payment._id === paymentId ? { ...payment, subscription: false } : payment
+        )
+      );
+    } else {
+      console.log("No se encontró una suscripción activa.");
+    }
+  } catch (error) {
+    console.error("Error al cancelar la suscripción:", error);
+  }
+};
+
   return (
     <div className="relative justify-center items-center h-screen">
         <Nav/>
+        {filterSuscripcion.length === 0 ? (
         <div className="flex justify-center mx-auto mt-20 gap-5 ">
         {plan.map((element,index)=>{
             return(
@@ -156,6 +194,33 @@ const MercadoPago = () => {
             )
         })}
         </div>
+         ) : (
+          <div
+            className="flex justify-center items-center"
+            style={{ display: "flex",  flexDirection: "column", alignItems: "center",minHeight: "70vh", backgroundColor: "white", color: "black"
+            }}
+          >
+            <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"
+              }}
+            >
+             Actualmente tiene una suscripción activa:
+            </p>
+            <span style={{ fontWeight: 'bold', color: 'black' }}>{filterPlan} Vigente hasta: {resulDate}</span>
+          
+          <div className="flex justify-center items-center w-48/2 space-x-7">
+              <Link to={`http://localhost:5173/user-panel/${id}/home`}>
+                <Button color="blue">
+                  IR AL INICIO
+                </Button>
+              </Link>
+              <Link to={`http://localhost:5173/user-panel/${id}/memberShip`}>
+                  <Button color="blue" onClick={handleCancelSubscription}>
+                    CAMBIAR SUSCRIPCIÓN
+                  </Button>
+                </Link>
+            </div>
+          </div>
+        )}
     </div>
 
   )
