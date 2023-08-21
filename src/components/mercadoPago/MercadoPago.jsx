@@ -87,7 +87,7 @@ const MercadoPago = () => {
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios(`http://localhost:3002/payment/${id}`);
+        const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
