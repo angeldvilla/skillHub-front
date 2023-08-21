@@ -153,12 +153,6 @@ export default function JobDetail() {
                       <Typography variant="small">{skill}</Typography>
                     </li>
                   ))}
-                  <li>
-                    <Typography variant="small">Finanzas</Typography>
-                  </li>
-                  <li>
-                    <Typography variant="small">Manualidades</Typography>
-                  </li>
                 </ul>
               </div>
 
