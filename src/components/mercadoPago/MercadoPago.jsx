@@ -62,7 +62,7 @@ const MercadoPago = () => {
 
     const dispatch = useDispatch();
     const { id } = useParams();
-    
+ 
     const handleBuy = async(element)=>{
             const client = {
                 plan:element.plan,
@@ -87,7 +87,7 @@ const MercadoPago = () => {
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios("http://localhost:3002/payment/");
+        const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
@@ -95,21 +95,24 @@ const MercadoPago = () => {
     };
     getPayment();
   }, [id]);
+  //! VERIFICA SI EL USUARIO TIENE SUSCRIPCIÓN ACTIVO
   const filterSuscripcion = pay
   .filter(({ subscription }) => subscription === true)
 
-  //console.log(filterSuscripcion)
   const filterPlan = pay
   .filter(({ subscription }) => subscription === true)
   .map(({plan}) => plan)
   const filterCreate = pay
   .filter(({ subscription }) => subscription === true)
   .map(({createdAt}) => createdAt.split("T")[0])
+
   const calculateExpirationDate = (filterCreate) => {
+
     const expirationDate = moment(filterCreate).add(30, "days");
     return expirationDate.format("YYYY-MM-DD");
   };
-  const resulDate = calculateExpirationDate();
+  const resulDate = calculateExpirationDate(filterCreate);
+  //! PARA CAMBIAR DE PLAN
 const handleCancelSubscription = async () => {
   try {
     const currentSubscription = pay.find(({ subscription }) => subscription === true);

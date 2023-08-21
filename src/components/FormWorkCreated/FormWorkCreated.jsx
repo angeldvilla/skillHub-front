@@ -332,7 +332,8 @@ const [pay, setPay] = useState([]);
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios("https://skillhub-back-production.up.railway.app/payment/");
+        const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
+        console.log(data);
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
@@ -340,6 +341,7 @@ const [pay, setPay] = useState([]);
     };
     getPayment();
   }, [id]);
+  //console.log(pay)
   const filterSuscripcion = pay
   .filter(({ subscription }) => subscription === true)
   //---- trae info del usuario ---
@@ -373,7 +375,7 @@ const [pay, setPay] = useState([]);
 
   return (
     <div>
-      {trabajoFiltrado? 
+      {filterSuscripcion? 
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">

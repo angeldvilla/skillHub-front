@@ -54,6 +54,7 @@ export default function Dashboard() {
     <Loader />
   ) : (
     <div>
+
       <Header />
       <Typography variant="h2" className="text-center my-8">
         Admin Dashboard
