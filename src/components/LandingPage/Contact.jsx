@@ -3,7 +3,7 @@ import { Card, Input, Textarea, Typography } from "@material-tailwind/react";
 
 const sectionContact = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen font-sans">
+    <div className="flex flex-col items-center justify-center h-screen font-sans -z-[1]">
       <Card
         id="contact"
         data-aos="fade-down"
