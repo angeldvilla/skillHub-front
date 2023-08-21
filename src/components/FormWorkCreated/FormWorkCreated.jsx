@@ -307,7 +307,7 @@ export default function FormCreateWork() {
 
 
   //Editar tarea
-  console.log("Todos los trabajos", TodosLostrabajos);
+  //console.log("Todos los trabajos", TodosLostrabajos);
 
   useEffect(() => {
     if (trabajoFiltrado) {
@@ -319,7 +319,7 @@ export default function FormCreateWork() {
         image: trabajoFiltrado.image,
         price: trabajoFiltrado.price,
       });
-      console.log("Este es el trabao Filtrado", trabajoFiltrado);
+      //console.log("Este es el trabao Filtrado", trabajoFiltrado);
     }
   }, [trabajoFiltrado, id]);
   
