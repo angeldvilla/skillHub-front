@@ -1,28 +1,43 @@
 import mercadopago from "../../assets/mercadopago.png";
 import { Toaster, toast } from "sonner";
+import { Link } from "react-router-dom";
+import { FaRegUser } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 export default function Footer() {
   const handleOnClick = (e) => {
     toast.message(e.target.name, { description: "Próximamente" });
   };
 
+  const { userCredentials } = useSelector(state => state.users);
+
   return (
-    <footer className="bg-blue-800 text-gray-400 text-sm pt-8 w-full">
+    <footer className="bg-blue-800 text-gray-400 text-md pt-8 w-full">
       <div className="flex flex-col flex-wrap items-center md:flex-nowrap md:flex-row md:justify-between md:mx-8 lg:mx-12 xl:justify-between xl:mx-32 2xl:mx-48">
-        <button
-          name="Términos de uso"
-          onClick={handleOnClick}
+      
+        <a href={userCredentials === null 
+         ? '/terms-of-use'
+         : `/user-panel/${userCredentials.uid}/terms-of-use`
+        }> <button
+          name="Condiciones de uso"
+  
           className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition"
         >
-          TÉRMINOS DE USO
+          Condiciones de uso
         </button>
-        <button
-          name="Políticas de privacidad"
-          onClick={handleOnClick}
-          className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12"
-        >
-          POLÍTICAS DE PRIVACIDAD
-        </button>
+        </a>
+          <button
+            name="Políticas de privacidad"
+            className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12"
+          > 
+           <a href={userCredentials === null 
+            ? "/privacy-policies"
+            : `/user-panel/${userCredentials.uid}/privacy-policies`
+          }>
+            Políticas de Privacidad
+             </a>
+          </button>
+       
         <button
           name="Políticas de cookies"
           onClick={handleOnClick}
@@ -30,19 +45,26 @@ export default function Footer() {
         >
           POLÍTICAS DE COOKIES
         </button>
+        
+        <a href={ userCredentials === null 
+          ? "/payment-policies"
+          : `/user-panel/${userCredentials.uid}/payment-policies`
+        }> 
         <button
           name="Políticas de pago"
-          onClick={handleOnClick}
           className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12 "
         >
-          POLÍTICAS DE PAGO
+          Politicas de Pago
         </button>
+        </a>
+
         <button
           name="Contacto"
           onClick={handleOnClick}
           className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12"
-        >
-          CONTÁCTANOS
+        > 
+         CONTÁCTANOS 
+         <div><FaRegUser/></div>
         </button>
       </div>
       <div className="md:flex md:flex-row md:justify-around md:px-4 xl:mx-32 xl:mt-8 2xl:mx-64">

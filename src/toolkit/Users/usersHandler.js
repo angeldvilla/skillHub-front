@@ -1,10 +1,11 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { logoutUserSesion } from "./usersSlice";
 
 export const getUsers = createAsyncThunk("users/getUsers", async () => {
   try {
     const { data } = await axios.get(
-      "https://skillhub-back-production.up.railway.app/user"
+      "https://skillhub-back-production.up.railway.app/user" 
     );
     return data;
   } catch (error) {
@@ -15,7 +16,7 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
 export const getUser = createAsyncThunk("users/getUser", async (id) => {
   try {
     const { data } = await axios.get(
-      `https://skillhub-back-production.up.railway.app/user/${id}`
+      `https://skillhub-back-production.up.railway.app/user/${id}` 
     );
     return data;
   } catch (error) {
@@ -28,7 +29,7 @@ export const getUsersByName = createAsyncThunk(
   async (name) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3002/user?name=${name}`
+        `https://skillhub-back-production.up.railway.app/user?name=${name}`
       );
       return data;
     } catch (error) {
@@ -49,7 +50,34 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
   }
 });
 
-export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
-  localStorage.removeItem("userCredentials");
-  return null;
+export const putUser = (id, userData) => {
+   return async (dispatch) => {
+     try {
+      const { data } = await axios.put(
+        `https://skillhub-back-production.up.railway.app/user/${id}`,
+        userData
+      );
+      dispatch(putUserInfo(data));
+     } catch (error) {
+      throw new Error(error);
+     }
+   }
+};
+
+
+export const logoutUser = () => {
+  return async (dispatch) => {
+    localStorage.removeItem("userCredentials");
+    dispatch(logoutUserSesion())
+  }
+};
+
+
+export const Payment = createAsyncThunk("users/Payment", async () => {
+  try {
+    const { data } = await axios.get("https://skillhub-back-production.up.railway.app/payment");
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
 });

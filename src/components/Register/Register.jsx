@@ -19,7 +19,8 @@ import {
   validateUserData,
   resetUserData,
 } from "../../utils/userDataValidation";
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -35,6 +36,18 @@ export default function Register() {
   });
 
   const [errors, setErrors] = useState({});
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,20 +80,21 @@ export default function Register() {
             accessToken: userCredentials.user.accessToken,
           };
           const displayName = userCredentials.user.displayName;
-          const [firstName, lastName] = displayName.split(' ');
-          const phoneNumber = "3015487655";
+          const [firstName, lastName] = displayName.split(" ");
+
           const userAuth = {
             uid: googleCredentials.uid,
-            firstName: firstName, 
-            lastName: lastName, 
+            firstName: firstName,
+            lastName: lastName,
             email: userCredentials.user.email,
-            phoneNumber: phoneNumber,
+            phoneNumber: "",
+            image: userCredentials.user.photoURL
           };
           dispatch(postUser(userAuth));
           dispatch(userLogin(googleCredentials));
           setErrors({});
           resetUserData(setUserData);
-          
+
           toast.message("Bienvenido", {
             description: userCredentials.user.displayName,
           });
@@ -90,25 +104,25 @@ export default function Register() {
             JSON.stringify(googleCredentials)
           );
 
-            // Envío del correo
-            const authUser = {
-              to_email: userCredentials.user.email,
-              user_first_name: firstName,
-              user_last_name: lastName
-            };
+          // Envío del correo
+          const authUser = {
+            to_email: userCredentials.user.email,
+            user_first_name: firstName,
+            user_last_name: lastName,
+          };
 
-            const emailJSResponse = await emailjs.send(
-              'service_lfymgxc',
-              'template_fi0kha4', 
-              authUser,
-              'RY2Fv-D-bvjhDwd_H' 
-            );
+          const emailJSResponse = await emailjs.send(
+            "service_lfymgxc",
+            "template_fi0kha4",
+            authUser,
+            "RY2Fv-D-bvjhDwd_H"
+          );
 
           setTimeout(() => {
             const uid = googleCredentials.uid;
             navigate(`/user-panel/${uid}/home`);
           }, 2000);
-          
+
           break;
         case "github":
           toast.message("GitHub", {
@@ -149,9 +163,12 @@ export default function Register() {
         lastName,
         email,
         phoneNumber,
+        image: "",
       };
 
       dispatch(postUser(newUser));
+      dispatch(userLogin(newUser.uid));
+
       toast.message("Bienvenido", {
         description: userCredentials.user.email,
       });
@@ -168,13 +185,15 @@ export default function Register() {
       const registerParams = {
         to_email: userData.email,
         user_first_name: userData.firstName,
-        user_last_name: userData.lastName
+        user_last_name: userData.lastName,
       };
 
-      const emailJSResponse = await emailjs.send('service_lfymgxc', 
-        'template_fi0kha4',
+      const emailJSResponse = await emailjs.send(
+        "service_lfymgxc",
+        "template_fi0kha4",
         registerParams,
-        'RY2Fv-D-bvjhDwd_H');
+        "RY2Fv-D-bvjhDwd_H"
+      );
 
       setTimeout(() => {
         const uid = newUser.uid;
@@ -200,7 +219,7 @@ export default function Register() {
             toast.error("Ups, algo salió mal");
         }
       }
-      console.error('Error al enviar el correo:', error);
+      console.error("Error al enviar el correo:", error);
     }
   };
 
@@ -282,15 +301,27 @@ export default function Register() {
             )}
 
             {/* Password */}
-            <Input
-              type="text"
-              size="lg"
-              label="Password"
-              color="black"
-              name="password"
-              value={userData.password}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                size="lg"
+                label="Contraseña"
+                color="black"
+                name="password"
+                value={userData.password}
+                onChange={handleChange}
+              />
+              <span
+                className="cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-6 w-5 text-black" />
+                ) : (
+                  <EyeIcon className="h-6 w-5 text-black" />
+                )}
+              </span>
+            </div>
             {errors.password && (
               <span className="text-center text-sm text-red-500">
                 {errors.password}
@@ -298,15 +329,27 @@ export default function Register() {
             )}
 
             {/* Confirm Password */}
-            <Input
-              type="text"
-              size="lg"
-              label="Confirm password"
-              color="black"
-              name="confirmPassword"
-              value={userData.confirmPassword}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <Input
+                type={showConfirmPassword ? "text" : "password"}
+                size="lg"
+                label="Confirmar Contraseña"
+                color="black"
+                name="confirmPassword"
+                value={userData.confirmPassword}
+                onChange={handleChange}
+              />
+              <span
+                className="cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"
+                onClick={toggleConfirmPasswordVisibility}
+              >
+                {showConfirmPassword ? (
+                  <EyeSlashIcon className="h-6 w-5 text-black" />
+                ) : (
+                  <EyeIcon className="h-6 w-5 text-black" />
+                )}
+              </span>
+            </div>
             {errors.confirmPassword && (
               <span className="text-center text-sm text-red-500">
                 {errors.confirmPassword}
@@ -376,4 +419,3 @@ export default function Register() {
     </div>
   );
 }
-

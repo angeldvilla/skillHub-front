@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWork } from "../../toolkit/thunks";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { getUser } from "../../toolkit/Users/usersHandler";
 import {  getDetailWork } from "../../toolkit/thunks";
+import { deleteWokrs } from "../../toolkit/ActionsworkPublications";
 
 import Nav from "../PanelUser/Nav";
 import Footer from "../Footer/Footer";
@@ -18,12 +19,15 @@ import {
 } from "@material-tailwind/react";
 import moneyBag from "../../assets/moneyBag.svg";
 import ubication from "../../assets/ubication.svg";
+import { toast } from "sonner";
+import axios from "axios";
 
 export default function WorkPublication() {
 
     const { id } = useParams();
     const { userCredentials } = useSelector(state => state.users);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     useEffect(() => {
         dispatch(getWork());
@@ -36,15 +40,105 @@ export default function WorkPublication() {
     const TodosLosId = TodosLostrabajos.filter(trabajo => trabajo.idUser)
 
     const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
-    console.log("id del trabajo encontrado", trabajosDelUsuario);
+    //console.log("id del trabajo encontrado", trabajosDelUsuario);
 
     const totalWorks = trabajosDelUsuario.length;
+
+
+    const trabajo = trabajosDelUsuario.map ((trab)=> trab._id)
+    //console.log("Este es el trabajo individual", trabajo);
 
     function handleClick () {
         dispatch(getWork())
     }
-
-  
+    function eliminar(trabajoId) {
+        console.log("ID del trabajo a eliminar:", trabajoId);
+        dispatch(deleteWokrs(trabajoId)); // Pasa solo el ID del trabajo
+        toast.error("Trabajo borrado correctamente");
+        setTimeout(() => {
+            navigate(`/user-panel/${id}/WorkPublications`);
+          }, 3000);
+    }
+ //TRABAJOS PENDIENTES (S/ SUSCRIPCION)
+ const [pay, setPay] = useState([]);
+ const [totalWork, setTotalWorks] = useState(0);
+ useEffect(() => {
+   const getPayment = async () => {
+     try {
+       const { data } = await axios("http://localhost:3002/payment/");
+       setPay(data);
+       // console.log(data)
+       // const totalWorksAssociated = data.reduce((count, payment) => {
+       //   return payment._id === id ? count + payment.totalWork : count;
+       // }, 0);
+       // setTotalWorks(totalWorksAssociated)
+       // console.log(totalWorksAssociated)
+     } catch (error) {
+       console.error("Error al obtener los pagos:", error);
+     }
+   };
+   getPayment();
+ }, [id]);
+ 
+ const filterSuscripcion = pay
+   .filter(({ subscription }) => subscription === true)
+   .map(({ plan }) => plan);
+ 
+ const filterSuscripcionID = pay
+   .filter(({ subscription }) => subscription === true)
+   .map(({ _id }) => _id);
+ 
+ const planBRONCE = 2;
+ const planORO = 15;
+ const planPLATINO = Infinity;
+ 
+ const countByPaymentId = {};
+ 
+ let workPendingBRONCE = 0;
+ let workPendingORO = 0;
+ let workPendingPLATINO = 0;
+ 
+ function cantidadPosteosBRONCE() {
+   if (planBRONCE === totalWorks) {
+     workPendingBRONCE = 0;
+   } else if (totalWorks > planBRONCE) {
+     workPendingBRONCE = 0;
+   } else {
+     workPendingBRONCE = planBRONCE - totalWorks;
+   }
+ }
+ 
+ function cantidadPosteosORO() {
+   if (planORO === totalWork) {
+     workPendingORO = 0;
+   } else if (totalWorks > planORO) {
+     workPendingORO = 0;
+   } else {
+     workPendingORO = planORO - totalWorks;
+   }
+ }
+ 
+ const findPlan = () => {
+   if (filterSuscripcionID.length > 0) {
+     for (const paymentId of filterSuscripcionID) {
+       if (filterSuscripcion.includes("Plan BRONCE")) {
+         cantidadPosteosBRONCE();
+         countByPaymentId[paymentId] = workPendingBRONCE;
+       } else if (filterSuscripcion.includes("Plan ORO")) {
+         cantidadPosteosORO();
+         countByPaymentId[paymentId] = workPendingORO;
+       } else if (filterSuscripcion.includes("Plan PLATINO")) {
+         // Realiza las operaciones correspondientes para el Plan PLATINO
+       } else {
+         countByPaymentId[paymentId] = 'No existe suscripción activa';
+       }
+     }
+   } else {
+     return 'No existe suscripción activa.';
+   }
+ };
+ 
+ findPlan();
 
     return (
       <div>
@@ -52,7 +146,18 @@ export default function WorkPublication() {
             <Nav />
             <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
              > {`Total trabajos publicados: ${totalWorks}`}</h1>
-
+              {countByPaymentId[filterSuscripcionID[0]] === 0 ? (
+                <div className="flex items-center   justify-center mb-96">
+                    <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
+                    > Si deseas publicar más servicios, considera actualizar tu plan de suscripción para acceder a beneficios adicionales. </h1>
+                    <br />
+                    <NavLink to={`/user-panel/${id}/memberShip`}>
+                        <button className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
+                        >
+                            Cambiar suscripcion </button>
+                    </NavLink>
+                </div>
+            ) : ( '.' )}
              <div className="flex items-center  gap-10  justify-center mb-28">
                 
 
@@ -104,6 +209,8 @@ export default function WorkPublication() {
                                         <Typography color="gray" className="text-center">
                                             {trabajo.price}
                                         </Typography>
+
+          
                                     </div>
                                     <div></div>
                                 </div>
@@ -134,7 +241,8 @@ export default function WorkPublication() {
                                     </svg>
                                 </Button>
                                 </Link>
-                                <button>Eliminar Trabajo</button>
+                                <button onClick={() => eliminar(trabajo._id)}>Eliminar Trabajo</button>
+
                         </div>
                     </Card>
                 ))

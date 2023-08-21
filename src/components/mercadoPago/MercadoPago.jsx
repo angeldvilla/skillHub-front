@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getUser } from "../../toolkit/Users/usersHandler";
@@ -12,24 +12,26 @@ import {
     Button,
   } from "@material-tailwind/react";
 import axios from 'axios';
-
+import { async } from '@firebase/util';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 const MercadoPago = () => {
 
     const navigate = useNavigate()
 
     const plan = [{
         id:1,
-        plan:"BASE",
+        plan:"BRONCE",
         pago:9.99,
         beneficios:["5 publicaciones"]
     },
     {   id:2,
-        plan:"ESTÁNDAR",
+        plan:"ORO",
         pago:19.99,
         beneficios:["15 publicaciones"]
     },
     {   id:3,
-        plan:"PREMIUM",
+        plan:"PLATINO",
         pago:29.99,
         beneficios:["Publicaciones ilimitados"]
     }
@@ -59,16 +61,15 @@ const MercadoPago = () => {
     const {userCredentials} = useSelector(state=>state.users);
 
     const dispatch = useDispatch();
-
     const { id } = useParams();
-
+ 
     const handleBuy = async(element)=>{
             const client = {
                 plan:element.plan,
                 price:element.pago,
                 user:id
             }
-            const {data} = await axios.post(`http://localhost:3002/payment/${id}`,client)
+            const {data} = await axios.post(`https://skillhub-back-production.up.railway.app/payment/${id}`,client)
             
             return window.location.href=data.preferenceUrl
             
@@ -79,9 +80,64 @@ const MercadoPago = () => {
         }
     }, [id, userCredentials]);
 
+    //------SUSCRIPCIONES----
+    const [pay, setPay] = useState([]);
+  
+
+  useEffect(() => {
+    const getPayment = async () => {
+      try {
+        const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
+        setPay(data);
+      } catch (error) {
+        console.error("Error al obtener los pagos:", error);
+      }
+    };
+    getPayment();
+  }, [id]);
+  //! VERIFICA SI EL USUARIO TIENE SUSCRIPCIÓN ACTIVO
+  const filterSuscripcion = pay
+  .filter(({ subscription }) => subscription === true)
+
+  const filterPlan = pay
+  .filter(({ subscription }) => subscription === true)
+  .map(({plan}) => plan)
+  const filterCreate = pay
+  .filter(({ subscription }) => subscription === true)
+  .map(({createdAt}) => createdAt.split("T")[0])
+
+  const calculateExpirationDate = (filterCreate) => {
+
+    const expirationDate = moment(filterCreate).add(30, "days");
+    return expirationDate.format("YYYY-MM-DD");
+  };
+  const resulDate = calculateExpirationDate(filterCreate);
+  //! PARA CAMBIAR DE PLAN
+const handleCancelSubscription = async () => {
+  try {
+    const currentSubscription = pay.find(({ subscription }) => subscription === true);
+    if (currentSubscription) {
+      const paymentId = currentSubscription._id;
+      await axios.put(`https://skillhub-back-production.up.railway.app/payment/${paymentId}`, {
+        subscription: false,
+      });
+      setPay(prevPay =>
+        prevPay.map(payment =>
+          payment._id === paymentId ? { ...payment, subscription: false } : payment
+        )
+      );
+    } else {
+      console.log("No se encontró una suscripción activa.");
+    }
+  } catch (error) {
+    console.error("Error al cancelar la suscripción:", error);
+  }
+};
+
   return (
     <div className="relative justify-center items-center h-screen">
         <Nav/>
+        {filterSuscripcion.length === 0 ? (
         <div className="flex justify-center mx-auto mt-20 gap-5 ">
         {plan.map((element,index)=>{
             return(
@@ -141,6 +197,33 @@ const MercadoPago = () => {
             )
         })}
         </div>
+         ) : (
+          <div
+            className="flex justify-center items-center"
+            style={{ display: "flex",  flexDirection: "column", alignItems: "center",minHeight: "70vh", backgroundColor: "white", color: "black"
+            }}
+          >
+            <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"
+              }}
+            >
+             Actualmente tiene una suscripción activa:
+            </p>
+            <span style={{ fontWeight: 'bold', color: 'black' }}>{filterPlan} Vigente hasta: {resulDate}</span>
+          
+          <div className="flex justify-center items-center w-48/2 space-x-7">
+              <Link to={`http://localhost:5173/user-panel/${id}/home`}>
+                <Button color="blue">
+                  IR AL INICIO
+                </Button>
+              </Link>
+              <Link to={`http://localhost:5173/user-panel/${id}/memberShip`}>
+                  <Button color="blue" onClick={handleCancelSubscription}>
+                    CAMBIAR SUSCRIPCIÓN
+                  </Button>
+                </Link>
+            </div>
+          </div>
+        )}
     </div>
 
   )
