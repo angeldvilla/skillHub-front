@@ -213,10 +213,10 @@ export default function Nav() {
 
   const handleLogout = () => {
     toast.message("Hasta pronto! Su sesión ha sido cerrada");
+    navigate("/home");
     setTimeout(() => {
       dispatch(logoutUser());
-      navigate("/home"); 
-    },2000)
+    })
   };
 
   useEffect(() => {

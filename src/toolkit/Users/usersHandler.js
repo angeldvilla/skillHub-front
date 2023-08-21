@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { logoutUserSesion } from "./usersSlice";
 
 export const getUsers = createAsyncThunk("users/getUsers", async () => {
   try {
@@ -49,7 +50,7 @@ export const postUser = createAsyncThunk("users/postUser", async (userData) => {
   }
 });
 
-export const putUser = createAsyncThunk(async (id, userData) => {
+export const putUser = (id, userData) => {
    return async (dispatch) => {
      try {
       const { data } = await axios.put(
@@ -61,12 +62,15 @@ export const putUser = createAsyncThunk(async (id, userData) => {
       throw new Error(error);
      }
    }
-});
+};
 
 
-export const logoutUser = createAsyncThunk("users/logoutUser", async () => {
-  localStorage.removeItem("userCredentials");
-});
+export const logoutUser = () => {
+  return async (dispatch) => {
+    localStorage.removeItem("userCredentials");
+    dispatch(logoutUserSesion())
+  }
+};
 
 
 export const Payment = createAsyncThunk("users/Payment", async () => {

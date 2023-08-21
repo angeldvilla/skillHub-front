@@ -82,7 +82,8 @@ export default function Login() {
             phoneNumber: "",
             image: userCredentials.user.photoURL
           }
-          const userAuth = users.find(user => user.uid === googleCredentials.uid); 
+          /* const userAuth = users.find(user => user.uid === googleCredentials.uid);  */
+          const userAuth = users.find(user => user.habilitar === true)
           if(userAuth){
             toast.message("Bienvenido", {
               description: userCredentials.user.displayName,
@@ -102,7 +103,7 @@ export default function Login() {
             }, 2000);
           } else {
             // o lo mando a registrarse
-            toast.error("Usuario no encontrado");
+            toast.error("Usuario no encontrado, para acceder correctamente, Registrate!");
 
             // o bien lo puedo registrar y darle acceso
             /* 

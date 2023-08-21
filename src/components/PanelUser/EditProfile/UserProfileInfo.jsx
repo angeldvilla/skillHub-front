@@ -68,7 +68,7 @@ const UserProfileInfo = () => {
     setTimeout(() => {
       setIsEditing(false);
       dispatch(getUser(user.uid))
-    }, 3000);
+    }, 2000);
   };
 
   const cancelEdit = () => {

@@ -4,7 +4,6 @@ import {
   getUsersByName,
   getUser,
   postUser,
-  logoutUser,
 } from "./usersHandler";
 
 const storedCredentials = JSON.parse(localStorage.getItem("userCredentials"));
@@ -28,6 +27,9 @@ export const userSlice = createSlice({
     },
     putUserInfo: (state, { payload }) => {
       state.user = payload
+    },
+    logoutUserSesion: (state) => {
+      state.userCredentials = null
     },
   },
   extraReducers: (builder) => {
@@ -90,24 +92,9 @@ export const userSlice = createSlice({
       .addCase(postUser.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = error.message;
-      })
-
-      // Logout User
-      .addCase(logoutUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.userCredentials = null;
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(logoutUser.rejected, (state, { error }) => {
-        state.isLoading = false;
-        state.error = error.message;
       });
   },
 });
 
-export const { userLogin, clearError, putUserInfo } = userSlice.actions;
+export const { userLogin, clearError, putUserInfo, logoutUserSesion } = userSlice.actions;
 export default userSlice.reducer;
