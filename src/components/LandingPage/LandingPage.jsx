@@ -1,5 +1,5 @@
 import "aos/dist/aos.css";
-import React from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import backgroundImage from "../../assets/backgroundImage.jpg";
 import logoSkillHub from "../../assets/skillHub.jpg";
@@ -13,9 +13,33 @@ import AbautUs from "../AbautUs/AbautUs";
 import Contact from "./Contact";
 import Services from "./Services";
 import Score from "../Score/Score";
+import { ArrowUpIcon } from "@heroicons/react/24/outline";
 
 export default function LandingPage() {
   const images = [Diseñador, Jardinero, Electricista, Cerrajero];
+
+  // Scroll to top feature
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setShowScrollButton(true);
+    } else {
+      setShowScrollButton(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen relative">
@@ -37,9 +61,7 @@ export default function LandingPage() {
           }
         `}
       </style>
-      <div
-        className="fixed top-0 left-0 right-0 px-4 sm:px-4 py-1 flex items-center justify-between bg-gray-900 bg-opacity-50 backdrop-blur-xl shadow-2xl" 
-      >
+      <div className="fixed top-0 left-0 right-0 px-4 sm:px-4 py-1 flex items-center justify-between bg-gray-900 bg-opacity-50 backdrop-blur-xl shadow-2xl">
         <div className="absolute top-0 left-0 right-0 bottom-0 z-[-1]"></div>
 
         <div className="flex items-center space-x-2 sm:space-x-4">
@@ -53,7 +75,11 @@ export default function LandingPage() {
         </div>
         <div className="flex ml-2 sm:ml-4 space-x-4 sm:space-x-8 items-center">
           <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
-            <a href="#inicio" className="text-white w-16 sm:w-24" data-aos="fade-down">
+            <a
+              href="#inicio"
+              className="text-white w-16 sm:w-24"
+              data-aos="fade-down"
+            >
               Inicio
             </a>
           </span>
@@ -76,7 +102,11 @@ export default function LandingPage() {
             </a>
           </span>
           <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
-            <a href="#contact" className="text-white w-16 sm:w-24" data-aos="fade-down">
+            <a
+              href="#contact"
+              className="text-white w-16 sm:w-24"
+              data-aos="fade-down"
+            >
               Contáctanos
             </a>
           </span>
@@ -102,6 +132,15 @@ export default function LandingPage() {
         id="inicio"
         className="h-screen flex flex-col justify-center items-center text-white py-20 sm:mb-32"
       >
+        {/* Scroll to Top Button */}
+        {showScrollButton && (
+          <button
+            className="fixed bottom-10 right-6 bg-gray-900/75 hover:bg-gray-900 text-white py-4 px-3 rounded-lg z-100"
+            onClick={scrollToTop}
+          >
+            <ArrowUpIcon className="h-6 w-6" />
+          </button>
+        )}
         <div
           className="fixed top-0 left-0 w-full h-screen bg-cover bg-center blur brightness-50 z-[-1]"
           style={{
@@ -109,7 +148,9 @@ export default function LandingPage() {
           }}
         ></div>
 
-        <div className="flex flex-col justify-center items-center w-11/12 sm:w-4/5 mx-auto mt-32 sm:mt-32"/* "flex justify-between items-center w-4/5 mx-auto mt-32" */>
+        <div
+          className="flex flex-col justify-center items-center w-11/12 sm:w-4/5 mx-auto mt-32 sm:mt-32" /* "flex justify-between items-center w-4/5 mx-auto mt-32" */
+        >
           {/* Columna Izquierda */}
           <div className="w-full sm:w-1/2 mx-auto">
             <h1
@@ -121,7 +162,10 @@ export default function LandingPage() {
           </div>
 
           <div className="w-full sm:w-1/2 mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8" data-aos="fade-up">
+            <h2
+              className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8"
+              data-aos="fade-up"
+            >
               Tu Centro de Habilidades
             </h2>
 
