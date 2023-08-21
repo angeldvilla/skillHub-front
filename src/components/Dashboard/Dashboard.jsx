@@ -18,25 +18,34 @@ export default function Dashboard() {
   const [status, setStatus] = useState({});
   const { users } = useSelector((state) => state.users);
   const [userStatus, setUserStatus] = useState({});
+  
+
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch]);
 
-  const handleOnClick = (_id) => {
-
-       
+    const initialUserStatus = {};
+    for (const user of users) {
+      initialUserStatus[user._id] = user.habilitar;
+    }
+    setUserStatus(initialUserStatus)
+ console.log(initialUserStatus)
+  }, [dispatch], [users]);
+  
+  const handleOnClick = (_id) => {     
     setUserStatus((prevStatuses) => ({
       ...prevStatuses,
       [_id]: !prevStatuses[_id],
-  }));
-
-    setStatus({ _id, habilitar: !status.habilitar });
-
-    dispatch(putUsers({ _id, habilitar: !status.habilitar }));
+    }));
+    
+    setStatus((prevstatus) => ({
+      ...prevstatus,
+      _id, habilitar: !userStatus[_id]
+    }));
+    
+    dispatch(putUsers({_id, habilitar: !userStatus[_id]}));
   };
-
+ 
   // const habilitado = useSelector((state) => state.users.users);
- console.log(status.habilitar)
   return (
     <div>
       <Header />
@@ -66,7 +75,7 @@ export default function Dashboard() {
           </thead>
           <tbody>
             {users.map(
-              ({ _id, firstName, lastName, email, phoneNumber }) => (
+              ({ _id, firstName, lastName, email, phoneNumber, habilitar }) => (
                 <tr key={firstName} className="even:bg-blue-gray-100">
                   <td className="p-4">
                     <Typography
@@ -163,7 +172,7 @@ export default function Dashboard() {
                         onClick={() => handleOnClick(_id)}
                       >
 
-                       {userStatus[_id] ? "Deshabilitar" : "Habilitar"}
+                       {userStatus[_id]  ? "Deshabilitar" : "Habilitar"}
                         {/* {habilitado.find((elem) => elem._id === _id).habilitar
                           ? "Deshabilitar"
                           : "Habilitar"} */}

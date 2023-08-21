@@ -68,7 +68,8 @@ export const putUsers = createAsyncThunk ("users/putUsers", async(userPut) => {
 
 
   try {
-    const { data } = await axios.put('http://localhost:3002/users/status', userPut)
+    console.log(userPut)
+    const { data } = await axios.put('https://skillhub-back-production.up.railway.app/users/status', userPut)
     return data
   } catch (error) {
     console.log("error:", error.message)
