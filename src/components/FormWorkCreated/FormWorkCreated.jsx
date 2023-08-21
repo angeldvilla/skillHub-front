@@ -352,7 +352,7 @@ const [pay, setPay] = useState([]);
 
   return (
     <div>
-      {filterSuscripcion.length > 0 ? 
+      {trabajoFiltrado? 
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">

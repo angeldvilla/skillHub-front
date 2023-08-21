@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 import moneyBag from "../../assets/moneyBag.svg";
 import ubication from "../../assets/ubication.svg";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../toolkit/Users/usersHandler"
@@ -25,7 +25,12 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
 
   const { userCredentials } = useSelector((state) => state.users);
 
- const isAdmin = true
+
+ const [isAdmin, setIsAdmin] = useState(false)
+ useEffect(()=>{
+  if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2")
+  setIsAdmin(true)
+ }, [])
   
 
 

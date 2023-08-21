@@ -29,6 +29,7 @@ import {
   CreditCardIcon,
   HomeIcon,
   PaperClipIcon,
+  
 } from "@heroicons/react/24/outline";
 
 const ProfileMenu = ({ userAuth, handleLogout }) => {
@@ -39,6 +40,12 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  const [isAdmin, setIsAdmin] = useState(false)
+  useEffect(()=>{
+   if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2")
+   setIsAdmin(true)
+  }, [])
 
   // profile menu component
   const profileMenuItems = [
@@ -79,6 +86,32 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
     },
   ];
 
+  const profileMenuItems2 = [
+    {
+      label: `${
+        userAuth ? `${userAuth?.firstName} ${userAuth?.lastName}` : ""
+      }`,
+      value: "my-profile",
+      icon: UserCircleIcon,
+    },
+
+    {
+      label: "Ver todos los trabajos",
+      value: "home",
+      icon: HomeIcon,
+    },
+    {
+      label: "Usuarios",
+      value: "Dashboard",
+      icon: FolderIcon,
+    },
+    {
+      label: "Cerrar Sesión",
+      value: "signin",
+      icon: PowerIcon,
+      onclick: handleLogout,
+    },
+  ];
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -104,8 +137,11 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon, value, onclick }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
+
+
+        {isAdmin ? (
+      profileMenuItems2.map(({ label, icon, value, onclick }, key) => {
+          const isLastItem = key === profileMenuItems2.length - 1;
 
           return (
             <div key={key}>
@@ -152,7 +188,60 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
               )}
             </div>
           );
-        })}
+        })
+        ): (
+          profileMenuItems.map(({ label, icon, value, onclick }, key) => {
+            const isLastItem = key === profileMenuItems.length - 1;
+  
+            return (
+              <div key={key}>
+                {isLastItem ? (
+                  <MenuItem
+                    key={label}
+                    onClick={handleLogout}
+                    className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
+                  >
+                    {React.createElement(icon, {
+                      className: `h-4 w-4 text-red-500`,
+                      strokeWidth: 2,
+                    })}
+  
+                    <Typography
+                      as="span"
+                      variant="small"
+                      className="font-normal text-red-500"
+                    >
+                      {label}
+                    </Typography>
+                  </MenuItem>
+                ) : (
+                  <a key={key} href={`/user-panel/${id}/${value}`}>
+                    <MenuItem
+                      key={label}
+                      onClick={onclick || closeMenu}
+                      className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
+                    >
+                      {React.createElement(icon, {
+                        className: `h-4 w-4`,
+                        strokeWidth: 2,
+                      })}
+  
+                      <Typography
+                        as="span"
+                        variant="small"
+                        className="font-normal"
+                      >
+                        {label}
+                      </Typography>
+                    </MenuItem>
+                  </a>
+                )}
+              </div>
+            );
+          })
+        )}
+        
+
       </MenuList>
     </Menu>
   );
@@ -197,7 +286,16 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
 export default function Nav() {
   const { id } = useParams();
 
-  const isAdmin = true
+
+  const [isAdmin, setIsAdmin] = useState(false)
+  useEffect(()=>{
+   if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2")
+   setIsAdmin(true)
+  }, [])
+   
+ 
+
+
 
   const dispatch = useDispatch();
 
@@ -222,6 +320,7 @@ export default function Nav() {
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
+
   return (
     <React.Fragment>
       {isAdmin ? (
