@@ -52,7 +52,7 @@ const sectionContact = () => {
               Mensaje
             </label>
             <textarea
-              className="w-full p-2 border border-black bg-gray-200 rounded-md text-b"
+              className="w-full p-2 border border-black bg-gray-200 rounded-md text-black"
               id="message"
               name="message"
               rows="4"

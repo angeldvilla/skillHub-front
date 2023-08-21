@@ -1,15 +1,25 @@
 import Footer from "../Footer/Footer"
 import "./componentes.css"
 import Header from "../Header/Header"
+import Nav from "../PanelUser/Nav";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import Acordeon from "./utils/componenteAc/acordeonComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import text from './utils/text'
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getUser } from "../../toolkit/Users/usersHandler";
 export default function PoliticaDePago() {
   const [active, setActive] = useState("Hola")
+  const { userCredentials } = useSelector(state => state.users);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser(id));
+  },[dispatch, id])
   return (
  <div> 
-    <Header/>
+    {userCredentials === null ? <Header/> : <Nav/>}
     <div className="bodyStyle">
     <h1> Politicas de Pago @SkillHub.netlifly.app </h1>
     <p>Última actualización: hace 5 meses</p>

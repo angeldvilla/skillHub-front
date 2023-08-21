@@ -309,10 +309,10 @@ export default function Nav() {
   };
 
   const handleLogout = () => {
-    toast.message("Hasta pronto! Su sesión ha sido cerrada");
-    navigate("/home");
+    dispatch(logoutUser());
     setTimeout(() => {
-      dispatch(logoutUser());
+      toast.message("Hasta pronto! Su sesión ha sido cerrada");
+      navigate("/home");
     })
   };
 
@@ -354,7 +354,7 @@ export default function Nav() {
           </div>
         </div>
     ) : (
-    <div className="w-full bg-gray-300 bg-opacity-50 backdrop-blur-xl lg:rounded-md lg:pl-6 px-4 py-2">
+    <div className="w-full bg-gray-300 bg-opacity-50 backdrop-blur-xl lg:pl-6 px-4 py-2">
     <div className="flex items-center justify-between ">
       <div className="flex items-center space-x-4">
         <a href={`/user-panel/${userCredentials.uid}/home`} className="gap-9">

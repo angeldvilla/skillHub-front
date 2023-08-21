@@ -22,7 +22,7 @@ export default function Profile() {
     const getPayment = async () => {
       try {
         const { data } = await axios(
-          "https://skillhub-back-production.up.railway.app/payment/"
+          `https://skillhub-back-production.up.railway.app/payment/${id}`
         );
         setPay(data);
       } catch (error) {
@@ -117,12 +117,10 @@ export default function Profile() {
           {/* Opción para eliminar cuenta */}
           <div className="mt-4 mb-20 bg-gray-200 rounded-lg shadow-md p-6">
             <h3 className="text-xl font-semibold mb-2">
-              Cerrar Sesión en Todos los Dispositivos
+              Cerrar Tu Cuenta!
             </h3>
             <p className="text-md text-gray-600">
-              Al cerrar tu sesión en todos los dispositivos, te desconectarás de
-              SkillHub en tus teléfonos, tablets y la web. Ten en cuenta que tu
-              historial de trabajos y servicios se eliminará automáticamente
+              Al eliminar tu cuenta, no volverás a tener acceso a SkillHub con este correo. Ten en cuenta que tu historial de trabajos, servicios, y suscripciones se eliminarán automáticamente
               después de cierto tiempo.
             </p>
             <div className="mt-4">
