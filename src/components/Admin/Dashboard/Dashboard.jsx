@@ -81,7 +81,7 @@ export default function Dashboard() {
           </thead>
           <tbody>
             {users.map(
-              ({ _id, firstName, lastName, email, phoneNumber, pay, habilitar }, index) => (
+              ({ _id, firstName, lastName, email, phoneNumber, pay }, index) => (
                 <tr key={index} className="even:bg-blue-gray-100">
                   <td className="p-4">
                     <Typography
