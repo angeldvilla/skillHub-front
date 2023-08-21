@@ -22,7 +22,7 @@ export default function Profile() {
     const getPayment = async () => {
       try {
         const { data } = await axios(
-          "https://skillhub-back-production.up.railway.app/payment/"
+          `https://skillhub-back-production.up.railway.app/payment/${id}`
         );
         setPay(data);
       } catch (error) {
