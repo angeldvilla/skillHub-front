@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getWork, getDetailWork, detailReset } from "../../toolkit/thunks";
+import { getDetailWork, detailReset } from "../../toolkit/thunks";
 import { getUser, getUsers } from "../../toolkit/Users/usersHandler";
 /* -------------- */
 /* COMPONENTS */
@@ -31,33 +31,28 @@ export default function JobDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { work, detail, isLoading } = useSelector((state) => state.work);
+  const { detail, isLoading } = useSelector((state) => state.work);
   const { users, user, userCredentials } = useSelector((state) => state.users);
   const infoUser = users.find((user) => user._id === detail.users);
-
   useEffect(() => {
-    !work.length && dispatch(getWork());
+    userCredentials !== null && dispatch(getUser(userCredentials.uid));
     !users.length && dispatch(getUsers());
-    !user.length && dispatch(getUser(id));
     dispatch(getDetailWork(id));
     return () => {
       dispatch(detailReset());
     };
-  }, [dispatch, id, work.length, users.length, user.length]);
-
+  }, [dispatch, id, userCredentials, users.length]);
   const images = [detail?.image];
-
   const handleClick = () => {
-    userCredentials && userCredentials.uid === id
-      ? navigate(`/user-panel/${id}/home`)
-      : navigate("/home");
+    userCredentials === null
+      ? navigate("/home")
+      : navigate(`/user-panel/${user.uid}/home`);
   };
 
   return (
     <Card className="flex flex-col justify-center items-center">
       {isLoading && <Loader />}
-
-      {userCredentials && userCredentials.uid === id ? <Nav /> : <Header />}
+      {userCredentials === null ? <Header /> : <Nav />}
 
       <div className="max-w-screen-2xl bg-gray-50 font-sans m-5 pb-1 shadow-md border-2 border-gray-200 rounded-md">
         <div className="px-4">
