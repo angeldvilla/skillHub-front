@@ -332,7 +332,8 @@ const [pay, setPay] = useState([]);
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios("https://skillhub-back-production.up.railway.app/payment/");
+        const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
+        console.log(data);
         setPay(data);
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
@@ -340,6 +341,7 @@ const [pay, setPay] = useState([]);
     };
     getPayment();
   }, [id]);
+  //console.log(pay)
   const filterSuscripcion = pay
   .filter(({ subscription }) => subscription === true)
   //---- trae info del usuario ---
@@ -348,11 +350,32 @@ const [pay, setPay] = useState([]);
   useEffect(() => {
     dispatch(getUser(id));
   }, [dispatch, id]);
-  //___________________________________________
+  
+  //! RELACION DE MODELO USUARIOS CON PAYMENT
+
+  const [allUsersPayment,setAllUseersPayment] = useState([])
+  useEffect(() => {
+    const usersPaymentResult = async()=>{ //! la base de datos esta modificado
+      const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
+      setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
+    }
+    usersPaymentResult()
+
+    if(allUsersPayment.length!==0){
+      
+      const dataPay= { pay:allUsersPayment[0]._id}
+      
+      const modifDate=async()=>{
+        const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
+      }
+      modifDate()
+    }
+  
+  }, [id,allUsersPayment.length]);
 
   return (
     <div>
-      {trabajoFiltrado? 
+      {filterSuscripcion? 
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">
