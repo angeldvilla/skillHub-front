@@ -65,4 +65,16 @@ export const reviews =  createAsyncThunk ("score/sendScore", async(score) => {
 })
 
       
-    
+export const putUsers = createAsyncThunk ("users/putUsers", async(userPut) => {
+
+
+  try {
+    console.log(userPut)
+    const { data } = await axios.put('https://skillhub-back-production.up.railway.app/users/status', userPut)
+    return data
+  } catch (error) {
+    console.log("error:", error.message)
+  }
+})
+
+      
