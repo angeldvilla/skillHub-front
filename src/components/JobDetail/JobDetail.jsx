@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailWork, detailReset } from "../../toolkit/thunks";
 import { getUser, getUsers } from "../../toolkit/Users/usersHandler";
@@ -23,7 +23,7 @@ export default function JobDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { work, detail, isLoading } = useSelector((state) => state.work);
+  const { detail, isLoading } = useSelector((state) => state.work);
   const { users, user, userCredentials } = useSelector((state) => state.users);
   const infoUser = users.find((user) => user._id === detail.users);
 
@@ -109,9 +109,16 @@ export default function JobDetail() {
                     Número de Teléfono
                   </h3>
 
-                  <p className="px-2">
-                    {"> +"} {infoUser?.phoneNumber}
-                  </p>
+                  <div className="flex items-center gap-2">
+                  {">"} 
+                  <Link to={`https://api.whatsapp.com/send?phone=${infoUser?.phoneNumber}` || ""} target="_blank" rel="noopener noreferrer">
+                  <img 
+                  src={"https://img.icons8.com/?size=512&id=16713&format=png"}
+                  className="w-10"
+                  />
+                  </Link>
+                  Contactar por Whatsapp
+                  </div>
                 </div>
               </div>
 

@@ -1,18 +1,23 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getUser } from "../../../toolkit/Users/usersHandler";
 import { motion } from "framer-motion";
 import Footer from "../../Footer/Footer";
 import Nav from "../Nav";
 import background from "../../../assets/backgroundImage.jpg";
+import Header from "../../Header/Header";
 
 const Support = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  const { userCredentials } = useSelector(state => state.users);
+
   useEffect(() => {
-    dispatch(getUser(id));
+    if(userCredentials !== null){
+      dispatch(getUser(id));
+    } 
   }, [dispatch, id]);
   return (
     <div className="min-h-screen bg-gray-200 flex flex-col">
@@ -34,7 +39,7 @@ const Support = () => {
           }
         `}
       </style>
-      <Nav />
+      {userCredentials === null ? <Header/> : <Nav />}
       <div
         className="absolute top-0 left-0 w-full h-full bg-cover bg-center blur-sm z-[-1]"
         style={{
