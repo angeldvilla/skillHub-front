@@ -12,11 +12,12 @@ import MercadoPago from "./components/mercadoPago/MercadoPago";
 import Next from "./components/mercadoPago/Next";
 import Error404 from "./components/error404/Error404";
 import AbautUs from "./components/AbautUs/AbautUs";
-import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv"
-import CondicionesDeUso from "./components/ComponentesFooter/CondicionesDeUso"
-import Dashboard from "./components/Admin/Dashboard/Dashboard"
-import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago"
-
+import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv";
+import CondicionesDeUso from "./components/ComponentesFooter/CondicionesDeUso";
+import Dashboard from "./components/Admin/Dashboard/Dashboard";
+import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago";
+import Support from "./components/PanelUser/FAQ/Support";
+import Help from "./components/PanelUser/FAQ/Help";
 /* ------------------------------------------- */
 
 /* ------------------------------------------- */
@@ -59,10 +60,10 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
 
       {/* RUTAS DE FOOTER EN PROCESO */}
-      <Route path="/privacy-policies" element={< PoliticasDePriv/>} />
-      <Route path="/terms-of-use" element={<CondicionesDeUso/>} />
+      <Route path="/privacy-policies" element={<PoliticasDePriv />} />
+      <Route path="/terms-of-use" element={<CondicionesDeUso />} />
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
-      <Route path="/payment-policies" element={<PoliticaDePago/>} />
+      <Route path="/payment-policies" element={<PoliticaDePago />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
@@ -134,6 +135,20 @@ function App() {
           path="next/:payment_id"
           element={
             userCredentials ? <Next /> : <Navigate to="/error404" replace />
+          }
+        />
+
+        <Route
+          path="help"
+          element={
+            userCredentials ? <Help /> : <Navigate to="/error404" replace />
+          }
+        />
+
+        <Route
+          path="support"
+          element={
+            userCredentials ? <Support /> : <Navigate to="/error404" replace />
           }
         />
       </Route>

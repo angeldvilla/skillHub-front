@@ -38,7 +38,7 @@ export default function LandingPage() {
         `}
       </style>
       <div
-        className="fixed top-0 left-0 right-0 px-14 sm:px-8 py-2 flex items-center justify-between bg-opacity-10 backdrop-blur-xl shadow-2xl" 
+        className="fixed top-0 left-0 right-0 px-4 sm:px-4 py-1 flex items-center justify-between bg-gray-900 bg-opacity-50 backdrop-blur-xl shadow-2xl" 
       >
         <div className="absolute top-0 left-0 right-0 bottom-0 z-[-1]"></div>
 
@@ -46,7 +46,7 @@ export default function LandingPage() {
           <a href="" className="gap-2 sm:gap-4">
             <img
               src={logoSkillHub}
-              className="-top-10 sm:-top-16 w-20 h-auto rounded-full border-2 border-black mt-1 sm:mt-2"
+              className="-top-10 sm:-top-16 w-16 h-auto rounded-full border-2 border-black mt-1 sm:mt-2"
               alt="skillHub Logo"
             />
           </a>

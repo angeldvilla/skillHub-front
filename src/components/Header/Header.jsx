@@ -165,7 +165,7 @@ export default function Header() {
         <a href="/" className="gap-9">
           <img
             src={logoSkillHub}
-            className="w-20 h-auto rounded-full border-4 border-sky-500 mt-2"
+            className="w-16 h-auto rounded-full border-4 border-black mt-2"
             alt="skillHub Logo"
           />
         </a>

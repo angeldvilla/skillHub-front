@@ -38,9 +38,10 @@
 
 .quienesStyle h1 {
   font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
   margin-top: 0.9em;
   margin-bottom: 10px;
-  font-size: 60px;
+  font-size: 50px;
   color: greenyellow;
   text-align: center;
 }
@@ -58,10 +59,10 @@
 }
 
 .teamCard {
-  width: 10.5em;
+  width: 15.5em;
   margin: 10px;
   padding: 22px;
-  background-color: #c9c9c9b0;
+  background-color: #c9c9c929;
   color: white;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -80,8 +81,12 @@
 .centerLink {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 1em;
   margin-top: 1em;
+}
+
+.icon-large {
+  font-size: 30px;
 }
 
 .nameSection {
@@ -90,8 +95,8 @@
 }
 
 .nameStyle {
-  font-size: 12px;
-  margin: 10px 0;
+  font-size: 1.2em;
+  margin: 1em 0;
 }
 
 .centerLink a {
@@ -102,5 +107,5 @@
 
 .centerLink a:hover {
   box-shadow: 2px solid black;
-  color: rgb(168, 216, 123);
+  color: rgba(168, 216, 123, 0.671);
 }

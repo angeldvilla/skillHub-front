@@ -145,8 +145,12 @@ export default function Contacto() {
                 <h1 className="nameStyle">{person.name}</h1>
               </div>
               <div className="centerLink">
-                {person.gitHub}
-                {person.linkedin}
+                  <div className="icon-large">
+                    {person.gitHub}
+                  </div>
+                  <div className="icon-large">
+                    {person.linkedin}
+                  </div>
               </div>
             </div>
           ))}

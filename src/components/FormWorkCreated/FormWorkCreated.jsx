@@ -348,7 +348,28 @@ const [pay, setPay] = useState([]);
   useEffect(() => {
     dispatch(getUser(id));
   }, [dispatch, id]);
-  //___________________________________________
+  
+  //! RELACION DE MODELO USUARIOS CON PAYMENT
+
+  const [allUsersPayment,setAllUseersPayment] = useState([])
+  useEffect(() => {
+    const usersPaymentResult = async()=>{ //! la base de datos esta modificado
+      const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
+      setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
+    }
+    usersPaymentResult()
+
+    if(allUsersPayment.length!==0){
+      
+      const dataPay= { pay:allUsersPayment[0]._id}
+      
+      const modifDate=async()=>{
+        const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
+      }
+      modifDate()
+    }
+  
+  }, [id,allUsersPayment.length]);
 
   return (
     <div>
