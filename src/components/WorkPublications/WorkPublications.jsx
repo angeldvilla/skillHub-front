@@ -76,26 +76,33 @@ export default function WorkPublication() {
     getUser();
   }, [id]);
   
-  const filterUser = usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
+
+  const filterUser = () => {
+    if(usuario.filter((element) => element.uid === id).map(({pay}) => pay)[0] === undefined) {
+       return 'no hay suscripcion';
+    } else{
+       return usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
+    }
+}
+
   
  const filterCantidad = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
- console.log(filterCantidad)
+ 
  
  const findPlan = () => {
 
-       if (filterUser === "Plan BRONCE" && filterCantidad === 2) {
+       if (filterUser() === "Plan BRONCE" && filterCantidad === 2) {
           return 'cumplio la cantidad'
-       } else if (filterUser === "Plan ORO" && filterCantidad === 15) {
+       } else if (filterUser() === "Plan ORO" && filterCantidad === 15) {
         return 'cumplio la cantidad'
         
         } else {
-          return 'No existe suscripción activa';
-        // setValidacion = 'No existe suscripción activa';
+          return 'Verificar suscripcion';
+
        }
      }
- 
  const result = findPlan();
-   //console.log(filterUser)
+
     return (
       <div>
         <div>
