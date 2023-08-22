@@ -96,12 +96,18 @@ export default function Register() {
             phoneNumber: "",
             image: userCredentials.user.photoURL,
           };
-          const userRegister = users.find((user) => user.habilitar === true);
+          const userRegister = users.find((user) => user.uid === googleCredentials.uid);
 
-          if (!userRegister) {
+          if (userRegister) {
+            toast.error("Ya estas registrado!", {
+              description: userCredentials.user.displayName,
+            });
+            
+          } else {
             toast.message("Bienvenido", {
               description: userCredentials.user.displayName,
             });
+            dispatch(postUser(userAuth));
             dispatch(userLogin(googleCredentials));
             setErrors({});
             resetUserData(setUserData);
@@ -129,10 +135,6 @@ export default function Register() {
               const uid = googleCredentials.uid;
               navigate(`/user-panel/${uid}/home`);
             }, 2000);
-          } else {
-            toast.error("Ya estas registrado!", {
-              description: userCredentials.user.displayName,
-            });
           }
 
           break;
@@ -179,7 +181,7 @@ export default function Register() {
       };
 
       dispatch(postUser(newUser));
-      dispatch(userLogin(newUser.uid));
+      dispatch(userLogin(userCredentials.user.uid));
 
       toast.message("Bienvenido", {
         description: userCredentials.user.email,
@@ -207,10 +209,9 @@ export default function Register() {
         "RY2Fv-D-bvjhDwd_H"
       );
 
-      setTimeout(() => {
-        const uid = newUser.uid;
-        navigate(`/user-panel/${uid}/home`);
-      }, 2000);
+    
+      navigate(`/signin`);
+     
 
       resetUserData(setUserData);
 
