@@ -9,6 +9,7 @@ import axios from "axios";
 import moment from "moment";
 import { Button } from "@material-tailwind/react";
 import { Suscription } from "./EditProfile/SuscriptionCard";
+import React from "react";
 
 export default function Profile() {
   const { id } = useParams();
@@ -91,50 +92,82 @@ export default function Profile() {
     dispatch(getUser(id));
   }, [dispatch, id]);
 
+
+  //Admin perfil:
+  const [isAdmin, setIsAdmin] = useState(false)
+  useEffect(()=>{
+   if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2")
+   setIsAdmin(true)
+  }, [])
+   
   return (
-    <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">
-      <Nav />
-      <div className="p-5 max-w-5xl mx-auto w-full">
-        <div className="flex-grow mx-72">
-          <h1 className="flex justify-center text-2xl font-bold mb-5">
-            PERFIL
-          </h1>
-          <UserProfileInfo/>
-          {/* Plan de suscripción */}
-          <div className="p-6 mt-4">
-            <h1 className="flex justify-center text-xl font-bold mb-5">
-              TU PLAN
-            </h1>
-            <div className="mt-4">
-              <Suscription
-                user={user}
-                subscriptionMessage={subscriptionMessage}
-                expirationDate={expirationDate}
-              />
-            </div>
-          </div>
+    <React.Fragment>
+      {isAdmin ? (
+        <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">
+          <Nav />
+          <div className="p-5 max-w-5xl mx-auto w-full">
+            <div className="flex-grow mx-72">
+              <h1 className="flex justify-center text-2xl font-bold mb-5">
+                PERFIL DE ADMINISTRADOR
+              </h1>
+              <UserProfileInfo />
+            
+              {/* Opción para eliminar cuenta */}
+              <div className="mt-4 mb-20 bg-gray-200 rounded-lg shadow-md p-6">
+                <p className="text-md text-gray-600">
+                Este es el perfil del administrador. Aquí puedes acceder a opciones y configuraciones avanzadas de SkillHub.                </p>
 
-          {/* Opción para eliminar cuenta */}
-          <div className="mt-4 mb-20 bg-gray-200 rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold mb-2">
-              Cerrar Sesión en Todos los Dispositivos
-            </h3>
-            <p className="text-md text-gray-600">
-              Al cerrar tu sesión en todos los dispositivos, te desconectarás de
-              SkillHub en tus teléfonos, tablets y la web. Ten en cuenta que tu
-              historial de trabajos y servicios se eliminará automáticamente
-              después de cierto tiempo.
-            </p>
-            <div className="mt-4">
-              <Button color="red" size="md">
-                Eliminar mi Cuenta
-              </Button>
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
-      </div>
-
-      <Footer />
-    </div>
+      ) : (
+        <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">
+          <Nav />
+          <div className="p-5 max-w-5xl mx-auto w-full">
+            <div className="flex-grow mx-72">
+              <h1 className="flex justify-center text-2xl font-bold mb-5">
+                PERFIL
+              </h1>
+              <UserProfileInfo />
+              {/* Plan de suscripción */}
+              <div className="p-6 mt-4">
+                <h1 className="flex justify-center text-xl font-bold mb-5">
+                  TU PLAN
+                </h1>
+                <div className="mt-4">
+                  <Suscription
+                    user={user}
+                    subscriptionMessage={subscriptionMessage}
+                    expirationDate={expirationDate}
+                  />
+                </div>
+              </div>
+  
+              {/* Opción para eliminar cuenta */}
+              <div className="mt-4 mb-20 bg-gray-200 rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold mb-2">
+                  Cerrar Sesión en Todos los Dispositivos
+                </h3>
+                <p className="text-md text-gray-600">
+                  Al cerrar tu sesión en todos los dispositivos, te desconectarás de
+                  SkillHub en tus teléfonos, tablets y la web. Ten en cuenta que tu
+                  historial de trabajos y servicios se eliminará automáticamente
+                  después de cierto tiempo.
+                </p>
+                <div className="mt-4">
+                  <Button color="red" size="md">
+                    Eliminar mi Cuenta
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      )}
+    </React.Fragment>
   );
 }
+  
