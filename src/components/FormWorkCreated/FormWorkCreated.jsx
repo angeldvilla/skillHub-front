@@ -124,26 +124,35 @@ export default function FormCreateWork() {
       }
       getUser();
      }, [id])
-   const filterUser = usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
+     const filterUser = () => {
+      if(usuario.filter((element) => element.uid === id).map(({pay}) => pay)[0] === undefined) {
+         return 'no hay suscripcion';
+      } else{
+         return usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
+      }
+ }
+
+
    const filterCantidadPost = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)
    const filterCantidadPost2 = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
 
-   //console.log(filterCantidadPost)
+  
 
    const findValidacion = () => {
-
-    if (filterUser === "Plan BRONCE" && filterCantidadPost2 === 2) {
+    if(filterUser() === 'no hay suscripcion') {
+      return 'No se encontro suscripcion activa'
+    }
+    else if (filterUser() === "Plan BRONCE" && filterCantidadPost2 === 2) {
        return 'cumplio la cantidad'
-    } else if (filterUser === "Plan ORO" && filterCantidadPost2 === 15) {
+    } else if (filterUser() === "Plan ORO" && filterCantidadPost2 === 15) {
      return 'cumplio la cantidad'
-     
-     } else {
+     }  else {
        return 'Suscripción activa';
-     // setValidacion = 'Suscripción activa';
     }
   }
-const resultValidacion = findValidacion();
-console.log(resultValidacion)
+ 
+  const resultValidacion = findValidacion();
+
   function handleSubmit(event) {
     event.preventDefault();
           const putUser = async () => {
