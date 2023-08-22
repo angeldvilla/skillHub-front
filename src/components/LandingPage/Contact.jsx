@@ -1,79 +1,64 @@
-import React from "react";
 import "aos/dist/aos.css";
+import { Card, Input, Textarea, Typography } from "@material-tailwind/react";
 
 const sectionContact = () => {
   return (
-    <section id="contact" className="bg-gray-200 py-16">
-      <div
-        className="flex flex-col justify-center items-center text-white "
+    <div className="flex flex-col items-center justify-center h-screen font-sans">
+      <Card
+        id="contact"
         data-aos="fade-down"
+        shadow={false}
+        className="bg-[#f8fafc] p-4 py-10 w-96"
       >
-        <form
-          className="mx-auto container w-1/2 bg-gray-300 p-6 rounded-lg shadow-md border-black"
+        <Typography
+          variant="h4"
+          color="blue-gray"
           data-aos="fade-up"
+          className="mb-2"
         >
-          <h2
-            className="text-3xl font-semibold text-center text-black mb-10"
-            data-aos="fade-up"
-          >
-            Contáctanos
-          </h2>
-          <div className="mb-6">
-            <label className="block text-black font-bold mb-2" htmlFor="name">
-              Nombre
-            </label>
-            <input
-              className="w-full p-2 border border-black bg-gray-200 rounded-md text-black"
+          Contáctanos
+        </Typography>
+        <form className="my-4" data-aos="fade-up">
+          <div className="mb-4 flex flex-col gap-4">
+            <Input
               type="text"
               id="name"
               name="name"
-              placeholder="Nombre"
+              label="Nombre"
+              size="lg"
+              color="black"
               required
+              className="text-gray-800"
             />
-          </div>
-          <div className="mb-4">
-            <label className="block text-black font-bold mb-2" htmlFor="email">
-              Correo Electrónico
-            </label>
-            <input
-              className="w-full p-2 border border-black bg-gray-200 rounded-md text-black"
+            <Input
               type="email"
               id="email"
               name="email"
-              placeholder="Correo Electrónico"
+              label="Correo Electrónico"
+              size="lg"
+              color="black"
               required
+              className="text-gray-800"
             />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-black font-bold mb-2"
-              htmlFor="message"
-            >
-              Mensaje
-            </label>
-            <textarea
-              className="w-full p-2 border border-black bg-gray-200 rounded-md text-black"
+            <Textarea
               id="message"
               name="message"
-              rows="4"
+              rows={6}
+              variant="static"
               placeholder="Escribe tu mensaje aquí"
               required
-            ></textarea>
+              className="text-gray-800 p-2"
+            ></Textarea>
           </div>
-          
+
           <div>
-          <button
-            type="submit"
-            className="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full hover:bg-sky-700 duration-200 hover:-translate-y-0.5"
-          >
-            Enviar
-          </button>
+            <button className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-blue-gray-500 transition-all font-semibold">
+              ENVIAR
+            </button>
           </div>
-
         </form>
-      </div>
-
-    </section>
+      </Card>
+    </div>
   );
 };
 

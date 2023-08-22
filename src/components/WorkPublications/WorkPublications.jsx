@@ -60,93 +60,49 @@ export default function WorkPublication() {
           }, 3000);
     }
  //TRABAJOS PENDIENTES (S/ SUSCRIPCION)
- const [pay, setPay] = useState([]);
- const [totalWork, setTotalWorks] = useState(0);
- useEffect(() => {
-   const getPayment = async () => {
-     try {
-       const { data } = await axios("http://localhost:3002/payment/");
-       setPay(data);
-       // console.log(data)
-       // const totalWorksAssociated = data.reduce((count, payment) => {
-       //   return payment._id === id ? count + payment.totalWork : count;
-       // }, 0);
-       // setTotalWorks(totalWorksAssociated)
-       // console.log(totalWorksAssociated)
-     } catch (error) {
-       console.error("Error al obtener los pagos:", error);
-     }
-   };
-   getPayment();
- }, [id]);
- 
- const filterSuscripcion = pay
-   .filter(({ subscription }) => subscription === true)
-   .map(({ plan }) => plan);
- 
- const filterSuscripcionID = pay
-   .filter(({ subscription }) => subscription === true)
-   .map(({ _id }) => _id);
- 
- const planBRONCE = 2;
- const planORO = 15;
- const planPLATINO = Infinity;
- 
- const countByPaymentId = {};
- 
- let workPendingBRONCE = 0;
- let workPendingORO = 0;
- let workPendingPLATINO = 0;
- 
- function cantidadPosteosBRONCE() {
-   if (planBRONCE === totalWorks) {
-     workPendingBRONCE = 0;
-   } else if (totalWorks > planBRONCE) {
-     workPendingBRONCE = 0;
-   } else {
-     workPendingBRONCE = planBRONCE - totalWorks;
-   }
- }
- 
- function cantidadPosteosORO() {
-   if (planORO === totalWork) {
-     workPendingORO = 0;
-   } else if (totalWorks > planORO) {
-     workPendingORO = 0;
-   } else {
-     workPendingORO = planORO - totalWorks;
-   }
- }
+ const [usuario, setUsuario] = useState([]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const { data } = await axios(`http://localhost:3002/user/`);
+        setUsuario(data);
+        //setAllWork(data.cantidadPost)
+   
+      } catch (error) {
+        console.error("Error al obtener los usuarios:", error);
+      }
+    };
+    getUser();
+  }, [id]);
+  
+  const filterUser = usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
+  
+ const filterCantidad = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
+ console.log(filterCantidad)
  
  const findPlan = () => {
-   if (filterSuscripcionID.length > 0) {
-     for (const paymentId of filterSuscripcionID) {
-       if (filterSuscripcion.includes("Plan BRONCE")) {
-         cantidadPosteosBRONCE();
-         countByPaymentId[paymentId] = workPendingBRONCE;
-       } else if (filterSuscripcion.includes("Plan ORO")) {
-         cantidadPosteosORO();
-         countByPaymentId[paymentId] = workPendingORO;
-       } else if (filterSuscripcion.includes("Plan PLATINO")) {
-         // Realiza las operaciones correspondientes para el Plan PLATINO
-       } else {
-         countByPaymentId[paymentId] = 'No existe suscripción activa';
+
+       if (filterUser === "Plan BRONCE" && filterCantidad === 2) {
+          return 'cumplio la cantidad'
+       } else if (filterUser === "Plan ORO" && filterCantidad === 15) {
+        return 'cumplio la cantidad'
+        
+        } else {
+          return 'No existe suscripción activa';
+        // setValidacion = 'No existe suscripción activa';
        }
      }
-   } else {
-     return 'No existe suscripción activa.';
-   }
- };
  
- findPlan();
-
+ const result = findPlan();
+   //console.log(filterUser)
     return (
       <div>
         <div>
             <Nav />
             <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-             > {`Total trabajos publicados: ${totalWorks}`}</h1>
-              {countByPaymentId[filterSuscripcionID[0]] === 0 ? (
+             > {`Total trabajos publicados: ${filterCantidad}`}</h1>
+              {result === 'cumplio la cantidad' ? (
                 <div className="flex items-center   justify-center mb-96">
                     <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
                     > Si deseas publicar más servicios, considera actualizar tu plan de suscripción para acceder a beneficios adicionales. </h1>

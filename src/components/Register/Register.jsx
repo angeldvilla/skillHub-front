@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations */
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { postUser } from "../../toolkit/Users/usersHandler";
+import { postUser, getUsers } from "../../toolkit/Users/usersHandler";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -25,6 +25,12 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { users } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -88,40 +94,48 @@ export default function Register() {
             lastName: lastName,
             email: userCredentials.user.email,
             phoneNumber: "",
-            image: userCredentials.user.photoURL
+            image: userCredentials.user.photoURL,
           };
-          dispatch(postUser(userAuth));
-          dispatch(userLogin(googleCredentials));
-          setErrors({});
-          resetUserData(setUserData);
+          const userRegister = users.find((user) => user.uid === googleCredentials.uid);
 
-          toast.message("Bienvenido", {
-            description: userCredentials.user.displayName,
-          });
+          if (userRegister) {
+            toast.error("Ya estas registrado!", {
+              description: userCredentials.user.displayName,
+            });
+            
+          } else {
+            toast.message("Bienvenido", {
+              description: userCredentials.user.displayName,
+            });
+            dispatch(postUser(userAuth));
+            dispatch(userLogin(googleCredentials));
+            setErrors({});
+            resetUserData(setUserData);
 
-          localStorage.setItem(
-            "userCredentials",
-            JSON.stringify(googleCredentials)
-          );
+            localStorage.setItem(
+              "userCredentials",
+              JSON.stringify(googleCredentials)
+            );
 
-          // Envío del correo
-          const authUser = {
-            to_email: userCredentials.user.email,
-            user_first_name: firstName,
-            user_last_name: lastName,
-          };
+            // Envío del correo
+            const authUser = {
+              to_email: userCredentials.user.email,
+              user_first_name: firstName,
+              user_last_name: lastName,
+            };
 
-          const emailJSResponse = await emailjs.send(
-            "service_lfymgxc",
-            "template_fi0kha4",
-            authUser,
-            "RY2Fv-D-bvjhDwd_H"
-          );
+            const emailJSResponse = await emailjs.send(
+              "service_lfymgxc",
+              "template_fi0kha4",
+              authUser,
+              "RY2Fv-D-bvjhDwd_H"
+            );
 
-          setTimeout(() => {
-            const uid = googleCredentials.uid;
-            navigate(`/user-panel/${uid}/home`);
-          }, 2000);
+            setTimeout(() => {
+              const uid = googleCredentials.uid;
+              navigate(`/user-panel/${uid}/home`);
+            }, 2000);
+          }
 
           break;
         case "github":
@@ -167,7 +181,7 @@ export default function Register() {
       };
 
       dispatch(postUser(newUser));
-      dispatch(userLogin(newUser.uid));
+      dispatch(userLogin(userCredentials.user.uid));
 
       toast.message("Bienvenido", {
         description: userCredentials.user.email,
@@ -195,10 +209,9 @@ export default function Register() {
         "RY2Fv-D-bvjhDwd_H"
       );
 
-      setTimeout(() => {
-        const uid = newUser.uid;
-        navigate(`/user-panel/${uid}/home`);
-      }, 2000);
+    
+      navigate(`/signin`);
+     
 
       resetUserData(setUserData);
 
