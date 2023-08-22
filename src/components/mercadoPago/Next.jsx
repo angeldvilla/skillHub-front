@@ -15,7 +15,7 @@ const Next = () => {
   const navigate = useNavigate()
 
   const { payment_id } = useParams();
-  
+ 
   const [datos,setDatos] =useState([])
   const [resultUser,setResultUser] =useState({})
   const [id_client,setId_client] =useState("")
@@ -51,15 +51,18 @@ const Next = () => {
 
         busqueda() 
         }, [payment_id,id_client]);
-        
+        //Cargar los datos  a la BD 
     const handleGuardarDatos=()=>{
-
-      //Cargar los datos  a la BD
-
       const saveData=async()=>{
         return await axios.post("https://skillhub-back-production.up.railway.app/payment/save",datos)
       }
     saveData()
+    const changeCantidadPost = async () => {
+      return await axios.put(`http://localhost:3002/user/${id_client}`,
+      {cantidadPost: 0}
+      )
+      }
+      changeCantidadPost();
 
     navigate(`/user-panel/${id_client}/createWork`)
   
