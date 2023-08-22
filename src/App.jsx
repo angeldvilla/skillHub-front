@@ -18,6 +18,7 @@ import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago";
 import Support from "./components/PanelUser/FAQ/Support";
 import Help from "./components/PanelUser/FAQ/Help";
+import Accessibility from "./components/ComponentesFooter/Accesibilidad/Accessibility"
 /* ------------------------------------------- */
 
 /* ------------------------------------------- */
