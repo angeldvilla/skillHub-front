@@ -22,11 +22,11 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { users } = useSelector(state => state.users);
+  const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch])
+  }, [dispatch]);
 
   const [userData, setUserData] = useState({
     email: "",
@@ -74,58 +74,44 @@ export default function Login() {
 
           const displayName = userCredentials.user.displayName;
           const [firstName, lastName] = displayName.split(" ");
+
           const newUser = {
             uid: googleCredentials.uid,
             firstName: firstName,
             lastName: lastName,
             email: userCredentials.user.email,
             phoneNumber: "",
-            image: userCredentials.user.photoURL
+            image: userCredentials.user.photoURL,
+          };
+
+          const userAuth = users.find(
+            (user) => user.uid === googleCredentials.uid
+          );
+          const usLog = [userAuth].some((user) => user.habilitar === true);
+
+          if (!usLog) {
+            toast.error("No tienes acceso a esta plataforma");
+            return;
           }
-          /* const userAuth = users.find(user => user.uid === googleCredentials.uid);  */
-          const userAuth = users.find(user => user.habilitar === true)
-          if(userAuth){
-            toast.message("Bienvenido", {
-              description: userCredentials.user.displayName,
-            });
 
-            dispatch(userLogin(googleCredentials));
+          dispatch(postUser(newUser));
 
-            // Almacena las credenciales en el Local Storage
-            localStorage.setItem(
-              "userCredentials",
-              JSON.stringify(googleCredentials)
-            );
+          toast.message("Bienvenido", {
+            description: userCredentials.user.displayName,
+          });
 
-            setTimeout(() => {
-              const uid = googleCredentials.uid;
-              navigate(`/user-panel/${uid}/home`);
-            }, 2000);
-          } else {
-            // o lo mando a registrarse
-            toast.error("Usuario no encontrado, para acceder correctamente, Registrate!");
+          dispatch(userLogin(googleCredentials));
 
-            // o bien lo puedo registrar y darle acceso
-            /* 
-            dispatch(postUser(newUser));
+          // Almacena las credenciales en el Local Storage
+          localStorage.setItem(
+            "userCredentials",
+            JSON.stringify(googleCredentials)
+          );
 
-            toast.message("Bienvenido", {
-              description: userCredentials.user.displayName,
-            });
-
-            dispatch(userLogin(googleCredentials));
-
-            // Almacena las credenciales en el Local Storage
-            localStorage.setItem(
-              "userCredentials",
-              JSON.stringify(googleCredentials)
-            );
-
-            setTimeout(() => {
-              const uid = googleCredentials.uid;
-              navigate(`/user-panel/${uid}/home`);
-            }, 2000); */
-          }
+          setTimeout(() => {
+            const uid = googleCredentials.uid;
+            navigate(`/user-panel/${uid}/home`);
+          }, 2000);
 
           break;
         case "github":
@@ -164,24 +150,34 @@ export default function Login() {
         uid: userCredentials.user.uid,
         accessToken: userCredentials.user.accessToken,
       };
-      dispatch(userLogin(credentials));
 
-      // Almacena las credenciales en el Local Storage
-      localStorage.setItem("userCredentials", JSON.stringify(credentials));
+      const logUser = users.find(
+        (user) => user.uid === userCredentials.user.uid
+      );
+      const userAuth1 = [logUser].some((user) => user.habilitar === true);
 
-      setUserData({
-        email: "",
-        password: "",
-      });
+      if (!userAuth1) {
+        toast.error("No tienes acceso a esta plataforma");
+      } else {
+        dispatch(userLogin(credentials));
 
-      toast.message("Bienvenido", {
-        description: userCredentials.user.email,
-      });
+        // Almacena las credenciales en el Local Storage
+        localStorage.setItem("userCredentials", JSON.stringify(credentials));
 
-      setTimeout(() => {
-        const uid = credentials.uid;
-        navigate(`/user-panel/${uid}/home`);
-      }, 2000);
+        setUserData({
+          email: "",
+          password: "",
+        });
+
+        toast.message("Bienvenido", {
+          description: userCredentials.user.email,
+        });
+
+        setTimeout(() => {
+          const uid = credentials.uid;
+          navigate(`/user-panel/${uid}/home`);
+        }, 2000);
+      }
     } catch (error) {
       if (platform === "google" || platform === "email") {
         switch (error.code) {
@@ -201,7 +197,7 @@ export default function Login() {
             toast.error("Usuario desactivado");
             break;
           default:
-            toast.error("Ups, algo salió mal");
+            break;
         }
       }
     }

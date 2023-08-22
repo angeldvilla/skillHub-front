@@ -15,6 +15,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
 const MercadoPago = () => {
+
+
   const navigate = useNavigate();
 
   const plan = [
@@ -88,6 +90,7 @@ const MercadoPago = () => {
           `https://skillhub-back-production.up.railway.app/payment/${id}`
         );
         setPay(data);
+        console.log(data)
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
       }
@@ -95,6 +98,7 @@ const MercadoPago = () => {
     getPayment();
   }, [id]);
   //! VERIFICA SI EL USUARIO TIENE SUSCRIPCIÓN ACTIVO
+
   const filterSuscripcion = pay.filter(
     ({ subscription }) => subscription === true
   );

@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations */
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { postUser } from "../../toolkit/Users/usersHandler";
+import { postUser, getUsers } from "../../toolkit/Users/usersHandler";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -26,6 +26,12 @@ export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { users } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -36,9 +42,7 @@ export default function Register() {
   });
 
   const [errors, setErrors] = useState({});
-
   const [showPassword, setShowPassword] = useState(false);
-
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -59,16 +63,6 @@ export default function Register() {
   const handleOnClick = async (e) => {
     const platform = e.currentTarget.getAttribute("data-platform");
 
-    const hasEmptyValues = Object.values(userData).some(
-      (value) => value === ""
-    );
-    const hasErrors = Object.keys(errors).length;
-
-    if (platform === "email" && (hasEmptyValues || hasErrors)) {
-      toast.error("Datos no validos");
-      return;
-    }
-
     try {
       switch (platform) {
         case "google":
@@ -79,6 +73,7 @@ export default function Register() {
             uid: userCredentials.user.uid,
             accessToken: userCredentials.user.accessToken,
           };
+
           const displayName = userCredentials.user.displayName;
           const [firstName, lastName] = displayName.split(" ");
 
@@ -88,16 +83,17 @@ export default function Register() {
             lastName: lastName,
             email: userCredentials.user.email,
             phoneNumber: "",
-            image: userCredentials.user.photoURL
+            image: userCredentials.user.photoURL,
           };
-          dispatch(postUser(userAuth));
-          dispatch(userLogin(googleCredentials));
-          setErrors({});
-          resetUserData(setUserData);
 
           toast.message("Bienvenido", {
             description: userCredentials.user.displayName,
           });
+
+          dispatch(postUser(userAuth));
+          dispatch(userLogin(googleCredentials));
+          setErrors({});
+          resetUserData(setUserData);
 
           localStorage.setItem(
             "userCredentials",
@@ -134,20 +130,16 @@ export default function Register() {
             description: "Próximamente",
           });
           break;
-        case "email":
-          console.log("Email");
-          break;
         default:
           break;
       }
     } catch (error) {
-      toast.error("Ups, algo salió mal");
+      console.error(error);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const platform = e.currentTarget.getAttribute("data-platform");
 
     try {
       const userCredentials = await createUserWithEmailAndPassword(
@@ -166,13 +158,6 @@ export default function Register() {
         image: "",
       };
 
-      dispatch(postUser(newUser));
-      dispatch(userLogin(newUser.uid));
-
-      toast.message("Bienvenido", {
-        description: userCredentials.user.email,
-      });
-
       localStorage.setItem(
         "userCredentials",
         JSON.stringify({
@@ -180,6 +165,18 @@ export default function Register() {
           accessToken: userCredentials.user.accessToken,
         })
       );
+
+      dispatch(postUser(newUser));
+      dispatch(
+        userLogin({
+          uid: userCredentials.user.uid,
+          accessToken: userCredentials.user.accessToken,
+        })
+      );
+
+      toast.message("Bienvenido", {
+        description: userCredentials.user.email,
+      });
 
       // Envío del correo
       const registerParams = {
@@ -196,30 +193,30 @@ export default function Register() {
       );
 
       setTimeout(() => {
-        const uid = newUser.uid;
-        navigate(`/user-panel/${uid}/home`);
-      }, 2000);
+        navigate(`/user-panel/${userCredentials.user.uid}/home`);
+      }, 3000);
 
       resetUserData(setUserData);
 
       return userCredentials;
     } catch (error) {
-      if (platform === "google" || platform === "email") {
-        switch (error.code) {
-          case "auth/email-already-in-use":
-            toast.error("Email en uso");
-            break;
-          case "auth/invalid-email":
-            toast.error("Email inválido");
-            break;
-          case "auth/weak-password":
-            toast.error("Contraseña demasiado débil");
-            break;
-          default:
-            toast.error("Ups, algo salió mal");
-        }
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          toast.error("Email en uso");
+          break;
+        case "auth/invalid-email":
+          toast.error("Email inválido");
+          break;
+        case "auth/missing-password":
+          toast.error("Contraseña requerida");
+          break;
+        case "auth/weak-password":
+          toast.error("Contraseña demasiado débil");
+          break;
+        default:
+          break;
       }
-      console.error("Error al enviar el correo:", error);
+      console.error(error);
     }
   };
 
@@ -360,8 +357,8 @@ export default function Register() {
           {/* Buttons */}
           <div className="flex flex-col">
             <button
+              type="submit"
               data-platform="email"
-              onClick={handleOnClick}
               className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-gray-500 transition-all font-semibold"
             >
               Registrarse

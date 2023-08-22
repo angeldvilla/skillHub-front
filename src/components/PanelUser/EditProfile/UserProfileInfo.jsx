@@ -20,6 +20,15 @@ const UserProfileInfo = () => {
 
   const [isEditing, setIsEditing] = useState(false);
 
+
+  //Función para actualizar imagen del perfil
+  const updateProfileImage = (newImage) => {
+    setEditedUserInfo((prevInfo) => ({
+      ...prevInfo,
+      image: newImage,
+    }));
+  };
+
   const [editedUserInfo, setEditedUserInfo] = useState({
     firstName: "",
     lastName: "",
@@ -82,6 +91,8 @@ const UserProfileInfo = () => {
     });
   };
 
+  
+
   return (
     <div className="relative sm:mx- py-6 flex items-center justify-center bg-gray-300 bg-opacity-75 rounded-lg shadow-lg sm:mb-20">
       {isEditing ? (
@@ -90,7 +101,7 @@ const UserProfileInfo = () => {
 
          {/*  <Avatar src={user?.image || userProfile} alt="avatar" size="xl" /> */}
 
-          <UploadPhoto user={user} avatarInputRef={avatarInputRef}/>
+         <UploadPhoto user={user} avatarInputRef={avatarInputRef} updateProfileImage={updateProfileImage} />
 
             { editedUserInfo.firstName ? (
                 <Input
