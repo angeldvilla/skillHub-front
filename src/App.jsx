@@ -58,6 +58,8 @@ function App() {
       <Route path="/error404" element={<Error404 />} />
       <Route path="/abautUs" element={<AbautUs />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/help" element={<Help />} />
+      <Route path="/support"element={<Support />} />
 
       {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/privacy-policies" element={<PoliticasDePriv />} />
@@ -65,9 +67,17 @@ function App() {
       <Route path="/cookies-policies" element={<UnderDevelopment />} />
       <Route path="/payment-policies" element={<PoliticaDePago />} />
       <Route path="/contact-us" element={<UnderDevelopment />} />
+      
 
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
+      {/* -------------DASHBOARD-------------------- */}
+      <Route 
+        path="Dashboard" 
+        element={userCredentials ? <Dashboard /> : <Navigate to="/home" replace/> } />
+
+
+        {/* -------------DASHBOARD-------------------- */}
         <Route
           path="home"
           element={userCredentials ? <Home /> : <Navigate to="/home" replace />}
@@ -151,6 +161,12 @@ function App() {
             userCredentials ? <Support /> : <Navigate to="/error404" replace />
           }
         />
+        <Route path="privacy-policies" element={userCredentials ? <PoliticasDePriv /> : <Navigate to="/privacy-policies" replace/> } />
+        <Route path="terms-of-use" element={userCredentials ? <CondicionesDeUso /> : <Navigate to="/terms-of-use" replace/> } />
+        <Route path="cookies-policies" element={userCredentials ? <UnderDevelopment /> : <Navigate to="/cookies-policies" replace/>} />
+        <Route path="payment-policies" element={userCredentials ? <PoliticaDePago /> : <Navigate to="/payment-policies" replace/>} />
+        <Route path="contact-us" element={userCredentials ? <UnderDevelopment /> : <Navigate to="/contact-us" replace/>} />
+
       </Route>
     </Routes>
   );

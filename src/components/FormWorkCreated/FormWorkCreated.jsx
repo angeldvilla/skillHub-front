@@ -396,6 +396,7 @@ export default function FormCreateWork() {
   return (
     <div>
     {filterSuscripcion.length > 0 || trabajoFiltrado ? 
+
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">
