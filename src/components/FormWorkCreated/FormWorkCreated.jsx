@@ -124,11 +124,26 @@ export default function FormCreateWork() {
       }
       getUser();
      }, [id])
-  //const filterUser = usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
+   const filterUser = usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
    const filterCantidadPost = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)
+   const filterCantidadPost2 = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
+
    //console.log(filterCantidadPost)
 
+   const findValidacion = () => {
 
+    if (filterUser === "Plan BRONCE" && filterCantidadPost2 === 2) {
+       return 'cumplio la cantidad'
+    } else if (filterUser === "Plan ORO" && filterCantidadPost2 === 15) {
+     return 'cumplio la cantidad'
+     
+     } else {
+       return 'Suscripción activa';
+     // setValidacion = 'Suscripción activa';
+    }
+  }
+const resultValidacion = findValidacion();
+console.log(resultValidacion)
   function handleSubmit(event) {
     event.preventDefault();
           const putUser = async () => {
@@ -136,6 +151,7 @@ export default function FormCreateWork() {
            cantidadPost: filterCantidadPost[0] + 1
       })
       }
+      //console.log(putUser)
       putUser();
     let updatedWorkData;
 
@@ -347,22 +363,22 @@ export default function FormCreateWork() {
   
 // Valifacion susbscripción
 
- const [pay, setPay] = useState([]);
-  useEffect(() => {
-    const getPayment = async () => {
-      try {
-        const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
-        setPay(data);
-      } catch (error) {
-        console.error("Error al obtener los pagos:", error);
-      }
-    };
-    getPayment();
-  }, [id]);
-  //console.log(pay)
-  const filterSuscripcion = pay
-  .filter(({ subscription }) => subscription === true)
-  console.log(filterSuscripcion)
+//  const [pay, setPay] = useState([]);
+//   useEffect(() => {
+//     const getPayment = async () => {
+//       try {
+//         const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
+//         setPay(data);
+//       } catch (error) {
+//         console.error("Error al obtener los pagos:", error);
+//       }
+//     };
+//     getPayment();
+//   }, [id]);
+//   //console.log(pay)
+//   const filterSuscripcion = pay
+//   .filter(({ subscription }) => subscription === true)
+//   console.log(filterSuscripcion)
 
   //---- trae info del usuario ---
   const { user } = useSelector((state) => state.users);
@@ -395,7 +411,7 @@ export default function FormCreateWork() {
 
   return (
     <div>
-    {filterSuscripcion.length > 0 || trabajoFiltrado ? 
+    {resultValidacion === 'Suscripción activa' || trabajoFiltrado ? 
 
       <div className="flex flex-col items-center justify-center">
         <Nav />
@@ -577,7 +593,7 @@ export default function FormCreateWork() {
       : (
         <div className="flex justify-center items-center" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "70vh", backgroundColor: "white", color: "black"}}>
               <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
-              {user.firstName}, su suscripción ha caducado y ya no tiene acceso a nuestros servicios. Por favor, renueve su plan para continuar disfrutando de nuestros beneficios.
+              {user.firstName}, su suscripción ha caducado y/o cumplió con el limite permitido de publicaciones. Por favor, renueve su plan para continuar disfrutando de nuestros beneficios.
           </p>
           <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted nuevamente!</p>
     
