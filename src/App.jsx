@@ -30,6 +30,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Menu from "./components/Admin/Admin";
+import Admin from "./components/Admin/Admin";
 /* ------------------------------------------- */
 
 function App() {
@@ -57,7 +59,7 @@ function App() {
       <Route path="/jobdetail/:id" element={<JobDetail />} />
       <Route path="/error404" element={<Error404 />} />
       <Route path="/abautUs" element={<AbautUs />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard" element={<Admin />} />
       <Route path="/help" element={<Help />} />
       <Route path="/support"element={<Support />} />
 
@@ -73,9 +75,20 @@ function App() {
       <Route path="/user-panel/:id/*">
       {/* -------------DASHBOARD-------------------- */}
       <Route 
-        path="Dashboard" 
-        element={userCredentials ? <Dashboard /> : <Navigate to="/home" replace/> } />
+        path="dashboard" 
+        element={userCredentials ? <Admin /> : <Navigate to="/home" replace/> } 
+      />
 
+      <Route 
+        path="list-users" 
+        element={userCredentials ? <Admin /> : <Navigate to="/home" replace/> } 
+      />
+
+      <Route 
+        path="list-services" 
+        element={userCredentials ? <Admin /> : <Navigate to="/home" replace/> } 
+      />
+      
 
         {/* -------------DASHBOARD-------------------- */}
         <Route
