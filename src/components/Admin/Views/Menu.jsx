@@ -42,8 +42,8 @@ function Menu() {
   ]; */
 
   return (
-    <nav className="w-20 h-screen bg-[#213980] flex flex-col items-center justify-between sticky top-0 p-4 box-shadow-md">
-      <img src={skillHub} alt="SkillHub Inc" className="w-16 mt-5 rounded-full" />
+    <nav className="w-16 h-screen bg-[#213980] flex flex-col items-center justify-between sticky top-0 p-4 box-shadow-md">
+      <img src={skillHub} alt="SkillHub Inc" className="mt-5 rounded-full" />
 
       <ul id="mainMenu" className="pt-6 w-7 flex flex-col items-center">
         <Icon icon={<FaDashcube />} />

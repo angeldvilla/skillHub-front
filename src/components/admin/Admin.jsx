@@ -9,6 +9,7 @@ import Footer from "../Footer/Footer";
 import Loader from "../Loader/Loader";
 import Menu from "./Views/Menu";
 import UsersList from "./Views/UsersList";
+import Home from "../Home/Home";
 import Header from "../Header/Header";
 
 
@@ -21,8 +22,6 @@ export default function Admin() {
   useEffect(
     () => {
       dispatch(getUsers());
-
-   
     }, [dispatch]
   );
 
@@ -55,7 +54,7 @@ export default function Admin() {
   return users.length === 0 ? (
     <Loader />
   ) : (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-full overflow-scroll">
            <style>
         {`
           /* Estilos de scroll */
@@ -74,15 +73,15 @@ export default function Admin() {
           }
         `}
       </style>
-     {/*  <Nav /> */}
       <Menu/>
       <div className="flex-1 flex flex-col justify-center items-center">
-     <Header/>
       <Typography variant="h2" className="text-center my-8">
         Admin Dashboard
       </Typography>
+        {/* <Home/> */}
         <UsersList/>
       </div>
+      <Nav />
     </div>
   );
 }

@@ -53,7 +53,6 @@ export default function UsersList() {
   ) : ( 
 <>
 <AdminNavbar />
-
 <Card className="flex-1 overflow-scroll">
   <table className="w-20 ml-2 min-w-max table-auto text-center">
     <thead>
