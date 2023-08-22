@@ -7,18 +7,20 @@ import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import Loader from "../../Loader/Loader";
-import { putUsers } from "../../../toolkit/thunks"
+import { getWork, putUsers } from "../../../toolkit/thunks"
 
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [status, setStatus] = useState({});
   const { users } = useSelector((state) => state.users);
+  const { work } = useSelector((state) => state.work);
   const [userStatus, setUserStatus] = useState({});
 
   useEffect(
     () => {
       dispatch(getUsers());
+      dispatch(getWork());
 
    
     }, [dispatch]
@@ -34,7 +36,7 @@ export default function Dashboard() {
   }, [users]);
   
 
-
+//! BORRADO LOGICO DE USUARIOS
   const handleOnClick = (_id) => {
     setUserStatus((prevStatuses) => ({
       ...prevStatuses,
@@ -49,6 +51,15 @@ export default function Dashboard() {
 
     dispatch(putUsers({ _id, habilitar: !userStatus[_id] }));
   };
+
+  //! POSTEOS
+  console.log(work);
+  console.log(users);
+  const planBRONCE = 2;
+  const planORO = 15;
+  const planPLATINO = Infinity;
+  //!==undefined ? (pay.plan === "Plan BRONCE"?planBRONCE-work.filter(element=>element.users===uid).length:""):""
+
 
   return users.length === 0 ? (
     <Loader />
@@ -82,7 +93,7 @@ export default function Dashboard() {
           </thead>
           <tbody>
             {users.map(
-              ({ _id, firstName, lastName, email, phoneNumber, pay }, index) => (
+              ({ _id, firstName, lastName, email, phoneNumber, pay,uid }, index) => (
                 <tr key={index} className="even:bg-blue-gray-100">
                   <td className="p-4">
                     <Typography
@@ -148,7 +159,7 @@ export default function Dashboard() {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      5
+                      {work.filter(element=>element.users===uid).length}
                     </Typography>
                   </td>
                   <td className="p-4">
@@ -157,7 +168,11 @@ export default function Dashboard() {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      15
+
+                    {pay !==undefined ? 
+                    (pay.plan === "Plan BRONCE"? planBRONCE-work.filter(element=>element.users===uid).length : 
+                    (pay.plan === "Plan ORO" ? planORO-work.filter(element=>element.users===uid).length : "ILIMITADO")):"NINGUNO"}
+
                     </Typography>
                   </td>
                   <td className="p-4">
