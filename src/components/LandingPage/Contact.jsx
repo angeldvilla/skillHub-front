@@ -1,14 +1,51 @@
 import "aos/dist/aos.css";
-import { Card, Input, Textarea, Typography } from "@material-tailwind/react";
+import { Input, Textarea, Typography } from "@material-tailwind/react";
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
 
-const sectionContact = () => {
+const SectionContact = () => {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleReset = () => {
+    setForm({
+      name: "",
+      email: "",
+      message: "",
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    emailjs.send(
+      "service_lfymgxc",
+      "template_fi0kha4",
+      {
+        to_email: "correoskillhub@gmail.com",
+        user_first_name: form.name,
+      },
+      "RY2Fv-D-bvjhDwd_H"
+    );
+    handleReset();
+    toast.success("Mensaje enviado correctamente");
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen font-sans">
-      <Card
+    <section className="flex flex-col items-center justify-center h-screen font-sans">
+      <div
         id="contact"
         data-aos="fade-down"
-        shadow={false}
-        className="bg-[#f8fafc] p-4 py-10 w-96"
+        className="bg-[#f8fafc] p-4 pt-10 w-96 rounded-lg"
       >
         <Typography
           variant="h4"
@@ -18,13 +55,15 @@ const sectionContact = () => {
         >
           Contáctanos
         </Typography>
-        <form className="my-4" data-aos="fade-up">
+        <form onSubmit={handleSubmit} className="my-4" data-aos="fade-up">
           <div className="mb-4 flex flex-col gap-4">
             <Input
               type="text"
               id="name"
               name="name"
               label="Nombre"
+              value={form.name}
+              onChange={handleChange}
               size="lg"
               color="black"
               required
@@ -35,6 +74,8 @@ const sectionContact = () => {
               id="email"
               name="email"
               label="Correo Electrónico"
+              value={form.email}
+              onChange={handleChange}
               size="lg"
               color="black"
               required
@@ -43,6 +84,8 @@ const sectionContact = () => {
             <Textarea
               id="message"
               name="message"
+              value={form.message}
+              onChange={handleChange}
               rows={6}
               variant="static"
               placeholder="Escribe tu mensaje aquí"
@@ -55,11 +98,18 @@ const sectionContact = () => {
             <button className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-blue-gray-500 transition-all font-semibold">
               ENVIAR
             </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="w-full mt-2 bg-blue-gray-400 rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-gray-500 transition-all font-semibold"
+            >
+              REINICIAR
+            </button>
           </div>
         </form>
-      </Card>
-    </div>
+      </div>
+    </section>
   );
 };
 
-export default sectionContact;
+export default SectionContact;

@@ -115,11 +115,55 @@ export default function FormCreateWork() {
       })
     }
   }
+  const [usuario, setUsuario] = useState([])
+   useEffect(() => {
+      const getUser = async () => {
+        const response = await axios(`http://localhost:3002/user/`)
+        setUsuario(response.data.filter((element) => element.uid === id))
+        
+      }
+      getUser();
+     }, [id])
+     const filterUser = () => {
+      if(usuario.filter((element) => element.uid === id).map(({pay}) => pay)[0] === undefined) {
+         return 'no hay suscripcion';
+      } else{
+         return usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
+      }
+ }
+
+
+   const filterCantidadPost = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)
+   const filterCantidadPost2 = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
+
+  
+
+   const findValidacion = () => {
+    if(filterUser() === 'no hay suscripcion') {
+      return 'No se encontro suscripcion activa'
+    }
+    else if (filterUser() === "Plan BRONCE" && filterCantidadPost2 === 2) {
+       return 'cumplio la cantidad'
+    } else if (filterUser() === "Plan ORO" && filterCantidadPost2 === 15) {
+     return 'cumplio la cantidad'
+     }  else {
+       return 'Suscripción activa';
+    }
+  }
+ 
+  const resultValidacion = findValidacion();
 
   function handleSubmit(event) {
     event.preventDefault();
+          const putUser = async () => {
+        const resultPut = await axios.put(`http://localhost:3002/user/${id}`, {
+           cantidadPost: filterCantidadPost[0] + 1
+      })
+      }
+      //console.log(putUser)
+      putUser();
     let updatedWorkData;
-  
+
     const validateFields = () => {
       if (!workdata.title || !workdata.description || !workdata.price || !workdata.image || !workdata.address) {
         toast.error("Completa los datos para continuar");
@@ -328,22 +372,23 @@ export default function FormCreateWork() {
   
 // Valifacion susbscripción
 
-const [pay, setPay] = useState([]);
-  useEffect(() => {
-    const getPayment = async () => {
-      try {
-        const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
-        console.log(data);
-        setPay(data);
-      } catch (error) {
-        console.error("Error al obtener los pagos:", error);
-      }
-    };
-    getPayment();
-  }, [id]);
-  //console.log(pay)
-  const filterSuscripcion = pay
-  .filter(({ subscription }) => subscription === true)
+//  const [pay, setPay] = useState([]);
+//   useEffect(() => {
+//     const getPayment = async () => {
+//       try {
+//         const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
+//         setPay(data);
+//       } catch (error) {
+//         console.error("Error al obtener los pagos:", error);
+//       }
+//     };
+//     getPayment();
+//   }, [id]);
+//   //console.log(pay)
+//   const filterSuscripcion = pay
+//   .filter(({ subscription }) => subscription === true)
+//   console.log(filterSuscripcion)
+
   //---- trae info del usuario ---
   const { user } = useSelector((state) => state.users);
 
@@ -375,7 +420,8 @@ const [pay, setPay] = useState([]);
 
   return (
     <div>
-      {filterSuscripcion.length > 0 ? 
+    {resultValidacion === 'Suscripción activa' || trabajoFiltrado ? 
+
       <div className="flex flex-col items-center justify-center">
         <Nav />
         <div className="relative mt-5">
@@ -553,10 +599,10 @@ const [pay, setPay] = useState([]);
           </button>
         </form>
       </div>
-       : (
+      : (
         <div className="flex justify-center items-center" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "70vh", backgroundColor: "white", color: "black"}}>
               <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
-              {user.firstName}, su suscripción ha caducado y ya no tiene acceso a nuestros servicios. Por favor, renueve su plan para continuar disfrutando de nuestros beneficios.
+              {user.firstName}, su suscripción ha caducado y/o cumplió con el limite permitido de publicaciones. Por favor, renueve su plan para continuar disfrutando de nuestros beneficios.
           </p>
           <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted nuevamente!</p>
     
@@ -569,7 +615,6 @@ const [pay, setPay] = useState([]);
             <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Renovar suscripción</button> 
           </NavLink>
             </div>
-    
             </div>
           )}
       <Footer />

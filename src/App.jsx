@@ -18,7 +18,6 @@ import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago";
 import Support from "./components/PanelUser/FAQ/Support";
 import Help from "./components/PanelUser/FAQ/Help";
-import Accessibility from "./components/ComponentesFooter/Accesibilidad/Accessibility"
 /* ------------------------------------------- */
 
 /* ------------------------------------------- */
@@ -61,6 +60,8 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/help" element={<Help />} />
       <Route path="/support"element={<Support />} />
+      <Route path="/cloudinary"element={<FormTemporal />} />
+
 
       {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/privacy-policies" element={<PoliticasDePriv />} />
@@ -75,7 +76,7 @@ function App() {
       <Route 
         path="Dashboard" 
         element={userCredentials ? <Dashboard /> : <Navigate to="/home" replace/> } />
-
+        
 
         {/* -------------DASHBOARD-------------------- */}
         <Route
