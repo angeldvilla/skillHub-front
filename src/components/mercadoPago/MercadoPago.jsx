@@ -22,17 +22,17 @@ const MercadoPago = () => {
     const plan = [{
         id:1,
         plan:"BRONCE",
-        pago:9.99,
+        pago:0.99,
         beneficios:["5 publicaciones"]
     },
     {   id:2,
         plan:"ORO",
-        pago:19.99,
+        pago:1.99,
         beneficios:["15 publicaciones"]
     },
     {   id:3,
         plan:"PLATINO",
-        pago:29.99,
+        pago:2.99,
         beneficios:["Publicaciones ilimitados"]
     }
 ]
@@ -89,6 +89,7 @@ const MercadoPago = () => {
       try {
         const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
         setPay(data);
+        console.log(data)
       } catch (error) {
         console.error("Error al obtener los pagos:", error);
       }
@@ -98,7 +99,7 @@ const MercadoPago = () => {
   //! VERIFICA SI EL USUARIO TIENE SUSCRIPCIÓN ACTIVO
   const filterSuscripcion = pay
   .filter(({ subscription }) => subscription === true)
-
+console.log(filterSuscripcion)
   const filterPlan = pay
   .filter(({ subscription }) => subscription === true)
   .map(({plan}) => plan)
