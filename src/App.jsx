@@ -18,9 +18,7 @@ import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago";
 import Support from "./components/PanelUser/FAQ/Support";
 import Help from "./components/PanelUser/FAQ/Help";
-import FormTemporal from "./components/FormWorkCreated/FormTemporal";
 /* ------------------------------------------- */
-
 
 /* ------------------------------------------- */
 import { useEffect } from "react";
@@ -68,11 +66,10 @@ function App() {
       {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/privacy-policies" element={<PoliticasDePriv />} />
       <Route path="/terms-of-use" element={<CondicionesDeUso />} />
-      <Route path="/cookies-policies" element={<UnderDevelopment />} />
+      <Route path="/accessibility" element={<Accessibility />} />
       <Route path="/payment-policies" element={<PoliticaDePago />} />
-      <Route path="/contact-us" element={<UnderDevelopment />} />
-      
-
+  
+    
       {/* RUTAS ANIDADAS PARA EL PANEL DE PERFIL DE USUARIO */}
       <Route path="/user-panel/:id/*">
       {/* -------------DASHBOARD-------------------- */}
@@ -167,10 +164,8 @@ function App() {
         />
         <Route path="privacy-policies" element={userCredentials ? <PoliticasDePriv /> : <Navigate to="/privacy-policies" replace/> } />
         <Route path="terms-of-use" element={userCredentials ? <CondicionesDeUso /> : <Navigate to="/terms-of-use" replace/> } />
-        <Route path="cookies-policies" element={userCredentials ? <UnderDevelopment /> : <Navigate to="/cookies-policies" replace/>} />
-        <Route path="payment-policies" element={userCredentials ? <PoliticaDePago /> : <Navigate to="/payment-policies" replace/>} />
-        <Route path="contact-us" element={userCredentials ? <UnderDevelopment /> : <Navigate to="/contact-us" replace/>} />
-
+        <Route path="accessibility" element={userCredentials ? <Accessibility/> : <Navigate to="/accessibility" replace/>} />
+        <Route path="payment-policies" element={userCredentials ? <PoliticaDePago/> : <Navigate to="/payment-policies" replace/>} />
       </Route>
     </Routes>
   );
