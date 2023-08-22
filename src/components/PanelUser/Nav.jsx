@@ -330,13 +330,13 @@ export default function Nav() {
         <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <a href={`/user-panel/${id}/home`} className="gap-9">
+              {/* <a href={`/user-panel/${id}/home`} className="gap-9">
                 <img
                   src={logoSkillHub}
                   className="w-16 h-auto rounded-full border-4 border-black mt-"
                   alt="skillHub Logo"
                 />
-              </a>
+              </a> */}
               <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
                 <span className="text-white text-lg">Perfil de Administrador</span>
               </div>

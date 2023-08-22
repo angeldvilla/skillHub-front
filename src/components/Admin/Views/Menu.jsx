@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import skillHub from "../../../assets/skillHub.jpg";
 import { FaDashcube, FaUsers, FaFolder, FaChartLine, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 function Menu() {
   useEffect(() => {
@@ -16,18 +17,42 @@ function Menu() {
     mainMenuLi.forEach((n) => n.addEventListener("click", changeActive));
   }, []);
 
-  return (
-    <nav className="w-16 h-screen bg-[#213980] flex flex-col items-center justify-between sticky top-0 p-4 box-shadow-md">
-      <img src={skillHub} alt="SkillHub Inc" className="w-10/12 pt-8 rounded-full" />
+ /*  const { user } = useSelector(state => state.users);
 
-      <ul id="mainMenu" className="pt-8 w-full flex flex-col items-center">
+
+  const profileMenuItems2 = [
+    {
+      label: `${
+        user ? `Bienvenido, ${user?.firstName} ${user?.lastName}` : ""
+      }`,
+      value: "my-profile",
+    },
+    {
+      value: "home",
+    },
+    {
+      value: "list-users",
+    },
+    {
+      label: "Cerrar Sesión",
+      value: "home",
+      icon: PowerIcon,
+      onclick: handleLogout,
+    },
+  ]; */
+
+  return (
+    <nav className="w-20 h-screen bg-[#213980] flex flex-col items-center justify-between sticky top-0 p-4 box-shadow-md">
+      <img src={skillHub} alt="SkillHub Inc" className="w-16 mt-5 rounded-full" />
+
+      <ul id="mainMenu" className="pt-6 w-7 flex flex-col items-center">
         <Icon icon={<FaDashcube />} />
         <Icon icon={<FaUsers />} />
         <Icon icon={<FaFolder />} />
         <Icon icon={<FaChartLine />} />
       </ul>
 
-      <ul className="lastMenu">
+      <ul className="lastMenu w-7">
         <Icon icon={<FaCog />} />
         <Icon icon={<FaSignOutAlt />} />
       </ul>
