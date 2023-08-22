@@ -65,7 +65,7 @@ export default function WorkPublication() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { data } = await axios(`http://localhost:3002/user/`);
+        const { data } = await axios(`https://skillhub-back-production.up.railway.app/user/`);
         setUsuario(data);
         //setAllWork(data.cantidadPost)
    
@@ -104,7 +104,7 @@ export default function WorkPublication() {
  const result = findPlan();
 
     return (
-      <div>
+      <div  >
         <div>
             <Nav />
             <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
@@ -125,16 +125,21 @@ export default function WorkPublication() {
                 
 
             {totalWorks === 0 ? (
-                <div className="flex items-center   justify-center mb-96">
-                    <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-                    > No tienes trabajos creados </h1>
-                    <br />
-                    <NavLink to={`/user-panel/${id}/createWork`}>
-                        <button className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
-                        >
-                            Crear trabajo</button>
-                    </NavLink>
+                
+                <div className="flex-grow mx-auto flex justify-center items-center">
+                <div className="flex flex-col justify-center items-center mt-4 mb-20 bg-gray-200 rounded-lg shadow-md p-6">
+                  <h1 className="text-2xl font-bold mb-5 text-center">
+                    No tienes trabajos creados
+                  </h1>
+                  <NavLink to={`/user-panel/${id}/createWork`}>
+                    <button className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition">
+                      Crear trabajo
+                    </button>
+                  </NavLink>
                 </div>
+              </div>
+            
+                
             ) : (
                 trabajosDelUsuario.map((trabajo, index) => (
                     <Card key={index} className="flex justify-center w-full max-w-[26rem] shadow-lg hover:shadow-lg hover:shadow-gray-400 transition-all duration-300 ">
@@ -204,8 +209,29 @@ export default function WorkPublication() {
                                     </svg>
                                 </Button>
                                 </Link>
-                                <button onClick={() => eliminar(trabajo._id)}>Eliminar Trabajo</button>
-
+                                <Button
+                                
+                                variant="filled"
+                                className="flex items-center gap-2 text-gray-800 text-xs font-semibold bg-transparent shadow-none hover:shadow-none hover:bg-gray-200"
+                                onClick={() => eliminar(trabajo._id)}
+                            >
+                                Eliminar
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    className="h-4 w-4"
+                                  
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                    />
+                                </svg>
+                            </Button>
                         </div>
                     </Card>
                 ))
@@ -218,4 +244,3 @@ export default function WorkPublication() {
         
     );
 }
-
