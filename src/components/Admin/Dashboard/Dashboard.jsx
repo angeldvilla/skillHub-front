@@ -53,12 +53,10 @@ export default function Dashboard() {
   };
 
   //! POSTEOS
-  console.log(work);
-  console.log(users);
+ 
   const planBRONCE = 2;
   const planORO = 15;
-  const planPLATINO = Infinity;
-  //!==undefined ? (pay.plan === "Plan BRONCE"?planBRONCE-work.filter(element=>element.users===uid).length:""):""
+  console.log(users)
 
 
   return users.length === 0 ? (
@@ -93,7 +91,7 @@ export default function Dashboard() {
           </thead>
           <tbody>
             {users.map(
-              ({ _id, firstName, lastName, email, phoneNumber, pay,uid }, index) => (
+              ({ _id, firstName, lastName, email, phoneNumber, pay,uid,cantidadPost }, index) => (
                 <tr key={index} className="even:bg-blue-gray-100">
                   <td className="p-4">
                     <Typography
@@ -159,7 +157,7 @@ export default function Dashboard() {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {work.filter(element=>element.users===uid).length}
+                      {cantidadPost}
                     </Typography>
                   </td>
                   <td className="p-4">
@@ -170,20 +168,22 @@ export default function Dashboard() {
                     >
 
                     {pay !==undefined ? 
-                    (pay.plan === "Plan BRONCE"? planBRONCE-work.filter(element=>element.users===uid).length : 
-                    (pay.plan === "Plan ORO" ? planORO-work.filter(element=>element.users===uid).length : "ILIMITADO")):"NINGUNO"}
+                    (pay.plan === "Plan BRONCE"? planBRONCE-cantidadPost : 
+                    (pay.plan === "Plan ORO" ? planORO-cantidadPost : "ILIMITADO")):"NINGUNO"}
 
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  {/* <td className="p-4">
                     <Typography
                       variant="small"
                       color="blue-gray"
                       className="font-normal"
                     >
-                      False
+                      {pay === undefined || pay.subscription === false
+                        ? "False"
+                        : "True"}
                     </Typography>
-                  </td>
+                  </td> */}
                   <td className="p-4">
                     <Typography
                       as="a"
