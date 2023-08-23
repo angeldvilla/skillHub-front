@@ -59,7 +59,7 @@ const Next = () => {
       }
     saveData()
     const changeCantidadPost = async () => {
-      return await axios.put(`http://localhost:3002/user/${id_client}`,
+      return await axios.put(`https://skillhub-back-production.up.railway.app/user/${id_client}`,
       {cantidadPost: 0}
       )
       }
