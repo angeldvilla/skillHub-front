@@ -1,64 +1,38 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../../toolkit/Users/usersHandler";
-import { Button, Card, Typography } from "@material-tailwind/react";
-import { TABLE_HEAD } from "../../../utils/dashboard";
-import AdminNavbar from "../AdminNavbar/AdminNavbar";
+import axios from "axios";
+import { TABLE_PAYMENT_HEAD } from "../../../utils/dashboard";
+import { Card, Typography } from "@material-tailwind/react";
 import Loader from "../../Loader/Loader";
-import { putUsers } from "../../../toolkit/thunks"
+import NavBarPayment from "../AdminNavbar/NavBarPayment";
 
-
-export default function UsersList() {
-  const dispatch = useDispatch();
-  const [status, setStatus] = useState({});
-  const { users } = useSelector((state) => state.users);
-  const [userStatus, setUserStatus] = useState({});
-
-  useEffect(
-    () => {
-      dispatch(getUsers());
-
-   
-    }, [dispatch]
-  );
-
+const Payments = () => {
+  const [payments, setPayments] = useState([]);
 
   useEffect(() => {
-    const initialUserStatus = {};
-    for (const user of users) {
-      initialUserStatus[user._id] = user.habilitar;
-    }
-    setUserStatus(initialUserStatus);
-  }, [users]);
-  
+    const getPayments = async () => {
+      try {
+        const { data } = await axios(
+          "https://skillhub-back-production.up.railway.app/payment/"
+        );
+        setPayments(data);
+      } catch (error) {
+        console.error("Error al obtener los pagos:", error);
+      }
+    };
+    getPayments();
+  }, []);
 
-
-  const handleOnClick = (_id) => {
-    setUserStatus((prevStatuses) => ({
-      ...prevStatuses,
-      [_id]: !prevStatuses[_id],
-    }));
-
-    setStatus((prevstatus) => ({
-      ...prevstatus,
-      _id,
-      habilitar: !userStatus[_id],
-    }));
-
-    dispatch(putUsers({ _id, habilitar: !userStatus[_id] }));
-  };
-
-  return users.length === 0 ? (
+  return payments.length === 0 ? (
     <Loader />
-  ) : ( 
-<>
-<h2 className="text-4xl mb-5 font-semibold font-mono italic">Lista de Usuarios</h2>
-<AdminNavbar />
+  ) : (
+  <>
+<h2 className="text-4xl mb-5 font-semibold font-mono italic">Lista de Pagos</h2>
+<NavBarPayment/>
 <Card className="flex-1 overflow-scroll">
   <table className="w-20 ml-2 min-w-max table-auto text-center">
     <thead>
       <tr>
-        {TABLE_HEAD.map((head) => (
+        {TABLE_PAYMENT_HEAD.map((head) => (
           <th
             key={head}
             className="border-b border-white bg-gray-900 p-5"
@@ -75,8 +49,8 @@ export default function UsersList() {
       </tr>
     </thead>
     <tbody>
-      {users.map(
-        ({ _id, firstName, lastName, email, phoneNumber, pay }, index) => (
+      {payments.map(
+        (payment, index) => (
           <tr key={index} className="even:bg-blue-gray-100">
             <td className="p-4">
               <Typography
@@ -84,7 +58,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                {firstName}
+                {payment._id}
               </Typography>
             </td>
             <td className="p-4">
@@ -93,7 +67,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                {lastName}
+                {payment.plan}
               </Typography>
             </td>
             <td className="p-4">
@@ -102,7 +76,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                {email}
+                {payment.price}
               </Typography>
             </td>
             <td className="p-4">
@@ -111,7 +85,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                {phoneNumber}
+                {payment.user}
               </Typography>
             </td>
             <td className="p-4">
@@ -120,9 +94,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                {pay === undefined || pay.subscription === false
-                  ? "No"
-                  : "Si"}
+               {payment.state}
               </Typography>
             </td>
             <td className="p-4">
@@ -131,9 +103,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                {pay === undefined || pay.subscription === false
-                  ? "Sin plan"
-                  : pay.plan}
+               {payment.compra_Id}
               </Typography>
             </td>
             <td className="p-4">
@@ -142,7 +112,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                5
+                {payment.subscription ? "Sí" : "No"}
               </Typography>
             </td>
             <td className="p-4">
@@ -151,24 +121,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                15
-              </Typography>
-            </td>
-            <td className="p-4">
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                color="blue-gray"
-                className="font-medium"
-              >
-                <Button
-                  variant="filled"
-                  color={userStatus[_id] ? "red" : "green"}
-                  onClick={() => handleOnClick(_id)}
-                >
-                  {userStatus[_id] ? "Deshabilitar" : "Habilitar"}
-                </Button>
+              {new Date(payment.createdAt).toLocaleDateString()}
               </Typography>
             </td>
           </tr>
@@ -178,5 +131,7 @@ export default function UsersList() {
   </table>
 </Card>
 </>
-)
-}
+  );
+};
+
+export default Payments;

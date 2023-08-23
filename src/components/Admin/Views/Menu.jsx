@@ -1,9 +1,70 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import skillHub from "../../../assets/skillHub.jpg";
-import { FaDashcube, FaUsers, FaFolder, FaChartLine, FaCog, FaSignOutAlt } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import {
+  FaDashcube,
+  FaUsers,
+  FaFolder,
+  FaChartLine,
+  FaCog,
+  FaSignOutAlt,
+  FaBars,
+  FaStar,
+  FaCcMastercard,
+} from "react-icons/fa";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../../toolkit/Users/usersHandler";
+import { toast } from "sonner";
+import { Button } from "@material-tailwind/react";
 
-function Menu() {
+const menuItems = [
+  {
+    icon: <FaDashcube />,
+    label: "Dashboard",
+    route: "admin",
+  },
+  {
+    icon: <FaUsers />,
+    label: "Usuarios",
+    route: "list-users",
+  },
+  {
+    icon: <FaFolder />,
+    label: "Servicios",
+    route: "list-services",
+  },
+  /* {
+    icon: <FaChartLine />,
+    label: "Graficos",
+    route: "charts",
+  }, */
+  {
+    icon: <FaCcMastercard />,
+    label: "Pagos",
+    route: "payments",
+  },
+  {
+    icon: <FaStar className="hover:text-yellow-500" />,
+    label: "Calificaciones",
+    route: "reviews",
+  },
+];
+
+function Menu({ expanded, toggleExpand }) {
+  const lastMenu = [
+    {
+      icon: <FaCog />,
+      label: "Settings",
+      route: "settings",
+    },
+    {
+      icon: <FaSignOutAlt />,
+      label: "Logout",
+    },
+  ];
+
+  const location = useLocation();
+
   useEffect(() => {
     const mainMenuLi = document
       .getElementById("mainMenu")
@@ -17,56 +78,100 @@ function Menu() {
     mainMenuLi.forEach((n) => n.addEventListener("click", changeActive));
   }, []);
 
- /*  const { user } = useSelector(state => state.users);
-
-
-  const profileMenuItems2 = [
-    {
-      label: `${
-        user ? `Bienvenido, ${user?.firstName} ${user?.lastName}` : ""
-      }`,
-      value: "my-profile",
-    },
-    {
-      value: "home",
-    },
-    {
-      value: "list-users",
-    },
-    {
-      label: "Cerrar Sesión",
-      value: "home",
-      icon: PowerIcon,
-      onclick: handleLogout,
-    },
-  ]; */
-
   return (
-    <nav className="w-16 h-screen bg-[#213980] flex flex-col items-center justify-between sticky top-0 p-4 box-shadow-md">
-      <img src={skillHub} alt="SkillHub Inc" className="mt-5 rounded-full" />
+    <nav
+      className={`w-16 ${
+        expanded ? "w-52" : "16"
+      } bg-[#213980] flex flex-col items-center justify-between sticky top-0 p-4 box-shadow-md`}
+    >
+      <button className="text-white mt-2 mb-4" onClick={toggleExpand}>
+        <FaBars />
+      </button>
 
-      <ul id="mainMenu" className="pt-6 w-7 flex flex-col items-center">
-        <Icon icon={<FaDashcube />} />
-        <Icon icon={<FaUsers />} />
-        <Icon icon={<FaFolder />} />
-        <Icon icon={<FaChartLine />} />
+      <img
+        src={skillHub}
+        alt="SkillHub Inc"
+        className="w-24 mt-5 rounded-full"
+      />
+
+      <ul
+        id="mainMenu"
+        className={`pt-6 w-auto flex flex-col items-center ${
+          expanded ? "expanded-menu" : ""
+        }`}
+      >
+        {menuItems.map((item, index) => (
+          <Icon
+            key={index}
+            icon={item.icon}
+            label={item.label}
+            route={item.route}
+            expanded={expanded}
+            isActive={location.pathname.includes(item.route)}
+          />
+        ))}
       </ul>
 
       <ul className="lastMenu w-7">
-        <Icon icon={<FaCog />} />
-        <Icon icon={<FaSignOutAlt />} />
+        {lastMenu.map((item2, index) => (
+          <Icon
+            key={index}
+            icon={item2.icon}
+            label={item2.label}
+            route={item2.route}
+            expanded={expanded}
+            onClick={item2.onclick}
+            isActive={location.pathname.includes(item2.route)}
+            isLogout={item2.label === "Logout"}
+          />
+        ))}
       </ul>
     </nav>
   );
 }
 
-const Icon = ({ icon }) => (
-  <li className="list-none mb-8 relative text-[#8c8a95] text-center w-full">
-    <a href="/home" className="text-[24px] transition-all duration-300 hover:text-[#6bcc3e]">
-      {icon}
-      <span className="absolute top-2 left-[-10px] w-[0px] h-[20px] bg-[#6bcc3e] rounded-full transition-all duration-300"></span>
-    </a>
-  </li>
-);
+const Icon = ({ icon, label, route, expanded, onclick, isActive, isLogout = false}) => {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    setTimeout(() => {
+      toast.message("Hasta pronto! Su sesión ha sido cerrada");
+      navigate("/home");
+    });
+  };
+
+  return (
+    <li
+      className={`list-none mb-6 relative text-[#8c8a95] text-center w-auto ${
+        expanded ? "expanded-icon" : ""
+      }`}
+    >
+      {isLogout ? (
+        <Button
+          onClick={handleLogout}
+          className={`flex-1 w-auto items-center justify-center transition-all duration-300 ${
+            expanded ? "w-auto" : "w-10/12"
+          } `}
+          >
+          <FaSignOutAlt />
+        </Button>
+      ) : (
+        <NavLink
+          to={route}
+          className={`flex items-center justify-center transition-all duration-300 hover:text-[#6bcc3e] ${
+            isActive ? "text-[#6bcc3e]" : ""
+          }`}
+        >
+          {icon}
+          {expanded && (
+            <p className={`ml-2 ${isActive ? "" : "font-semibold"}`}>{label}</p>
+          )}
+        </NavLink>
+      )}
+    </li>
+  );
+};
 
 export default Menu;

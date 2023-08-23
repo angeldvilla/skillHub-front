@@ -19,14 +19,21 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import { getUsers, postUser } from "../../toolkit/Users/usersHandler";
 
 export default function Login() {
+  const { users } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { users } = useSelector((state) => state.users);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const admin = users.find(
+    (user) => user.uid === "Zqaz0B6durdS841Bd7e3qJdbjEU2"
+  );
 
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch]);
+    if (admin) {
+      setIsAdmin(true);
+    }
+  }, [dispatch, admin]);
 
   const [userData, setUserData] = useState({
     email: "",
@@ -110,8 +117,12 @@ export default function Login() {
 
           setTimeout(() => {
             const uid = googleCredentials.uid;
-            navigate(`/user-panel/${uid}/home`);
-          }, 2000);
+            if (isAdmin && googleCredentials.uid === "Zqaz0B6durdS841Bd7e3qJdbjEU2") {
+              navigate(`/user-panel/${uid}/dashboard/admin`);
+            } else {
+              navigate(`/user-panel/${uid}/home`);
+            }
+          });
 
           break;
         case "github":
@@ -175,8 +186,12 @@ export default function Login() {
 
         setTimeout(() => {
           const uid = credentials.uid;
-          navigate(`/user-panel/${uid}/home`);
-        }, 2000);
+          if (isAdmin && credentials.uid === "Zqaz0B6durdS841Bd7e3qJdbjEU2") {
+            navigate(`/user-panel/${uid}/dashboard/admin`);
+          } else {
+            navigate(`/user-panel/${uid}/home`);
+          }
+        });
       }
     } catch (error) {
       if (platform === "google" || platform === "email") {

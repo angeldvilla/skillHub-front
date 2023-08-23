@@ -18,7 +18,7 @@ export default function Profile() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, userCredentials } = useSelector((state) => state.users);
+  const { user } = useSelector((state) => state.users);
   const [pay, setPay] = useState([]);
   const [subscriptionMessage, setSubscriptionMessage] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
@@ -123,22 +123,22 @@ export default function Profile() {
   useEffect(()=>{
    if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2")
    setIsAdmin(true)
-  }, [])
+  }, [id])
    
 
   return (
     <React.Fragment>
 
     {isAdmin ? (
-      <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">
-      <Nav />
+      <div className="flex flex-col min-h-screen">
       <div className="p-5 max-w-lg mx-auto w-full">
+        <Nav />
         <div className="flex-grow mx-auto">
           <div className="flex flex-col justify-center items-center mt-4 mb-20 bg-gray-200 rounded-lg shadow-md p-6">
-            <p className="text-md text-gray-600 text-center">
           <h1 className="flex justify-center text-2xl font-bold mb-5">
             PERFIL ADMINISTRATIVO
           </h1>
+            <p className="text-md text-gray-600 text-center">
              Esta es la cuenta administrativa de SkillHub. 
               Puedes Inhabilitar usuarios y trabajos que incumplan con las politicias de la empresa además de otras funciones exclusivas   
             </p>
@@ -147,7 +147,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
     ): (
       <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import userProfile from "../../assets/user-profile.svg";
 import { logoutUser } from "../../toolkit/Users/usersHandler";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 import {
   Collapse,
@@ -29,7 +29,6 @@ import {
   PaperClipIcon,
   ShieldCheckIcon,
   QuestionMarkCircleIcon,
-  UsersIcon,
 } from "@heroicons/react/24/outline";
 
 
@@ -47,7 +46,7 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2") setIsAdmin(true);
-  }, []);
+  }, [id]);
 
   // profile menu component
   const profileMenuItems = [
@@ -91,22 +90,10 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
           ? `Bienvenido, ${userAuth?.firstName} ${userAuth?.lastName}`
           : ""
       }`,
-      value: "my-profile",
       icon: UserCircleIcon,
     },
     {
-      label: "Ver todos los trabajos",
-      value: "home",
-      icon: FolderIcon,
-    },
-    {
-      label: "Usuarios",
-      value: "Dashboard",
-      icon: UsersIcon,
-    },
-    {
       label: "Cerrar Sesión",
-      value: "signin",
       icon: PowerIcon,
       onclick: handleLogout,
     },
@@ -139,16 +126,16 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
 
       <MenuList className="p-1">
         {isAdmin
-          ? profileMenuItems2.map(({ label, icon, value, onclick }, key) => {
+          ? profileMenuItems2.map(({ label, icon, onclick }, key) => {
               const isLastItem = key === profileMenuItems2.length - 1;
 
               return (
                 <div key={key}>
                   {isLastItem ? (
                     <MenuItem
-                      key={label}
-                      onClick={onclick}
-                      className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
+                    key={label}
+                    onClick={onclick}
+                    className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
                     >
                       {React.createElement(icon, {
                         className: `h-4 w-4 text-red-500`,
@@ -159,15 +146,11 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
                         as="span"
                         variant="small"
                         className="font-normal text-red-500"
-                      >
+                        >
                         {label}
                       </Typography>
                     </MenuItem>
                   ) : (
-                    <a
-                      key={key}
-                      href={`/user-panel/${userCredentials.uid}/${value}`}
-                    >
                       <MenuItem
                         key={label}
                         onClick={onclick || closeMenu}
@@ -186,7 +169,6 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
                           {label}
                         </Typography>
                       </MenuItem>
-                    </a>
                   )}
                 </div>
               );
@@ -298,7 +280,7 @@ export default function Nav() {
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2") setIsAdmin(true);
-  }, []);
+  }, [id]);
 
   const dispatch = useDispatch();
 
@@ -330,9 +312,7 @@ export default function Nav() {
   return (
     <React.Fragment>
       {isAdmin ? (
-
         <div>
-          <ProfileMenu userAuth={user} handleLogout={handleLogout} />
           <IconButton
               size="sm"
               color="blue-gray"
@@ -342,6 +322,7 @@ export default function Nav() {
             >
             <Bars2Icon className="h-6 w-6" />
           </IconButton>
+          <ProfileMenu userAuth={user} handleLogout={handleLogout} />
         </div> 
     
       ) : (
