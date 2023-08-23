@@ -9,6 +9,7 @@ import text from './utils/text'
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getUser } from "../../toolkit/Users/usersHandler";
+import Atras from "../ComponentesFooter/Atras"
 export default function PoliticaDePago() {
   const [active, setActive] = useState("Hola")
   const { userCredentials } = useSelector(state => state.users);
@@ -19,8 +20,10 @@ export default function PoliticaDePago() {
   },[dispatch, id])
   return (
  <div> 
+
     {userCredentials === null ? <Header/> : <Nav/>}
     <div className="bodyStyle">
+    <Atras></Atras>
     <h1> Politicas de Pago @SkillHub.netlifly.app </h1>
     <p>Última actualización: hace 5 meses</p>
 

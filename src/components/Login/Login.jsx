@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -21,11 +22,11 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { users } = useSelector(state => state.users);
+  const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch])
+  }, [dispatch]);
 
   const [userData, setUserData] = useState({
     email: "",
@@ -73,38 +74,44 @@ export default function Login() {
 
           const displayName = userCredentials.user.displayName;
           const [firstName, lastName] = displayName.split(" ");
+
           const newUser = {
             uid: googleCredentials.uid,
             firstName: firstName,
             lastName: lastName,
             email: userCredentials.user.email,
             phoneNumber: "",
-            image: userCredentials.user.photoURL
-          }
+            image: userCredentials.user.photoURL,
+          };
 
-          const userAuth = users.find(user => user.uid === googleCredentials.uid);
-          const usLog = [userAuth].some(user => user.habilitar === true);
-          if(!usLog){
+          const userAuth = users.find(
+            (user) => user.uid === googleCredentials.uid
+          );
+          const usLog = [userAuth].some((user) => user.habilitar === true);
+
+          if (!usLog) {
             toast.error("No tienes acceso a esta plataforma");
-          } else {
-            toast.message("Bienvenido", {
-              description: userCredentials.user.displayName,
-            });
-
-            dispatch(userLogin(googleCredentials));
-
-            // Almacena las credenciales en el Local Storage
-            localStorage.setItem(
-              "userCredentials",
-              JSON.stringify(googleCredentials)
-            );
-
-            setTimeout(() => {
-              const uid = googleCredentials.uid;
-              navigate(`/user-panel/${uid}/home`);
-            }, 2000);
-            
+            return;
           }
+
+          dispatch(postUser(newUser));
+
+          toast.message("Bienvenido", {
+            description: userCredentials.user.displayName,
+          });
+
+          dispatch(userLogin(googleCredentials));
+
+          // Almacena las credenciales en el Local Storage
+          localStorage.setItem(
+            "userCredentials",
+            JSON.stringify(googleCredentials)
+          );
+
+          setTimeout(() => {
+            const uid = googleCredentials.uid;
+            navigate(`/user-panel/${uid}/home`);
+          }, 2000);
 
           break;
         case "github":
@@ -144,26 +151,28 @@ export default function Login() {
         accessToken: userCredentials.user.accessToken,
       };
 
-      const logUser = users.find(user => user.uid === userCredentials.user.uid);
-      const userAuth1 = [logUser].some(user => user.habilitar === true);
+      const logUser = users.find(
+        (user) => user.uid === userCredentials.user.uid
+      );
+      const userAuth1 = [logUser].some((user) => user.habilitar === true);
 
-      if (!userAuth1){
-        toast.error('No tienes acceso a esta plataforma');
+      if (!userAuth1) {
+        toast.error("No tienes acceso a esta plataforma");
       } else {
         dispatch(userLogin(credentials));
-  
+
         // Almacena las credenciales en el Local Storage
         localStorage.setItem("userCredentials", JSON.stringify(credentials));
-  
+
         setUserData({
           email: "",
           password: "",
         });
-  
+
         toast.message("Bienvenido", {
           description: userCredentials.user.email,
         });
-  
+
         setTimeout(() => {
           const uid = credentials.uid;
           navigate(`/user-panel/${uid}/home`);
@@ -188,7 +197,7 @@ export default function Login() {
             toast.error("Usuario desactivado");
             break;
           default:
-            toast.error("Ups, algo salió mal");
+            break;
         }
       }
     }

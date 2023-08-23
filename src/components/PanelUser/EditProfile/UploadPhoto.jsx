@@ -3,7 +3,7 @@ import axios from "axios";
 import { Avatar, Button } from "@material-tailwind/react";
 import userProfile from "../../../assets/user-profile.svg";
 
-export default function UploadPhoto({ user, avatarInputRef }) {
+export default function UploadPhoto({ user, avatarInputRef, updateProfileImage  }) {
   const [image, setImage] = useState({
     name: "",
     img: "",
@@ -20,6 +20,11 @@ export default function UploadPhoto({ user, avatarInputRef }) {
       );
       const data = response.data.secure_url;
       console.log("Esta es la respuesta de la data", data);
+
+      updateProfileImage(data);
+
+
+      
       // Actualizar el estado de manera inmutable
       setImage((prevData) => ({
         ...prevData,

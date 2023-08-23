@@ -10,7 +10,7 @@ const ServicesSection = () => {
     {
       title: "Plan Bronce",
       description:
-        "El Plan Bronce te permite experimentar SkillHub con 5 publicaciones gratuitas.",
+        "El Plan Bronce te permite experimentar SkillHub con 2 publicaciones.",
       details:
         "Descubre cómo SkillHub puede ayudarte a encontrar las habilidades adecuadas y poner tus talentos en acción. ¡Regístrate ahora!",
       icon: planPrueba2,
