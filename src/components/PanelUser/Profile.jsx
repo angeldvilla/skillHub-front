@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser, logoutUser } from "../../toolkit/Users/usersHandler";
@@ -11,6 +11,8 @@ import { Button } from "@material-tailwind/react";
 import { Suscription } from "./EditProfile/SuscriptionCard";
 import { putUsers } from "../../toolkit/thunks";
 import { toast } from "sonner";
+
+import React from "react";
 
 export default function Profile() {
   const { id } = useParams();
@@ -117,8 +119,38 @@ export default function Profile() {
     dispatch(getUser(id));
   }, [dispatch, id]);
 
+  const [isAdmin, setIsAdmin] = useState(false)
+  useEffect(()=>{
+   if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2")
+   setIsAdmin(true)
+  }, [])
+   
+
   return (
-    <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">
+    <React.Fragment>
+
+    {isAdmin ? (
+      <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">
+      <Nav />
+      <div className="p-5 max-w-lg mx-auto w-full">
+        <div className="flex-grow mx-auto">
+          <div className="flex flex-col justify-center items-center mt-4 mb-20 bg-gray-200 rounded-lg shadow-md p-6">
+            <p className="text-md text-gray-600 text-center">
+          <h1 className="flex justify-center text-2xl font-bold mb-5">
+            PERFIL ADMINISTRATIVO
+          </h1>
+             Esta es la cuenta administrativa de SkillHub. 
+              Puedes Inhabilitar usuarios y trabajos que incumplan con las politicias de la empresa además de otras funciones exclusivas   
+            </p>
+          </div>
+          <UserProfileInfo />
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+    ): (
+      <div className="flex flex-col min-h-screen bg-blue-gray-800 bg-opacity-30">
       <Nav />
       <div className="p-5 max-w-lg mx-auto w-full">
         <div className="flex-grow mx-auto">
@@ -194,5 +226,8 @@ export default function Profile() {
 
       <Footer />
     </div>
+    )}
+    </React.Fragment>
+
   );
 }
