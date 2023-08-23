@@ -59,7 +59,7 @@ export default function WorkPublication() {
             navigate(`/user-panel/${id}/WorkPublications`);
           }, 3000);
     }
- //TRABAJOS PENDIENTES (S/ SUSCRIPCION)
+ //TRABAJOS PENDIENTES (S/ SUSCRIPCIiON)
  const [usuario, setUsuario] = useState([]);
 
   useEffect(() => {
