@@ -125,10 +125,10 @@ export default function Register() {
             };
 
             const emailJSResponse = await emailjs.send(
-              "service_lfymgxc",
-              "template_fi0kha4",
+              "service_n97ipmm",
+              "template_du3d689",
               authUser,
-              "RY2Fv-D-bvjhDwd_H"
+              "M2HzawMtj0qzxyVZx"
             );
 
             setTimeout(() => {
@@ -203,10 +203,10 @@ export default function Register() {
       };
 
       const emailJSResponse = await emailjs.send(
-        "service_lfymgxc",
-        "template_fi0kha4",
+        "service_n97ipmm",
+        "template_du3d689",
         registerParams,
-        "RY2Fv-D-bvjhDwd_H"
+        "M2HzawMtj0qzxyVZx"
       );
 
     
