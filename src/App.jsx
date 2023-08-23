@@ -6,7 +6,7 @@ import Home from "./components/Home/Home";
 import JobDetail from "./components/JobDetail/JobDetail";
 import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
-import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment";
+/* import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment"; */
 import Profile from "./components/PanelUser/Profile";
 import MercadoPago from "./components/mercadoPago/MercadoPago";
 import Next from "./components/mercadoPago/Next";
@@ -14,7 +14,7 @@ import Error404 from "./components/error404/Error404";
 import AbautUs from "./components/AbautUs/AbautUs";
 import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv";
 import CondicionesDeUso from "./components/ComponentesFooter/CondicionesDeUso";
-import Dashboard from "./components/Admin/Dashboard/Dashboard";
+/* import Dashboard from "./components/Admin/Dashboard/Dashboard"; */
 import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago";
 import Support from "./components/PanelUser/FAQ/Support";
 import Help from "./components/PanelUser/FAQ/Help";
@@ -62,7 +62,7 @@ function App() {
       <Route path="/dashboard" element={<Admin />} />
       <Route path="/help" element={<Help />} />
       <Route path="/support"element={<Support />} />
-      <Route path="/cloudinary"element={<FormTemporal />} />
+      {/* <Route path="/cloudinary"element={<FormTemporal />} /> */}
 
 
       {/* RUTAS DE FOOTER EN PROCESO */}
