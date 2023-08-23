@@ -102,11 +102,7 @@ const CondicionesDeUso = () => {
             </div>
           </div>
           <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-            {/*<img
-              className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
-              src="https://res.cloudinary.com/dvr9giaia/image/upload/v1692252347/Screenshot_102_nrni31.png"
-              alt="skillHubPage"
-  />*/}
+          
           </div>
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div className="lg:pr-4">
@@ -183,8 +179,7 @@ const CondicionesDeUso = () => {
                       <div id="introduccion">
                         1. Cuando utilizas nuestros Servicios aceptas cumplir
                         todos estos términos. Tu uso de nuestros Servicios
-                        también está sujeto a nuestra Política de cookies y a
-                        nuestra Política de privacidad, que abarca el modo en
+                        también está sujeto a nuestra Política de privacidad, que abarca el modo en
                         que recabamos, utilizamos, compartimos y almacenamos tu
                         información personal.
                       </div>
@@ -406,7 +401,7 @@ const CondicionesDeUso = () => {
                     escribirnos a estas direcciones.
                   </div>
                 </p>
-                
+           
               </div>
             </div>
           </div>
