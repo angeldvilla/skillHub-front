@@ -34,10 +34,12 @@ export default function JobDetail() {
   const { detail, isLoading } = useSelector((state) => state.work);
   const { users, user, userCredentials } = useSelector((state) => state.users);
   const infoUser = users.find((user) => user._id === detail.users);
+  console.log("Este es unfoUSER",infoUser)
   useEffect(() => {
     userCredentials !== null && dispatch(getUser(userCredentials.uid));
-    !users.length && dispatch(getUsers());
+    // !users.length && dispatch(getUsers());
     dispatch(getDetailWork(id));
+    dispatch(getUsers())
     return () => {
       dispatch(detailReset());
     };

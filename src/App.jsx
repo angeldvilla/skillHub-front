@@ -61,7 +61,6 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/help" element={<Help />} />
       <Route path="/support"element={<Support />} />
-      <Route path="/cloudinary"element={<FormTemporal />} />
 
 
       {/* RUTAS DE FOOTER EN PROCESO */}

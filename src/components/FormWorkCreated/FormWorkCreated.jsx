@@ -119,7 +119,7 @@ export default function FormCreateWork() {
   const [usuario, setUsuario] = useState([])
    useEffect(() => {
       const getUser = async () => {
-        const response = await axios(`http://localhost:3002/user/`)
+        const response = await axios(`https://skillhub-back-production.up.railway.app/user/`)
         setUsuario(response.data.filter((element) => element.uid === id))
         
       }
