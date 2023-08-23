@@ -19,6 +19,7 @@ import axios from "axios";
 import Footer from "../Footer/Footer";
 import Nav from "../PanelUser/Nav";
 import { setId } from "@material-tailwind/react/components/Tabs/TabsContext";
+import Loader from "../Loader/Loader";
 
 //_______________________________________
 
@@ -123,14 +124,24 @@ export default function FormCreateWork() {
         
       }
       getUser();
-     }, [id])
-     const filterUser = () => {
-      if(usuario.filter((element) => element.uid === id).map(({pay}) => pay)[0] === undefined) {
-         return 'no hay suscripcion';
-      } else{
-         return usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
-      }
- }
+    }, [id])
+
+    //const result = usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)
+   // console.log(result)
+    const filterUser = () => {
+
+
+   if (usuario.filter((element) => element.uid === id).map(({ pay }) => pay)[0] === undefined) {
+    return 'No hay suscripción';
+  } else if(!usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)){
+    return 'No hay suscripción';
+  } else if (usuario.filter((element) => element.uid === id).some(({ pay }) => pay.subscription === true)) {
+    return usuario.filter((element) => element.uid === id).map(({ pay }) => pay.plan)[0];
+  } else {
+    return 'No hay suscripción';
+  }
+};
+ //filterUser();
 
 
    const filterCantidadPost = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)
@@ -139,20 +150,20 @@ export default function FormCreateWork() {
   
 
    const findValidacion = () => {
-    if(filterUser() === 'no hay suscripcion') {
+    if(filterUser() === 'No hay suscripción') {
       return 'No se encontro suscripcion activa'
     }
     else if (filterUser() === "Plan BRONCE" && filterCantidadPost2 === 2) {
        return 'cumplio la cantidad'
     } else if (filterUser() === "Plan ORO" && filterCantidadPost2 === 15) {
-     return 'cumplio la cantidad'
+     return 'cumplio la cantidad' 
      }  else {
-       return 'Suscripción activa';
+       return 'Suscripción activa'
     }
   }
  
   const resultValidacion = findValidacion();
-
+console.log(resultValidacion)
   function handleSubmit(event) {
     event.preventDefault();
           const putUser = async () => {
@@ -160,7 +171,6 @@ export default function FormCreateWork() {
            cantidadPost: filterCantidadPost[0] + 1
       })
       }
-      //console.log(putUser)
       putUser();
     let updatedWorkData;
 
@@ -368,27 +378,6 @@ export default function FormCreateWork() {
   }, [trabajoFiltrado, id]);
   
 
-
-  
-// Valifacion susbscripción
-
-//  const [pay, setPay] = useState([]);
-//   useEffect(() => {
-//     const getPayment = async () => {
-//       try {
-//         const { data } = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`);
-//         setPay(data);
-//       } catch (error) {
-//         console.error("Error al obtener los pagos:", error);
-//       }
-//     };
-//     getPayment();
-//   }, [id]);
-//   //console.log(pay)
-//   const filterSuscripcion = pay
-//   .filter(({ subscription }) => subscription === true)
-//   console.log(filterSuscripcion)
-
   //---- trae info del usuario ---
   const { user } = useSelector((state) => state.users);
 
@@ -417,10 +406,11 @@ export default function FormCreateWork() {
     }
   
   }, [id,allUsersPayment.length]);
+  
 
   return (
     <div>
-    {resultValidacion === 'Suscripción activa' || trabajoFiltrado ? 
+    {resultValidacion === 'Suscripción activa' || trabajoFiltrado  ? 
 
       <div className="flex flex-col items-center justify-center">
         <Nav />
@@ -428,10 +418,11 @@ export default function FormCreateWork() {
           <button
             onClick={() => navigate(`/user-panel/${id}/home`)}
             className="absolute right-32 px-4 py-1 bg-gray-700 rounded-md hover:cursor-pointer hover:bg-gray-600 transition-all"
-          >
+            >
             {"<<"}
           </button>
         </div>
+           
 
         <form onSubmit={(event) => handleSubmit(event)}
           className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-6 rounded-lg shadow-neutral-900 shadow-lg mb-5" >
@@ -599,12 +590,13 @@ export default function FormCreateWork() {
           </button>
         </form>
       </div>
+      
       : (
         <div className="flex justify-center items-center" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "70vh", backgroundColor: "white", color: "black"}}>
               <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
-              {user.firstName}, su suscripción ha caducado y/o cumplió con el limite permitido de publicaciones. Por favor, renueve su plan para continuar disfrutando de nuestros beneficios.
+              {user.firstName}, no existe suscripcion activa y/o cumplió con el limite permitido de publicaciones. Por favor, accede a un plan para  disfrutar de nuestros beneficios.
           </p>
-          <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted nuevamente!</p>
+          <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted!</p>
     
     
             <div className="flex justify-between w-1/2">
@@ -612,7 +604,7 @@ export default function FormCreateWork() {
           <button justifyContent= 'flex-start' className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Ir al inicio</button>
           </NavLink>
           <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/memberShip`}>
-            <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Renovar suscripción</button> 
+            <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Suscripción</button> 
           </NavLink>
             </div>
             </div>

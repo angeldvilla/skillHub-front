@@ -64,7 +64,7 @@ const Next = () => {
       }
       changeCantidadPost();
 
-    navigate(`/user-panel/${id_client}/createWork`)
+    navigate(`/user-panel/${id_client}/home`)
   
     //Enviar el mensaje de confirmación de pago al usuario
 
@@ -76,7 +76,7 @@ const Next = () => {
     }
 
     emailjs
-    .send("service_lfymgxc", "template_yjh5uy5", dataUser,"RY2Fv-D-bvjhDwd_H")
+    .send("service_n97ipmm", "template_0i2a9rd", dataUser,"M2HzawMtj0qzxyVZx")
     .then((result) => {console.log(result.text)},
       (error) => console.log(error.text));
     
