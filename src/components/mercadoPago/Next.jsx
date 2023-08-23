@@ -45,12 +45,13 @@ const Next = () => {
       setId_client(result.data.metadata.user_id) // id del cliente
 
       //Traemos el usuario de la BD
-        const {data} = await axios.get(`https://skillhub-back-production.up.railway.app/user/${id_client}`)
+        const {data} = await axios.get(`https://skillhub-back-production.up.railway.app/user/${result.data.metadata.user_id}`)
         setResultUser(data)
         }
 
         busqueda() 
-        }, [payment_id,id_client]);
+        }, []);
+        
         //Cargar los datos  a la BD 
     const handleGuardarDatos=()=>{
       const saveData=async()=>{
@@ -58,7 +59,7 @@ const Next = () => {
       }
     saveData()
     const changeCantidadPost = async () => {
-      return await axios.put(`http://localhost:3002/user/${id_client}`,
+      return await axios.put(`https://skillhub-back-production.up.railway.app/user/${id_client}`,
       {cantidadPost: 0}
       )
       }
@@ -75,10 +76,10 @@ const Next = () => {
       email: resultUser.email
     }
 
-    emailjs
-    .send("service_n97ipmm", "template_0i2a9rd", dataUser,"M2HzawMtj0qzxyVZx")
-    .then((result) => {console.log(result.text)},
-      (error) => console.log(error.text));
+    // emailjs
+    // .send("service_n97ipmm", "template_0i2a9rd", dataUser,"M2HzawMtj0qzxyVZx")
+    // .then((result) => {console.log(result.text)},
+    //   (error) => console.log(error.text));
     
     }
 

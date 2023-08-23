@@ -7,6 +7,6 @@ export const TABLE_HEAD = [
   "Plan de suscripción",
   "Posteos realizados",
   "Posteos disponibles",
-  "Activo",
+  // "Activo",
   "Acciones",
 ];

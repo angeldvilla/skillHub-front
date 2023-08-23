@@ -19,14 +19,15 @@ export default function PoliticaDePago() {
     dispatch(getUser(id));
   },[dispatch, id])
   return (
- <div> 
+ <div className="ContainerPolitPago"> 
 
     {userCredentials === null ? <Header/> : <Nav/>}
     <div className="bodyStyle">
     <Atras></Atras>
+    <div className="backgroundBlack"> 
     <h1> Politicas de Pago @SkillHub.netlifly.app </h1>
     <p>Última actualización: hace 5 meses</p>
-
+    </div>
     <hr />
     <h2> 
     <Acordeon title={'Suscripcion Plantino'} active ={active} setActive={setActive} texto={text.texto1}/>

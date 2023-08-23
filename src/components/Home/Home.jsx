@@ -1,8 +1,10 @@
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getWork } from "../../toolkit/thunks";
 import { getUser } from "../../toolkit/Users/usersHandler";
+import axios from "axios";
 
 import Header from "../Header/Header";
 import Nav from "../PanelUser/Nav";
@@ -34,27 +36,27 @@ export default function Home() {
   const indexOfFirstWork = indexOfLastWork - worksPerPage;
   const currentWorks = work.slice(indexOfFirstWork, indexOfLastWork);
 
-   //! RELACION DE MODELO USUARIOS CON PAYMENT
-
-   const [allUsersPayment,setAllUseersPayment] = useState([])
-   useEffect(() => {
-     const usersPaymentResult = async()=>{ //! la base de datos esta modificado
-       const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
-       setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
-     }
-     usersPaymentResult()
- 
-     if(allUsersPayment.length!==0){
-       
-       const dataPay= { pay:allUsersPayment[0]._id}
-       
-       const modifDate=async()=>{
-         const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
-       }
-       modifDate()
-     }
-   
-   }, [id,allUsersPayment.length]);
+    //! RELACION DE MODELO USUARIOS CON PAYMENT
+    
+    const [allUsersPayment,setAllUseersPayment] = useState([])
+    useEffect(() => {
+      const usersPaymentResult = async()=>{ //! la base de datos esta modificado
+        const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
+        setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
+      }
+      usersPaymentResult()
+  
+      if(allUsersPayment.length!==0){
+        
+        const dataPay= { pay:allUsersPayment[0]._id}
+        
+        const modifDate=async()=>{
+          const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
+        }
+        modifDate()
+      }
+    
+    }, [id,allUsersPayment.length]);
 
   if (isLoading) {
     return <Loader />;
