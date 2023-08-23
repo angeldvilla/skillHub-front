@@ -2,7 +2,10 @@ import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import "./Accesibilidad.css";
 import Atras from "../Atras";
+
+
 const Accessibility = () => {
+  
   return (
     <div className="BodyContainer">
       <Header />
@@ -21,7 +24,7 @@ const Accessibility = () => {
         <div className="contenedor">
           <h1>Declaración de accesibilidad </h1>
           <p>
-            En Spotify, celebramos la creatividad y nos esforzamos por que todas
+            En SkillHub, celebramos la creatividad y nos esforzamos por que todas
             las personas puedan usar nuestra plataforma, incluidos un millón de
             artistas y miles de millones de oyentes. Aprendemos de los expertos
             y empleamos personas con conocimiento en accesibilidad para hacer
@@ -29,23 +32,24 @@ const Accessibility = () => {
             Trabajando en conjunto, nos proponemos empoderar a todas las
             personas para que puedan crear, descubrir e inspirarse.
           </p>
-          <h1>Explora la accesibilidad en Spotify </h1>
+          <h1>Explora la accesibilidad en SkillHub </h1>
           <p>
-            Spotify Joins the Valuable 500 With a Commitment to Disability
-            Inclusion (Spotify se une a The Valuable 500 con el compromiso de
+          SkillHub Joins the Valuable 500 With a Commitment to Disability
+            Inclusion (SkillHub se une a The Valuable 500 con el compromiso de
             incluir a las personas con discapacidad)
           </p>
           <h1> Cómo contactarnos</h1>
           <p>
             Si tienes alguna pregunta o inquietud sobre la accesibilidad,
             comunícate con nosotros a través de cualquiera de los siguientes
-            medios. Email: accessibility-support@spotify.com Escríbenos a Att:
-            Accessibility Team Spotify USA Inc., 150 Greenwich Street, Floor 62,
-            New York, NY 10007, USA Por cualquier consulta general, comunícate
+            medios.@SkillHub.telifly.net Escríbenos a Att:
+            Accessibility Team SkillHub Inc., 150 Greenwich Street, Floor 62,
+            Por cualquier consulta general, comunícate
             con Atención al Cliente a través del siguiente medio:
           </p>
         </div>
       </div>
+     
       <Footer />
     </div>
   );

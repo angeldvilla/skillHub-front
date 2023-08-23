@@ -64,7 +64,7 @@ const people = [
       </Link>
     ),
     imageUrl:
-      "https://res.cloudinary.com/dvr9giaia/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1691980631/Screenshot_96_w9pqpw.png",
+      "https://res.cloudinary.com/dvr9giaia/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1692754668/74b29f45-0640-4049-a868-d5663e03b7a7_s4ap0s.jpg",
   },
 
   {
