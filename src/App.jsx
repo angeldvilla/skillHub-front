@@ -64,6 +64,7 @@ function App() {
       <Route path="/support"element={<Support />} />
 
 
+
       {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/privacy-policies" element={<PoliticasDePriv />} />
       <Route path="/terms-of-use" element={<CondicionesDeUso />} />

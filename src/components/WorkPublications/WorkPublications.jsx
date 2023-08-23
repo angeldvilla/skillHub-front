@@ -59,7 +59,7 @@ export default function WorkPublication() {
             navigate(`/user-panel/${id}/WorkPublications`);
           }, 3000);
     }
- //TRABAJOS PENDIENTES (S/ SUSCRIPCION)
+ //TRABAJOS PENDIENTES (S/ SUSCRIPCIiON)
  const [usuario, setUsuario] = useState([]);
 
   useEffect(() => {
@@ -80,14 +80,27 @@ export default function WorkPublication() {
   const filterUser = () => {
     if(usuario.filter((element) => element.uid === id).map(({pay}) => pay)[0] === undefined) {
        return 'no hay suscripcion';
-    } else{
+    } else if (usuario.filter((element) => element.uid === id).map(({pay}) => pay.subscription)[0] === false) {
+        return 'no hay suscripcion';
+    }else {
        return usuario.filter((element) => element.uid === id).map(({pay}) => pay.plan)[0]
     }
 }
 
-  
- const filterCantidad = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
- 
+const filterCantidad = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
+let trabajosPendientes = () => {
+    if (filterUser() === "Plan BRONCE") {
+        return 2 - filterCantidad
+    } else if(filterUser() === "Plan ORO") {
+        return 15 - filterCantidad
+    } else if(filterUser() === "Plan PLATINO"){
+        return 'Trabajos ilimitados'
+    }
+     else {
+        return 'No existe suscripción activa'
+    }
+}
+const resulPendientes = trabajosPendientes();
  
  const findPlan = () => {
 
@@ -95,8 +108,9 @@ export default function WorkPublication() {
           return 'cumplio la cantidad'
        } else if (filterUser() === "Plan ORO" && filterCantidad === 15) {
         return 'cumplio la cantidad'
-        
-        } else {
+       } else if(resulPendientes === 'No existe suscripción activa' ) {
+        return 'cumplio la cantidad'
+       } else {
           return 'Verificar suscripcion';
 
        }
@@ -108,11 +122,13 @@ export default function WorkPublication() {
         <div>
             <Nav />
             <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-             > {`Total trabajos publicados: ${filterCantidad}`}</h1>
+             > {`Trabajos disponibles según plan actual: ${resulPendientes}`}</h1>
+               <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
+             > {`Total trabajos publicados: ${totalWorks}`}</h1>
               {result === 'cumplio la cantidad' ? (
                 <div className="flex items-center   justify-center mb-96">
                     <h1  className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-                    > Si deseas publicar más servicios, considera actualizar tu plan de suscripción para acceder a beneficios adicionales. </h1>
+                    > No existe suscripcion activa o cumplio con el limite permitido de publicaciones, considera actualizar tu plan de suscripción para acceder a beneficios adicionales. </h1>
                     <br />
                     <NavLink to={`/user-panel/${id}/memberShip`}>
                         <button className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"

@@ -1,4 +1,5 @@
-import { useEffect,useState } from "react";
+
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getWork } from "../../toolkit/thunks";
@@ -12,7 +13,7 @@ import Filters from "../filters/Filters";
 import Footer from "../Footer/Footer";
 import Paginated from "../Paginated/Paginated";
 import Loader from "../Loader/Loader";
-
+import axios from "axios";
 export default function Home() {
   const { id } = useParams();
 
@@ -35,9 +36,8 @@ export default function Home() {
   const indexOfFirstWork = indexOfLastWork - worksPerPage;
   const currentWorks = work.slice(indexOfFirstWork, indexOfLastWork);
 
-
     //! RELACION DE MODELO USUARIOS CON PAYMENT
-
+    
     const [allUsersPayment,setAllUseersPayment] = useState([])
     useEffect(() => {
       const usersPaymentResult = async()=>{ //! la base de datos esta modificado
