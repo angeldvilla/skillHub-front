@@ -119,7 +119,7 @@ export default function FormCreateWork() {
   const [usuario, setUsuario] = useState([])
    useEffect(() => {
       const getUser = async () => {
-        const response = await axios(`http://localhost:3002/user/`)
+        const response = await axios(`https://skillhub-back-production.up.railway.app/user/`)
         setUsuario(response.data.filter((element) => element.uid === id))
         
       }
@@ -384,29 +384,6 @@ console.log(resultValidacion)
   useEffect(() => {
     dispatch(getUser(id));
   }, [dispatch, id]);
-  
-  //! RELACION DE MODELO USUARIOS CON PAYMENT
-
-  const [allUsersPayment,setAllUseersPayment] = useState([])
-  useEffect(() => {
-    const usersPaymentResult = async()=>{ //! la base de datos esta modificado
-      const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
-      setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
-    }
-    usersPaymentResult()
-
-    if(allUsersPayment.length!==0){
-      
-      const dataPay= { pay:allUsersPayment[0]._id}
-      
-      const modifDate=async()=>{
-        const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
-      }
-      modifDate()
-    }
-  
-  }, [id,allUsersPayment.length]);
-  
 
   return (
     <div>

@@ -14,7 +14,7 @@ import Error404 from "./components/error404/Error404";
 import AbautUs from "./components/AbautUs/AbautUs";
 import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv";
 import CondicionesDeUso from "./components/ComponentesFooter/CondicionesDeUso";
-/* import Dashboard from "./components/Admin/Dashboard/Dashboard"; */
+/* import Dashboard from "./components/admin/Dashboard/Dashboard"; */
 import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago";
 import Support from "./components/PanelUser/FAQ/Support";
 import Help from "./components/PanelUser/FAQ/Help";
@@ -32,6 +32,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 /* ------------------------------------------- */
 
 function App() {
@@ -62,7 +63,6 @@ function App() {
       <Route path="/dashboard" element={<Admin />} />
       <Route path="/help" element={<Help />} />
       <Route path="/support"element={<Support />} />
-      {/* <Route path="/cloudinary"element={<FormTemporal />} /> */}
 
 
       {/* RUTAS DE FOOTER EN PROCESO */}
