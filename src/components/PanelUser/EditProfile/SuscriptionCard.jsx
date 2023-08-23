@@ -10,7 +10,7 @@ import { CreditCardIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 export function Suscription({ user, subscriptionMessage, expirationDate }) {
     
     const planDescription = subscriptionMessage === "Plan BRONCE"
-    ? "Disfruta de la posibilidad de publicar hasta 5 servicios en tu cuenta."
+    ? "Disfruta de la posibilidad de publicar hasta 2 servicios en tu cuenta."
     : subscriptionMessage === "Plan ORO"
     ? "Acceso completo a todas las funciones de nuestra plataforma, con un limite de publicar hasta 15 servicios en tu cuenta."
     : subscriptionMessage === "Plan PLATINO"

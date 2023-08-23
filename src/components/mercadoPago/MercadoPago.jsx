@@ -14,6 +14,10 @@ import {
 import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import planPrueba2 from "../../assets/planPrueba2.png";
+import planPlatino from "../../assets/planPlatino.png";
+import planOro from "../../assets/planOro.webp"
+
 const MercadoPago = () => {
 
 
@@ -24,14 +28,14 @@ const MercadoPago = () => {
       id: 1,
       plan: "BRONCE",
       pago: 9.99,
-      beneficios: ["5 publicaciones"],
+      beneficios: ["2 publicaciones.", "Editar y/o eliminar tus publicaciones.", "Facil comunicación con tus posibles empleados.", "Cancelacion automática."],
     },
-    { id: 2, plan: "ORO", pago: 19.99, beneficios: ["15 publicaciones"] },
+    { id: 2, plan: "ORO", pago: 19.99, beneficios: ["15 publicaciones", "Editar y/o eliminar tus publicaciones.", "Facil comunicación con tus posibles empleados.", "Cancelacion automática.", 'Soporte técnico.'] },
     {
       id: 3,
       plan: "PLATINO",
       pago: 29.99,
-      beneficios: ["Publicaciones ilimitados"],
+      beneficios: ["Publicaciones ilimitados", "Editar y/o eliminar tus publicaciones.", "Facil comunicación con tus posibles empleados.", "Cancelacion automática.", "Soporte técnico"],
     },
   ];
 
@@ -106,15 +110,20 @@ const MercadoPago = () => {
   const filterPlan = pay
     .filter(({ subscription }) => subscription === true)
     .map(({ plan }) => plan);
-  const filterCreate = pay
-    .filter(({ subscription }) => subscription === true)
-    .map(({ createdAt }) => createdAt.split("T")[0]);
+    // 
 
-  const calculateExpirationDate = (filterCreate) => {
-    const expirationDate = moment(filterCreate).add(30, "days");
-    return expirationDate.format("YYYY-MM-DD");
-  };
-  const resulDate = calculateExpirationDate(filterCreate);
+//   const filterCreate = pay
+//     .filter(({ subscription }) => subscription === true)
+//     .map(({ createdAt }) => createdAt.split("T")[0]);
+    
+// //console.log(filterCreate)
+//   const calculateExpirationDate = (filterCreate) => {
+//     const expirationDate = moment(filterCreate).add(30, "days");
+//     return expirationDate.format("YYYY-MM-DD");
+//   };
+//   const resulDate = calculateExpirationDate(filterCreate);
+//   console.log(calculateExpirationDate(filterCreate))
+//   console.log(filterCreate)
   //! PARA CAMBIAR DE PLAN
   const handleCancelSubscription = async () => {
     try {
@@ -166,7 +175,7 @@ const MercadoPago = () => {
                   <Typography
                     variant="small"
                     color="white"
-                    className="font-normal uppercase"
+                    className="text-3xl font-bold mb-8"
                   >
                     {element.plan}
                   </Typography>
@@ -236,7 +245,7 @@ const MercadoPago = () => {
             Actualmente tiene una suscripción activa:
           </p>
           <span style={{ fontWeight: "bold", color: "black" }}>
-            {filterPlan} Vigente hasta: {resulDate}
+            {filterPlan} 
           </span>
 
           <div className="flex justify-center items-center w-48/2 space-x-7">
