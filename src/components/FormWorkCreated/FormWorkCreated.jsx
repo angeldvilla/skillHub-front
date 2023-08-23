@@ -116,6 +116,10 @@ export default function FormCreateWork() {
       })
     }
   }
+
+ 
+
+
   const [usuario, setUsuario] = useState([])
    useEffect(() => {
       const getUser = async () => {
@@ -129,8 +133,6 @@ export default function FormCreateWork() {
     //const result = usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)
    // console.log(result)
     const filterUser = () => {
-
-
    if (usuario.filter((element) => element.uid === id).map(({ pay }) => pay)[0] === undefined) {
     return 'No hay suscripción';
   } else if(!usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)){
@@ -142,7 +144,7 @@ export default function FormCreateWork() {
   }
 };
  //filterUser();
-
+console.log()
 
    const filterCantidadPost = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)
    const filterCantidadPost2 = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
@@ -386,7 +388,8 @@ console.log(resultValidacion)
   }, [dispatch, id]);
 
   return (
-    <div>
+    usuario.length === 0 ? <Loader/> : 
+   ( <div>
     {resultValidacion === 'Suscripción activa' || trabajoFiltrado  ? 
 
       <div className="flex flex-col items-center justify-center">
@@ -588,7 +591,7 @@ console.log(resultValidacion)
           )}
       <Footer />
       <ToastContainer />
-    </div>
+    </div>)
   );
 }
 
