@@ -1,0 +1,54 @@
+.BodyContainer{
+    text-align: center;
+    font-family: 'Arial Narrow Bold';
+}
+.BodyContainer h1{
+    font-size: 65px;
+}
+.BodyContainer h2{
+    font-size: 30px;
+    margin: 50px; 
+   
+ 
+}
+.backgroundStyle{
+    background-color: black;
+    color: aliceblue;
+   
+}
+.containerParraf{
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: left;
+
+}
+.containerParraf h1{
+    font-size:40px;
+    margin-top: 30px;
+}
+.containerParraf p{
+    font-size:15px;
+    margin-right: 100px;
+}
+
+.contenedor {
+    width: 90%; /* Ancho del contenedor */
+    padding: 60px; /* Espaciado interno del contenedor */
+    border: 1px solid rgba(204, 204, 204, 0.027); /* Borde del contenedor */
+    background-color: #f0f0f037; /* Color de fondo del contenedor */
+     
+    margin-top: 10%; /* Margen exterior del contenedor */
+    margin-bottom: 20%;
+
+    box-shadow: 3px 3px 5px #888;
+  }
+ .positionAtras{
+    display: flex;
+    margin-left: 50px;
+ }
+  
+  
+  
+  
+  
+  
