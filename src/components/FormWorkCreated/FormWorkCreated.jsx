@@ -116,6 +116,10 @@ export default function FormCreateWork() {
       })
     }
   }
+
+ 
+
+
   const [usuario, setUsuario] = useState([])
    useEffect(() => {
       const getUser = async () => {
@@ -129,8 +133,6 @@ export default function FormCreateWork() {
     //const result = usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)
    // console.log(result)
     const filterUser = () => {
-
-
    if (usuario.filter((element) => element.uid === id).map(({ pay }) => pay)[0] === undefined) {
     return 'No hay suscripción';
   } else if(!usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)){
@@ -142,7 +144,7 @@ export default function FormCreateWork() {
   }
 };
  //filterUser();
-
+console.log()
 
    const filterCantidadPost = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)
    const filterCantidadPost2 = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
@@ -385,31 +387,12 @@ console.log(resultValidacion)
     dispatch(getUser(id));
   }, [dispatch, id]);
   
-  //! RELACION DE MODELO USUARIOS CON PAYMENT
-
-  const [allUsersPayment,setAllUseersPayment] = useState([])
-  useEffect(() => {
-    const usersPaymentResult = async()=>{ //! la base de datos esta modificado
-      const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
-      setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
-    }
-    usersPaymentResult()
-
-    if(allUsersPayment.length!==0){
-      
-      const dataPay= { pay:allUsersPayment[0]._id}
-      
-      const modifDate=async()=>{
-        const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
-      }
-      modifDate()
-    }
   
-  }, [id,allUsersPayment.length]);
   
 
   return (
-    <div>
+    usuario.length === 0 ? <Loader/> : 
+   ( <div>
     {resultValidacion === 'Suscripción activa' || trabajoFiltrado  ? 
 
       <div className="flex flex-col items-center justify-center">
@@ -611,7 +594,7 @@ console.log(resultValidacion)
           )}
       <Footer />
       <ToastContainer />
-    </div>
+    </div>)
   );
 }
 
