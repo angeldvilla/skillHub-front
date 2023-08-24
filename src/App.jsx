@@ -13,12 +13,12 @@ import Error404 from "./components/error404/Error404";
 import AbautUs from "./components/AbautUs/AbautUs";
 import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv";
 import CondicionesDeUso from "./components/ComponentesFooter/CondicionesDeUso";
-import Dashboard from "./components/Admin/Views/Dashboard";
+import Admin from "./components/admin/Admin";
 import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago";
 import Support from "./components/PanelUser/FAQ/Support";
 import Help from "./components/PanelUser/FAQ/Help";
 import Accessibility from "./components/ComponentesFooter/Accesibilidad/Accessibility";
-import Admin from "./components/Admin/Admin";
+import Dashboard from "./components/admin/Views/Dashboard";
 import UsersList from "./components/Admin/Views/UsersList";
 import Reviews from "./components/Admin/Views/Reviews";
 import Payments from "./components/Admin/Views/Payments";
@@ -35,6 +35,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+
 /* ------------------------------------------- */
 
 function App() {

@@ -110,20 +110,7 @@ const MercadoPago = () => {
   const filterPlan = pay
     .filter(({ subscription }) => subscription === true)
     .map(({ plan }) => plan);
-    // 
 
-//   const filterCreate = pay
-//     .filter(({ subscription }) => subscription === true)
-//     .map(({ createdAt }) => createdAt.split("T")[0]);
-    
-// //console.log(filterCreate)
-//   const calculateExpirationDate = (filterCreate) => {
-//     const expirationDate = moment(filterCreate).add(30, "days");
-//     return expirationDate.format("YYYY-MM-DD");
-//   };
-//   const resulDate = calculateExpirationDate(filterCreate);
-//   console.log(calculateExpirationDate(filterCreate))
-//   console.log(filterCreate)
   //! PARA CAMBIAR DE PLAN
   const handleCancelSubscription = async () => {
     try {
@@ -249,10 +236,10 @@ const MercadoPago = () => {
           </span>
 
           <div className="flex justify-center items-center w-48/2 space-x-7">
-            <Link to={`http://localhost:5173/user-panel/${id}/home`}>
+            <Link to={`https://skillhub-back-production.up.railway.app/user-panel/${id}/home`}>
               <Button color="blue">IR AL INICIO</Button>
             </Link>
-            <Link to={`http://localhost:5173/user-panel/${id}/memberShip`}>
+            <Link to={`https://skillhub-back-production.up.railway.app/user-panel/${id}/memberShip`}>
               <Button color="blue" onClick={handleCancelSubscription}>
                 CAMBIAR SUSCRIPCIÓN
               </Button>
