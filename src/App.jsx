@@ -13,7 +13,7 @@ import Error404 from "./components/error404/Error404";
 import AbautUs from "./components/AbautUs/AbautUs";
 import PoliticasDePriv from "./components/ComponentesFooter/PoliticaDePriv";
 import CondicionesDeUso from "./components/ComponentesFooter/CondicionesDeUso";
-import Admin from "./components/Admin/Admin";
+import Admin from "./components/Admin/GeneralAdmin";
 import PoliticaDePago from "./components/ComponentesFooter/PoliticaDePago";
 import Support from "./components/PanelUser/FAQ/Support";
 import Help from "./components/PanelUser/FAQ/Help";
