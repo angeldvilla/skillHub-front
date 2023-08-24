@@ -6,7 +6,6 @@ import Home from "./components/Home/Home";
 import JobDetail from "./components/JobDetail/JobDetail";
 import FormWorkCreated from "./components/FormWorkCreated/FormWorkCreated";
 import WorkPublications from "./components/WorkPublications/WorkPublications";
-/* import UnderDevelopment from "./components/UnderDevelopment/UnderDevelopment"; */
 import Profile from "./components/PanelUser/Profile";
 import MercadoPago from "./components/mercadoPago/MercadoPago";
 import Next from "./components/mercadoPago/Next";
@@ -24,7 +23,6 @@ import UsersList from "./components/Admin/Views/UsersList";
 import Reviews from "./components/Admin/Views/Reviews";
 import Payments from "./components/Admin/Views/Payments";
 import Rating from "./components/PanelUser/FAQ/Rating";
-/* import Charts from "./components/Admin/Views/Charts"; */
 /* ------------------------------------------- */
 
 /* ------------------------------------------- */
@@ -99,10 +97,10 @@ function App() {
             path="list-services"
             element={isAdmin && userCredentials ? <Home /> : <Navigate to="/error404" replace />}
           />
-         {/*  <Route
-            path="charts"
-            element={isAdmin && userCredentials ? <Charts /> : <Navigate to="/error404" replace />}
-          /> */}
+          <Route
+            path="details-services/:id"
+            element={isAdmin && userCredentials ? <JobDetail /> : <Navigate to="/error404" replace />}
+          />
           <Route
             path="payments"
             element={isAdmin && userCredentials ? <Payments /> : <Navigate to="/error404" replace />}

@@ -32,7 +32,8 @@ export default function JobDetail() {
   const navigate = useNavigate();
   const { detail, isLoading } = useSelector((state) => state.work);
   const { users, user, userCredentials } = useSelector((state) => state.users);
-  const infoUser = users.find((user) => user._id === detail.users);
+  const infoUser = users.find((user) => user.uid === detail.users);
+  console.log(infoUser);
 
   useEffect(() => {
     userCredentials !== null && dispatch(getUser(userCredentials.uid));
@@ -62,13 +63,7 @@ export default function JobDetail() {
       {
         isAdmin ?  ( 
       <Card className="flex flex-col justify-center items-center">
-      {/* {userCredentials === null ? <Header /> : <Nav />} */}
       <div className="max-w-screen-2xl bg-gray-50 font-sans m-5 pb-1 shadow-md border-2 border-gray-200 rounded-md">
-        {/* <div className="px-4">
-          <Button onClick={handleClick} className="flex w-full mb-4">
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" />
-          </Button>
-        </div> */}
 
         <div className="flex flex-row py-2">
           <div className="flex px-4 gap-5 max-w-sm w-96">
@@ -81,7 +76,7 @@ export default function JobDetail() {
                   </div>
                 ) : (
                   <Tooltip
-                    content={infoUser?.phoneNumber || "3042594820"}
+                    content={infoUser?.phoneNumber || "3015985993"}
                     animate={{
                       mount: { scale: 1, y: 0 },
                       unmount: { scale: 0, y: 25 },
@@ -90,7 +85,7 @@ export default function JobDetail() {
                   >
                     <Link
                       to={`https://api.whatsapp.com/send?phone=${
-                        infoUser?.phoneNumber || "3042594820"
+                        infoUser?.phoneNumber || "3015985993"
                       }`}
                       target="_blank"
                       rel="noopener noreferrer"

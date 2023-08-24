@@ -152,7 +152,7 @@ const Icon = ({ icon, label, route, expanded, onclick, isActive, isLogout = fals
         <Button
           onClick={handleLogout}
           className={`flex-1 w-auto items-center justify-center transition-all duration-300 ${
-            expanded ? "w-auto" : "w-10/12"
+            expanded ? "w-auto" : "w-full"
           } `}
           >
           <FaSignOutAlt />

@@ -23,7 +23,7 @@ export default function Admin() {
     }, [dispatch]
   );
 
-  const isDashboardNavRender = location.pathname.includes("list-services") || location.pathname.includes("settings"); 
+  const isDashboardNavRender = location.pathname.includes("list-services") || location.pathname.includes("settings") || location.pathname.includes("details-services"); 
 
   return users.length === 0 ? (
     <Loader />
@@ -50,9 +50,6 @@ export default function Admin() {
       <Menu expanded={expanded} toggleExpand={toggleExpand}/>
       <div className="flex-1 flex flex-col justify-center items-center">
         <div className="w-full">
-          {
-            
-          }
          {!isDashboardNavRender && <Nav />}
         </div>
       <Outlet/> 

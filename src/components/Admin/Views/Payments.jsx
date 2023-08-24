@@ -3,7 +3,6 @@ import axios from "axios";
 import { TABLE_PAYMENT_HEAD } from "../../../utils/dashboard";
 import { Card, Typography } from "@material-tailwind/react";
 import Loader from "../../Loader/Loader";
-import NavBarPayment from "../AdminNavbar/NavBarPayment";
 
 const Payments = () => {
   const [payments, setPayments] = useState([]);
@@ -27,7 +26,6 @@ const Payments = () => {
   ) : (
   <>
 <h2 className="text-4xl mb-5 font-semibold font-mono italic">Lista de Pagos</h2>
-<NavBarPayment/>
 <Card className="flex-1 overflow-scroll">
   <table className="w-20 ml-2 min-w-max table-auto text-center">
     <thead>

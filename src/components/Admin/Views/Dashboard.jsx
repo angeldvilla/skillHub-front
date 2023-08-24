@@ -1,7 +1,9 @@
 import { Typography } from "@material-tailwind/react";
+import { useState, useEffect } from "react";
 import { Card } from "@material-tailwind/react";
 import { useSelector } from "react-redux";
 import { FaUsers, FaCcMastercard, FaStar, FaFolder } from "react-icons/fa";
+import axios from "axios";
 
 const Dashboard = () => {
   const { work } = useSelector((state) => state.work);
@@ -9,15 +11,31 @@ const Dashboard = () => {
   const totalUsers = users.length;
   const totalServices = work.length;
 
-  const totalPayments = 50;
+  const [payments, setPayments] = useState([]);
+
+
+    const getPayments = async () => {
+      try {
+        const { data } = await axios(
+          "https://skillhub-back-production.up.railway.app/payment/"
+        );
+        setPayments(data);
+      } catch (error) {
+        console.error("Error al obtener los pagos:", error);
+      }
+    };
+    getPayments();
+
+  const totalPayments = payments.length;
   const totalRatings = 120;
 
   return (
-    <div className="flex-col space-y-3 items-center mb-10">
+    <div>
         <Typography variant="h2" className="text-center">
           Admin Dashboard
         </Typography>
     
+      <div className="fgap-10">
       {/* USERS */}
       <a
       href={`/user-panel/${userCredentials.uid}/dashboard/list-users`}>
@@ -36,6 +54,9 @@ const Dashboard = () => {
         </Card>
         </a>
 
+        {/* SERVICES */}
+        <a
+        href={`/user-panel/${userCredentials.uid}/dashboard/list-services`}>
         <Card className="bg-green-700">
           <div className="p-4 text-center">
             <Typography variant="h5" color="white">
@@ -49,7 +70,11 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
+        </a>
 
+        {/* PAYMENTS */}
+        <a
+        href={`/user-panel/${userCredentials.uid}/dashboard/payments`}>
         <Card className="bg-blue-500">
           <div className="p-4 text-center">
             <Typography variant="h5" color="white">
@@ -63,7 +88,11 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
+        </a>
 
+        {/* REVIEWS */}
+        <a
+      href={`/user-panel/${userCredentials.uid}/dashboard/reviews`}>
         <Card className="bg-yellow-700">
           <div className="p-4 text-center">
             <Typography variant="h5" color="white">
@@ -77,6 +106,9 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
+        </a>
+
+      </div>
     </div>
   );
 };
