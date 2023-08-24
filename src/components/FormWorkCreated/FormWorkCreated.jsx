@@ -399,7 +399,7 @@ const resultValidacion = findValidacion();
               Editar
             </h1>
 
-          ) : <h1 className="text-3xl text-center text-white mb-7 mt-6">
+          ) : <h1 className="text-3xl text-center text-black mb-7 mt-6">
             ¡Postula tu trabajo!
           </h1>
           }
