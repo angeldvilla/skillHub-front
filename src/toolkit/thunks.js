@@ -1,5 +1,5 @@
   import { createAsyncThunk } from "@reduxjs/toolkit";
-import { allWork, getWorkName, startIsLoading, detailWork, postPagos,  } from "./slice";
+import { allWork, getWorkName, startIsLoading, detailWork } from "./slice";
   import axios from "axios";
 
   const URL_API = "https://skillhub-back-production.up.railway.app/empleador"; 

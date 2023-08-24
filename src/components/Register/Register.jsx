@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postUser, getUsers } from "../../toolkit/Users/usersHandler";
 import {
@@ -25,8 +25,6 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -109,10 +107,10 @@ export default function Register() {
           };
 
           const emailJSResponse = await emailjs.send(
-            "service_lfymgxc",
-            "template_fi0kha4",
+            "service_n97ipmm",
+            "template_du3d689",
             authUser,
-            "RY2Fv-D-bvjhDwd_H"
+            "M2HzawMtj0qzxyVZx"
           );
 
           setTimeout(() => {
