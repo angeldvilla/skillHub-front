@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -11,15 +10,14 @@ import Card from "../Cards/Card";
 import Filters from "../filters/Filters";
 import Footer from "../Footer/Footer";
 import Paginated from "../Paginated/Paginated";
-import Loader from "../Loader/Loader";
+
 
 export default function Home() {
   const { id } = useParams();
-
   const dispatch = useDispatch();
 
   const { userCredentials } = useSelector((state) => state.users);
-  const { work, isLoading, currentPage } = useSelector((state) => state.work);
+  const { work, currentPage } = useSelector((state) => state.work);
 
   const worksPerPage = 8;
   const totalPages = Math.ceil(work.length / worksPerPage);
@@ -38,6 +36,7 @@ export default function Home() {
   const indexOfLastWork = currentPage * worksPerPage;
   const indexOfFirstWork = indexOfLastWork - worksPerPage;
   const currentWorks = work.slice(indexOfFirstWork, indexOfLastWork);
+
   
   //! RELACION DE MODELO USUARIOS CON PAYMENT
   
@@ -57,18 +56,36 @@ export default function Home() {
     } );
 
 
-  if (isLoading) {
-    return <Loader />;
-  }
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2") setIsAdmin(true);
+  }, [id]);
+
 
   return (
     <div className="flex flex-col justify-center items-center">
-      {userCredentials && userCredentials.uid === id ? <Nav /> : <Header />}
-      <Filters />
-      <Paginated totalPages={totalPages} />
-      <Card work={currentWorks} />
-      <Paginated totalPages={totalPages} />
-      <Footer />
+      {isAdmin ? (
+        <div className="ml-3 mr-3 h-screen mt-8">
+          <Nav />
+          <h2 className="text-4xl mb-5 font-semibold font-mono italic flex justify-center">
+            Servicios
+          </h2>
+          <Filters />
+          <Paginated totalPages={totalPages} />
+          <Card work={currentWorks} />
+          <Paginated totalPages={totalPages} />
+        </div>
+      ) : (
+        <>
+          {userCredentials && userCredentials.uid === id ? <Nav /> : <Header />}
+          <Filters />
+          <Paginated totalPages={totalPages} />
+          <Card work={currentWorks} />
+          <Paginated totalPages={totalPages} />
+          <Footer />
+        </>
+      )}
     </div>
   );
 }

@@ -22,6 +22,7 @@ import {
   CreditCardIcon,
   ArrowUpRightIcon,
   Bars2Icon,
+  StarIcon
 } from "@heroicons/react/24/outline";
 
 
@@ -119,6 +120,11 @@ const NavList = () => {
       value: "support",
       icon: ShieldCheckIcon,
     },
+    {
+      label: "Calificanos",
+      value: "rating",
+      icon: StarIcon,
+    },
   /*   {
       label: "Suscripción",
       value: "membership",
@@ -126,7 +132,7 @@ const NavList = () => {
     }, */
   ];
 
-  return (
+ return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {navListItems.map(({ label, icon, value }, key) => (
         <a

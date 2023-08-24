@@ -7,7 +7,12 @@ import Footer from "../../Footer/Footer";
 import Nav from "../Nav";
 import background from "../../../assets/backgroundImage.jpg";
 import Header from "../../Header/Header";
-
+import React from "react";
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+} from "@material-tailwind/react";
 const Support = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -19,6 +24,10 @@ const Support = () => {
       dispatch(getUser(id));
     }
   }, [dispatch, id, userCredentials]);
+
+    const [open, setOpen] = React.useState(1);
+   
+    const handleOpen = (value) => setOpen(open === value ? 0 : value);
   return (
     <div className="min-h-screen bg-gray-200 flex flex-col">
       <style>
@@ -64,24 +73,37 @@ const Support = () => {
           <div className="bg-gray-100 p-4 rounded-lg">
             <h3 className="text-xl font-semibold mb-2">Preguntas Frecuentes</h3>
             <ul className="text-gray-700 space-y-2">
-              <li>¿Cómo inicio sesión en mi cuenta?</li>
-              <li>¿Cómo restablezco mi contraseña?</li>
-              <li>¿Dónde puedo ver mis pedidos?</li>
-              <li>¿Cómo contacto al servicio de atención al cliente?</li>
+            <>
+  <Accordion open={open === 1}>
+    <AccordionHeader className="text-gray-500 space-y-2" onClick={() => handleOpen(1)}>¿Cómo inicio sesión en mi cuenta?</AccordionHeader>
+    <AccordionBody className="text-lg">
+      Complete los campos con sus datos personales o inicie sesión con Google.
+    </AccordionBody>
+  </Accordion>
+  <Accordion open={open === 2}>
+    <AccordionHeader className="text-gray-500" onClick={() => handleOpen(2)}>
+      ¿Dónde puedo ver mis pedidos?
+    </AccordionHeader>
+    <AccordionBody className="text-lg">
+      Una vez que inicies sesión, en el margen superior derecho tendrás acceso a 'Mis Servicios', donde podrás ver tus publicaciones y la cantidad de publicaciones disponibles según tu plan.
+    </AccordionBody>
+  </Accordion>
+  <Accordion open={open === 3}>
+    <AccordionHeader className="text-gray-500" onClick={() => handleOpen(3)}>
+      ¿Cómo contacto al servicio de atención al cliente?
+    </AccordionHeader>
+    <AccordionBody className="text-lg">
+      Dirígete a Contactanos y podrás enviar un correo a nuestro correo general de SkillHub.
+    </AccordionBody>
+  </Accordion>
+</>
             </ul>
           </div>
           <div>
-            <h3 className="text-xl font-semibold mb-2">Contáctanos</h3>
             <p className="text-gray-600 mb-4">
               Si no encuentras la respuesta que necesitas, nuestro equipo de
               soporte está listo para ayudarte.
             </p>
-            <a
-              href="#contact"
-              className="block bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300"
-            >
-              Contactar Soporte
-            </a>
           </div>
         </motion.div>
       </div>

@@ -86,7 +86,6 @@ export default function FormCreateWork() {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    //?const parsedValue = name === "price" ? (value === "" ? 0 : parseInt(value, 10)) : value;  
 
     setWorkData({
       ...workdata,
@@ -110,15 +109,14 @@ export default function FormCreateWork() {
     }
   }
 
-
   function handleSubmit(event) {
     event.preventDefault();
-          const putUser = async () => {
-        const resultPut = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`, {
-           cantidadPost: filterCantidadPost[0] + 1
+    const putUser = async () => {
+      const resultPut = await axios.put(`http://localhost:3002/user/${id}`, {
+        cantidadPost: filterCantidadPost[0] + 1
       })
-      }
-      putUser();
+    }
+    putUser();
     let updatedWorkData;
 
     const validateFields = () => {
@@ -151,20 +149,24 @@ export default function FormCreateWork() {
     };
 
     if (trabajoFiltrado) {
+      
+      numericPrice = parseInt(workdata.price, 10); // Parsear a número
       if (validateFields()) {
-        const userConfirmation = window.confirm("Editar, recuerda que no podrás modificar el título después.");
+        const userConfirmation = window.confirm("¿Editar trabajo?");
         if (userConfirmation) {
           // Concatenar la opción de pago al precio
-          const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
+          const finalPrice = `${numericPrice} ${selectedPaymentOption}`;
+          console.log("Numeric Price:", numericPrice);
+
           updatedWorkData = {
             ...workdata,
             price: finalPrice,
           };
-  
+
           dispatch(editPost(updatedWorkData, id));
           handleReset();
           toast.success("Trabajo Editado correctamente");
-  
+
           setTimeout(() => {
             navigate(`/user-panel/${id}/home`);
           }, 3000);
@@ -172,7 +174,7 @@ export default function FormCreateWork() {
       }
     } else {
       if (validateFields()) {
-        const userConfirmation = window.confirm("¿Publicar trabajo? Recuerda que no podrás modificar el título después.");
+        const userConfirmation = window.confirm("ADVERTENCIA! No podrás modificar el título después.");
         if (userConfirmation) {
           // Concatenar la opción de pago al precio
           const finalPrice = `${workdata.price} ${selectedPaymentOption}`;
@@ -180,11 +182,11 @@ export default function FormCreateWork() {
             ...workdata,
             price: finalPrice,
           };
-  
+
           dispatch(postJobs(updatedWorkData, id));
           handleReset();
           toast.success("Trabajo creado correctamente");
-  
+
           setTimeout(() => {
             navigate(`/user-panel/${id}/WorkPublications`);
           }, 3000);
@@ -294,17 +296,21 @@ export default function FormCreateWork() {
   }
 
 
-  // Previsualización de la imagen
-  let previewImage = workdata.image ? (
-    <span style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-      <span>Imagen Seleccionada</span>
-      <img
-        src={workdata.image}
-        alt="Previsualización"
-        style={{ maxWidth: "200px", height: "200px", margin: "auto" }}
-      />
-    </span>
-  ) : null;
+ // Previsualización de la imagen
+ let previewImage = workdata.image ? (
+  <span style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+    <span>Imagen Seleccionada</span>
+    <br />
+    <img
+      src={workdata.image}
+      alt="nature image"
+      style={{ maxWidth: "200px", height: "200px", margin: "auto" }}
+      className="h-96 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
+
+    />
+  </span>
+) : null;
+
 
 
   //Editar tarea
@@ -437,20 +443,22 @@ const resultValidacion = findValidacion();
 
 
             <label className="pl-2 mb-1 text-lg">
-              Precio:
-            </label>
-            <input
-              type="text"
-              placeholder="$20"
-              name="price"
-              value={trabajoFiltrado ? workdata.price : priceValue}
-              onChange={(event) => {
-                const newValue = event.target.value;
-                handleChange(event);
-                setPriceValue(newValue)
-              }}
-              className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
-            />
+                Precio:
+              </label>
+              <input
+                type="text"
+                placeholder="$20"
+                name="price"
+                value={
+                  trabajoFiltrado ? workdata.price.split(" ")[0] : priceValue
+                }
+                onChange={(event) => {
+                  const newValue = event.target.value;
+                  handleChange(event);
+                  setPriceValue(newValue)
+                }}
+                className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
+              />
 
             <label htmlFor="payment" className="pl-2 mb-1 text-lg">
               Pago
@@ -576,4 +584,3 @@ const resultValidacion = findValidacion();
     </div>)
   );
 }
-

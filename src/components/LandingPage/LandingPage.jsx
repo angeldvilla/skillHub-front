@@ -12,9 +12,8 @@ import Footer from "../Footer/Footer";
 import AbautUs from "../AbautUs/AbautUs";
 import Contact from "./Contact";
 import Services from "./Services";
-import Score from "../Score/Score";
 import { ArrowUpIcon } from "@heroicons/react/24/outline";
-
+import Scoreview from "../ScoreView/ScoreView";
 export default function LandingPage() {
   const images = [Diseñador, Jardinero, Electricista, Cerrajero];
 
@@ -206,13 +205,11 @@ export default function LandingPage() {
           <AbautUs />
         </div>
       </section>
-
       {/* SECCIÓN DE CONTACTO */}
       <Contact />
 
-      {/* SECCIÓN DE REVIEWS */}
       <section className="bg-gray-900 flex justify-center py-16">
-        <Score />
+        <Scoreview />
       </section>
 
       <Footer />

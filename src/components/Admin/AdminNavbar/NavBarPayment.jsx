@@ -6,7 +6,7 @@ import { Navbar, Button, Input } from "@material-tailwind/react";
 import { toast } from "sonner";
 import { useEffect } from "react";
 
-export default function AdminNavbar() {
+export default function NavBarPayment() {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.users);
   const [name, setName] = useState("");
@@ -44,7 +44,7 @@ export default function AdminNavbar() {
               value={name}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
-              label="Busca un usuario..."
+              label="Busca un pago..."
               containerProps={{
                 className: "min-w-[288px]",
               }}
