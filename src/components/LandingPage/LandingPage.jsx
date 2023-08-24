@@ -12,7 +12,6 @@ import Footer from "../Footer/Footer";
 import AbautUs from "../AbautUs/AbautUs";
 import Contact from "./Contact";
 import Services from "./Services";
-import Score from "../Score/Score";
 import { ArrowUpIcon } from "@heroicons/react/24/outline";
 
 export default function LandingPage() {
@@ -210,10 +209,7 @@ export default function LandingPage() {
       {/* SECCIÓN DE CONTACTO */}
       <Contact />
 
-      {/* SECCIÓN DE REVIEWS */}
-      <section className="bg-gray-900 flex justify-center py-16">
-        <Score />
-      </section>
+  
 
       <Footer />
     </div>
