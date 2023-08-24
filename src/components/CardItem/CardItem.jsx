@@ -9,7 +9,7 @@ import {
 import moneyBag from "../../assets/moneyBag.svg";
 import ubication from "../../assets/ubication.svg";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../toolkit/Users/usersHandler";
 import { deleteWokrs } from "../../toolkit/ActionsworkPublications";
@@ -18,6 +18,10 @@ import { toast } from "sonner";
 const CardItem = ({ _id, title, image, address, price, ability }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const location = useLocation();
 
   const { userCredentials } = useSelector((state) => state.users);
   const { isLoading } = useSelector((state) => state.work);
@@ -34,15 +38,21 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
     }
   }, [dispatch, id, userCredentials]);
 
-  function handleClick(trabajoId) {
-    event.preventDefault();
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
-    const userConfirmation = window.confirm("¿Vas a eliminar este trabajo?");
-    if (userConfirmation) {
-      dispatch(deleteWokrs(trabajoId));
-      console.log("ID del trabajo a eliminar:", trabajoId);
-      toast("Trabajo eliminado correctamente");
-    }
+  const handleOnClick = () => {
+    setShowDeleteConfirmation(true);
+  };
+
+  function handleDeleteService(trabajoId) {
+    dispatch(deleteWokrs(trabajoId));
+    console.log("ID del trabajo a eliminar:", trabajoId);
+
+    toast.success("Trabajo eliminado con exito!");
+    setShowDeleteConfirmation(false);
+    setTimeout(() => {
+      navigate(location.pathname);
+    });
   }
 
   if (isAdmin) {
@@ -95,7 +105,7 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
           <a
             href={
               userCredentials && userCredentials.uid === id
-                ? `/user-panel/${id}/jobDetail/${_id}`
+                ? `/user-panel/${id}/dashboard/details-services/${_id}`
                 : `/jobDetail/${_id}`
             }
           >
@@ -119,28 +129,60 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
                 />
               </svg>
             </Button>
-            <Button
-              onClick={() => handleClick(_id)}
-              variant="filled"
-              className="flex items-center gap-2 text-gray-800 text-xs font-semibold bg-transparent shadow-none hover:shadow-none hover:bg-gray-200"
-            >
-              Eliminar
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                className="h-4 w-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-              </svg>
-            </Button>
           </a>
+          <div>
+          <Button
+            onClick={handleOnClick}
+            variant="filled"
+            className="flex items-center gap-2 text-red-600 text-xs font-semibold bg-transparent shadow-none hover:shadow-none hover:bg-red-200"
+          >
+            Eliminar
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="red"
+              strokeWidth={2}
+              className="h-4 w-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </Button>
+          </div>
+          {showDeleteConfirmation && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-semibold mb-2">
+                  Confirmar Eliminación
+                </h3>
+                <p className="text-md text-gray-600">
+                  ¿Estás seguro de borrar este servicio? Esta acción es
+                  irreversible.
+                </p>
+                <div className="mt-4 flex justify-end">
+                  <Button
+                    color="gray"
+                    size="sm"
+                    onClick={() => setShowDeleteConfirmation(false)}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    color="red"
+                    size="sm"
+                    onClick={() => handleDeleteService(_id)}
+                    className="ml-2"
+                  >
+                    Eliminar
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </Card>
     );

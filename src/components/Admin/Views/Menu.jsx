@@ -4,7 +4,6 @@ import {
   FaDashcube,
   FaUsers,
   FaFolder,
-  FaChartLine,
   FaCog,
   FaSignOutAlt,
   FaBars,
@@ -15,7 +14,6 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../toolkit/Users/usersHandler";
 import { toast } from "sonner";
-import { Button } from "@material-tailwind/react";
 
 const menuItems = [
   {
@@ -33,11 +31,6 @@ const menuItems = [
     label: "Servicios",
     route: "list-services",
   },
-  /* {
-    icon: <FaChartLine />,
-    label: "Graficos",
-    route: "charts",
-  }, */
   {
     icon: <FaCcMastercard />,
     label: "Pagos",
@@ -130,33 +123,33 @@ function Menu({ expanded, toggleExpand }) {
   );
 }
 
-const Icon = ({ icon, label, route, expanded, onclick, isActive, isLogout = false}) => {
+const Icon = ({icon, label, route, expanded, isActive, isLogout = false}) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const handleLogout = () => {
+    toast.message("Hasta pronto! Su sesión ha sido cerrada");
     dispatch(logoutUser());
     setTimeout(() => {
-      toast.message("Hasta pronto! Su sesión ha sido cerrada");
       navigate("/home");
     });
   };
 
   return (
     <li
-      className={`list-none mb-6 relative text-[#8c8a95] text-center w-auto ${
+      className={`list-none mb-6 flex justify-center text-[#8c8a95] text-center w-auto ${
         expanded ? "expanded-icon" : ""
       }`}
     >
       {isLogout ? (
-        <Button
+        <button
           onClick={handleLogout}
-          className={`flex-1 w-auto items-center justify-center transition-all duration-300 ${
-            expanded ? "w-auto" : "w-10/12"
-          } `}
-          >
-          <FaSignOutAlt />
-        </Button>
+          className={`w-auto ${!expanded ? "w-auto mt-2" : ""}`}
+          color="gray"
+        >
+          {!expanded && <FaSignOutAlt/> }
+          {expanded && <p className="font-semibold flex gap-3 justify-center items-center hover:text-[#6bcc3e]"> <FaSignOutAlt/> Logout</p>}
+        </button>
       ) : (
         <NavLink
           to={route}

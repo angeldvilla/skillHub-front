@@ -5,7 +5,7 @@ import { Button, Card, Typography } from "@material-tailwind/react";
 import { TABLE_HEAD } from "../../../utils/dashboard";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import Loader from "../../Loader/Loader";
-import { putUsers } from "../../../toolkit/thunks"
+import { getWork, putUsers } from "../../../toolkit/thunks"
 
 
 export default function UsersList() {
@@ -17,8 +17,7 @@ export default function UsersList() {
   useEffect(
     () => {
       dispatch(getUsers());
-
-   
+      dispatch(getWork());
     }, [dispatch]
   );
 
@@ -48,6 +47,10 @@ export default function UsersList() {
     dispatch(putUsers({ _id, habilitar: !userStatus[_id] }));
   };
 
+  //! POSTEOS
+  const planBRONCE = 2;
+  const planORO = 15;
+
   return users.length === 0 ? (
     <Loader />
   ) : ( 
@@ -76,7 +79,7 @@ export default function UsersList() {
     </thead>
     <tbody>
       {users.map(
-        ({ _id, firstName, lastName, email, phoneNumber, pay }, index) => (
+        ({ _id, firstName, lastName, email, phoneNumber, pay, cantidadPost }, index) => (
           <tr key={index} className="even:bg-blue-gray-100">
             <td className="p-4">
               <Typography
@@ -111,7 +114,9 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                {phoneNumber}
+                {
+                !phoneNumber ? "Sin numero" : phoneNumber
+                }
               </Typography>
             </td>
             <td className="p-4">
@@ -142,7 +147,7 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                5
+                {cantidadPost}
               </Typography>
             </td>
             <td className="p-4">
@@ -151,7 +156,9 @@ export default function UsersList() {
                 color="blue-gray"
                 className="font-normal"
               >
-                15
+                {pay !== undefined ? 
+                    (pay.plan === "Plan BRONCE"? planBRONCE-cantidadPost : 
+                    (pay.plan === "Plan ORO" ? planORO-cantidadPost : "ILIMITADO")):"NINGUNO"}
               </Typography>
             </td>
             <td className="p-4">

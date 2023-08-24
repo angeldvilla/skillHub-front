@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getUser } from "../../../toolkit/Users/usersHandler";
-import { motion } from "framer-motion";
 import Footer from "../../Footer/Footer";
 import Nav from "../Nav";
 import background from "../../../assets/backgroundImage.jpg";
@@ -67,16 +66,8 @@ const Help = () => {
               beneficios exclusivos que cada plan ofrece para elegir el mejor
               para ti.
             </p>
-            <a
-              href={
-                userCredentials === null
-                  ? "/memberShip"
-                  : `/user-panel/${id}/memberShip`
-              }
-              className="text-blue-500 hover:underline"
-            >
-              Ver Planes de Suscripción
-            </a>
+            <p className="text-blue-500 hover:underline">Ver Planes de Suscripción</p>
+           
           </div>
     
           <div>

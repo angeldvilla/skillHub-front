@@ -31,7 +31,8 @@ export default function Home() {
       
     }
     usersPaymentResult()
-  }, [dispatch, id, userCredentials]);
+  }, [dispatch, id, userCredentials, work.length]);
+
   
   const indexOfLastWork = currentPage * worksPerPage;
   const indexOfFirstWork = indexOfLastWork - worksPerPage;
