@@ -13,7 +13,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../toolkit/Users/usersHandler";
 import { deleteWokrs } from "../../toolkit/ActionsworkPublications";
-import { getWork } from "../../toolkit/thunks";
 import { toast } from "sonner";
 
 const CardItem = ({ _id, title, image, address, price, ability }) => {
@@ -24,10 +23,6 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
   const { isLoading } = useSelector((state) => state.work);
 
   const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    dispatch(getWork());
-  }, [dispatch]);
 
   useEffect(() => {
     if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2") setIsAdmin(true);
