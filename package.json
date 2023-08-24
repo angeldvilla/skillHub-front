@@ -21,6 +21,8 @@
     "cloudinary": "^1.40.0",
     "dotenv": "^16.3.1",
     "firebase": "^10.1.0",
+    "flowbite": "^1.8.1",
+    "flowbite-react": "^0.5.0",
     "framer-motion": "^10.16.1",
     "moment": "^2.29.4",
     "react": "^18.2.0",
