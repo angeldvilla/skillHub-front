@@ -1,24 +1,26 @@
 import { Typography } from "@material-tailwind/react";
 import { Card } from "@material-tailwind/react";
 import { useSelector } from "react-redux";
-import { FaUsers, FaPaypal, FaStar } from "react-icons/fa";
+import { FaUsers, FaCcMastercard, FaStar, FaFolder } from "react-icons/fa";
 
 const Dashboard = () => {
-  const { users } = useSelector((state) => state.users);
+  const { work } = useSelector((state) => state.work);
+  const { users, userCredentials } = useSelector((state) => state.users);
   const totalUsers = users.length;
+  const totalServices = work.length;
 
   const totalPayments = 50;
   const totalRatings = 120;
 
   return (
-    <div>
-      <div className="flex justify-between w-full px-6 py-4 space-x-4">
-        <Typography variant="h2" className="text-center my-8">
+    <div className="flex-col space-y-3 items-center mb-10">
+        <Typography variant="h2" className="text-center">
           Admin Dashboard
         </Typography>
-      </div>
-
-      <div className="flex space-x-4">
+    
+      {/* USERS */}
+      <a
+      href={`/user-panel/${userCredentials.uid}/dashboard/list-users`}>
         <Card className="bg-red-700">
           <div className="p-4 text-center">
             <Typography variant="h5" color="white">
@@ -32,6 +34,21 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
+        </a>
+
+        <Card className="bg-green-700">
+          <div className="p-4 text-center">
+            <Typography variant="h5" color="white">
+              Servicios
+            </Typography>
+            <Typography variant="h3" className="mt-2 text-white">
+              {totalServices}
+            </Typography>
+            <div className="mt-4">
+              <FaFolder className="text-white text-4xl" />
+            </div>
+          </div>
+        </Card>
 
         <Card className="bg-blue-500">
           <div className="p-4 text-center">
@@ -42,7 +59,7 @@ const Dashboard = () => {
               {totalPayments}
             </Typography>
             <div className="mt-4">
-              <FaPaypal className="text-white text-4xl" />
+              <FaCcMastercard className="text-white text-4xl" />
             </div>
           </div>
         </Card>
@@ -60,7 +77,6 @@ const Dashboard = () => {
             </div>
           </div>
         </Card>
-      </div>
     </div>
   );
 };

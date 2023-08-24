@@ -264,7 +264,6 @@ const NavList = () => {
         <a
           key={key}
           href={`/user-panel/${userCredentials.uid}/${value}`}
-          variant="large"
           color="blue-gray"
           className="font-normal"
         >
@@ -318,7 +317,7 @@ export default function Nav() {
   return (
     <React.Fragment>
       {isAdmin ? (
-        <div>
+        <div className="w-full bg-gray-300 bg-opacity-50 backdrop-blur-xl lg:pl-6 px-4 py-2">
           <IconButton
               size="sm"
               color="blue-gray"

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import userProfile from "../../assets/user-profile.svg";
-import { ShowAlert } from "./ShowAlert";
 import {
   Collapse,
   Typography,
@@ -19,7 +18,6 @@ import {
   ShieldCheckIcon,
   QuestionMarkCircleIcon,
   ChevronDownIcon,
-  CreditCardIcon,
   ArrowUpRightIcon,
   Bars2Icon,
   StarIcon
@@ -125,11 +123,6 @@ const NavList = () => {
       value: "rating",
       icon: StarIcon,
     },
-  /*   {
-      label: "Suscripción",
-      value: "membership",
-      icon: CreditCardIcon,
-    }, */
   ];
 
  return (
@@ -138,14 +131,8 @@ const NavList = () => {
         <a
           key={key}
           href={`/${value}`}
-          variant="large"
           color="blue-gray"
           className="font-normal"
-          onClick={() => {
-            if (value === "membership") {
-              <ShowAlert/>
-            }
-          }}
         >
           {
             <MenuItem
