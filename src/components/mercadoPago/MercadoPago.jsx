@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUser } from "../../toolkit/Users/usersHandler";
@@ -13,10 +13,6 @@ import {
 } from "@material-tailwind/react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import moment from "moment";
-import planPrueba2 from "../../assets/planPrueba2.png";
-import planPlatino from "../../assets/planPlatino.png";
-import planOro from "../../assets/planOro.webp"
 
 const MercadoPago = () => {
 
@@ -236,10 +232,10 @@ const MercadoPago = () => {
           </span>
 
           <div className="flex justify-center items-center w-48/2 space-x-7">
-            <Link to={`https://skillhub-back-production.up.railway.app/user-panel/${id}/home`}>
+            <Link to={`/user-panel/${id}/home`}>
               <Button color="blue">IR AL INICIO</Button>
             </Link>
-            <Link to={`https://skillhub-back-production.up.railway.app/user-panel/${id}/memberShip`}>
+            <Link to={`/user-panel/${id}/memberShip`}>
               <Button color="blue" onClick={handleCancelSubscription}>
                 CAMBIAR SUSCRIPCIÓN
               </Button>
