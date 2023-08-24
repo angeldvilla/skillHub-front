@@ -569,14 +569,14 @@ const resultValidacion = findValidacion();
           <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted!</p>
     
     
-            {/* <div className="flex justify-between w-1/2">
-          <NavLink to={`http://localhost:5173/user-panel/${usuario[0].uid}/home`}>
-          <button justifyContent= 'flex-start' className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Ir al inicio</button>
+          <div className="flex justify-between w-1/2">
+          <NavLink to={`/user-panel/${usuario[0].uid}/home`}>
+          <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Ir al inicio</button>
           </NavLink>
-          <NavLink to={`http://localhost:5173/user-panel/${usuario[0].uid}/memberShip`}>
+          <NavLink to={`/user-panel/${usuario[0].uid}/memberShip`}>
             <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Suscripción</button> 
           </NavLink>
-            </div> */}
+            </div>
             </div>
           )}
       <Footer />

@@ -6,8 +6,7 @@ import Nav from "../PanelUser/Nav";
 import Loader from "../Loader/Loader";
 import Menu from "./Views/Menu";
 
-
-export default function Admin() {
+const Admin = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { users, userCredentials } = useSelector((state) => state.users);
@@ -61,3 +60,4 @@ export default function Admin() {
     </div>
   );
 }
+export default Admin;
