@@ -22,6 +22,7 @@ import moneyBag from "../../assets/moneyBag.svg";
 import ubication from "../../assets/ubication.svg";
 import { toast } from "sonner";
 import axios from "axios";
+import Loader from "../Loader/Loader";
 
 export default function WorkPublication() {
 
@@ -30,52 +31,51 @@ export default function WorkPublication() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const TodosLostrabajos = useSelector((state) => state.work.work);
+
+    const [trabajosDelUsuario,settrabajosDelUsuario] = useState([])
+    
+
     useEffect(() => {
         dispatch(getWork());
         if (userCredentials && userCredentials.uid === id) {
             dispatch(getUser(id));
         }
-    }, [dispatch, id, userCredentials]);
-
-    const TodosLostrabajos = useSelector((state) => state.work.work);
-    const TodosLosId = TodosLostrabajos.filter(trabajo => trabajo.idUser)
-
-    const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
-    //console.log("id del trabajo encontrado", trabajosDelUsuario);
-
-    const totalWorks = trabajosDelUsuario.length;
+        settrabajosDelUsuario(TodosLostrabajos.filter(trabajo => trabajo.users === id))
+    }, [dispatch, id, userCredentials,TodosLostrabajos]);
 
 
-    const trabajo = trabajosDelUsuario.map((trab) => trab._id)
-    //console.log("Este es el trabajo individual", trabajo);
+    let totalWorks = trabajosDelUsuario.length;
+
 
     function handleClick() {
         dispatch(getWork())
     }
     function eliminar(trabajoId) {
-        console.log("ID del trabajo a eliminar:", trabajoId);
+        
         dispatch(deleteWokrs(trabajoId)); // Pasa solo el ID del trabajo
         toast.error("Trabajo borrado correctamente");
         setTimeout(() => {
             navigate(`/user-panel/${id}/WorkPublications`);
+
         }, 3000);
     }
     //TRABAJOS PENDIENTES (S/ SUSCRIPCIiON)
     const [usuario, setUsuario] = useState([]);
 
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                const { data } = await axios(`https://skillhub-back-production.up.railway.app/user/`);
-                setUsuario(data);
-                //setAllWork(data.cantidadPost)
-
-            } catch (error) {
-                console.error("Error al obtener los usuarios:", error);
-            }
-        };
-        getUser();
-    }, [id]);
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const { data } = await axios(`https://skillhub-back-production.up.railway.app/user/`);
+        setUsuario(data);
+   
+      } catch (error) {
+        console.error("Error al obtener los usuarios:", error);
+      }
+    };
+    getUser();
+    
+  }, [id]);
 
 
     const filterUser = () => {
@@ -119,6 +119,7 @@ export default function WorkPublication() {
     const result = findPlan();
 
     return (
+        usuario.length===0?<Loader/>:
         <div  >
             <div>
                 <div>
@@ -127,15 +128,10 @@ export default function WorkPublication() {
                 <Typography variant="small" color="blue-gray" textGradient>
                     {`Trabajos disponibles según plan actual: ${resulPendientes}`}
                 </Typography>
-
-                <Typography variant="small" color="blue-gray" textGradient>
-                {`Total trabajos publicados: ${totalWorks}`}
-                </Typography>
                 </div>
                 <br />
 
                 {result === 'cumplio la cantidad' ? (
-                    //_____________}
                     <div className="flex-grow mx-auto flex justify-center items-center">
                     <div className="flex flex-col justify-center items-center mt-4 mb-20 bg-gray-200 rounded-lg shadow-md p-6">
                     <h1 className="bg-neutral-900 opacity-50 p-1.5 mb-2 rounded-md w-80 text-neutral-100 text-center outline-none"
