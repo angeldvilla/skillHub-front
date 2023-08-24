@@ -76,10 +76,10 @@ const Next = () => {
       email: resultUser.email
     }
 
-    // emailjs
-    // .send("service_n97ipmm", "template_0i2a9rd", dataUser,"M2HzawMtj0qzxyVZx")
-    // .then((result) => {console.log(result.text)},
-    //   (error) => console.log(error.text));
+    emailjs
+    .send("service_n97ipmm", "template_0i2a9rd", dataUser,"M2HzawMtj0qzxyVZx")
+    .then((result) => {console.log(result.text)},
+      (error) => console.log(error.text));
     
     }
 

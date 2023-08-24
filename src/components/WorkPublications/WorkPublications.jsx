@@ -128,10 +128,6 @@ export default function WorkPublication() {
                 <Typography variant="small" color="blue-gray" textGradient>
                     {`Trabajos disponibles según plan actual: ${resulPendientes}`}
                 </Typography>
-
-                <Typography variant="small" color="blue-gray" textGradient>
-                {`Total trabajos publicados: ${totalWorks}`}
-                </Typography>
                 </div>
                 <br />
 

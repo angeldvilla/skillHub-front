@@ -42,7 +42,7 @@ export default function FormCreateWork() {
   const { userCredentials } = useSelector(state => state.users);
   const trabajoFiltrado = TodosLostrabajos.find(trabajo => trabajo._id === id); // Usa find en lugar de filter para obtener un solo objeto
   const { detail } = useSelector(state => state.work)
-
+  let numericPrice;
 
 
   const [workdata, setWorkData] = useState({
@@ -112,7 +112,7 @@ export default function FormCreateWork() {
   function handleSubmit(event) {
     event.preventDefault();
     const putUser = async () => {
-      const resultPut = await axios.put(`http://localhost:3002/user/${id}`, {
+      const resultPut = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`, {
         cantidadPost: filterCantidadPost[0] + 1
       })
     }
@@ -156,7 +156,7 @@ export default function FormCreateWork() {
         if (userConfirmation) {
           // Concatenar la opción de pago al precio
           const finalPrice = `${numericPrice} ${selectedPaymentOption}`;
-          console.log("Numeric Price:", numericPrice);
+          
 
           updatedWorkData = {
             ...workdata,
@@ -342,7 +342,7 @@ useEffect(() => {
    getUser();
  }, [id])
  
-//console.log(usuario);
+
  const filterUser = () => {
   if (usuario.filter((element) => element.uid === id).map(({ pay }) => pay)[0] === undefined) {
    return 'No hay suscripción';
@@ -570,10 +570,10 @@ const resultValidacion = findValidacion();
     
     
             {/* <div className="flex justify-between w-1/2">
-          <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/home`}>
+          <NavLink to={`http://localhost:5173/user-panel/${usuario[0].uid}/home`}>
           <button justifyContent= 'flex-start' className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Ir al inicio</button>
           </NavLink>
-          <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/memberShip`}>
+          <NavLink to={`http://localhost:5173/user-panel/${usuario[0].uid}/memberShip`}>
             <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Suscripción</button> 
           </NavLink>
             </div> */}
