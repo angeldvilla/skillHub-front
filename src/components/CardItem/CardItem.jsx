@@ -159,7 +159,7 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
           </Button>
           </div>
           {showDeleteConfirmation && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold mb-2">
                   Confirmar Eliminación
