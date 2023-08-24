@@ -4,15 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getUser } from "../../../toolkit/Users/usersHandler";
 import { motion } from "framer-motion";
-import {
-    Button,
-    Dialog,
-    DialogHeader,
-    DialogBody,
-    DialogFooter,
-    Input,
-    Textarea,
-} from "@material-tailwind/react";
 import Footer from "../../Footer/Footer";
 import Nav from "../Nav";
 import background from "../../../assets/backgroundImage.jpg";
@@ -39,24 +30,7 @@ const Rating = () => {
 //console.log(user)
 
    
-    const handleOpen = () => setOpen(!open);
-
-    const handleSendClick2 = () => {
-        if (message.trim() === "") {
-          console.log("El mensaje está vacío");
-          return;
-        }
-        try {
-          dispatch(reviews(message));
-          console.log(`Enviando puntuación: ${message}`);
-        } catch (error) {
-          console.error("Error al enviar la puntuación:", error);
-        }
-      };
-
-      const handleMessageChange = (e) => {
-        setMessage(e.target.value);
-      };
+   
       // SCORE ----
       const handleRatingClick = (ratingValue) => {
         if (ratingValue !== rating) {
@@ -72,6 +46,7 @@ const Rating = () => {
         if (scoreToSend.score !== 0) {
           dispatch(reviews(scoreToSend));
           console.log(`Enviando puntuación: ${scoreToSend.score}`);
+          alert("Gracias por calificarnos")
         }
       };
 
@@ -149,41 +124,7 @@ return (
         </div>
     </div>
           <p>Valoramos tus comentarios y queremos asegurarnos de que tu voz sea escuchada. Si tienes alguna opinión, sugerencia o simplemente deseas compartir tu experiencia, no dudes en escribir un mensaje. Tu retroalimentación es invaluable para nosotros y nos ayuda a mejorar continuamente.</p>
-      <div className="flex justify-center">
-       <Button className="margin-top: 200px" color="blue" onClick={handleOpen}>COMENTARIOS</Button>
-      </div>
-      <Dialog open={open} handler={handleOpen}>
-        <div className="flex items-center justify-between">
-          <DialogHeader>SKILLHUB</DialogHeader>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="mr-3 h-5 w-5"
-            onClick={handleOpen}
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
-        <DialogBody divider>
-          <div className="grid gap-6">
-            <Input label="Nombre" />
-            <Textarea label="Comentarios" value={message} onChange={handleMessageChange} />
-          </div>
-        </DialogBody>
-        <DialogFooter className="space-x-2">
-          <Button variant="outlined" color="red" onClick={handleOpen}>
-            cerrar
-          </Button>
-          <Button variant="gradient" color="blue" onClick={handleSendClick2}>
-            enviar mensaje
-          </Button>
-        </DialogFooter>
-      </Dialog>
+      
           
         </motion.div>
       </div>
