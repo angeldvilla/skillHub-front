@@ -10,7 +10,7 @@ import moment from "moment";
 import { Button } from "@material-tailwind/react";
 import { Suscription } from "./EditProfile/SuscriptionCard";
 import { putUsers } from "../../toolkit/thunks";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 import React from "react";
 
@@ -38,7 +38,7 @@ export default function Profile() {
     setInactive({ _id, habilitar: !inactive.habilitar });
     dispatch(putUsers({ _id, habilitar: !inactive.habilitar }));
 
-    toast("Su cuenta ha sido eliminada con exito!");
+    toast.success("Su cuenta ha sido eliminada con exito!");
     dispatch(logoutUser());
     setTimeout(() => {
       navigate("/home");
