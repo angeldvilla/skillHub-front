@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { getWork } from "../../toolkit/thunks";
 import { getUser } from "../../toolkit/Users/usersHandler";
 import axios from "axios";
-
 import Header from "../Header/Header";
 import Nav from "../PanelUser/Nav";
 import Card from "../Cards/Card";
@@ -13,7 +12,7 @@ import Filters from "../filters/Filters";
 import Footer from "../Footer/Footer";
 import Paginated from "../Paginated/Paginated";
 import Loader from "../Loader/Loader";
-import axios from "axios";
+
 export default function Home() {
   const { id } = useParams();
 
@@ -25,38 +24,38 @@ export default function Home() {
   const worksPerPage = 8;
   const totalPages = Math.ceil(work.length / worksPerPage);
 
+  const [allUsersPayment,setAllUseersPayment] = useState([])
+  
   useEffect(() => {
     dispatch(getWork());
     if (userCredentials && userCredentials.uid === id) {
       dispatch(getUser(id));
+      
     }
+    usersPaymentResult()
   }, [dispatch, id, userCredentials]);
-
+  
   const indexOfLastWork = currentPage * worksPerPage;
   const indexOfFirstWork = indexOfLastWork - worksPerPage;
   const currentWorks = work.slice(indexOfFirstWork, indexOfLastWork);
-
-    //! RELACION DE MODELO USUARIOS CON PAYMENT
-    
-    const [allUsersPayment,setAllUseersPayment] = useState([])
-    useEffect(() => {
-      const usersPaymentResult = async()=>{ //! la base de datos esta modificado
-        const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
-        setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
-      }
-      usersPaymentResult()
   
-      if(allUsersPayment.length!==0){
-        
-        const dataPay= { pay:allUsersPayment[0]._id}
-        
-        const modifDate=async()=>{
-          const {data} = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,dataPay)
-        }
-        modifDate()
-      }
-    
-    }, [id,allUsersPayment.length]);
+  //! RELACION DE MODELO USUARIOS CON PAYMENT
+  
+  const usersPaymentResult = async()=>{ //! la base de datos esta modificado
+    const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
+    setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
+  }
+
+  const modifDate=async()=>{
+    await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,{ pay:allUsersPayment[0]._id})
+  }
+
+    useEffect(() => {
+
+      allUsersPayment.length !==0?modifDate():allUsersPayment.length
+      
+    } );
+
 
   if (isLoading) {
     return <Loader />;

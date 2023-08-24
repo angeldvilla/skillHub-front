@@ -29,8 +29,6 @@ const maxSiseMB = 3 * 1024 * 1024; // Tamaño de 3mb para las fotos
 
 export default function FormCreateWork() {
 
-  // const works = useSelector((state) => state.formwork.allPublicationsWork)
-  //  const allWorkTypes = useSelector((state) => state.formwork.allPublicationsWork)
   const { id } = useParams();
   const dispatch = useDispatch();
   const dispatch2 = useDispatch();
@@ -41,7 +39,6 @@ export default function FormCreateWork() {
   const fileInputRef = useRef(null);
   const params = useParams()
   const TodosLostrabajos = useSelector((state) => state.work.work);
-  // const trabajosDelUsuario = TodosLostrabajos.filter(trabajo => trabajo.users === id);
   const { userCredentials } = useSelector(state => state.users);
   const trabajoFiltrado = TodosLostrabajos.find(trabajo => trabajo._id === id); // Usa find en lugar de filter para obtener un solo objeto
   const { detail } = useSelector(state => state.work)
@@ -101,10 +98,6 @@ export default function FormCreateWork() {
       [name]: value,
     }));
 
-    console.log("Datos del formulario:", {
-      ...workdata,
-      [name]: value,
-    });
   }
 
   function handleSelect(event) {
@@ -117,59 +110,11 @@ export default function FormCreateWork() {
     }
   }
 
- 
 
-
-  const [usuario, setUsuario] = useState([])
-   useEffect(() => {
-      const getUser = async () => {
-        const response = await axios(`https://skillhub-back-production.up.railway.app/user/`)
-        setUsuario(response.data.filter((element) => element.uid === id))
-        
-      }
-      getUser();
-    }, [id])
-
-    //const result = usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)
-   // console.log(result)
-    const filterUser = () => {
-   if (usuario.filter((element) => element.uid === id).map(({ pay }) => pay)[0] === undefined) {
-    return 'No hay suscripción';
-  } else if(!usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)){
-    return 'No hay suscripción';
-  } else if (usuario.filter((element) => element.uid === id).some(({ pay }) => pay.subscription === true)) {
-    return usuario.filter((element) => element.uid === id).map(({ pay }) => pay.plan)[0];
-  } else {
-    return 'No hay suscripción';
-  }
-};
- //filterUser();
-console.log()
-
-   const filterCantidadPost = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)
-   const filterCantidadPost2 = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
-
-  
-
-   const findValidacion = () => {
-    if(filterUser() === 'No hay suscripción') {
-      return 'No se encontro suscripcion activa'
-    }
-    else if (filterUser() === "Plan BRONCE" && filterCantidadPost2 === 2) {
-       return 'cumplio la cantidad'
-    } else if (filterUser() === "Plan ORO" && filterCantidadPost2 === 15) {
-     return 'cumplio la cantidad' 
-     }  else {
-       return 'Suscripción activa'
-    }
-  }
- 
-  const resultValidacion = findValidacion();
-console.log(resultValidacion)
   function handleSubmit(event) {
     event.preventDefault();
           const putUser = async () => {
-        const resultPut = await axios.put(`http://localhost:3002/user/${id}`, {
+        const resultPut = await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`, {
            cantidadPost: filterCantidadPost[0] + 1
       })
       }
@@ -204,7 +149,7 @@ console.log(resultValidacion)
       }
       return true;
     };
-  
+
     if (trabajoFiltrado) {
       if (validateFields()) {
         const userConfirmation = window.confirm("Editar, recuerda que no podrás modificar el título después.");
@@ -314,7 +259,7 @@ console.log(resultValidacion)
 
   async function uploadImage(files) {
     const selectedFile = files[0];
-    console.log(files[0]);
+
 
     if (selectedFile) {
       if (selectedFile.size < maxSiseMB) {
@@ -328,7 +273,7 @@ console.log(resultValidacion)
         try {
           const response = await axios.post("https://api.cloudinary.com/v1_1/dvr9giaia/upload", imageFormData);
           const data = response.data.secure_url;
-          console.log("Esta es la respuesta de la data", data);
+
           // Actualizar el estado de manera inmutable
           setWorkData(prevData => ({
             ...prevData,
@@ -363,7 +308,6 @@ console.log(resultValidacion)
 
 
   //Editar tarea
-  //console.log("Todos los trabajos", TodosLostrabajos);
 
   useEffect(() => {
     if (trabajoFiltrado) {
@@ -375,22 +319,60 @@ console.log(resultValidacion)
         image: trabajoFiltrado.image,
         price: trabajoFiltrado.price,
       });
-      //console.log("Este es el trabao Filtrado", trabajoFiltrado);
+
     }
   }, [trabajoFiltrado, id]);
   
 
-  //---- trae info del usuario ---
-  const { user } = useSelector((state) => state.users);
+const [usuario, setUsuario] = useState([])
 
-  useEffect(() => {
-    dispatch(getUser(id));
-  }, [dispatch, id]);
+useEffect(() => {
+   const getUser = async () => {
+     const response = await axios(`https://skillhub-back-production.up.railway.app/user/`)
+     setUsuario(response.data.filter((element) => element.uid === id))
+     
+     
+   }
+   getUser();
+ }, [id])
+ 
+//console.log(usuario);
+ const filterUser = () => {
+  if (usuario.filter((element) => element.uid === id).map(({ pay }) => pay)[0] === undefined) {
+   return 'No hay suscripción';
+  } else if(!usuario.filter((element) => element.uid === id).map(({ pay }) => pay.subscription)){
+   return 'No hay suscripción';
+  } else if (usuario.filter((element) => element.uid === id).some(({ pay }) => pay.subscription === true)) {
+   return usuario.filter((element) => element.uid === id).map(({ pay }) => pay.plan)[0];
+  } else {
+   return 'No hay suscripción';
+  }
+  };
+
+  const filterCantidadPost = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)
+  const filterCantidadPost2 = usuario.filter((element) => element.uid === id).map(({cantidadPost}) => cantidadPost)[0]
+  
+
+  const findValidacion = () => {
+   if(filterUser() === 'No hay suscripción') {
+     return 'No se encontro suscripcion activa'
+   }
+   else if (filterUser() === "Plan BRONCE" && filterCantidadPost2 === 2) {
+      return 'cumplio la cantidad'
+   } else if (filterUser() === "Plan ORO" && filterCantidadPost2 === 15) {
+    return 'cumplio la cantidad' 
+    }  else {
+      return 'Suscripción activa'
+   }
+  
+  
+}
+const resultValidacion = findValidacion();
+
 
   return (
-    usuario.length === 0 ? <Loader/> : 
    ( <div>
-    {resultValidacion === 'Suscripción activa' || trabajoFiltrado  ? 
+    {  userCredentials  && (usuario.length===1 ?resultValidacion === 'Suscripción activa':userCredentials)? 
 
       <div className="flex flex-col items-center justify-center">
         <Nav />
@@ -406,7 +388,7 @@ console.log(resultValidacion)
 
         <form onSubmit={(event) => handleSubmit(event)}
           className="flex flex-col justify-center items-center bg-blue-800 bg-opacity-20 p-6 rounded-lg shadow-neutral-900 shadow-lg mb-5" >
-          {trabajoFiltrado ? (
+          { trabajoFiltrado ? (
             <h1 className="text-3xl text-center text-white mb-7 mt-6">
               Editar
             </h1>
@@ -574,19 +556,19 @@ console.log(resultValidacion)
       : (
         <div className="flex justify-center items-center" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "70vh", backgroundColor: "white", color: "black"}}>
               <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
-              {user.firstName}, no existe suscripcion activa y/o cumplió con el limite permitido de publicaciones. Por favor, accede a un plan para  disfrutar de nuestros beneficios.
+               No existe suscripcion activa y/o cumplió con el limite permitido de publicaciones. Por favor, accede a un plan para  disfrutar de nuestros beneficios.
           </p>
           <p className="title" style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>¡Esperamos contar con usted!</p>
     
     
-            <div className="flex justify-between w-1/2">
+            {/* <div className="flex justify-between w-1/2">
           <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/home`}>
           <button justifyContent= 'flex-start' className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Ir al inicio</button>
           </NavLink>
           <NavLink to={`http://localhost:5173/user-panel/${user?.uid}/memberShip`}>
             <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">Suscripción</button> 
           </NavLink>
-            </div>
+            </div> */}
             </div>
           )}
       <Footer />
