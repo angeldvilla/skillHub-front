@@ -46,6 +46,7 @@ const Accessibility = () => {
             Accessibility Team SkillHub Inc., 150 Greenwich Street, Floor 62,
             Por cualquier consulta general, comunícate
             con Atención al Cliente a través del siguiente medio:
+            correoSkillHub@gmail.com
           </p>
         </div>
       </div>

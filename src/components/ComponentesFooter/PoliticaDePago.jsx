@@ -25,7 +25,7 @@ export default function PoliticaDePago() {
     <div className="bodyStyle">
     <Atras></Atras>
     <div className="backgroundBlack"> 
-    <h1> Politicas de Pago @SkillHub.netlifly.app </h1>
+    <h1> Politicas de Pago @SkillHub.netlify.app </h1>
     <p>Última actualización: hace 5 meses</p>
     </div>
     <hr />
