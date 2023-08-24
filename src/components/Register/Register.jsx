@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations */
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { postUser } from "../../toolkit/Users/usersHandler";
+import { postUser, getUsers } from "../../toolkit/Users/usersHandler";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -19,10 +19,18 @@ import {
   validateUserData,
   resetUserData,
 } from "../../utils/userDataValidation";
+import emailjs from "@emailjs/browser";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 
 export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { users } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -34,6 +42,16 @@ export default function Register() {
   });
 
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,16 +63,6 @@ export default function Register() {
   const handleOnClick = async (e) => {
     const platform = e.currentTarget.getAttribute("data-platform");
 
-    const hasEmptyValues = Object.values(userData).some(
-      (value) => value === ""
-    );
-    const hasErrors = Object.keys(errors).length;
-
-    if (platform === "email" && (hasEmptyValues || hasErrors)) {
-      toast.error("Datos no validos");
-      return;
-    }
-
     try {
       switch (platform) {
         case "google":
@@ -65,28 +73,46 @@ export default function Register() {
             uid: userCredentials.user.uid,
             accessToken: userCredentials.user.accessToken,
           };
+
           const displayName = userCredentials.user.displayName;
-          const [firstName, lastName] = displayName.split(' ');
-          const phoneNumber = "3015487655";
+          const [firstName, lastName] = displayName.split(" ");
+
           const userAuth = {
             uid: googleCredentials.uid,
-            firstName: firstName, 
-            lastName: lastName, 
+            firstName: firstName,
+            lastName: lastName,
             email: userCredentials.user.email,
-            phoneNumber: phoneNumber,
+            phoneNumber: "",
+            image: userCredentials.user.photoURL,
           };
-          dispatch(postUser(userAuth));
-          dispatch(userLogin(googleCredentials));
-          setErrors({});
-          resetUserData(setUserData);
-          
+
+
           toast.message("Bienvenido", {
             description: userCredentials.user.displayName,
           });
 
+          dispatch(postUser(userAuth));
+          dispatch(userLogin(googleCredentials));
+          setErrors({});
+          resetUserData(setUserData);
+
           localStorage.setItem(
             "userCredentials",
             JSON.stringify(googleCredentials)
+          );
+
+          // Envío del correo
+          const authUser = {
+            to_email: userCredentials.user.email,
+            user_first_name: firstName,
+            user_last_name: lastName,
+          };
+
+          const emailJSResponse = await emailjs.send(
+            "service_lfymgxc",
+            "template_fi0kha4",
+            authUser,
+            "RY2Fv-D-bvjhDwd_H"
           );
 
           setTimeout(() => {
@@ -94,7 +120,6 @@ export default function Register() {
             navigate(`/user-panel/${uid}/home`);
           }, 2000);
 
-         
           break;
         case "github":
           toast.message("GitHub", {
@@ -106,20 +131,16 @@ export default function Register() {
             description: "Próximamente",
           });
           break;
-        case "email":
-          console.log("Email");
-          break;
         default:
           break;
       }
     } catch (error) {
-      toast.error("Ups, algo salió mal");
+      console.error(error);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const platform = e.currentTarget.getAttribute("data-platform");
 
     try {
       const userCredentials = await createUserWithEmailAndPassword(
@@ -135,12 +156,8 @@ export default function Register() {
         lastName,
         email,
         phoneNumber,
+        image: "",
       };
-
-      dispatch(postUser(newUser));
-      toast.message("Bienvenido", {
-        description: userCredentials.user.email,
-      });
 
       localStorage.setItem(
         "userCredentials",
@@ -150,30 +167,57 @@ export default function Register() {
         })
       );
 
+      dispatch(postUser(newUser));
+      dispatch(
+        userLogin({
+          uid: userCredentials.user.uid,
+          accessToken: userCredentials.user.accessToken,
+        })
+      );
+
+      toast.message("Bienvenido", {
+        description: userCredentials.user.email,
+      });
+
+      // Envío del correo
+      const registerParams = {
+        to_email: userData.email,
+        user_first_name: userData.firstName,
+        user_last_name: userData.lastName,
+      };
+
+      const emailJSResponse = await emailjs.send(
+        "service_n97ipmm",
+        "template_du3d689",
+        registerParams,
+        "M2HzawMtj0qzxyVZx"
+      );
+
       setTimeout(() => {
-        const uid = newUser.uid;
-        navigate(`/user-panel/${uid}/home`);
-      }, 2000);
+        navigate(`/user-panel/${userCredentials.user.uid}/home`);
+      }, 3000);
 
       resetUserData(setUserData);
 
       return userCredentials;
     } catch (error) {
-      if (platform === "google" || platform === "email") {
-        switch (error.code) {
-          case "auth/email-already-in-use":
-            toast.error("Email en uso");
-            break;
-          case "auth/invalid-email":
-            toast.error("Email inválido");
-            break;
-          case "auth/weak-password":
-            toast.error("Contraseña demasiado débil");
-            break;
-          default:
-            toast.error("Ups, algo salió mal");
-        }
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          toast.error("Email en uso");
+          break;
+        case "auth/invalid-email":
+          toast.error("Email inválido");
+          break;
+        case "auth/missing-password":
+          toast.error("Contraseña requerida");
+          break;
+        case "auth/weak-password":
+          toast.error("Contraseña demasiado débil");
+          break;
+        default:
+          break;
       }
+      console.error(error);
     }
   };
 
@@ -255,15 +299,27 @@ export default function Register() {
             )}
 
             {/* Password */}
-            <Input
-              type="text"
-              size="lg"
-              label="Password"
-              color="black"
-              name="password"
-              value={userData.password}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                size="lg"
+                label="Contraseña"
+                color="black"
+                name="password"
+                value={userData.password}
+                onChange={handleChange}
+              />
+              <span
+                className="cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-6 w-5 text-black" />
+                ) : (
+                  <EyeIcon className="h-6 w-5 text-black" />
+                )}
+              </span>
+            </div>
             {errors.password && (
               <span className="text-center text-sm text-red-500">
                 {errors.password}
@@ -271,15 +327,27 @@ export default function Register() {
             )}
 
             {/* Confirm Password */}
-            <Input
-              type="text"
-              size="lg"
-              label="Confirm password"
-              color="black"
-              name="confirmPassword"
-              value={userData.confirmPassword}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <Input
+                type={showConfirmPassword ? "text" : "password"}
+                size="lg"
+                label="Confirmar Contraseña"
+                color="black"
+                name="confirmPassword"
+                value={userData.confirmPassword}
+                onChange={handleChange}
+              />
+              <span
+                className="cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"
+                onClick={toggleConfirmPasswordVisibility}
+              >
+                {showConfirmPassword ? (
+                  <EyeSlashIcon className="h-6 w-5 text-black" />
+                ) : (
+                  <EyeIcon className="h-6 w-5 text-black" />
+                )}
+              </span>
+            </div>
             {errors.confirmPassword && (
               <span className="text-center text-sm text-red-500">
                 {errors.confirmPassword}
@@ -290,8 +358,8 @@ export default function Register() {
           {/* Buttons */}
           <div className="flex flex-col">
             <button
+              type="submit"
               data-platform="email"
-              onClick={handleOnClick}
               className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-gray-500 transition-all font-semibold"
             >
               Registrarse
@@ -349,4 +417,3 @@ export default function Register() {
     </div>
   );
 }
-

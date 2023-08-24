@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUsers, getUser, postUser, logoutUser } from "./usersHandler";
+import {
+  getUsers,
+  getUsersByName,
+  getUser,
+  postUser,
+} from "./usersHandler";
 
 const storedCredentials = JSON.parse(localStorage.getItem("userCredentials"));
 
@@ -17,6 +22,15 @@ export const userSlice = createSlice({
     userLogin: (state, { payload }) => {
       state.userCredentials = payload;
     },
+    clearError: (state) => {
+      state.error = null;
+    },
+    putUserInfo: (state, { payload }) => {
+      state.user = payload
+    },
+    logoutUserSesion: (state) => {
+      state.userCredentials = null
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -32,6 +46,21 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(getUsers.rejected, (state, { error }) => {
+        state.isLoading = false;
+        state.error = error.message;
+      })
+
+      // Get users by name
+      .addCase(getUsersByName.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getUsersByName.fulfilled, (state, { payload }) => {
+        state.users = payload;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getUsersByName.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = error.message;
       })
@@ -63,24 +92,9 @@ export const userSlice = createSlice({
       .addCase(postUser.rejected, (state, { error }) => {
         state.isLoading = false;
         state.error = error.message;
-      })
-
-      // Logout User
-      .addCase(logoutUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(logoutUser.fulfilled, (state, { payload }) => {
-        state.userCredentials = payload
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(logoutUser.rejected, (state, { error }) => {
-        state.isLoading = false;
-        state.error = error.message;
       });
   },
 });
 
-export const { userLogin } = userSlice.actions;
+export const { userLogin, clearError, putUserInfo, logoutUserSesion } = userSlice.actions;
 export default userSlice.reducer;

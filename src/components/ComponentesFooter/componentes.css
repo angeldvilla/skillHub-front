@@ -1,0 +1,135 @@
+.containerPolitici{
+text-align: center;
+font-family: 'Arial Narrow Bold';
+
+}
+.containerCondUso{
+  font-family: 'Arial Narrow Bold';
+}
+.backgroundBlack{
+  background-color: black;
+  color: aliceblue;
+  margin-right: 60%;
+}
+.ContainerPolitPago{
+  font-family: 'Arial Narrow Bold';
+}
+.containerPolitici h1{
+    font-size: 50px;
+}
+.containerPolitici h3{
+    font-size: 30px;
+}
+.containerOp h4{
+    font-size: 30px;
+    margin-bottom: 5%;
+    margin-top: 10%;
+
+}
+.spanStyle span{
+    font-size: 20px;
+  
+}
+.ulStyle ul{
+    text-align: justify;
+}
+.containerBackgrond{
+
+background-color: #63676726; 
+  padding: 20px; 
+  border-radius: 10px; 
+
+  box-shadow: 3px 3px 5px rgb(0, 0, 0);
+  
+}
+  
+  .iconStyle h1{
+        
+display: flex;
+justify-content:center;
+margin-bottom: 30px;
+
+  }
+  .iconStyle h3{
+    display: flex;
+justify-content:center;
+margin-bottom: 30px;
+margin-top: 10px;
+  }
+  .iconCondicionesDeUso{
+    font-size: 100px;
+  }
+  .titleServCliente h1{
+    font-size: 30px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+
+  }
+  .museStyle h3{
+    cursor: pointer;
+    color: rgb(104, 110, 241);
+  }
+  .my-atropos {
+    width: 320px;
+    height: 160px;
+  }
+ .efect{
+  display: block;
+  white-space:nowrap;
+  border-right: 1px solid;
+  width: 55ch;
+  animation:typing 8s steps(80), 
+  blink .6s infinite step-end alternate;
+  overflow:hidden;
+ }
+ @keyframes typing{
+  from{width:0}
+ }
+ @keyframes blink{
+  50% {border-color:transparent}
+ }
+ .bodyStyle{
+  margin-left: 100px;
+ }
+ .bodyStyle h1{
+  text-align:left;
+  font-size: xx-large;
+  margin-top: 60px;
+
+ 
+ }
+
+ .bodyStyle h2{
+  margin-top: 60px;
+
+ }
+ .bodyStyle ul{
+  margin-top: 40px;
+  margin-right: 50px;
+  
+ }
+ .bodyStyle li{
+  font-size: 17px;
+  margin-top: 30px;
+ }
+ .icon{
+  font-size: 30px;
+  
+ }
+ .containerBackgrond{
+  margin-bottom: 200px;
+ }
+ .functionAtras{
+  font-size: 50px;
+ }
+ .positionButon{
+  display: flex;
+  margin-left: 13%;
+  margin-top: 5%;
+
+ }
+ .positionBack{
+  display: flex;
+ }
+
+ 

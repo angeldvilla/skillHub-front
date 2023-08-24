@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   GoogleAuthProvider,
@@ -15,10 +15,25 @@ import github from "../../assets/github.svg";
 import facebook from "../../assets/facebook.svg";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Toaster, toast } from "sonner";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
+import { getUsers, postUser } from "../../toolkit/Users/usersHandler";
 
 export default function Login() {
+  const { users } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const admin = users.find(
+    (user) => user.uid === "Zqaz0B6durdS841Bd7e3qJdbjEU2"
+  );
+
+  useEffect(() => {
+    dispatch(getUsers());
+    if (admin) {
+      setIsAdmin(true);
+    }
+  }, [dispatch, admin]);
 
   const [userData, setUserData] = useState({
     email: "",
@@ -26,6 +41,12 @@ export default function Login() {
   });
 
   const [errors, setErrors] = useState({});
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,11 +78,36 @@ export default function Login() {
             uid: userCredentials.user.uid,
             accessToken: userCredentials.user.accessToken,
           };
-          dispatch(userLogin(googleCredentials));
+
+          const displayName = userCredentials.user.displayName;
+          const [firstName, lastName] = displayName.split(" ");
+
+          const newUser = {
+            uid: googleCredentials.uid,
+            firstName: firstName,
+            lastName: lastName,
+            email: userCredentials.user.email,
+            phoneNumber: "",
+            image: userCredentials.user.photoURL,
+          };
+
+          const userAuth = users.find(
+            (user) => user.uid === googleCredentials.uid
+          );
+          const usLog = [userAuth].some((user) => user.habilitar === true);
+
+          if (!usLog) {
+            toast.error("No tienes acceso a esta plataforma");
+            return;
+          }
+
+          dispatch(postUser(newUser));
 
           toast.message("Bienvenido", {
             description: userCredentials.user.displayName,
           });
+
+          dispatch(userLogin(googleCredentials));
 
           // Almacena las credenciales en el Local Storage
           localStorage.setItem(
@@ -71,8 +117,12 @@ export default function Login() {
 
           setTimeout(() => {
             const uid = googleCredentials.uid;
-            navigate(`/user-panel/${uid}/home`);
-          }, 2000);
+            if (isAdmin && googleCredentials.uid === "Zqaz0B6durdS841Bd7e3qJdbjEU2") {
+              navigate(`/user-panel/${uid}/dashboard/admin`);
+            } else {
+              navigate(`/user-panel/${uid}/home`);
+            }
+          });
 
           break;
         case "github":
@@ -111,24 +161,38 @@ export default function Login() {
         uid: userCredentials.user.uid,
         accessToken: userCredentials.user.accessToken,
       };
-      dispatch(userLogin(credentials));
 
-      // Almacena las credenciales en el Local Storage
-      localStorage.setItem("userCredentials", JSON.stringify(credentials));
+      const logUser = users.find(
+        (user) => user.uid === userCredentials.user.uid
+      );
+      const userAuth1 = [logUser].some((user) => user.habilitar === true);
 
-      setUserData({
-        email: "",
-        password: "",
-      });
+      if (!userAuth1) {
+        toast.error("No tienes acceso a esta plataforma");
+      } else {
+        dispatch(userLogin(credentials));
 
-      toast.message("Bienvenido", {
-        description: userCredentials.user.email,
-      });
+        // Almacena las credenciales en el Local Storage
+        localStorage.setItem("userCredentials", JSON.stringify(credentials));
 
-      setTimeout(() => {
-        const uid = credentials.uid;
-        navigate(`/user-panel/${uid}/home`);
-      }, 2000);
+        setUserData({
+          email: "",
+          password: "",
+        });
+
+        toast.message("Bienvenido", {
+          description: userCredentials.user.email,
+        });
+
+        setTimeout(() => {
+          const uid = credentials.uid;
+          if (isAdmin && credentials.uid === "Zqaz0B6durdS841Bd7e3qJdbjEU2") {
+            navigate(`/user-panel/${uid}/dashboard/admin`);
+          } else {
+            navigate(`/user-panel/${uid}/home`);
+          }
+        });
+      }
     } catch (error) {
       if (platform === "google" || platform === "email") {
         switch (error.code) {
@@ -148,7 +212,7 @@ export default function Login() {
             toast.error("Usuario desactivado");
             break;
           default:
-            toast.error("Ups, algo salió mal");
+            break;
         }
       }
     }
@@ -171,15 +235,27 @@ export default function Login() {
               value={userData.email}
               onChange={handleChange}
             />
-            <Input
-              type="password"
-              size="lg"
-              label="Contraseña"
-              color="black"
-              name="password"
-              value={userData.password}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                size="lg"
+                label="Contraseña"
+                color="black"
+                name="password"
+                value={userData.password}
+                onChange={handleChange}
+              />
+              <span
+                className="cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-6 w-5 text-black" />
+                ) : (
+                  <EyeIcon className="h-6 w-5 text-black" />
+                )}
+              </span>
+            </div>
           </div>
           <button
             data-platform="email"

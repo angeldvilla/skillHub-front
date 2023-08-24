@@ -3,7 +3,10 @@ import {useParams } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
+import logoSkillHub from "../../assets/skillHub.jpg";
+import { Button } from "@material-tailwind/react";
 import emailjs from '@emailjs/browser';
+
 
 const Next = () => {
   // Token
@@ -12,7 +15,7 @@ const Next = () => {
   const navigate = useNavigate()
 
   const { payment_id } = useParams();
-  
+ 
   const [datos,setDatos] =useState([])
   const [resultUser,setResultUser] =useState({})
   const [id_client,setId_client] =useState("")
@@ -42,23 +45,27 @@ const Next = () => {
       setId_client(result.data.metadata.user_id) // id del cliente
 
       //Traemos el usuario de la BD
-        const {data} = await axios.get(`http://localhost:3002/user/${id_client}`)
+        const {data} = await axios.get(`https://skillhub-back-production.up.railway.app/user/${result.data.metadata.user_id}`)
         setResultUser(data)
         }
 
         busqueda() 
-        }, [payment_id,id_client]);
+        }, []);
         
+        //Cargar los datos  a la BD 
     const handleGuardarDatos=()=>{
-
-      //Cargar los datos  a la BD
-
       const saveData=async()=>{
-        return await axios.post("http://localhost:3002/payment/save",datos)
+        return await axios.post("https://skillhub-back-production.up.railway.app/payment/save",datos)
       }
     saveData()
+    const changeCantidadPost = async () => {
+      return await axios.put(`https://skillhub-back-production.up.railway.app/user/${id_client}`,
+      {cantidadPost: 0}
+      )
+      }
+      changeCantidadPost();
 
-    navigate(`/user-panel/${id_client}/createWork`)
+    navigate(`/user-panel/${id_client}/home`)
   
     //Enviar el mensaje de confirmación de pago al usuario
 
@@ -70,20 +77,30 @@ const Next = () => {
     }
 
     emailjs
-    .send("service_lfymgxc", "template_yjh5uy5", dataUser,"RY2Fv-D-bvjhDwd_H")
+    .send("service_n97ipmm", "template_0i2a9rd", dataUser,"M2HzawMtj0qzxyVZx")
     .then((result) => {console.log(result.text)},
       (error) => console.log(error.text));
     
     }
 
   return (
-  <div>
-    TU pago se ralizó con exito
-    <br/>
-    {datos===null?<Loader/>:<button onClick={handleGuardarDatos}> next</button>}
-
-  </div>
-  )
+    <div className="flex justify-center items-center" style={{ display: "flex", flexDirection: "column", justifycontent: "center", alignItems: "center", minHeight: "100vh", backgroundColor: "white", color: "black" }}>
+      <img src={logoSkillHub} alt="Logo de la empresa" style={{ width: "200px", marginBottom: "21px", borderRadius: '50%' }} />
+      <p className="title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px", width: "50%", textAlign: "center"}}>
+        ¡Listo para llevar tus propuestas al mundo!
+      </p>
+      <p className="description" style={{ fontSize: "18px", marginBottom: "20px", width: "50%", textAlign: "center"}}>
+        En SkillHub, nos complace brindarte una experiencia excepcional. Contáctanos ante cualquier consulta o inquietud.
+      </p>
+      {datos === null ? (
+        <Loader />
+      ) : (
+        <div>
+         <Button className = "flex w-max gap-4"  color='blue' onClick={handleGuardarDatos}>CONTINUAR</Button>
+         </div>
+      )}
+    </div>
+  );
 }
 
 export default Next

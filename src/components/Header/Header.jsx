@@ -15,13 +15,13 @@ import {
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
-  HeartIcon,
-  MapPinIcon,
+  ShieldCheckIcon,
+  QuestionMarkCircleIcon,
   ChevronDownIcon,
   ArrowUpRightIcon,
   Bars2Icon,
+  StarIcon
 } from "@heroicons/react/24/outline";
-
 
 
 const ProfileMenu = () => {
@@ -34,8 +34,7 @@ const ProfileMenu = () => {
     {
       label: "Registrarse",
       value: "signup",
-      icon: ArrowUpRightIcon
-  ,
+      icon: ArrowUpRightIcon,
     },
   ];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,7 +51,6 @@ const ProfileMenu = () => {
           color="blue-gray"
           className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
         >
-          
           <Avatar
             variant="circular"
             size="md"
@@ -73,33 +71,30 @@ const ProfileMenu = () => {
         {profileMenuItems.map(({ label, icon, value }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
-            <Link
-            key={key}
-            to={`/${value}`}
-            >
+            <Link key={key} to={`/${value}`}>
               {
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-blue-500/10 focus:bg-blue-500/10 active:bg-blue-500/10"
-                  : ""
-              }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-blue-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="paragraph"
-                className="font-normal"
-                color={isLastItem ? "blue" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
+                <MenuItem
+                  key={label}
+                  onClick={closeMenu}
+                  className={`flex items-center gap-2 rounded ${
+                    isLastItem
+                      ? "hover:bg-blue-500/10 focus:bg-blue-500/10 active:bg-blue-500/10"
+                      : ""
+                  }`}
+                >
+                  {React.createElement(icon, {
+                    className: `h-4 w-4 ${isLastItem ? "text-blue-500" : ""}`,
+                    strokeWidth: 2,
+                  })}
+                  <Typography
+                    as="span"
+                    variant="paragraph"
+                    className="font-normal"
+                    color={isLastItem ? "blue" : "inherit"}
+                  >
+                    {label}
+                  </Typography>
+                </MenuItem>
               }
             </Link>
           );
@@ -109,31 +104,42 @@ const ProfileMenu = () => {
   );
 };
 
+const NavList = () => {
 
-/* const NavList = () => {
   // Nav List component
   const navListItems = [
     {
-      label: "Favoritos",
-      value: "favorites",
-      icon: HeartIcon,
+      label: "Ayuda",
+      value: "help",
+      icon: QuestionMarkCircleIcon,
     },
     {
-      label: "Ubicación",
-      value: "ubication",
-      icon: MapPinIcon,
+      label: "Soporte",
+      value: "support",
+      icon: ShieldCheckIcon,
     },
-  
+    {
+      label: "Calificanos",
+      value: "rating",
+      icon: StarIcon,
+    },
   ];
-  return (
+
+ return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {navListItems.map(({ label, icon, value }, key) => (
         <a
           key={key}
           href={`/${value}`}
+          color="blue-gray"
+          className="font-normal"
         >
           {
-            <MenuItem className="flex items-center gap-2 lg:rounded-full text-lg text-black">
+            <MenuItem
+              className={`flex items-center gap-2 lg:rounded-full text-lg text-black ${
+                value === "membership" ? "cursor-pointer" : ""
+              }`}
+            >
               {React.createElement(icon, { className: "h-[24px] w-[24px]" })}{" "}
               {label}
             </MenuItem>
@@ -142,51 +148,52 @@ const ProfileMenu = () => {
       ))}
     </ul>
   );
-}; */
+};
 
 export default function Header() {
+
   const [dropDownOpen, setDropDownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropDownOpen((cur) => !cur);
-  };
+  }
 
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setDropDownOpen(false)
-    )
-  }, [])
+    );
+  }, []);
 
   return (
-    <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
-    <div className="flex items-center justify-between ">
-      <div className="flex items-center space-x-4">
-        <a href="/" className="gap-9">
-          <img
-            src={logoSkillHub}
-            className="w-20 h-auto rounded-full border-4 border-sky-500 mt-2"
-            alt="skillHub Logo"
-          />
-        </a>
-        <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-          {/* <NavList /> */}
+    <div className="w-full bg-gray-400 lg:pl-6 px-4 py-2">
+      <div className="flex items-center justify-between ">
+        <div className="flex items-center space-x-4">
+          <a href="/" className="gap-9">
+            <img
+              src={logoSkillHub}
+              className="w-16 h-auto rounded-full border-4 border-black mt-2"
+              alt="skillHub Logo"
+            />
+          </a>
+          <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+            <NavList/>
+          </div>
+          <IconButton
+            size="sm"
+            color="blue-gray"
+            variant="text"
+            onClick={toggleDropdown}
+            className="ml-auto mr-2 lg:hidden"
+          >
+            <Bars2Icon className="h-6 w-6" />
+          </IconButton>
         </div>
-        <IconButton
-          size="sm"
-          color="blue-gray"
-          variant="text"
-          onClick={toggleDropdown}
-          className="ml-auto mr-2 lg:hidden"
-        >
-          <Bars2Icon className="h-6 w-6" />
-        </IconButton>
+        <ProfileMenu />
       </div>
-      <ProfileMenu />
+      <Collapse open={dropDownOpen} className="overflow-scroll">
+        <NavList/>
+      </Collapse>
     </div>
-        {/*<Collapse open={dropDownOpen} className="overflow-scroll">
-           <NavList /> 
-        </Collapse>*/}
-</div>
   );
 }
