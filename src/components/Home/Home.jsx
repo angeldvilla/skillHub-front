@@ -13,7 +13,6 @@ import Filters from "../filters/Filters";
 import Footer from "../Footer/Footer";
 import Paginated from "../Paginated/Paginated";
 import Loader from "../Loader/Loader";
-import axios from "axios";
 export default function Home() {
   const { id } = useParams();
 

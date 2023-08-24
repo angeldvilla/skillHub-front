@@ -52,10 +52,13 @@ import { allWork, getWorkName, startIsLoading, detailWork, postPagos,  } from ".
     }
   }
 
-export const reviews =  createAsyncThunk ("score/sendScore", async(score) => {
-
+export const reviews =  createAsyncThunk ("score/sendScore", async({score, message}) => {
+  const response = {
+    score: score,
+    message: message
+  };
     try {
-      const { data } = await axios.post('https://skillhub-back-production.up.railway.app/reviews', score) 
+      const { data } = await axios.post('https://skillhub-back-production.up.railway.app/reviews', response) 
       return data
       
     } catch (error) {

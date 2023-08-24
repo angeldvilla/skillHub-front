@@ -29,6 +29,7 @@ import {
   PaperClipIcon,
   ShieldCheckIcon,
   QuestionMarkCircleIcon,
+  StarIcon
 } from "@heroicons/react/24/outline";
 
 
@@ -249,6 +250,11 @@ const NavList = () => {
       label: "Suscripción",
       value: "membership",
       icon: CreditCardIcon,
+    },
+    {
+      label: "Calificanos",
+      value: "rating",
+      icon: StarIcon,
     },
   ];
 

@@ -23,6 +23,7 @@ import Admin from "./components/Admin/Admin";
 import UsersList from "./components/Admin/Views/UsersList";
 import Reviews from "./components/Admin/Views/Reviews";
 import Payments from "./components/Admin/Views/Payments";
+import Rating from "./components/PanelUser/FAQ/Rating";
 /* import Charts from "./components/Admin/Views/Charts"; */
 /* ------------------------------------------- */
 
@@ -69,7 +70,7 @@ function App() {
       <Route path="/abautUs" element={<AbautUs />} />
       <Route path="/help" element={<Help />} />
       <Route path="/support" element={<Support />} />
-
+      <Route path="/rating"element={<Rating />} />
 
       {/* RUTAS DE FOOTER EN PROCESO */}
       <Route path="/privacy-policies" element={<PoliticasDePriv />} />
@@ -205,6 +206,12 @@ function App() {
           path="support"
           element={
             userCredentials ? <Support /> : <Navigate to="/error404" replace />
+          }
+        />
+        <Route
+          path="rating"
+          element={
+            userCredentials ? <Rating /> : <Navigate to="/error404" replace />
           }
         />
         <Route
