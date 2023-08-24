@@ -10,3 +10,14 @@ export const TABLE_HEAD = [
   // "Activo",
   "Acciones",
 ];
+
+export const TABLE_PAYMENT_HEAD = [
+  "ID",
+  "Plan",
+  "Precio",
+  "Usuario",
+  "Estado",
+  "ID de Compra",
+  "Subscripción",
+  "Fecha de Creación",
+];

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import logoSkillHub from "../../assets/skillHub.jpg";
 import userProfile from "../../assets/user-profile.svg";
 import { logoutUser } from "../../toolkit/Users/usersHandler";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 import {
   Collapse,
@@ -29,14 +29,13 @@ import {
   PaperClipIcon,
   ShieldCheckIcon,
   QuestionMarkCircleIcon,
-  UsersIcon,
 } from "@heroicons/react/24/outline";
 
-const ProfileMenu = ({ userAuth, handleLogout }) => {
 
+const ProfileMenu = ({ userAuth, handleLogout }) => {
   const { id } = useParams();
-  
-  const { userCredentials } = useSelector(state => state.users);
+
+  const { userCredentials } = useSelector((state) => state.users);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -44,17 +43,18 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
     setIsMenuOpen(false);
   };
 
-  const [isAdmin, setIsAdmin] = useState(false)
-  useEffect(()=>{
-   if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2")
-   setIsAdmin(true)
-  }, [])
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2") setIsAdmin(true);
+  }, [id]);
 
   // profile menu component
   const profileMenuItems = [
     {
       label: `${
-        userAuth ? `Bienvenido, ${userAuth?.firstName} ${userAuth?.lastName}` : ""
+        userAuth
+          ? `Bienvenido, ${userAuth?.firstName} ${userAuth?.lastName}`
+          : ""
       }`,
       value: "my-profile",
       icon: UserCircleIcon,
@@ -86,30 +86,20 @@ const ProfileMenu = ({ userAuth, handleLogout }) => {
   const profileMenuItems2 = [
     {
       label: `${
-        userAuth ? `Bienvenido, ${userAuth?.firstName} ${userAuth?.lastName}` : ""
+        userAuth
+          ? `Bienvenido, ${userAuth?.firstName} ${userAuth?.lastName}`
+          : ""
       }`,
-      value: "my-profile",
       icon: UserCircleIcon,
     },
     {
-      label: "Ver todos los trabajos",
-      value: "home",
-      icon: FolderIcon,
-    },
-    {
-      label: "Usuarios",
-      value: "Dashboard",
-      icon: UsersIcon,
-    },
-    {
       label: "Cerrar Sesión",
-      value: "signin",
       icon: PowerIcon,
       onclick: handleLogout,
     },
   ];
 
-return (
+  return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
         <Button
@@ -133,118 +123,116 @@ return (
           />
         </Button>
       </MenuHandler>
-      
+
       <MenuList className="p-1">
-        {isAdmin ? (
-        profileMenuItems2.map(({ label, icon, value, onclick }, key) => {
-          const isLastItem = key === profileMenuItems2.length - 1;
+        {isAdmin
+          ? profileMenuItems2.map(({ label, icon, onclick }, key) => {
+              const isLastItem = key === profileMenuItems2.length - 1;
 
-          return (
-            <div key={key}>
-              {isLastItem ? (
-                <MenuItem
-                  key={label}
-                  onClick={onclick}
-                  className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
-                >
-                  {React.createElement(icon, {
-                    className: `h-4 w-4 text-red-500`,
-                    strokeWidth: 2,
-                  })}
-
-                  <Typography
-                    as="span"
-                    variant="small"
-                    className="font-normal text-red-500"
-                  >
-                    {label}
-                  </Typography>
-                </MenuItem>
-              ) : (
-                <a key={key} href={`/user-panel/${userCredentials.uid}/${value}`}>
-                  <MenuItem
-                    key={label}
-                    onClick={onclick || closeMenu}
-                    className={`flex items-center gap-2 rounded hover:bg-gray-500/10 focus:bg-gray-500/10 active:bg-gray-500/10`}
-                  >
-                    {React.createElement(icon, {
-                      className: `h-4 w-4`,
-                      strokeWidth: 2,
-                    })}
-
-                    <Typography
-                      as="span"
-                      variant="small"
-                      className="font-normal"
-                    >
-                      {label}
-                    </Typography>
-                  </MenuItem>
-                </a>
-              )}
-            </div>
-          );
-        })
-        ) 
-        : (
-          profileMenuItems.map(({ label, icon, value, onclick }, key) => {
-            const isLastItem = key === profileMenuItems.length - 1;
-  
-            return (
-              <div key={key}>
-                {isLastItem ? (
-                  <MenuItem
+              return (
+                <div key={key}>
+                  {isLastItem ? (
+                    <MenuItem
                     key={label}
                     onClick={onclick}
                     className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
-                  >
-                    {React.createElement(icon, {
-                      className: `h-4 w-4 text-red-500`,
-                      strokeWidth: 2,
-                    })}
-  
-                    <Typography
-                      as="span"
-                      variant="small"
-                      className="font-normal text-red-500"
-                    >
-                      {label}
-                    </Typography>
-                  </MenuItem>
-                ) : (
-                  <a key={key} href={`/user-panel/${userCredentials.uid}/${value}`}>
-                    <MenuItem
-                      key={label}
-                      onClick={onclick || closeMenu}
-                      className={`flex items-center gap-2 rounded hover:bg-gray-500/10 focus:bg-gray-500/10 active:bg-gray-500/10`}
                     >
                       {React.createElement(icon, {
-                        className: `h-4 w-4`,
+                        className: `h-4 w-4 text-red-500`,
                         strokeWidth: 2,
                       })}
-  
+
                       <Typography
                         as="span"
                         variant="small"
-                        className="font-normal"
+                        className="font-normal text-red-500"
+                        >
+                        {label}
+                      </Typography>
+                    </MenuItem>
+                  ) : (
+                      <MenuItem
+                        key={label}
+                        onClick={onclick || closeMenu}
+                        className={`flex items-center gap-2 rounded hover:bg-gray-500/10 focus:bg-gray-500/10 active:bg-gray-500/10`}
+                      >
+                        {React.createElement(icon, {
+                          className: `h-4 w-4`,
+                          strokeWidth: 2,
+                        })}
+
+                        <Typography
+                          as="span"
+                          variant="small"
+                          className="font-normal"
+                        >
+                          {label}
+                        </Typography>
+                      </MenuItem>
+                  )}
+                </div>
+              );
+            })
+          : profileMenuItems.map(({ label, icon, value, onclick }, key) => {
+              const isLastItem = key === profileMenuItems.length - 1;
+
+              return (
+                <div key={key}>
+                  {isLastItem ? (
+                    <MenuItem
+                      key={label}
+                      onClick={onclick}
+                      className={`flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
+                    >
+                      {React.createElement(icon, {
+                        className: `h-4 w-4 text-red-500`,
+                        strokeWidth: 2,
+                      })}
+
+                      <Typography
+                        as="span"
+                        variant="small"
+                        className="font-normal text-red-500"
                       >
                         {label}
                       </Typography>
                     </MenuItem>
-                  </a>
-                )}
-              </div>
-            );
-          })
-        )}
+                  ) : (
+                    <a
+                      key={key}
+                      href={`/user-panel/${userCredentials.uid}/${value}`}
+                    >
+                      <MenuItem
+                        key={label}
+                        onClick={onclick || closeMenu}
+                        className={`flex items-center gap-2 rounded hover:bg-gray-500/10 focus:bg-gray-500/10 active:bg-gray-500/10`}
+                      >
+                        {React.createElement(icon, {
+                          className: `h-4 w-4`,
+                          strokeWidth: 2,
+                        })}
+
+                        <Typography
+                          as="span"
+                          variant="small"
+                          className="font-normal"
+                        >
+                          {label}
+                        </Typography>
+                      </MenuItem>
+                    </a>
+                  )}
+                </div>
+              );
+            })}
       </MenuList>
     </Menu>
   );
 };
 
 const NavList = () => {
-  const { userCredentials } = useSelector(state=> state.users);
-  
+  const { userCredentials } = useSelector((state) => state.users);
+
   // Nav List component
   const navListItems = [
     {
@@ -287,15 +275,13 @@ const NavList = () => {
 };
 
 export default function Nav() {
-
   const { id } = useParams();
-  
-  const [isAdmin, setIsAdmin] = useState(false)
-  useEffect(()=>{
-   if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2")
-   setIsAdmin(true)
-  }, [])
-   
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    if (id === "Zqaz0B6durdS841Bd7e3qJdbjEU2") setIsAdmin(true);
+  }, [id]);
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -313,7 +299,7 @@ export default function Nav() {
     setTimeout(() => {
       toast.message("Hasta pronto! Su sesión ha sido cerrada");
       navigate("/home");
-    })
+    });
   };
 
   useEffect(() => {
@@ -324,21 +310,37 @@ export default function Nav() {
   }, []);
 
   return (
-  <React.Fragment>
-      
+    <React.Fragment>
       {isAdmin ? (
-        <div className="w-full bg-gray-500 lg:rounded-md lg:pl-6 px-4 py-2">
-          <div className="flex items-center justify-between">
+        <div>
+          <IconButton
+              size="sm"
+              color="blue-gray"
+              variant="text"
+              onClick={toggleIsNavOpen}
+              className="ml-auto mr-2 lg:hidden"
+            >
+            <Bars2Icon className="h-6 w-6" />
+          </IconButton>
+          <ProfileMenu userAuth={user} handleLogout={handleLogout} />
+        </div> 
+    
+      ) : (
+        <div className="w-full bg-gray-300 bg-opacity-50 backdrop-blur-xl lg:pl-6 px-4 py-2">
+          <div className="flex items-center justify-between ">
             <div className="flex items-center space-x-4">
-              <a href={`/user-panel/${id}/home`} className="gap-9">
+              <a
+                href={`/user-panel/${userCredentials.uid}/home`}
+                className="gap-9"
+              >
                 <img
                   src={logoSkillHub}
-                  className="w-16 h-auto rounded-full border-4 border-black mt-"
+                  className="w-16 h-auto rounded-full border-2 border-black mt-"
                   alt="skillHub Logo"
                 />
               </a>
-              <div className="absolute top-12 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-                <span className="text-white text-lg">Perfil de Administrador</span>
+              <div className="absolute top-10 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+                <NavList />
               </div>
               <IconButton
                 size="sm"
@@ -352,39 +354,11 @@ export default function Nav() {
             </div>
             <ProfileMenu userAuth={user} handleLogout={handleLogout} />
           </div>
+          <Collapse open={isNavOpen} className="overflow-scroll">
+            <NavList />
+          </Collapse>
         </div>
-    ) : (
-    <div className="w-full bg-gray-300 bg-opacity-50 backdrop-blur-xl lg:pl-6 px-4 py-2">
-    <div className="flex items-center justify-between ">
-      <div className="flex items-center space-x-4">
-        <a href={`/user-panel/${userCredentials.uid}/home`} className="gap-9">
-          <img
-            src={logoSkillHub}
-            className="w-16 h-auto rounded-full border-2 border-black mt-"
-            alt="skillHub Logo"
-          />
-        </a>
-        <div className="absolute top-10 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
-          <NavList />
-        </div>
-        <IconButton
-          size="sm"
-          color="blue-gray"
-          variant="text"
-          onClick={toggleIsNavOpen}
-          className="ml-auto mr-2 lg:hidden"
-        >
-          <Bars2Icon className="h-6 w-6" />
-        </IconButton>
-      </div>
-      <ProfileMenu userAuth={user} handleLogout={handleLogout} />
-    </div>
-    <Collapse open={isNavOpen} className="overflow-scroll">
-       <NavList /> 
-    </Collapse>
-  </div>
-    )
-  }
-  </React.Fragment>
-);
+      )}
+    </React.Fragment>
+  );
 }
