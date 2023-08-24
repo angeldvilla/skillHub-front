@@ -14,7 +14,6 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../../toolkit/Users/usersHandler";
 import { toast } from "sonner";
-import { Button } from "@material-tailwind/react";
 
 const menuItems = [
   {
@@ -138,20 +137,19 @@ const Icon = ({icon, label, route, expanded, isActive, isLogout = false}) => {
 
   return (
     <li
-      className={`list-none mb-6 relative text-[#8c8a95] text-center w-auto ${
+      className={`list-none mb-6 flex justify-center text-[#8c8a95] text-center w-auto ${
         expanded ? "expanded-icon" : ""
       }`}
     >
       {isLogout ? (
-        <Button
+        <button
           onClick={handleLogout}
-          className={`w-full ${expanded ? "w-auto mt-2" : ""}`}
-          ripple="light"
+          className={`w-auto ${!expanded ? "w-auto mt-2" : ""}`}
           color="gray"
         >
-          <FaSignOutAlt />
-          {expanded && <p className="ml-5 font-semibold">Logout</p>}
-        </Button>
+          {!expanded && <FaSignOutAlt/> }
+          {expanded && <p className="font-semibold flex gap-3 justify-center items-center hover:text-[#6bcc3e]"> <FaSignOutAlt/> Logout</p>}
+        </button>
       ) : (
         <NavLink
           to={route}
