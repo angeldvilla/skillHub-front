@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../toolkit/Users/usersHandler";
+import { getUsers, getUser } from "../../toolkit/Users/usersHandler";
 import Nav from "../PanelUser/Nav";
 import Loader from "../Loader/Loader";
 import Menu from "./Views/Menu";
 
 
 export default function Admin() {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.users);
+  const { users, userCredentials } = useSelector((state) => state.users);
   const location = useLocation();
 
   const [expanded, setExpanded] = useState(true);
@@ -20,7 +21,10 @@ export default function Admin() {
   useEffect(
     () => {
       dispatch(getUsers());
-    }, [dispatch]
+      if(userCredentials && userCredentials.uid === id){
+        dispatch(getUser(id));
+      }
+    }, [dispatch, id, userCredentials]
   );
 
   const isDashboardNavRender = location.pathname.includes("list-services") || location.pathname.includes("settings") || location.pathname.includes("details-services"); 
@@ -57,5 +61,3 @@ export default function Admin() {
     </div>
   );
 }
-
-//cambios finales

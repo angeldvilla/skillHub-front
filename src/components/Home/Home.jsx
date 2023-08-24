@@ -26,7 +26,7 @@ export default function Home() {
     if (userCredentials && userCredentials.uid === id) {
       dispatch(getUser(id));
     }
-  }, [dispatch, id, userCredentials]);
+  }, [dispatch, id, userCredentials, work.length]);
 
   const indexOfLastWork = currentPage * worksPerPage;
   const indexOfFirstWork = indexOfLastWork - worksPerPage;

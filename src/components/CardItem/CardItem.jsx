@@ -54,10 +54,10 @@ const CardItem = ({ _id, title, image, address, price, ability }) => {
     console.log("ID del trabajo a eliminar:", trabajoId);
 
     toast.success("Trabajo eliminado con exito!");
-    dispatch(getWork());
+    setShowDeleteConfirmation(false);
     setTimeout(() => {
       navigate(location.pathname);
-    }, 2000);
+    });
   }
 
   if (isAdmin) {

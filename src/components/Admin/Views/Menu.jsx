@@ -4,7 +4,6 @@ import {
   FaDashcube,
   FaUsers,
   FaFolder,
-  FaChartLine,
   FaCog,
   FaSignOutAlt,
   FaBars,
@@ -33,11 +32,6 @@ const menuItems = [
     label: "Servicios",
     route: "list-services",
   },
-  /* {
-    icon: <FaChartLine />,
-    label: "Graficos",
-    route: "charts",
-  }, */
   {
     icon: <FaCcMastercard />,
     label: "Pagos",
@@ -130,14 +124,14 @@ function Menu({ expanded, toggleExpand }) {
   );
 }
 
-const Icon = ({ icon, label, route, expanded, onclick, isActive, isLogout = false}) => {
+const Icon = ({icon, label, route, expanded, isActive, isLogout = false}) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const handleLogout = () => {
+    toast.message("Hasta pronto! Su sesión ha sido cerrada");
     dispatch(logoutUser());
     setTimeout(() => {
-      toast.message("Hasta pronto! Su sesión ha sido cerrada");
       navigate("/home");
     });
   };
@@ -151,11 +145,12 @@ const Icon = ({ icon, label, route, expanded, onclick, isActive, isLogout = fals
       {isLogout ? (
         <Button
           onClick={handleLogout}
-          className={`flex-1 w-auto items-center justify-center transition-all duration-300 ${
-            expanded ? "w-auto" : "w-full"
-          } `}
-          >
+          className={`w-full ${expanded ? "w-auto mt-2" : ""}`}
+          ripple="light"
+          color="gray"
+        >
           <FaSignOutAlt />
+          {expanded && <p className="ml-5 font-semibold">Logout</p>}
         </Button>
       ) : (
         <NavLink

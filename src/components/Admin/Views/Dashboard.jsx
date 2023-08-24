@@ -8,12 +8,8 @@ import axios from "axios";
 const Dashboard = () => {
   const { work } = useSelector((state) => state.work);
   const { users, userCredentials } = useSelector((state) => state.users);
-  const totalUsers = users.length;
-  const totalServices = work.length;
-
   const [payments, setPayments] = useState([]);
-
-
+  const [reviews, setReviews] = useState([]);
     const getPayments = async () => {
       try {
         const { data } = await axios(
@@ -26,21 +22,35 @@ const Dashboard = () => {
     };
     getPayments();
 
-  const totalPayments = payments.length;
-  const totalRatings = 120;
+    const getReviews = async () => {
+      try {
+        const { data } = await axios(
+          "https://skillhub-back-production.up.railway.app/reviews"
+        );
+        setReviews(data);
+      } catch (error) {
+        console.error("Error al obtener las calificaciones:", error);
+      }
+    };
+    getReviews();
+
+    const totalUsers = users.length;
+    const totalServices = work.length;
+    const totalPayments = payments.length;
+    const totalRatings = reviews.length;
 
   return (
     <div>
-        <Typography variant="h2" className="text-center">
+        <Typography variant="h3" className="text-center mb-7">
           Admin Dashboard
         </Typography>
     
-      <div className="fgap-10">
+      <div className="flex flex-col justify-between gap-1">
       {/* USERS */}
       <a
       href={`/user-panel/${userCredentials.uid}/dashboard/list-users`}>
         <Card className="bg-red-700">
-          <div className="p-4 text-center">
+          <div className="p-2 text-center">
             <Typography variant="h5" color="white">
               Usuarios
             </Typography>
@@ -58,7 +68,7 @@ const Dashboard = () => {
         <a
         href={`/user-panel/${userCredentials.uid}/dashboard/list-services`}>
         <Card className="bg-green-700">
-          <div className="p-4 text-center">
+          <div className="p-2 text-center">
             <Typography variant="h5" color="white">
               Servicios
             </Typography>
@@ -76,7 +86,7 @@ const Dashboard = () => {
         <a
         href={`/user-panel/${userCredentials.uid}/dashboard/payments`}>
         <Card className="bg-blue-500">
-          <div className="p-4 text-center">
+          <div className="p-2 text-center">
             <Typography variant="h5" color="white">
               Pagos
             </Typography>
@@ -94,7 +104,7 @@ const Dashboard = () => {
         <a
       href={`/user-panel/${userCredentials.uid}/dashboard/reviews`}>
         <Card className="bg-yellow-700">
-          <div className="p-4 text-center">
+          <div className="p-2 text-center">
             <Typography variant="h5" color="white">
               Calificaciones
             </Typography>
