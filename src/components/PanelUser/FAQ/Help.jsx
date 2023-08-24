@@ -78,26 +78,7 @@ const Help = () => {
               Ver Planes de Suscripción
             </a>
           </div>
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">Guías y Recursos</h3>
-            <ul className="text-gray-600 space-y-2">
-              <li>
-                <a href="#" className="hover:text-blue-500">
-                  Cómo optimizar tu experiencia de usuario.
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-500">
-                  Aprovecha al máximo nuestras funciones.
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-500">
-                  Cómo mantener tu cuenta segura.
-                </a>
-              </li>
-            </ul>
-          </div>
+    
           <div>
             <h3 className="text-lg font-semibold mb-2">
               ¿Necesitas Ayuda Personalizada?
@@ -107,13 +88,6 @@ const Help = () => {
               para ayudarte de manera personalizada. No dudes en contactarnos
               para obtener la asistencia que necesitas.
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition-transform w-full"
-            >
-              Contactar Soporte
-            </motion.button>
           </div>
         </div>
       </div>
