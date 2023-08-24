@@ -12,6 +12,8 @@ import { getUser } from "../../toolkit/Users/usersHandler";
 // Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@material-tailwind/react";
+
 
 import axios from "axios";
 
@@ -302,9 +304,9 @@ export default function FormCreateWork() {
   const tiposSelected = workdata.ability.map((cat) => (
     <div key={cat}>
       <span>{cat}</span>
-      <button
+      <Button
         onClick={() => handleDelete(cat)}
-        className="p-0.5 ml-1 bg-gray-800 text-white rounded-md w-6 h-6 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-sm transition text-xs flex items-center justify-center"       > x </button>
+        className="p-0.5 ml-1 bg-gray-800 text-white rounded-md w-6 h-6 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-sm transition text-xs flex items-center justify-center"  color="red"     > x </Button>
     </div>
   ));
 
@@ -358,10 +360,13 @@ export default function FormCreateWork() {
   let previewImage = workdata.image ? (
     <span style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
       <span>Imagen Seleccionada</span>
+      <br />
       <img
         src={workdata.image}
-        alt="Previsualización"
+        alt="nature image"
         style={{ maxWidth: "200px", height: "200px", margin: "auto" }}
+        className="h-96 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
+
       />
     </span>
   ) : null;
@@ -541,6 +546,7 @@ export default function FormCreateWork() {
                 Imagen:
               </label>
               <input
+              
                 type="file"
                 name="image"
                 onChange={(event) => {
