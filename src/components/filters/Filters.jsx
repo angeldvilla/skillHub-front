@@ -15,19 +15,15 @@ export default function Filters() {
   const dispatch = useDispatch();
 
   //AGREGAMOS LAS CATEGORIAS DE TRABAJOS
-
-  const allCategory = useSelector((state) => state.formwork.allWorkTypes);
+  const categories = useSelector((state) => state.formwork.allWorkTypes);
 
   useEffect(() => {
     dispatch(getTypes());
   }, [dispatch]);
 
-  //--------------------------------------------
-
   const handleOrdertitle = (value) => {
     dispatch(filterName(value));
     dispatch(setCurrentPage(1));
-    console.log(value);
   };
 
   const handleFilterPrice = (value) => {
@@ -47,7 +43,7 @@ export default function Filters() {
 
   return (
     <div className="flex justify-between items-center w-full py-5 px-10 border-b-2 bg-gray-900">
-      <div className="flex flex-row items-center gap-4 px-8">
+      <div className="flex items-center gap-4 px-8">
         <div className="w-60">
           <Select
             label="Ordenar"
@@ -115,13 +111,7 @@ export default function Filters() {
             }}
             onChange={handleFilterTypeWork}
           >
-            <Option
-              value="all"
-              className="text-gray-800 hover:bg-gray-300 transition duration-150"
-            >
-              Todas
-            </Option>
-            {allCategory.map((element, index) => (
+            {categories.map((element, index) => (
               <Option
                 key={index}
                 value={element.category}
