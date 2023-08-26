@@ -105,10 +105,10 @@ export const workSlice = createSlice({
       //RESPUESTA
 
       if (state.isAll === true) {
-        if (action.payload !== "all") state.work = state.filterWork4;
+        if (action.payload !== "Todas") state.work = state.filterWork4;
         else state.work = state.filterWork3;
       } else {
-        action.payload === "all"
+        action.payload === "Todas"
           ? (state.work = typeWorkConditioned)
           : (state.work = typeWorkConditioned.filter((element) =>
               element.ability.includes(action.payload)
