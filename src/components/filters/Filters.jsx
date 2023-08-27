@@ -1,20 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filterName,
   filterPrice,
   filterTypeWork,
   setCurrentPage,
+  resetFilters,
 } from "../../toolkit/slice";
-import { getWork } from "../../toolkit/thunks";
 import SearchBar from "../SearchBar/SearchBar";
 import { getTypes } from "../../toolkit/ActionsworkPublications";
 import { Button, Select, Option } from "@material-tailwind/react";
 
 export default function Filters() {
   const dispatch = useDispatch();
+  const [selectKey, setSelectKey] = useState(0);
 
-  //AGREGAMOS LAS CATEGORIAS DE TRABAJOS
   const categories = useSelector((state) => state.formwork.allWorkTypes);
 
   useEffect(() => {
@@ -36,8 +36,9 @@ export default function Filters() {
     dispatch(setCurrentPage(1));
   };
 
-  const resetFilters = () => {
-    dispatch(getWork());
+  const handleReset = () => {
+    setSelectKey((prevKey) => prevKey + 1);
+    dispatch(resetFilters());
     dispatch(setCurrentPage(1));
   };
 
@@ -50,6 +51,7 @@ export default function Filters() {
             labelProps={{
               className: "text-gray-200",
             }}
+            key={selectKey}
             onChange={handleOrdertitle}
           >
             <Option
@@ -72,6 +74,7 @@ export default function Filters() {
             labelProps={{
               className: "text-gray-200",
             }}
+            key={selectKey}
             onChange={handleFilterPrice}
           >
             <Option className="text-gray-800 hover:bg-gray-300 transition duration-150">
@@ -109,6 +112,7 @@ export default function Filters() {
             labelProps={{
               className: "text-gray-200",
             }}
+            key={selectKey}
             onChange={handleFilterTypeWork}
           >
             {categories.map((element, index) => (
@@ -124,7 +128,7 @@ export default function Filters() {
         </div>
         <Button
           color="gray"
-          onClick={resetFilters}
+          onClick={handleReset}
           className="text-white bg-blue-600 hover:bg-blue-500 transition duration-150 ml-10"
         >
           Limpiar filtros
