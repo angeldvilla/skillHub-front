@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   work: [],
+  workBackUp: [],
   filterWork: [],
   filterWork2: [],
   filterWork3: [],
@@ -23,6 +24,7 @@ export const workSlice = createSlice({
 
     allWork: (state, action) => {
       state.isLoading = false;
+      state.workBackUp = action.payload.resultWork;
       state.work = action.payload.resultWork; // para renderizar en home
       state.filterWork = action.payload.resultWork; // para el filtro por nombre
       state.filterWork2 = action.payload.resultWork; // para el filtro por precio
@@ -137,6 +139,10 @@ export const workSlice = createSlice({
       state.currentPage = payload;
       state.error = null;
     },
+
+    resetFilters: (state) => {
+      state.work = state.workBackUp;
+    },
   },
 });
 
@@ -152,6 +158,7 @@ export const {
   setCurrentPage,
   getUsers,
   postPagos,
+  resetFilters,
 } = workSlice.actions;
 
 //export default workSlice.reducer
