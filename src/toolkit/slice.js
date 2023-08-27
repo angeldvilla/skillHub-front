@@ -142,6 +142,11 @@ export const workSlice = createSlice({
 
     resetFilters: (state) => {
       state.work = state.workBackUp;
+      state.filterWork = state.workBackUp;
+      state.filterWork2 = state.workBackUp;
+      state.filterWork3 = state.workBackUp;
+      state.filterWork4 = state.workBackUp;
+      state.filterWork5 = state.workBackUp;
     },
   },
 });
