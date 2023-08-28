@@ -30,19 +30,30 @@ export default function JobDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
   const { detail, isLoading } = useSelector((state) => state.work);
   const { users, user, userCredentials } = useSelector((state) => state.users);
   const infoUser = users.find((user) => user.uid === detail.users);
-  console.log(infoUser);
 
   useEffect(() => {
-    userCredentials !== null && dispatch(getUser(userCredentials.uid));
-    dispatch(getDetailWork(id));
-    dispatch(getUsers());
+    if(userCredentials !== null) {
+      dispatch(getUser(userCredentials.uid));
+      dispatch(getDetailWork(id));
+      dispatch(getUsers());
+    }
+    if(userCredentials === null) {
+      dispatch(getDetailWork(id));
+      dispatch(getUsers());
+    }
+    if (userCredentials !== null && userCredentials.uid === "Zqaz0B6durdS841Bd7e3qJdbjEU2"){
+      setIsAdmin(true);
+    }
+
     return () => {
       dispatch(detailReset());
     };
-  }, [dispatch, id, userCredentials, users.length]);
+
+  }, [dispatch, id, userCredentials]);
 
   const images = [detail?.image];
 
@@ -52,11 +63,6 @@ export default function JobDetail() {
       : navigate(`/user-panel/${user.uid}/home`);
   };
 
-  const [isAdmin, setIsAdmin] = useState(false);
-  useEffect(() => {
-    if (userCredentials.uid === "Zqaz0B6durdS841Bd7e3qJdbjEU2") setIsAdmin(true);
-  }, [userCredentials.uid]);
-  console.log(isAdmin);
 
   return (
     <div>
