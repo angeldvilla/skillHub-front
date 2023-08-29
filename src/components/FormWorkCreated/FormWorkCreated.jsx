@@ -37,6 +37,7 @@ export default function FormCreateWork() {
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
   const [fileSelected, setFileSelected] = useState(false); //Soluciona el filed seleccionado
   const [selectKey, setSelectKey] = useState(0);
+  const [selectKey1, setSelectKey1] = useState(1);
   const fileInputRef = useRef(null);
   const TodosLostrabajos = useSelector((state) => state.work.work);
   const { userCredentials } = useSelector((state) => state.users);
@@ -218,6 +219,7 @@ export default function FormCreateWork() {
     setPriceValue("");
     setFileSelected(false);
     setSelectKey((prevKey) => prevKey + 1);
+    setSelectKey1((prevKey) => prevKey + 10);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -501,7 +503,7 @@ export default function FormCreateWork() {
 
                   <Select
                     label="Tipo de pago"
-                    // key={selectKey}
+                    key={selectKey}
                     size="lg"
                     onChange={(value) => handleSelectPrice(value)}
                   >
@@ -518,7 +520,7 @@ export default function FormCreateWork() {
 
                   <Select
                     label="Categorias"
-                    key={selectKey}
+                    key={selectKey1}
                     size="lg"
                     onChange={(value) => handleSelect(value)}
                   >
