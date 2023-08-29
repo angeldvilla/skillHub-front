@@ -585,8 +585,6 @@ export default function FormCreateWork() {
                     className="bg-neutral-800 text-black rounded-sm hover:bg-sky-700"
                     ref={fileInputRef}
                   />
-                  {fileSelected && <p>Archivo seleccionado</p>}
-
                   {previewImage}
                   {errors.image && (
                     <span className="text-center text-sm text-red-500">
