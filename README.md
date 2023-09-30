@@ -78,4 +78,4 @@ Este es el frontend de SkillHub, una aplicación que conecta a personas con habi
 Si deseas contribuir a este proyecto, ¡estamos encantados de recibir tus aportaciones! Puedes hacerlo a través de pull requests.
 
 ---------
-Este README proporciona una descripción detallada de las tecnologías utilizadas, cómo configurar el proyecto, las funcionalidades principales y una visión general de cómo contribuir al proyecto. Puedes personalizarlo aún más según las necesidades de tu proyecto. ¡Espero que te sea útil!
+Este README proporciona una descripción detallada de las tecnologías utilizadas, cómo configurar el proyecto, las funcionalidades principales y una visión general de cómo contribuir al proyecto.
