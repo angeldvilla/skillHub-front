@@ -1,10 +1,10 @@
-import mercadopago from "../../assets/mercadopago.png";
-import { Toaster, toast } from "sonner";
+import { Toaster, toast } from 'sonner'
+import { useSelector } from 'react-redux'
 
-import { useSelector } from "react-redux";
+import mercadopago from '../../assets/mercadopago.png'
 
 export default function Footer() {
-  const { userCredentials } = useSelector((state) => state.users);
+  const { userCredentials } = useSelector((state) => state.users)
 
   return (
     <footer className="bg-blue-800 text-gray-400 text-md pt-8 w-full">
@@ -12,66 +12,57 @@ export default function Footer() {
         <a
           href={
             userCredentials === null
-              ? "/terms-of-use"
+              ? '/terms-of-use'
               : `/user-panel/${userCredentials.uid}/terms-of-use`
           }
         >
-       
           <button
-            name="Condiciones de uso"
             className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition"
+            name="Condiciones de uso"
           >
             Condiciones de uso
           </button>
         </a>
         <button
-          name="Políticas de privacidad"
           className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12"
+          name="Políticas de privacidad"
         >
           <a
             href={
               userCredentials === null
-                ? "/privacy-policies"
+                ? '/privacy-policies'
                 : `/user-panel/${userCredentials.uid}/privacy-policies`
             }
           >
             Políticas de Privacidad
           </a>
-
         </button>
 
-
-
         <button
-          name="accessibility"
           className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12 "
+          name="accessibility"
         >
           <a
             href={
               userCredentials === null
-                ? "/accessibility"
+                ? '/accessibility'
                 : `/user-panel/${userCredentials.uid}/accessibility`
             }
           >
-           Accesibilidad
+            Accesibilidad
           </a>
-
         </button>
-
-
-
-        
 
         <a
           href={
             userCredentials === null
-              ? "/payment-policies"
+              ? '/payment-policies'
               : `/user-panel/${userCredentials.uid}/payment-policies`
           }
         >
           <button
-            name="Políticas de pago"
             className="py-2 rounded-sm hover:text-white hover:border-cyan-700 transition lg:border-l-2 lg:pl-12 "
+            name="Políticas de pago"
           >
             Politicas de Pago
           </button>
@@ -80,10 +71,10 @@ export default function Footer() {
       <div className="md:flex md:flex-row md:justify-around md:px-4 xl:mx-32 xl:mt-8 2xl:mx-64">
         <div className="flex justify-center">
           <img
-            src={mercadopago}
             alt="mercadopago-logo"
             className="w-40 hover:cursor-pointer"
-            onClick={() => window.open("https://www.mercadopago.com.ar/")}
+            src={mercadopago}
+            onClick={() => window.open('https://www.mercadopago.com.ar/')}
           />
         </div>
         <div className="flex flex-col justify-center text-center">
@@ -100,5 +91,5 @@ export default function Footer() {
       </div>
       <Toaster closeButton />
     </footer>
-  );
+  )
 }

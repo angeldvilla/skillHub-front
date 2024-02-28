@@ -1,23 +1,25 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getUser } from "../../../toolkit/Users/usersHandler";
-import Footer from "../../Footer/Footer";
-import Nav from "../Nav";
-import background from "../../../assets/backgroundImage.jpg";
-import Header from "../../Header/Header";
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
-const Help = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
+import { getUser } from '../../../toolkit/Users/usersHandler'
+import Footer from '../../Footer/Footer'
+import Nav from '../Nav'
+import background from '../../../assets/backgroundImage.jpg'
+import Header from '../../Header/Header'
 
-  const { userCredentials } = useSelector((state) => state.users);
+function Help() {
+  const { id } = useParams()
+  const dispatch = useDispatch()
+
+  const { userCredentials } = useSelector((state) => state.users)
 
   useEffect(() => {
     if (userCredentials !== null) {
-      dispatch(getUser(id));
+      dispatch(getUser(id))
     }
-  }, [dispatch, id, userCredentials]);
+  }, [dispatch, id, userCredentials])
+
   return (
     <div className="min-h-screen bg-gray-200 flex flex-col">
       <style>
@@ -42,9 +44,9 @@ const Help = () => {
       <div
         className="absolute top-0 left-0 w-full h-full bg-cover bg-center blur brightness-50 z-[-1]"
         style={{
-          backgroundImage: `url(${background})`,
+          backgroundImage: `url(${background})`
         }}
-      ></div>
+      />
       <div className="flex-1 flex justify-center items-center py-10">
         <div className="bg-white rounded-lg shadow-md w-3/6 p-8">
           <div className="mb-6">
@@ -66,10 +68,11 @@ const Help = () => {
               beneficios exclusivos que cada plan ofrece para elegir el mejor
               para ti.
             </p>
-            <p className="text-blue-500 hover:underline">Ver Planes de Suscripción</p>
-           
+            <p className="text-blue-500 hover:underline">
+              Ver Planes de Suscripción
+            </p>
           </div>
-    
+
           <div>
             <h3 className="text-lg font-semibold mb-2">
               ¿Necesitas Ayuda Personalizada?
@@ -84,7 +87,7 @@ const Help = () => {
       </div>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Help;
+export default Help

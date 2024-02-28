@@ -1,309 +1,307 @@
 /* eslint-disable no-case-declarations */
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { postUser, getUsers } from "../../toolkit/Users/usersHandler";
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../../firebase";
-import { userLogin } from "../../toolkit/Users/usersSlice";
-import { Toaster, toast } from "sonner";
-import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import google from "../../assets/google.svg";
-import github from "../../assets/github.svg";
-import facebook from "../../assets/facebook.svg";
-import {
-  validateUserData,
-  resetUserData,
-} from "../../utils/userDataValidation";
-import emailjs from "@emailjs/browser";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
+  createUserWithEmailAndPassword
+} from 'firebase/auth'
+import { Toaster, toast } from 'sonner'
+import { Card, Input, Button, Typography } from '@material-tailwind/react'
+import emailjs from '@emailjs/browser'
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/20/solid'
+
+import { postUser, getUsers } from '../../toolkit/Users/usersHandler'
+import { auth } from '../../firebase'
+import { userLogin } from '../../toolkit/Users/usersSlice'
+import google from '../../assets/google.svg'
+import github from '../../assets/github.svg'
+import facebook from '../../assets/facebook.svg'
+import { validateUserData, resetUserData } from '../../utils/userDataValidation'
 
 export default function Register() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+    dispatch(getUsers())
+  }, [dispatch])
 
   const [userData, setUserData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-    confirmPassword: "",
-  });
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: ''
+  })
 
-  const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState({})
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+    setShowConfirmPassword(!showConfirmPassword)
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
-    setUserData({ ...userData, [name]: value });
-    setErrors(validateUserData(name, value, userData));
-  };
+    setUserData({ ...userData, [name]: value })
+    setErrors(validateUserData(name, value, userData))
+  }
 
   const handleOnClick = async (e) => {
-    const platform = e.currentTarget.getAttribute("data-platform");
+    const platform = e.currentTarget.getAttribute('data-platform')
 
     try {
       switch (platform) {
-        case "google":
-          const googleProvider = new GoogleAuthProvider();
-          const userCredentials = await signInWithPopup(auth, googleProvider);
+        case 'google':
+          const googleProvider = new GoogleAuthProvider()
+          const userCredentials = await signInWithPopup(auth, googleProvider)
 
           const googleCredentials = {
             uid: userCredentials.user.uid,
-            accessToken: userCredentials.user.accessToken,
-          };
+            accessToken: userCredentials.user.accessToken
+          }
 
-          const displayName = userCredentials.user.displayName;
-          const [firstName, lastName] = displayName.split(" ");
+          const displayName = userCredentials.user.displayName
+          const [firstName, lastName] = displayName.split(' ')
 
           const userAuth = {
             uid: googleCredentials.uid,
             firstName: firstName,
             lastName: lastName,
             email: userCredentials.user.email,
-            phoneNumber: "",
-            image: userCredentials.user.photoURL,
-          };
+            phoneNumber: '',
+            image: userCredentials.user.photoURL
+          }
 
+          toast.message('Bienvenido', {
+            description: userCredentials.user.displayName
+          })
 
-          toast.message("Bienvenido", {
-            description: userCredentials.user.displayName,
-          });
-
-          dispatch(postUser(userAuth));
-          dispatch(userLogin(googleCredentials));
-          setErrors({});
-          resetUserData(setUserData);
+          dispatch(postUser(userAuth))
+          dispatch(userLogin(googleCredentials))
+          setErrors({})
+          resetUserData(setUserData)
 
           localStorage.setItem(
-            "userCredentials",
+            'userCredentials',
             JSON.stringify(googleCredentials)
-          );
+          )
 
           // Envío del correo
           const authUser = {
             to_email: userCredentials.user.email,
             user_first_name: firstName,
-            user_last_name: lastName,
-          };
+            user_last_name: lastName
+          }
 
           const emailJSResponse = await emailjs.send(
-            "service_n97ipmm",
-            "template_du3d689",
+            'service_n97ipmm',
+            'template_du3d689',
             authUser,
-            "M2HzawMtj0qzxyVZx"
-          );
+            'M2HzawMtj0qzxyVZx'
+          )
 
           setTimeout(() => {
-            const uid = googleCredentials.uid;
-            navigate(`/user-panel/${uid}/home`);
-          }, 2000);
+            const uid = googleCredentials.uid
 
-          break;
-        case "github":
-          toast.message("GitHub", {
-            description: "Próximamente",
-          });
-          break;
-        case "facebook":
-          toast.message("Facebook", {
-            description: "Próximamente",
-          });
-          break;
+            navigate(`/user-panel/${uid}/home`)
+          }, 2000)
+
+          break
+        case 'github':
+          toast.message('GitHub', {
+            description: 'Próximamente'
+          })
+          break
+        case 'facebook':
+          toast.message('Facebook', {
+            description: 'Próximamente'
+          })
+          break
         default:
-          break;
+          break
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         userData.email,
         userData.password
-      );
+      )
 
-      const { firstName, lastName, email, phoneNumber } = userData;
+      const { firstName, lastName, email, phoneNumber } = userData
       const newUser = {
         uid: userCredentials.user.uid,
         firstName,
         lastName,
         email,
         phoneNumber,
-        image: "",
-      };
+        image: ''
+      }
 
       localStorage.setItem(
-        "userCredentials",
+        'userCredentials',
         JSON.stringify({
           uid: userCredentials.user.uid,
-          accessToken: userCredentials.user.accessToken,
+          accessToken: userCredentials.user.accessToken
         })
-      );
+      )
 
-      dispatch(postUser(newUser));
+      dispatch(postUser(newUser))
       dispatch(
         userLogin({
           uid: userCredentials.user.uid,
-          accessToken: userCredentials.user.accessToken,
+          accessToken: userCredentials.user.accessToken
         })
-      );
+      )
 
-      toast.message("Bienvenido", {
-        description: userCredentials.user.email,
-      });
+      toast.message('Bienvenido', {
+        description: userCredentials.user.email
+      })
 
       // Envío del correo
       const registerParams = {
         to_email: userData.email,
         user_first_name: userData.firstName,
-        user_last_name: userData.lastName,
-      };
+        user_last_name: userData.lastName
+      }
 
       const emailJSResponse = await emailjs.send(
-        "service_n97ipmm",
-        "template_du3d689",
+        'service_n97ipmm',
+        'template_du3d689',
         registerParams,
-        "M2HzawMtj0qzxyVZx"
-      );
+        'M2HzawMtj0qzxyVZx'
+      )
 
       setTimeout(() => {
-        navigate(`/user-panel/${userCredentials.user.uid}/home`);
-      }, 3000);
+        navigate(`/user-panel/${userCredentials.user.uid}/home`)
+      }, 3000)
 
-      resetUserData(setUserData);
+      resetUserData(setUserData)
 
-      return userCredentials;
+      return userCredentials
     } catch (error) {
       switch (error.code) {
-        case "auth/email-already-in-use":
-          toast.error("Email en uso");
-          break;
-        case "auth/invalid-email":
-          toast.error("Email inválido");
-          break;
-        case "auth/missing-password":
-          toast.error("Contraseña requerida");
-          break;
-        case "auth/weak-password":
-          toast.error("Contraseña demasiado débil");
-          break;
+        case 'auth/email-already-in-use':
+          toast.error('Email en uso')
+          break
+        case 'auth/invalid-email':
+          toast.error('Email inválido')
+          break
+        case 'auth/missing-password':
+          toast.error('Contraseña requerida')
+          break
+        case 'auth/weak-password':
+          toast.error('Contraseña demasiado débil')
+          break
         default:
-          break;
+          break
       }
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   const handleReset = () => {
-    resetUserData(setUserData);
-    setErrors({});
-  };
+    resetUserData(setUserData)
+    setErrors({})
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen font-sans">
-      <Card shadow={false} className="bg-[#f8fafc] p-4 py-10 w-96">
-        <Typography variant="h4" color="blue-gray" className="mb-2">
+      <Card className="bg-[#f8fafc] p-4 py-10 w-96" shadow={false}>
+        <Typography className="mb-2" color="blue-gray" variant="h4">
           Registrarse
         </Typography>
-        <form onSubmit={handleSubmit} className="mt-4 mb-4">
+        <form className="mt-4 mb-4" onSubmit={handleSubmit}>
           <div className="mb-4 flex flex-col gap-4">
             {/* First Name */}
             <Input
-              type="text"
-              size="lg"
-              label="Nombre"
               color="black"
+              label="Nombre"
               name="firstName"
+              size="lg"
+              type="text"
               value={userData.firstName}
               onChange={handleChange}
             />
-            {errors.firstName && (
+            {errors.firstName ? (
               <span className="text-center text-sm text-red-500">
                 {errors.firstName}
               </span>
-            )}
+            ) : null}
 
             {/* Last Name */}
             <Input
-              type="text"
-              size="lg"
-              label="Apellido"
               color="black"
+              label="Apellido"
               name="lastName"
+              size="lg"
+              type="text"
               value={userData.lastName}
               onChange={handleChange}
             />
-            {errors.lastName && (
+            {errors.lastName ? (
               <span className="text-center text-sm text-red-500">
                 {errors.lastName}
               </span>
-            )}
+            ) : null}
 
             {/* Email */}
             <Input
-              type="text"
-              size="lg"
-              label="Email"
               color="black"
+              label="Email"
               name="email"
+              size="lg"
+              type="text"
               value={userData.email}
               onChange={handleChange}
             />
-            {errors.email && (
+            {errors.email ? (
               <span className="text-center text-sm text-red-500">
                 {errors.email}
               </span>
-            )}
+            ) : null}
 
             {/* Phone Number */}
             <Input
-              type="text"
-              size="lg"
-              label="Número de teléfono"
               color="black"
+              label="Número de teléfono"
               name="phoneNumber"
+              size="lg"
+              type="text"
               value={userData.phoneNumber}
               onChange={handleChange}
             />
-            {errors.phoneNumber && (
+            {errors.phoneNumber ? (
               <span className="text-center text-sm text-red-500">
                 {errors.phoneNumber}
               </span>
-            )}
+            ) : null}
 
             {/* Password */}
             <div className="relative">
               <Input
-                type={showPassword ? "text" : "password"}
-                size="lg"
-                label="Contraseña"
                 color="black"
+                label="Contraseña"
                 name="password"
+                size="lg"
+                type={showPassword ? 'text' : 'password'}
                 value={userData.password}
                 onChange={handleChange}
               />
@@ -318,20 +316,20 @@ export default function Register() {
                 )}
               </span>
             </div>
-            {errors.password && (
+            {errors.password ? (
               <span className="text-center text-sm text-red-500">
                 {errors.password}
               </span>
-            )}
+            ) : null}
 
             {/* Confirm Password */}
             <div className="relative">
               <Input
-                type={showConfirmPassword ? "text" : "password"}
-                size="lg"
-                label="Confirmar Contraseña"
                 color="black"
+                label="Confirmar Contraseña"
                 name="confirmPassword"
+                size="lg"
+                type={showConfirmPassword ? 'text' : 'password'}
                 value={userData.confirmPassword}
                 onChange={handleChange}
               />
@@ -346,33 +344,33 @@ export default function Register() {
                 )}
               </span>
             </div>
-            {errors.confirmPassword && (
+            {errors.confirmPassword ? (
               <span className="text-center text-sm text-red-500">
                 {errors.confirmPassword}
               </span>
-            )}
+            ) : null}
           </div>
 
           {/* Buttons */}
           <div className="flex flex-col">
             <button
-              type="submit"
-              data-platform="email"
               className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-gray-500 transition-all font-semibold"
+              data-platform="email"
+              type="submit"
             >
               Registrarse
             </button>
             <button
+              className="w-full mt-2 bg-gray-700 rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-gray-500 transition-all font-semibold"
               type="button"
               onClick={handleReset}
-              className="w-full mt-2 bg-gray-700 rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-gray-500 transition-all font-semibold"
             >
               Reiniciar
             </button>
           </div>
-          <Typography color="gray" className="mt-4 text-center font-normal">
-            ¿Ya tienes una cuenta?{" "}
-            <a href="/signin" className="font-semibold text-gray-600">
+          <Typography className="mt-4 text-center font-normal" color="gray">
+            ¿Ya tienes una cuenta?{' '}
+            <a className="font-semibold text-gray-600" href="/signin">
               Ingresa
             </a>
           </Typography>
@@ -385,33 +383,33 @@ export default function Register() {
           </Typography>
           <div className="flex justify-center gap-4 mt-2">
             <Button
+              ripple
+              color="white"
               data-platform="google"
               onClick={handleOnClick}
-              ripple={true}
-              color="white"
             >
-              <img src={google} alt="google-logo" className="w-6" />
+              <img alt="google-logo" className="w-6" src={google} />
             </Button>
             <Button
+              ripple
+              color="white"
               data-platform="facebook"
               onClick={handleOnClick}
-              ripple={true}
-              color="white"
             >
-              <img src={facebook} alt="facebook-logo" className="w-6" />
+              <img alt="facebook-logo" className="w-6" src={facebook} />
             </Button>
             <Button
+              ripple
+              color="white"
               data-platform="github"
               onClick={handleOnClick}
-              ripple={true}
-              color="white"
             >
-              <img src={github} alt="github-logo" className="w-6" />
+              <img alt="github-logo" className="w-6" src={github} />
             </Button>
           </div>
         </div>
       </Card>
-      <Toaster richColors closeButton />
+      <Toaster closeButton richColors />
     </div>
-  );
+  )
 }
