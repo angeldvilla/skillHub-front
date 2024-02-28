@@ -31,6 +31,8 @@ const WorkPerTime = ['/Hora', '/Fijo']
 const maxSiseMB = 3 * 1024 * 1024 // Tamaño de 3mb para las fotos
 
 export default function FormCreateWork() {
+  const URL = import.meta.env.VITE_URL
+
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -109,12 +111,9 @@ export default function FormCreateWork() {
   function handleSubmit(event) {
     event.preventDefault()
     const putUser = async () => {
-      const resultPut = await axios.put(
-        `https://skillhub-back-glsd.onrender.com/user/${id}`,
-        {
-          cantidadPost: filterCantidadPost[0] + 1
-        }
-      )
+      const resultPut = await axios.put(`${URL}/user/${id}`, {
+        cantidadPost: filterCantidadPost[0] + 1
+      })
     }
 
     putUser()
@@ -362,9 +361,7 @@ export default function FormCreateWork() {
 
   useEffect(() => {
     const getUser = async () => {
-      const response = await axios(
-        `https://skillhub-back-glsd.onrender.com/user/`
-      )
+      const response = await axios(`${URL}/user/`)
 
       setUsuario(response.data.filter((element) => element.uid === id))
     }

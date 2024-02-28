@@ -3,9 +3,11 @@ import axios from 'axios'
 import { AddWorks, EditWorks } from './sliceWorkPublication'
 import { GetAllWorkTypes, DeleteWorks } from './sliceWorkPublication'
 
+const URL = import.meta.env.VITE_URL
+
 export const postJobs = (workdata, id) => (dispatch) => {
   axios
-    .post(`https://skillhub-back-glsd.onrender.com/empleador/${id}`, workdata)
+    .post(`${URL}/empleador/${id}`, workdata)
     .then((res) => dispatch(AddWorks(res.data.results)))
     .catch((error) => console.log('Error con postWokrs', error))
 }
@@ -13,9 +15,7 @@ export const postJobs = (workdata, id) => (dispatch) => {
 export const getTypes = () => {
   return async function (dispatch) {
     try {
-      let json = await axios.get(
-        'https://skillhub-back-glsd.onrender.com/empleador/allType'
-      )
+      let json = await axios.get(`${URL}/empleador/allType`)
 
       return dispatch(GetAllWorkTypes(json.data))
     } catch (error) {
@@ -27,9 +27,7 @@ export const getTypes = () => {
 export const deleteWokrs = (trabajoId) => {
   return async function (dispatch) {
     try {
-      const response = await axios.delete(
-        `https://skillhub-back-glsd.onrender.com/empleador/${trabajoId}`
-      )
+      const response = await axios.delete(`${URL}/empleador/${trabajoId}`)
 
       dispatch(DeleteWorks(trabajoId))
     } catch (error) {
@@ -40,7 +38,7 @@ export const deleteWokrs = (trabajoId) => {
 
 export const editPost = (workdata, id) => (dispatch) => {
   axios
-    .put(`https://skillhub-back-glsd.onrender.com/empleador/${id}`, workdata)
+    .put(`${URL}/empleador/${id}`, workdata)
     .then((res) => dispatch(EditWorks(res.data.results)))
     .catch((error) => console.log('Error con EditWorks', error.response))
 }

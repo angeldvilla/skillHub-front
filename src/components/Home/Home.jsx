@@ -13,6 +13,8 @@ import Footer from '../Footer/Footer'
 import Paginated from '../Paginated/Paginated'
 
 export default function Home() {
+  const URL = import.meta.env.VITE_URL
+
   const { id } = useParams()
   const dispatch = useDispatch()
 
@@ -40,9 +42,7 @@ export default function Home() {
 
   const usersPaymentResult = async () => {
     //! la base de datos esta modificado
-    const resultPaymentUser = await axios(
-      `https://skillhub-back-glsd.onrender.com/payment/${id}`
-    )
+    const resultPaymentUser = await axios(`${URL}/payment/${id}`)
 
     setAllUseersPayment(
       resultPaymentUser.data.filter((element) => element.subscription === true)
@@ -50,7 +50,7 @@ export default function Home() {
   }
 
   const modifDate = async () => {
-    await axios.put(`https://skillhub-back-glsd.onrender.com/user/${id}`, {
+    await axios.put(`${URL}/user/${id}`, {
       pay: allUsersPayment[0]._id
     })
   }

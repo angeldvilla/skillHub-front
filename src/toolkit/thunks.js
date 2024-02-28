@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-const URL_API = 'https://skillhub-back-glsd.onrender.com/empleador'
+const URL = import.meta.env.VITE_URL
 
 export const getWork = () => {
   return async (dispatch) => {
     dispatch(startIsLoading())
 
-    const { data } = await axios(`${VITE_URL}/empleador`)
+    const { data } = await axios(`${URL}/empleador`)
 
     dispatch(allWork({ resultWork: data }))
   }
@@ -18,9 +18,7 @@ export const getWorkForName = (title) => {
     try {
       dispatch(startIsLoading())
 
-      const { data } = await axios(
-        `https://skillhub-back-production.up.railway.app/empleador/job?title=${title}`
-      )
+      const { data } = await axios(`${URL}/empleador/job?title=${title}`)
 
       dispatch(getWorkName(data))
     } catch (error) {
@@ -34,9 +32,7 @@ export const getDetailWork = (id) => {
     try {
       dispatch(startIsLoading())
 
-      const { data } = await axios(
-        `https://skillhub-back-glsd.onrender.com/empleador?_id=${id}`
-      )
+      const { data } = await axios(`${URL}/empleador?_id=${id}`)
 
       dispatch(detailWork(data))
     } catch (error) {
@@ -60,10 +56,7 @@ export const reviews = createAsyncThunk(
     }
 
     try {
-      const { data } = await axios.post(
-        'https://skillhub-back-glsd.onrender.com/reviews',
-        response
-      )
+      const { data } = await axios.post(`${URL}/reviews`, response)
 
       return data
     } catch (error) {
@@ -74,10 +67,7 @@ export const reviews = createAsyncThunk(
 
 export const putUsers = createAsyncThunk('users/putUsers', async (userPut) => {
   try {
-    const { data } = await axios.put(
-      'https://skillhub-back-glsd.onrender.com/users/status',
-      userPut
-    )
+    const { data } = await axios.put(`${URL}/users/status`, userPut)
 
     return data
   } catch (error) {

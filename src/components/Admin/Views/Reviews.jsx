@@ -4,14 +4,14 @@ import { FaStar } from 'react-icons/fa'
 import { Card } from '@material-tailwind/react'
 
 function Reviews() {
+  const URL = import.meta.env.VITE_URL
+
   const [reviews, setReviews] = useState([])
 
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const { data } = await axios(
-          'https://skillhub-back-glsd.onrender.com/reviews'
-        )
+        const { data } = await axios(`${URL}/reviews`)
 
         setReviews(data)
       } catch (error) {

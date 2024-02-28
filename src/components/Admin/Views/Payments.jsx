@@ -6,14 +6,14 @@ import { TABLE_PAYMENT_HEAD } from '../../../utils/dashboard'
 import Loader from '../../Loader/Loader'
 
 function Payments() {
+  const URL = import.meta.env.VITE_URL
+
   const [payments, setPayments] = useState([])
 
   useEffect(() => {
     const getPayments = async () => {
       try {
-        const { data } = await axios(
-          'https://skillhub-back-glsd.onrender.com/payment/'
-        )
+        const { data } = await axios(`${URL}/payment/`)
 
         setPayments(data)
       } catch (error) {

@@ -16,6 +16,7 @@ import Nav from '../PanelUser/Nav'
 import { getUser } from '../../toolkit/Users/usersHandler'
 
 function MercadoPago() {
+  const URL = process.env.VITE_URL
   const navigate = useNavigate()
 
   const plan = [
@@ -88,10 +89,7 @@ function MercadoPago() {
       price: element.pago,
       user: id
     }
-    const { data } = await axios.post(
-      `https://skillhub-back-glsd.onrender.com/payment/${id}`,
-      client
-    )
+    const { data } = await axios.post(`${URL}/payment/${id}`, client)
 
     return (window.location.href = data.preferenceUrl)
   }
@@ -108,9 +106,7 @@ function MercadoPago() {
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios(
-          `https://skillhub-back-glsd.onrender.com/payment/${id}`
-        )
+        const { data } = await axios(`${URL}/payment/${id}`)
 
         setPay(data)
         console.log(data)
@@ -141,12 +137,9 @@ function MercadoPago() {
       if (currentSubscription) {
         const paymentId = currentSubscription._id
 
-        await axios.put(
-          `https://skillhub-back-glsd.onrender.com/payment/${paymentId}`,
-          {
-            subscription: false
-          }
-        )
+        await axios.put(`${URL}/payment/${paymentId}`, {
+          subscription: false
+        })
         setPay((prevPay) =>
           prevPay.map((payment) =>
             payment._id === paymentId

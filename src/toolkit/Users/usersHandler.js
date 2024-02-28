@@ -3,11 +3,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { logoutUserSesion } from './usersSlice'
 
+const URL = import.meta.env.VITE_URL
+
 export const getUsers = createAsyncThunk('users/getUsers', async () => {
   try {
-    const { data } = await axios.get(
-      'https://skillhub-back-glsd.onrender.com/user'
-    )
+    const { data } = await axios.get(`${URL}/user`)
 
     return data
   } catch (error) {
@@ -17,9 +17,7 @@ export const getUsers = createAsyncThunk('users/getUsers', async () => {
 
 export const getUser = createAsyncThunk('users/getUser', async (id) => {
   try {
-    const { data } = await axios.get(
-      `https://skillhub-back-glsd.onrender.com/user/${id}`
-    )
+    const { data } = await axios.get(`${URL}/user/${id}`)
 
     return data
   } catch (error) {
@@ -31,9 +29,7 @@ export const getUsersByName = createAsyncThunk(
   'users/getUsersByName',
   async (name) => {
     try {
-      const { data } = await axios.get(
-        `https://skillhub-back-glsd.onrender.com/user?name=${name}`
-      )
+      const { data } = await axios.get(`${URL}/user?name=${name}`)
 
       return data
     } catch (error) {
@@ -44,10 +40,7 @@ export const getUsersByName = createAsyncThunk(
 
 export const postUser = createAsyncThunk('users/postUser', async (userData) => {
   try {
-    const { data } = await axios.post(
-      'https://skillhub-back-glsd.onrender.com/user/register',
-      userData
-    )
+    const { data } = await axios.post('${URL}/user/register', userData)
 
     return data
   } catch (error) {
@@ -58,10 +51,7 @@ export const postUser = createAsyncThunk('users/postUser', async (userData) => {
 export const putUser = (id, userData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(
-        `https://skillhub-back-glsd.onrender.com/user/${id}`,
-        userData
-      )
+      const { data } = await axios.put(`${URL}/user/${id}`, userData)
 
       dispatch(putUserInfo(data))
     } catch (error) {
@@ -79,9 +69,7 @@ export const logoutUser = () => {
 
 export const Payment = createAsyncThunk('users/Payment', async () => {
   try {
-    const { data } = await axios.get(
-      'https://skillhub-back-glsd.onrender.com/payment'
-    )
+    const { data } = await axios.get('${URL}/payment')
 
     return data
   } catch (error) {

@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 export default function Scoreview() {
+  const URL = import.meta.env.VITE_URL
+
   const [rating, setRating] = useState(0)
   const [hover, setHover] = useState(null)
   const [reviews, setReviews] = useState([])
 
   const getReviews = async () => {
     try {
-      const response = await axios.get(
-        'https://skillhub-back-glsd.onrender.com/reviews'
-      )
+      const response = await axios.get(`${URL}/reviews`)
 
       return response.data
     } catch (error) {

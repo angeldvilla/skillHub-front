@@ -16,6 +16,8 @@ import UserProfileInfo from './EditProfile/UserProfileInfo'
 import Nav from './Nav'
 
 export default function Profile() {
+  const URL = import.meta.env.VITE_URL
+
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -50,9 +52,7 @@ export default function Profile() {
   useEffect(() => {
     const getPayment = async () => {
       try {
-        const { data } = await axios(
-          `https://skillhub-back-glsd.onrender.com/payment/${id}`
-        )
+        const { data } = await axios(`${URL}/payment/${id}`)
 
         setPay(data)
       } catch (error) {
@@ -74,7 +74,7 @@ export default function Profile() {
     const expirationDate = calculateExpirationDate(createdAt)
 
     try {
-      await axios.put(`https://skillhub-back-glsd.onrender.com/payment/${id}`, {
+      await axios.put(`${URL}/payment/${id}`, {
         subscription: false
       })
       setPay((prevPay) =>

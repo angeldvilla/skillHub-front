@@ -9,6 +9,7 @@ import Loader from '../Loader/Loader'
 import logoSkillHub from '../../assets/skillHub.jpg'
 
 function Next() {
+  const URL = import.meta.env.VITE_URL
   // Token
   const access_token = import.meta.env.VITE_MERCADOPAGO_KEY
 
@@ -23,15 +24,12 @@ function Next() {
   useEffect(() => {
     const busqueda = async () => {
       // Traemos la consulta de venta de mercado pago
-      const result = await axios.get(
-        `https://api.mercadopago.com/v1/payments/${payment_id}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${access_token}`
-          }
+      const result = await axios.get(`${URL}/${payment_id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access_token}`
         }
-      )
+      })
 
       const resultModificados = {
         compra_Id: result.data.id,
@@ -46,7 +44,7 @@ function Next() {
 
       //Traemos el usuario de la BD
       const { data } = await axios.get(
-        `https://skillhub-back-glsd.onrender.com/user/${result.data.metadata.user_id}`
+        `${URL}/user/${result.data.metadata.user_id}`
       )
 
       setResultUser(data)
@@ -58,18 +56,12 @@ function Next() {
   //Cargar los datos  a la BD
   const handleGuardarDatos = () => {
     const saveData = async () => {
-      return await axios.post(
-        'https://skillhub-back-production.up.railway.app/payment/save',
-        datos
-      )
+      return await axios.post('${URL}/payment/save', datos)
     }
 
     saveData()
     const changeCantidadPost = async () => {
-      return await axios.put(
-        `https://skillhub-back-glsd.onrender.com/user/${id_client}`,
-        { cantidadPost: 0 }
-      )
+      return await axios.put(`${URL}/user/${id_client}`, { cantidadPost: 0 })
     }
 
     changeCantidadPost()

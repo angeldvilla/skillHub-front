@@ -6,15 +6,15 @@ import { FaUsers, FaCcMastercard, FaStar, FaFolder } from 'react-icons/fa'
 import axios from 'axios'
 
 function Dashboard() {
+  const URL = import.meta.env.VITE_URL
+
   const { work } = useSelector((state) => state.work)
   const { users, userCredentials } = useSelector((state) => state.users)
   const [payments, setPayments] = useState([])
   const [reviews, setReviews] = useState([])
   const getPayments = async () => {
     try {
-      const { data } = await axios(
-        'https://skillhub-back-glsd.onrender.com/payment/'
-      )
+      const { data } = await axios(`${URL}/payment/`)
 
       setPayments(data)
     } catch (error) {
@@ -26,9 +26,7 @@ function Dashboard() {
 
   const getReviews = async () => {
     try {
-      const { data } = await axios(
-        'https://skillhub-back-glsd.onrender.com/reviews'
-      )
+      const { data } = await axios(`${URL}/reviews`)
 
       setReviews(data)
     } catch (error) {

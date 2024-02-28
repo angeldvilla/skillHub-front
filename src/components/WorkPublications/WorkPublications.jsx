@@ -23,6 +23,8 @@ import ubication from '../../assets/ubication.svg'
 import Loader from '../Loader/Loader'
 
 export default function WorkPublication() {
+  const URL = import.meta.env.VITE_URL
+
   const { id } = useParams()
   const { userCredentials } = useSelector((state) => state.users)
   const dispatch = useDispatch()
@@ -60,9 +62,7 @@ export default function WorkPublication() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { data } = await axios(
-          `https://skillhub-back-glsd.onrender.com/user/`
-        )
+        const { data } = await axios(`${URL}/user/`)
 
         setUsuario(data)
       } catch (error) {
