@@ -13,7 +13,7 @@ function Dashboard() {
   const getPayments = async () => {
     try {
       const { data } = await axios(
-        'https://skillhub-back-production.up.railway.app/payment/'
+        'https://skillhub-back-glsd.onrender.com/payment/'
       )
 
       setPayments(data)
@@ -27,12 +27,12 @@ function Dashboard() {
   const getReviews = async () => {
     try {
       const { data } = await axios(
-        'https://skillhub-back-production.up.railway.app/reviews'
+        'https://skillhub-back-glsd.onrender.com/reviews'
       )
 
       setReviews(data)
     } catch (error) {
-      console.error('Error al obtener las calificaciones:', error)
+      console.error('Error al obtener las calificaciones: ', error)
     }
   }
 

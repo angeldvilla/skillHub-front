@@ -96,7 +96,10 @@ function SectionContact() {
           </div>
 
           <div>
-            <button className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-blue-gray-500 transition-all font-semibold">
+            <button
+              className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-blue-gray-500 transition-all font-semibold"
+              type="button"
+            >
               ENVIAR
             </button>
             <button

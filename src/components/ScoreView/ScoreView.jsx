@@ -10,12 +10,11 @@ export default function Scoreview() {
   const getReviews = async () => {
     try {
       const response = await axios.get(
-        'https://skillhub-back-production.up.railway.app/reviews'
+        'https://skillhub-back-glsd.onrender.com/reviews'
       )
 
       return response.data
     } catch (error) {
-      console.error('Error al obtener las reseñas:', error)
       throw error
     }
   }
@@ -40,8 +39,6 @@ export default function Scoreview() {
 
     fetchReviews()
   }, [])
-
-  console.log(rating)
 
   return (
     <div className="flex flex-col items-center">

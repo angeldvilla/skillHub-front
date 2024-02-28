@@ -110,7 +110,7 @@ export default function FormCreateWork() {
     event.preventDefault()
     const putUser = async () => {
       const resultPut = await axios.put(
-        `https://skillhub-back-production.up.railway.app/user/${id}`,
+        `https://skillhub-back-glsd.onrender.com/user/${id}`,
         {
           cantidadPost: filterCantidadPost[0] + 1
         }
@@ -266,6 +266,7 @@ export default function FormCreateWork() {
       <span>{cat}</span>
       <button
         className="p-0.5 ml-1 bg-gray-800 text-white rounded-md w-6 h-6 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-sm transition text-xs flex items-center justify-center"
+        type="button"
         onClick={() => handleDelete(cat)}
       >
         {' '}
@@ -308,10 +309,6 @@ export default function FormCreateWork() {
             ...prevData,
             image: data
           }))
-          console.log(
-            'Esta es la nueva info de setWorkData en img',
-            workdata.image
-          )
         } catch (error) {
           console.log('Error en el componente UploadImage en cludinary', error)
         }
@@ -338,7 +335,7 @@ export default function FormCreateWork() {
       <span>Imagen Seleccionada</span>
       <br />
       <img
-        alt="nature image"
+        alt="nature"
         className="h-96 w-full rounded-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
         src={workdata.image}
         style={{ maxWidth: '200px', height: '200px', margin: 'auto' }}
@@ -366,7 +363,7 @@ export default function FormCreateWork() {
   useEffect(() => {
     const getUser = async () => {
       const response = await axios(
-        `https://skillhub-back-production.up.railway.app/user/`
+        `https://skillhub-back-glsd.onrender.com/user/`
       )
 
       setUsuario(response.data.filter((element) => element.uid === id))
@@ -614,11 +611,17 @@ export default function FormCreateWork() {
                   ) : null}
                 </div>
                 {trabajoFiltrado ? (
-                  <button className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-blue-gray-500 transition-all font-semibold">
+                  <button
+                    className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-blue-gray-500 transition-all font-semibold"
+                    type="button"
+                  >
                     Editar Trabajo
                   </button>
                 ) : (
-                  <button className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-blue-gray-500 transition-all font-semibold">
+                  <button
+                    className="w-full mt-4 bg-[#242121] rounded-md py-3 text-white text-xs hover:shadow-md hover:shadow-blue-gray-500 transition-all font-semibold"
+                    type="button"
+                  >
                     Publicar Trabajo
                   </button>
                 )}
@@ -674,12 +677,18 @@ export default function FormCreateWork() {
 
           <div className="flex justify-between w-1/2">
             <NavLink to={`/user-panel/${usuario[0].uid}/home`}>
-              <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
+              <button
+                className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition"
+                type="button"
+              >
                 Ir al inicio
               </button>
             </NavLink>
             <NavLink to={`/user-panel/${usuario[0].uid}/memberShip`}>
-              <button className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition">
+              <button
+                className="p-2 mt-8 bg-blue-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-sky-700 hover:shadow-md transition"
+                type="button"
+              >
                 Suscripción
               </button>
             </NavLink>

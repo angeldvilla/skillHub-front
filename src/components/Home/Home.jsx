@@ -41,7 +41,7 @@ export default function Home() {
   const usersPaymentResult = async () => {
     //! la base de datos esta modificado
     const resultPaymentUser = await axios(
-      `https://skillhub-back-production.up.railway.app/payment/${id}`
+      `https://skillhub-back-glsd.onrender.com/payment/${id}`
     )
 
     setAllUseersPayment(
@@ -50,10 +50,9 @@ export default function Home() {
   }
 
   const modifDate = async () => {
-    await axios.put(
-      `https://skillhub-back-production.up.railway.app/user/${id}`,
-      { pay: allUsersPayment[0]._id }
-    )
+    await axios.put(`https://skillhub-back-glsd.onrender.com/user/${id}`, {
+      pay: allUsersPayment[0]._id
+    })
   }
 
   useEffect(() => {

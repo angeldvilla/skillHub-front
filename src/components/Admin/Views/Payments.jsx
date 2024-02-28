@@ -12,7 +12,7 @@ function Payments() {
     const getPayments = async () => {
       try {
         const { data } = await axios(
-          'https://skillhub-back-production.up.railway.app/payment/'
+          'https://skillhub-back-glsd.onrender.com/payment/'
         )
 
         setPayments(data)

@@ -46,7 +46,7 @@ function Next() {
 
       //Traemos el usuario de la BD
       const { data } = await axios.get(
-        `https://skillhub-back-production.up.railway.app/user/${result.data.metadata.user_id}`
+        `https://skillhub-back-glsd.onrender.com/user/${result.data.metadata.user_id}`
       )
 
       setResultUser(data)
@@ -67,7 +67,7 @@ function Next() {
     saveData()
     const changeCantidadPost = async () => {
       return await axios.put(
-        `https://skillhub-back-production.up.railway.app/user/${id_client}`,
+        `https://skillhub-back-glsd.onrender.com/user/${id_client}`,
         { cantidadPost: 0 }
       )
     }

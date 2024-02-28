@@ -10,7 +10,7 @@ function Reviews() {
     const getReviews = async () => {
       try {
         const { data } = await axios(
-          'https://skillhub-back-production.up.railway.app/reviews'
+          'https://skillhub-back-glsd.onrender.com/reviews'
         )
 
         setReviews(data)

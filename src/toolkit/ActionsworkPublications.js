@@ -5,10 +5,7 @@ import { GetAllWorkTypes, DeleteWorks } from './sliceWorkPublication'
 
 export const postJobs = (workdata, id) => (dispatch) => {
   axios
-    .post(
-      `https://skillhub-back-production.up.railway.app/empleador/${id}`,
-      workdata
-    )
+    .post(`https://skillhub-back-glsd.onrender.com/empleador/${id}`, workdata)
     .then((res) => dispatch(AddWorks(res.data.results)))
     .catch((error) => console.log('Error con postWokrs', error))
 }
@@ -17,7 +14,7 @@ export const getTypes = () => {
   return async function (dispatch) {
     try {
       let json = await axios.get(
-        'https://skillhub-back-production.up.railway.app/empleador/allType'
+        'https://skillhub-back-glsd.onrender.com/empleador/allType'
       )
 
       return dispatch(GetAllWorkTypes(json.data))
@@ -30,13 +27,10 @@ export const getTypes = () => {
 export const deleteWokrs = (trabajoId) => {
   return async function (dispatch) {
     try {
-      console.log('Intentando eliminar trabajo con ID:', trabajoId)
       const response = await axios.delete(
-        `https://skillhub-back-production.up.railway.app/empleador/${trabajoId}`
+        `https://skillhub-back-glsd.onrender.com/empleador/${trabajoId}`
       )
 
-      console.log('Trabajo eliminado:', trabajoId)
-      console.log('Respuesta del servidor:', response)
       dispatch(DeleteWorks(trabajoId))
     } catch (error) {
       console.log('Error en el DeleteWorks', error.response)
@@ -46,10 +40,7 @@ export const deleteWokrs = (trabajoId) => {
 
 export const editPost = (workdata, id) => (dispatch) => {
   axios
-    .put(
-      `https://skillhub-back-production.up.railway.app/empleador/${id}`,
-      workdata
-    )
+    .put(`https://skillhub-back-glsd.onrender.com/empleador/${id}`, workdata)
     .then((res) => dispatch(EditWorks(res.data.results)))
     .catch((error) => console.log('Error con EditWorks', error.response))
 }

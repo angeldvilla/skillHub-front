@@ -61,7 +61,7 @@ export default function WorkPublication() {
     const getUser = async () => {
       try {
         const { data } = await axios(
-          `https://skillhub-back-production.up.railway.app/user/`
+          `https://skillhub-back-glsd.onrender.com/user/`
         )
 
         setUsuario(data)
@@ -145,7 +145,10 @@ export default function WorkPublication() {
               </h1>
               <br />
               <NavLink to={`/user-panel/${id}/memberShip`}>
-                <button className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition">
+                <button
+                  className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
+                  type="button"
+                >
                   Actualizar suscripcion{' '}
                 </button>
               </NavLink>
@@ -162,7 +165,10 @@ export default function WorkPublication() {
                   No tienes trabajos creados
                 </h1>
                 <NavLink to={`/user-panel/${id}/createWork`}>
-                  <button className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition">
+                  <button
+                    className="p-2 my-3 bg-gray-800 text-white rounded-md w-48 border-2 border-slate-600 hover:bg-gray-700 hover:shadow-md transition"
+                    type="button"
+                  >
                     Crear trabajo
                   </button>
                 </NavLink>
@@ -177,7 +183,7 @@ export default function WorkPublication() {
                 <div className="flex flex-col justify-center">
                   <CardHeader color="blue-gray" floated={false}>
                     <img
-                      alt="job-image"
+                      alt="job"
                       className="w-96 h-64"
                       src={trabajo.image[0]}
                     />
