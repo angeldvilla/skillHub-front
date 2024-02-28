@@ -110,7 +110,7 @@ export default function FormCreateWork() {
     event.preventDefault();
     const putUser = async () => {
       const resultPut = await axios.put(
-        `https://skillhub-back-production.up.railway.app/user/${id}`,
+        `https://skillhub-back-glsd.onrender.com/user/${id}`,
         {
           cantidadPost: filterCantidadPost[0] + 1,
         }
@@ -352,7 +352,7 @@ export default function FormCreateWork() {
   useEffect(() => {
     const getUser = async () => {
       const response = await axios(
-        `https://skillhub-back-production.up.railway.app/user/`
+        `https://skillhub-back-glsd.onrender.com/user/`
       );
       setUsuario(response.data.filter((element) => element.uid === id));
     };

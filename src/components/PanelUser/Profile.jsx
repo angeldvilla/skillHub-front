@@ -50,7 +50,7 @@ export default function Profile() {
     const getPayment = async () => {
       try {
         const { data } = await axios(
-          `https://skillhub-back-production.up.railway.app/payment/${id}`
+          `https://skillhub-back-glsd.onrender.com/payment/${id}`
         );
         setPay(data);
       } catch (error) {
@@ -70,7 +70,7 @@ export default function Profile() {
     const expirationDate = calculateExpirationDate(createdAt);
     try {
       await axios.put(
-        `https://skillhub-back-production.up.railway.app/payment/${id}`,
+        `https://skillhub-back-glsd.onrender.com/payment/${id}`,
         {
           subscription: false,
         }

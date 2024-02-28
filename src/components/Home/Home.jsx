@@ -42,12 +42,12 @@ export default function Home() {
   //! RELACION DE MODELO USUARIOS CON PAYMENT
   
   const usersPaymentResult = async()=>{ //! la base de datos esta modificado
-    const resultPaymentUser = await axios(`https://skillhub-back-production.up.railway.app/payment/${id}`)
+    const resultPaymentUser = await axios(`https://skillhub-back-glsd.onrender.com/payment/${id}`)
     setAllUseersPayment(resultPaymentUser.data.filter(element=>element.subscription===true))
   }
 
   const modifDate=async()=>{
-    await axios.put(`https://skillhub-back-production.up.railway.app/user/${id}`,{ pay:allUsersPayment[0]._id})
+    await axios.put(`https://skillhub-back-glsd.onrender.com/user/${id}`,{ pay:allUsersPayment[0]._id})
   }
 
     useEffect(() => {

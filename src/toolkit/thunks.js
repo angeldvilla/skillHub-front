@@ -2,7 +2,7 @@
 import { allWork, getWorkName, startIsLoading, detailWork } from "./slice";
   import axios from "axios";
 
-  const URL_API = "https://skillhub-back-production.up.railway.app/empleador"; 
+  const URL_API = "https://skillhub-back-glsd.onrender.com/empleador"; 
   
 
   export const getWork = () => {
@@ -21,7 +21,7 @@ import { allWork, getWorkName, startIsLoading, detailWork } from "./slice";
           try {
               dispatch(startIsLoading())
 
-              const {data}= await axios(`https://skillhub-back-production.up.railway.app/empleador/job?title=${title}`) 
+              const {data}= await axios(`https://skillhub-back-glsd.onrender.com/empleador/job?title=${title}`) 
               dispatch(getWorkName(data))
               
           } catch (error) {
@@ -35,7 +35,7 @@ import { allWork, getWorkName, startIsLoading, detailWork } from "./slice";
       try {
         dispatch(startIsLoading());
 
-        const { data } = await axios(`https://skillhub-back-production.up.railway.app/empleador?_id=${id}`); 
+        const { data } = await axios(`https://skillhub-back-glsd.onrender.com/empleador?_id=${id}`); 
         dispatch(detailWork(data));
         
     
@@ -58,7 +58,7 @@ export const reviews =  createAsyncThunk ("score/sendScore", async({score, messa
     message: message
   };
     try {
-      const { data } = await axios.post('https://skillhub-back-production.up.railway.app/reviews', response) 
+      const { data } = await axios.post('https://skillhub-back-glsd.onrender.com/reviews', response) 
       return data
       
     } catch (error) {
@@ -73,7 +73,7 @@ export const putUsers = createAsyncThunk ("users/putUsers", async(userPut) => {
 
   try {
     console.log(userPut)
-    const { data } = await axios.put('https://skillhub-back-production.up.railway.app/users/status', userPut)
+    const { data } = await axios.put('https://skillhub-back-glsd.onrender.com/users/status', userPut)
     return data
   } catch (error) {
     console.log("error:", error.message)

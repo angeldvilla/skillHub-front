@@ -86,7 +86,7 @@ const SectionContact = () => {
               name="message"
               value={form.message}
               onChange={handleChange}
-              rows={6}
+              
               variant="static"
               placeholder="Escribe tu mensaje aquí"
               required

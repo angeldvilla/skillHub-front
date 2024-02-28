@@ -68,7 +68,7 @@ const MercadoPago = () => {
       user: id,
     };
     const { data } = await axios.post(
-      `https://skillhub-back-production.up.railway.app/payment/${id}`,
+      `https://skillhub-back-glsd.onrender.com/payment/${id}`,
       client
     );
 
@@ -87,7 +87,7 @@ const MercadoPago = () => {
     const getPayment = async () => {
       try {
         const { data } = await axios(
-          `https://skillhub-back-production.up.railway.app/payment/${id}`
+          `https://skillhub-back-glsd.onrender.com/payment/${id}`
         );
         setPay(data);
         console.log(data)
@@ -116,7 +116,7 @@ const MercadoPago = () => {
       if (currentSubscription) {
         const paymentId = currentSubscription._id;
         await axios.put(
-          `https://skillhub-back-production.up.railway.app/payment/${paymentId}`,
+          `https://skillhub-back-glsd.onrender.com/payment/${paymentId}`,
           {
             subscription: false,
           }

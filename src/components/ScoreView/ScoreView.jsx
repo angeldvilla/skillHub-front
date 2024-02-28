@@ -9,7 +9,7 @@ export default function Scoreview() {
 
   const getReviews = async () => {
     try {
-      const response = await axios.get("https://skillhub-back-production.up.railway.app/reviews");
+      const response = await axios.get("https://skillhub-back-glsd.onrender.com/reviews");
       return response.data;
     } catch (error) {
       console.error("Error al obtener las reseñas:", error);
