@@ -66,7 +66,7 @@ export default function WorkPublication() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { data } = await axios(`https://skillhub-back-production.up.railway.app/user/`);
+        const { data } = await axios(`https://skillhub-back-glsd.onrender.com/user/`);
         setUsuario(data);
    
       } catch (error) {

@@ -5,7 +5,7 @@ import { logoutUserSesion } from "./usersSlice";
 export const getUsers = createAsyncThunk("users/getUsers", async () => {
   try {
     const { data } = await axios.get(
-      "https://skillhub-back-production.up.railway.app/user" 
+      "https://skillhub-back-glsd.onrender.com/user" 
     );
     return data;
   } catch (error) {
@@ -16,7 +16,7 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
 export const getUser = createAsyncThunk("users/getUser", async (id) => {
   try {
     const { data } = await axios.get(
-      `https://skillhub-back-production.up.railway.app/user/${id}` 
+      `https://skillhub-back-glsd.onrender.com/user/${id}` 
     );
     return data;
   } catch (error) {
@@ -29,7 +29,7 @@ export const getUsersByName = createAsyncThunk(
   async (name) => {
     try {
       const { data } = await axios.get(
-        `https://skillhub-back-production.up.railway.app/user?name=${name}`
+        `https://skillhub-back-glsd.onrender.com/user?name=${name}`
       );
       return data;
     } catch (error) {
@@ -41,7 +41,7 @@ export const getUsersByName = createAsyncThunk(
 export const postUser = createAsyncThunk("users/postUser", async (userData) => {
   try {
     const { data } = await axios.post(
-      "https://skillhub-back-production.up.railway.app/user/register",
+      "https://skillhub-back-glsd.onrender.com/user/register",
       userData
     );
     return data;
@@ -54,7 +54,7 @@ export const putUser = (id, userData) => {
    return async (dispatch) => {
      try {
       const { data } = await axios.put(
-        `https://skillhub-back-production.up.railway.app/user/${id}`,
+        `https://skillhub-back-glsd.onrender.com/user/${id}`,
         userData
       );
       dispatch(putUserInfo(data));
@@ -75,7 +75,7 @@ export const logoutUser = () => {
 
 export const Payment = createAsyncThunk("users/Payment", async () => {
   try {
-    const { data } = await axios.get("https://skillhub-back-production.up.railway.app/payment");
+    const { data } = await axios.get("https://skillhub-back-glsd.onrender.com/payment");
     return data;
   } catch (error) {
     throw new Error(error);
