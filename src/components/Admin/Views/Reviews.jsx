@@ -1,28 +1,30 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { FaStar } from "react-icons/fa";
-import { Card } from "@material-tailwind/react";
+import axios from 'axios'
+import { useState, useEffect } from 'react'
+import { FaStar } from 'react-icons/fa'
+import { Card } from '@material-tailwind/react'
 
-const Reviews = () => {
-  const [reviews, setReviews] = useState([]);
-  
+function Reviews() {
+  const URL = import.meta.env.VITE_URL
+
+  const [reviews, setReviews] = useState([])
+
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const { data } = await axios(
-          "https://skillhub-back-glsd.onrender.com/reviews"
-        );
-        setReviews(data);
+        const { data } = await axios(`${URL}/reviews`)
+
+        setReviews(data)
       } catch (error) {
-        console.error("Error al obtener las calificaciones:", error);
+        console.error('Error al obtener las calificaciones:', error)
       }
-    };
-    getReviews();
-  }, []);
+    }
+
+    getReviews()
+  }, [])
 
   // promedio de calificaciones
-  const totalScores = reviews.reduce((sum, review) => sum + review.score, 0);
-  const averageScore = totalScores / reviews.length;
+  const totalScores = reviews.reduce((sum, review) => sum + review.score, 0)
+  const averageScore = totalScores / reviews.length
 
   return (
     <div className="px-4 py-32 flex">
@@ -52,7 +54,7 @@ const Reviews = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Reviews;
+export default Reviews

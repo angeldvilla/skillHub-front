@@ -1,22 +1,23 @@
-const modeToggle = document.getElementById('modeToggle');
-const body = document.body;
+const modeToggle = document.getElementById('modeToggle')
+const body = document.body
 
-modeToggle.addEventListener('click', toggleMode);
+modeToggle.addEventListener('click', toggleMode)
 
 function toggleMode() {
   if (body.classList.contains('dark-mode')) {
-    body.classList.remove('dark-mode');
-    localStorage.setItem('mode', 'light');
+    body.classList.remove('dark-mode')
+    localStorage.setItem('mode', 'light')
   } else {
-    body.classList.add('dark-mode');
-    localStorage.setItem('mode', 'dark');
+    body.classList.add('dark-mode')
+    localStorage.setItem('mode', 'dark')
   }
 }
 
 // Verificar la preferencia almacenada en localStorage al cargar la página
-const savedMode = localStorage.getItem('mode');
+const savedMode = localStorage.getItem('mode')
+
 if (savedMode === 'dark') {
-  body.classList.add('dark-mode');
+  body.classList.add('dark-mode')
 }
 
-export default toggleMode;
+export default toggleMode

@@ -1,44 +1,48 @@
-import "aos/dist/aos.css";
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import backgroundImage from "../../assets/backgroundImage.jpg";
-import logoSkillHub from "../../assets/skillHub.jpg";
-import ImageCarousel from "../ImageCarousel/ImageCarousel";
-import Cerrajero from "../../assets/Cerrajero.jpeg";
-import Jardinero from "../../assets/Jardinero.jpg";
-import Electricista from "../../assets/electrician.webp";
-import Diseñador from "../../assets/Designer.avif";
-import Footer from "../Footer/Footer";
-import AbautUs from "../AbautUs/AbautUs";
-import Contact from "./Contact";
-import Services from "./Services";
-import { ArrowUpIcon } from "@heroicons/react/24/outline";
-import Scoreview from "../ScoreView/ScoreView";
+import 'aos/dist/aos.css'
+import { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { ArrowUpIcon } from '@heroicons/react/24/outline'
+
+import backgroundImage from '../../assets/backgroundImage.jpg'
+import logoSkillHub from '../../assets/skillHub.jpg'
+import ImageCarousel from '../ImageCarousel/ImageCarousel'
+import Cerrajero from '../../assets/Cerrajero.jpeg'
+import Jardinero from '../../assets/Jardinero.jpg'
+import Electricista from '../../assets/electrician.webp'
+import Diseñador from '../../assets/Designer.avif'
+import Footer from '../Footer/Footer'
+import AbautUs from '../AbautUs/AbautUs'
+import Scoreview from '../ScoreView/ScoreView'
+
+import Contact from './Contact'
+import Services from './Services'
+
 export default function LandingPage() {
-  const images = [Diseñador, Jardinero, Electricista, Cerrajero];
+  const images = [Diseñador, Jardinero, Electricista, Cerrajero]
 
   // Scroll to top feature
-  const [showScrollButton, setShowScrollButton] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false)
 
   const handleScroll = () => {
     if (window.scrollY > 300) {
-      setShowScrollButton(true);
+      setShowScrollButton(true)
     } else {
-      setShowScrollButton(false);
+      setShowScrollButton(false)
     }
-  };
+  }
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
-    });
-  };
+      behavior: 'smooth'
+    })
+  }
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <div className="flex flex-col min-h-screen relative">
@@ -61,50 +65,50 @@ export default function LandingPage() {
         `}
       </style>
       <div className="fixed top-0 left-0 right-0 px-4 sm:px-4 py-1 flex items-center justify-between bg-gray-900 bg-opacity-50 backdrop-blur-xl shadow-2xl">
-        <div className="absolute top-0 left-0 right-0 bottom-0 z-[-1]"></div>
+        <div className="absolute top-0 left-0 right-0 bottom-0 z-[-1]" />
 
         <div className="flex items-center space-x-2 sm:space-x-4">
-          <a href="" className="gap-2 sm:gap-4">
+          <a className="gap-2 sm:gap-4" href="">
             <img
-              src={logoSkillHub}
-              className="-top-10 sm:-top-16 w-16 h-auto rounded-full border-2 border-black mt-1 sm:mt-2"
               alt="skillHub Logo"
+              className="-top-10 sm:-top-16 w-16 h-auto rounded-full border-2 border-black mt-1 sm:mt-2"
+              src={logoSkillHub}
             />
           </a>
         </div>
         <div className="flex ml-2 sm:ml-4 space-x-4 sm:space-x-8 items-center">
           <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
             <a
-              href="#inicio"
               className="text-white w-16 sm:w-24"
               data-aos="fade-down"
+              href="#inicio"
             >
               Inicio
             </a>
           </span>
           <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
             <a
-              href="#services"
               className="text-white w-16 sm:w-24"
               data-aos="fade-down"
+              href="#services"
             >
               Servicios
             </a>
           </span>
           <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
             <a
-              href="#about-us"
               className="text-white w-16 sm:w-24"
               data-aos="fade-down"
+              href="#about-us"
             >
               Sobre Nosotros
             </a>
           </span>
           <span className="hover:translate-x-2 transition-transform duration-300 ease-in-out text-base sm:text-lg">
             <a
-              href="#contact"
               className="text-white w-16 sm:w-24"
               data-aos="fade-down"
+              href="#contact"
             >
               Contáctanos
             </a>
@@ -112,15 +116,15 @@ export default function LandingPage() {
         </div>
         <div className="flex space-x-3 sm:space-x-5 justify-end">
           <NavLink
-            to="/signin"
             className="bg-white hover:bg-gray-300 text-black text-center px-2 py-1 sm:px-3 sm:py-2 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
+            to="/signin"
           >
             Iniciar Sesión
           </NavLink>
 
           <NavLink
-            to="/signup"
             className="bg-blue-700 hover:bg-blue-600 text-white text-center px-3 py-1 sm:px-4 sm:py-2 rounded-md inline-block shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
+            to="/signup"
           >
             Regístrate
           </NavLink>
@@ -128,24 +132,24 @@ export default function LandingPage() {
       </div>
 
       <section
-        id="inicio"
         className="h-screen flex flex-col justify-center items-center text-white py-20 sm:mb-32"
+        id="inicio"
       >
         {/* Scroll to Top Button */}
-        {showScrollButton && (
+        {showScrollButton ? (
           <button
             className="fixed bottom-10 right-6 bg-gray-900/75 hover:bg-gray-900 text-white py-4 px-3 rounded-lg z-100"
             onClick={scrollToTop}
           >
             <ArrowUpIcon className="h-6 w-6" />
           </button>
-        )}
+        ) : null}
         <div
           className="fixed top-0 left-0 w-full h-screen bg-cover bg-center blur brightness-50 z-[-1]"
           style={{
-            backgroundImage: `url(${backgroundImage})`,
+            backgroundImage: `url(${backgroundImage})`
           }}
-        ></div>
+        />
 
         <div
           className="flex flex-col justify-center items-center w-11/12 sm:w-4/5 mx-auto mt-32 sm:mt-32" /* "flex justify-between items-center w-4/5 mx-auto mt-32" */
@@ -180,8 +184,8 @@ export default function LandingPage() {
 
             <div className="mt-8 sm:mt-12 justify-center">
               <NavLink
-                to="/home"
                 className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-transform duration-200 hover:-translate-y-0.5"
+                to="/home"
               >
                 Ver ahora
               </NavLink>
@@ -200,7 +204,7 @@ export default function LandingPage() {
       <Services />
 
       {/* SECCIÓN SOBRE NOSOTROS */}
-      <section id="about-us" className="bg-blue-800 py-16">
+      <section className="bg-blue-800 py-16" id="about-us">
         <div className="container mx-auto">
           <AbautUs />
         </div>
@@ -214,5 +218,5 @@ export default function LandingPage() {
 
       <Footer />
     </div>
-  );
+  )
 }

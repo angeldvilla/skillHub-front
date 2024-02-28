@@ -1,28 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 export const WorkPublicationSlice = createSlice({
-    name: "formwork",
-    initialState: {
-        allPublicationsWork : [],
-        allWorkTypes : []
+  name: 'formwork',
+  initialState: {
+    allPublicationsWork: [],
+    allWorkTypes: []
+  },
+  reducers: {
+    AddWorks: (state, action) => {
+      state.allPublicationsWork.push(action.payload)
     },
-    reducers: {
-        AddWorks:(state, action) => {
-            state.allPublicationsWork.push(action.payload) 
-        },
-        GetAllWorkTypes: (state, action) => {
-            state.allWorkTypes = action.payload
-          },
-          DeleteWorks: (state, action) => {
-            state.allPublicationsWork = state.allPublicationsWork.filter(work => work._id !== action.payload);
-        },
-        EditWorks: (state, action) => {
-            state.allPublicationsWork.push(action.payload)
-        }
-        
+    GetAllWorkTypes: (state, action) => {
+      state.allWorkTypes = action.payload
+    },
+    DeleteWorks: (state, action) => {
+      state.allPublicationsWork = state.allPublicationsWork.filter(
+        (work) => work._id !== action.payload
+      )
+    },
+    EditWorks: (state, action) => {
+      state.allPublicationsWork.push(action.payload)
     }
+  }
 })
 
-export const {AddWorks, DeleteWorks, GetAllWorkTypes, EditWorks} = WorkPublicationSlice.actions 
+export const { AddWorks, DeleteWorks, GetAllWorkTypes, EditWorks } =
+  WorkPublicationSlice.actions
 
 export default WorkPublicationSlice.reducer //Aquí mando todo lo que contiene el reducer

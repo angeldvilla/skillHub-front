@@ -1,8 +1,6 @@
-import Atras from "./Atras"
-import { Link } from "react-scroll";
-import Header from "../Header/Header"
-import { ArrowUpIcon } from "@heroicons/react/24/outline";
-import {useState, useEffect} from "react";
+import { Link } from 'react-scroll'
+import { ArrowUpIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect } from 'react'
 import {
   RiDraftFill,
   RiFileList3Line,
@@ -10,74 +8,77 @@ import {
   RiCheckboxMultipleLine,
   RiUserUnfollowFill,
   RiOpenArmFill,
-  RiEmotionUnhappyLine,
-} from "react-icons/ri";
-import Footer from "../Footer/Footer";
-const CondicionesDeUso = () => {
-  const [showScrollButton, setShowScrollButton] = useState(false);
+  RiEmotionUnhappyLine
+} from 'react-icons/ri'
+
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
+
+import Atras from './Atras'
+function CondicionesDeUso() {
+  const [showScrollButton, setShowScrollButton] = useState(false)
 
   const handleScroll = () => {
     if (window.scrollY > 300) {
-      setShowScrollButton(true);
+      setShowScrollButton(true)
     } else {
-      setShowScrollButton(false);
+      setShowScrollButton(false)
     }
-  };
+  }
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
-    });
-  };
+      behavior: 'smooth'
+    })
+  }
+
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <div className="containerCondUso">
-     
-      <Header/>
-      <div className="positionButon"> 
-      <Atras/>
-     
-      <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <svg
-            className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
-            aria-hidden="true"
-          >
-            <defs>
-              <pattern
-                id="e813992c-7d03-4cc4-a2bd-151760b470a0"
-                width={200}
-                height={200}
-                x="50%"
-                y={-1}
-                patternUnits="userSpaceOnUse"
-              >
-                <path d="M100 200V.5M.5 .5H200" fill="none" />
-              </pattern>
-            </defs>
-            <svg x="50%" y={-1} className="overflow-visible fill-gray-50">
-              <path
-                d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+      <Header />
+      <div className="positionButon">
+        <Atras />
+
+        <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+          <div className="absolute inset-0 -z-10 overflow-hidden">
+            <svg
+              aria-hidden="true"
+              className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+            >
+              <defs>
+                <pattern
+                  height={200}
+                  id="e813992c-7d03-4cc4-a2bd-151760b470a0"
+                  patternUnits="userSpaceOnUse"
+                  width={200}
+                  x="50%"
+                  y={-1}
+                >
+                  <path d="M100 200V.5M.5 .5H200" fill="none" />
+                </pattern>
+              </defs>
+              <svg className="overflow-visible fill-gray-50" x="50%" y={-1}>
+                <path
+                  d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                  strokeWidth={0}
+                />
+              </svg>
+              <rect
+                fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)"
+                height="100%"
                 strokeWidth={0}
+                width="100%"
               />
             </svg>
-            <rect
-              width="100%"
-              height="100%"
-              strokeWidth={0}
-              fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)"
-            />
-          </svg>
+          </div>
         </div>
-        </div>
-     
-    
-      
+
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div className="lg:pr-4">
@@ -101,9 +102,7 @@ const CondicionesDeUso = () => {
               </div>
             </div>
           </div>
-          <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-          
-          </div>
+          <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden" />
           <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             <div className="lg:pr-4">
               <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
@@ -114,63 +113,63 @@ const CondicionesDeUso = () => {
                     </h1>
 
                     <Link
+                      smooth
+                      spy
                       activeClass="active"
-                      to="introduccion"
-                      spy={true}
-                      smooth={true}
-                      offset={50}
                       duration={4000}
+                      offset={50}
+                      to="introduccion"
                     >
                       <h3> 1.Introducción</h3>
                     </Link>
                     <Link
+                      smooth
+                      spy
                       activeClass="active"
-                      to="Obligaciones"
-                      spy={true}
-                      smooth={true}
-                      offset={50}
                       duration={4000}
+                      offset={50}
+                      to="Obligaciones"
                     >
                       <h3>2.Obligaciones</h3>
                     </Link>
 
                     <Link
+                      smooth
+                      spy
                       activeClass="active"
-                      to="Derechos"
-                      spy={true}
-                      smooth={true}
-                      offset={50}
                       duration={4000}
+                      offset={50}
+                      to="Derechos"
                     >
                       <h3>3.Derechos y limitaciones</h3>
                     </Link>
                     <Link
+                      smooth
+                      spy
                       activeClass="active"
-                      to="Quejas"
-                      spy={true}
-                      smooth={true}
-                      offset={50}
                       duration={4000}
+                      offset={50}
+                      to="Quejas"
                     >
                       <h3>4.Quejas relativas al contenido</h3>
                     </Link>
 
                     <Link
-                      to="Contactarnos"
+                      smooth
+                      spy
                       className="test6"
-                      spy={true}
-                      smooth={true}
                       duration={5000}
+                      to="Contactarnos"
                     >
                       <h3>5. Contactarnos</h3>
                     </Link>
                   </p>
                 </div>
-                <ul role="list" className="mt-8 space-y-8 text-gray-600">
+                <ul className="mt-8 space-y-8 text-gray-600" role="list">
                   <li className="flex gap-x-3">
                     <RiFileList3Line
-                      className="mt-1 h-5 w-5 flex-none text-indigo-600"
                       aria-hidden="true"
+                      className="mt-1 h-5 w-5 flex-none text-indigo-600"
                     />
                     <span>
                       <strong className="font-semibold text-gray-900">
@@ -179,9 +178,9 @@ const CondicionesDeUso = () => {
                       <div id="introduccion">
                         1. Cuando utilizas nuestros Servicios aceptas cumplir
                         todos estos términos. Tu uso de nuestros Servicios
-                        también está sujeto a nuestra Política de privacidad, que abarca el modo en
-                        que recabamos, utilizamos, compartimos y almacenamos tu
-                        información personal.
+                        también está sujeto a nuestra Política de privacidad,
+                        que abarca el modo en que recabamos, utilizamos,
+                        compartimos y almacenamos tu información personal.
                       </div>
                       <div className="titleServCliente">
                         <h1>
@@ -205,8 +204,8 @@ const CondicionesDeUso = () => {
                   </li>
                   <li className="flex gap-x-3">
                     <RiCheckboxMultipleLine
-                      className="mt-1 h-5 w-5 flex-none text-indigo-600"
                       aria-hidden="true"
+                      className="mt-1 h-5 w-5 flex-none text-indigo-600"
                     />
                     <div id="Obligaciones">
                       <span>
@@ -253,8 +252,8 @@ const CondicionesDeUso = () => {
                   </li>
                   <li className="flex gap-x-3">
                     <RiUserUnfollowFill
-                      className="mt-1 h-5 w-5 flex-none text-indigo-600"
                       aria-hidden="true"
+                      className="mt-1 h-5 w-5 flex-none text-indigo-600"
                     />
                     <span>
                       <strong className="font-semibold text-gray-900">
@@ -289,18 +288,18 @@ const CondicionesDeUso = () => {
                       </div>
                     </p>
                   </li>
-                  {showScrollButton && (
-          <button
-            className="fixed bottom-10 right-6 bg-gray-900/75 hover:bg-gray-900 text-white py-4 px-3 rounded-lg z-100"
-            onClick={scrollToTop}
-          >
-            <ArrowUpIcon className="h-6 w-6" />
-          </button>
-        )}
+                  {showScrollButton ? (
+                    <button
+                      className="fixed bottom-10 right-6 bg-gray-900/75 hover:bg-gray-900 text-white py-4 px-3 rounded-lg z-100"
+                      onClick={scrollToTop}
+                    >
+                      <ArrowUpIcon className="h-6 w-6" />
+                    </button>
+                  ) : null}
                   <li className="flex gap-x-3">
                     <RiEmotionUnhappyLine
-                      className="mt-1 h-5 w-5 flex-none text-indigo-600"
                       aria-hidden="true"
+                      className="mt-1 h-5 w-5 flex-none text-indigo-600"
                     />
                     <div id="Quejas">
                       <span>
@@ -401,17 +400,15 @@ const CondicionesDeUso = () => {
                     escribirnos a estas direcciones.
                   </div>
                 </p>
-           
               </div>
             </div>
           </div>
         </div>
-       
-      </div> 
-       
-       
+      </div>
+
       <Footer />
     </div>
-  );
-};
-export default CondicionesDeUso;
+  )
+}
+
+export default CondicionesDeUso
