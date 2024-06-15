@@ -1,7 +1,9 @@
 {
   "name": "skillhubv2",
   "version": "0.1.0",
+  "author": "Angel Villa & Ariel Piazzano",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
