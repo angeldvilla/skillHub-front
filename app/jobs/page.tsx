@@ -2,6 +2,7 @@ import { getJobs } from '@/modules/job/actions/actions'
 import Card from '@/modules/job/components/card'
 
 export default async function Page() {
+  await new Promise((resolve) => setTimeout(resolve, 4000))
   const jobs = await getJobs()
 
   return (
