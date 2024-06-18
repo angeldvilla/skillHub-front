@@ -12,3 +12,14 @@ export const getJobs = async () => {
 
   return data
 }
+
+export const getJob = async (id: string) => {
+  const res = await fetch(`${API_URL}/job/${id}`)
+  const data = (await res.json()) as Job
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch job')
+  }
+
+  return data
+}
