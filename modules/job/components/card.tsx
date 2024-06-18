@@ -20,7 +20,7 @@ export default function Card({
   userId
 }: Props) {
   return (
-    <div className="card w-full bg-base-100 shadow-xl">
+    <div className="card bg-base-100 w-full shadow-xl">
       <figure>
         <Image
           alt="Shoes"
@@ -41,7 +41,7 @@ export default function Card({
             {category}
           </div>
           <div className="badge badge-outline hover:bg-base-content hover:text-base-100">
-            {category}
+            {location}
           </div>
         </div>
       </div>
