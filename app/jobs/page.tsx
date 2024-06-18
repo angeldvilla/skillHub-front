@@ -6,7 +6,7 @@ export default async function Page() {
   const jobs = await getJobs()
 
   return (
-    <div className="grid grid-cols-1 gap-4 bg-neutral-800 p-3 text-neutral-500 md:grid-cols-2 lg:grid-cols-3">
+    <div className="mx-auto my-4 grid w-full max-w-lg grid-cols-1 gap-5 rounded-3xl border-2 border-neutral-700 bg-neutral-950 p-8 text-neutral-500 md:max-w-4xl md:grid-cols-2 xl:max-w-7xl xl:grid-cols-3 xl:gap-6">
       {jobs.map(
         ({
           id,
