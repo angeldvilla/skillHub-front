@@ -14,7 +14,7 @@ export const getJobs = async () => {
 }
 
 export const getJob = async (id: string) => {
-  const res = await fetch(`${API_URL}/job/${id}`)
+  const res = await fetch(`${API_URL}/job/${id}`, { cache: 'no-store' })
   const data = (await res.json()) as Job
 
   if (!res.ok) {
