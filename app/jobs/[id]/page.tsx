@@ -5,7 +5,7 @@ interface Props {
 }
 
 export default async function Page({ params: { id } }: Props) {
-  const { category, description, image, location, title, wage, userId } =
+  const { category, description, image, location, title, wage, user } =
     await getJob(id)
 
   return (
@@ -18,7 +18,9 @@ export default async function Page({ params: { id } }: Props) {
           <p className="mb-3">{category}</p>
           <p className="mb-3">{location}</p>
           <p className="mb-3">{wage}</p>
-          <p className="mb-3">{userId}</p>
+        </div>
+        <div className="max-w-md">
+          <h2 className="mb-10 text-5xl font-bold">{user.name}</h2>
         </div>
       </div>
     </div>
