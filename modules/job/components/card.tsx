@@ -8,8 +8,6 @@ interface Props {
   image: string
   location: string
   title: string
-  type: string
-  userId: number
 }
 
 export default function Card({
@@ -18,9 +16,7 @@ export default function Card({
   description,
   image,
   location,
-  title,
-  type,
-  userId
+  title
 }: Props) {
   return (
     <Link href={`/jobs/${id}`}>
