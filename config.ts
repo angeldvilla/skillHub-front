@@ -1,4 +1,4 @@
-if (process.env.PORT === undefined || process.env.API_URL === undefined) {
+if (!process.env.PORT || !process.env.API_URL) {
   throw new Error('Missing environment variables')
 }
 
