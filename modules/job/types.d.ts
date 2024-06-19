@@ -1,3 +1,10 @@
+export interface User {
+  id: number
+  name: string
+  email: string
+  role: string
+}
+
 export interface Job {
   id: number
   category: string
@@ -5,7 +12,7 @@ export interface Job {
   image: string
   location: string
   title: string
-  type: string
   wage: number
   userId: number
+  user: User
 }
