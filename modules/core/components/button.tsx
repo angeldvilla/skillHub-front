@@ -1,12 +1,22 @@
 'use client'
 
+import type { CustomButtonProps } from '@/types'
+
 import Link from 'next/link'
 
-export default function ButtonDefault() {
+export default function CustomButton({
+  title,
+  containerStyles,
+  handleClick
+}: CustomButtonProps) {
   return (
     <Link href="/jobs">
-      <button className="btn btn-outline btn-info" type="button">
-        Start
+      <button
+        className={`relative flex flex-row items-center justify-center px-6 py-3 outline-none ${containerStyles}`}
+        type="button"
+        onClick={handleClick}
+      >
+        <span className="flex-1">{title}</span>
       </button>
     </Link>
   )
