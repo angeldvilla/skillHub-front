@@ -1,14 +1,12 @@
 import type { Metadata } from 'next'
 
-import { Sora } from 'next/font/google'
-
 import '@/styles/globals.css'
-
-const sora = Sora({ subsets: ['latin'] })
+import NavBar from '@/modules/core/components/navbar'
+import Footer from '@/modules/core/components/footer'
 
 export const metadata: Metadata = {
   title: 'Skillhub',
-  description: 'Skillhub'
+  description: 'Discover and connect with the best talents'
 }
 
 export default function RootLayout({
@@ -18,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={sora.className}>{children}</body>
+      <body className="relative">
+        <NavBar />
+        {children}
+        <Footer />
+      </body>
     </html>
   )
 }
