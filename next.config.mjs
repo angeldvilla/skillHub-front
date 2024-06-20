@@ -4,7 +4,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    remotePatterns: [{ protocol: 'https', hostname: 'img.daisyui.com' }]
+    remotePatterns: [{ protocol: 'https', hostname: '*' }]
   },
   webpack(config) {
     config.module.rules.push({
