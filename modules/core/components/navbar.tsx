@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function NavBar() {
@@ -22,8 +23,8 @@ export default function NavBar() {
                 />
               </svg>
             </div>
-            <ul className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow">
-              <li>
+            <ul className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-blue-700 p-2 shadow">
+              {/*   <li>
                 <Link href="/">Home</Link>
               </li>
               <li>
@@ -39,16 +40,23 @@ export default function NavBar() {
               </li>
               <li>
                 <Link href="/">Contact</Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <Link className="btn btn-ghost text-xl" href="/">
+            <Image
+              alt="logo"
+              className="rounded-full"
+              height={50}
+              src="/logo_sk.svg"
+              width={50}
+            />
             SkillHub
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal z-10 px-1">
-            <li>
+            {/* <li>
               <Link href="/">Home</Link>
             </li>
             <li>
@@ -66,16 +74,16 @@ export default function NavBar() {
             </li>
             <li>
               <Link href="/">Contact</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="navbar-end">
-          <Link className="btn" href="/">
+          <Link className="btn btn-outline border-blue-400" href="/">
             Sign Up
           </Link>
         </div>
       </div>
-      <div className="h-0.5 w-full bg-emerald-500" />
+      <div className="h-0.5 w-full bg-blue-700" />
     </>
   )
 }
