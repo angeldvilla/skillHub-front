@@ -62,7 +62,24 @@ export default function Footer() {
       </nav>
       <aside>
         <p>Copyright © 2024 - All right reserved</p>
-        <p>Made with ❤ by Angel Villa & Ariel Piazzano</p>
+        <p>
+          <span>Made with ❤ by </span>
+          <Link
+            className="text-sky-400 hover:underline dark:text-cyan-500/90"
+            href="https://github.com/angeldvilla"
+            target="_blank"
+          >
+            Angel Villa
+          </Link>
+          <span> & </span>
+          <Link
+            className="text-sky-400 hover:underline dark:text-cyan-500/90"
+            href="https://github.com/NoistNT"
+            target="_blank"
+          >
+            Ariel Piazzano
+          </Link>
+        </p>
       </aside>
     </footer>
   )
