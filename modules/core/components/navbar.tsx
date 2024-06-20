@@ -24,23 +24,7 @@ export default function NavBar() {
               </svg>
             </div>
             <ul className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-blue-700 p-2 shadow">
-              {/*   <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li>
-                <Link href="/">About</Link>
-                <ul className="p-2">
-                  <li>
-                    <Link href="/">Our Team</Link>
-                  </li>
-                  <li>
-                    <Link href="/">Reviews</Link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Link href="/">Contact</Link>
-              </li> */}
+              {' '}
             </ul>
           </div>
           <Link className="btn btn-ghost text-xl" href="/">
@@ -55,27 +39,7 @@ export default function NavBar() {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal z-10 px-1">
-            {/* <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <details>
-                <summary>About</summary>
-                <ul className="p-2">
-                  <li>
-                    <Link href="/">Our Team</Link>
-                  </li>
-                  <li>
-                    <Link href="/">Reviews</Link>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <Link href="/">Contact</Link>
-            </li> */}
-          </ul>
+          <ul className="menu menu-horizontal z-10 px-1"> </ul>
         </div>
         <div className="navbar-end">
           <Link className="btn btn-outline border-blue-400" href="/">
