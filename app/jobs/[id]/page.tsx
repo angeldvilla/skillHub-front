@@ -4,7 +4,7 @@ interface Props {
   params: { id: string }
 }
 
-export default async function Page({ params: { id } }: Props) {
+export default async function DetailJobPage({ params: { id } }: Props) {
   const { category, description, image, location, title, wage, user } =
     await getJob(id)
 
