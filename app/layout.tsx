@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 
 import '@/styles/globals.css'
-import NavBar from '@/modules/core/components/navbar'
-import Footer from '@/modules/core/components/footer'
+import { NavBar, Footer } from '@/modules/core/components'
 
 export const metadata: Metadata = {
   title: 'Skillhub',
