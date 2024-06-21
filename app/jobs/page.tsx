@@ -9,10 +9,19 @@ interface Props {
 export default async function JobsPage({ searchParams: { title } }: Props) {
   const jobs = await getJobs(title)
 
+  if (jobs.length)
+    return (
+      <>
+        <Search />
+        <List jobs={jobs} />
+      </>
+    )
+
   return (
     <>
       <Search />
-      <List jobs={jobs} />
+      {/* TODO: Fix styles */}
+      <p className="my-48 text-center text-xl">No jobs found with that title</p>
     </>
   )
 }
