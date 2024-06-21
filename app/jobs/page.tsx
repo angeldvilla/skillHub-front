@@ -1,13 +1,18 @@
 import { getJobs } from '@/modules/job/actions/actions'
 import List from '@/modules/job/components/list'
+import Search from '@/modules/job/components/search'
 
-export default async function JobsPage() {
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-  const jobs = await getJobs()
+interface Props {
+  searchParams: { title?: string }
+}
+
+export default async function JobsPage({ searchParams: { title } }: Props) {
+  const jobs = await getJobs(title)
 
   return (
-    <div className="flex h-full flex-col">
+    <>
+      <Search />
       <List jobs={jobs} />
-    </div>
+    </>
   )
 }
