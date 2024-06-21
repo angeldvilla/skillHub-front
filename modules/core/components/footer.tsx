@@ -4,22 +4,22 @@ export default function Footer() {
   return (
     <footer className="footer footer-center rounded bg-base-200 p-10 text-base-content">
       <nav className="grid grid-flow-col gap-4">
-        <Link className="-hover link" href="/">
+        <Link className="-hover link hover:text-blue-500" href="/">
           Terms & Conditions
         </Link>
-        <Link className="-hover link" href="/">
+        <Link className="-hover link hover:text-blue-500" href="/">
           Cookies
         </Link>
-        <Link className="-hover link" href="/">
+        <Link className="-hover link hover:text-blue-500" href="/">
           Privacy & Policy
         </Link>
-        <Link className="-hover link" href="/">
+        <Link className="-hover link hover:text-blue-500" href="/">
           Contact
         </Link>
       </nav>
       <nav>
         <div className="grid grid-flow-col gap-4">
-          <Link href="/">
+          <Link className="hover:text-sky-500" href="/">
             <svg
               className="fill-current"
               height="24"
@@ -32,7 +32,7 @@ export default function Footer() {
               </path>
             </svg>
           </Link>
-          <Link href="/">
+          <Link className="hover:text-red-500" href="/">
             <svg
               className="fill-current"
               height="24"
@@ -45,7 +45,7 @@ export default function Footer() {
               </path>
             </svg>
           </Link>
-          <Link href="/">
+          <Link className="hover:text-blue-500" href="/">
             <svg
               className="fill-current"
               height="24"
