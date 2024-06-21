@@ -5,13 +5,13 @@ export default function Footer() {
     <footer className="footer footer-center rounded bg-base-200 p-10 text-base-content">
       <nav className="grid grid-flow-col gap-4">
         <Link className="-hover link" href="/">
-          Terms and Conditions
-        </Link>
-        <Link className="-hover link" href="/">
-          Privacy Policy
+          Terms & Conditions
         </Link>
         <Link className="-hover link" href="/">
           Cookies
+        </Link>
+        <Link className="-hover link" href="/">
+          Privacy & Policy
         </Link>
         <Link className="-hover link" href="/">
           Contact
@@ -65,7 +65,7 @@ export default function Footer() {
         <p>
           <span>Made with ❤ by </span>
           <Link
-            className="text-sky-400 hover:underline dark:text-cyan-500/90"
+            className="text-blue-400 hover:underline dark:text-blue-500/90"
             href="https://github.com/angeldvilla"
             target="_blank"
           >
@@ -73,7 +73,7 @@ export default function Footer() {
           </Link>
           <span> & </span>
           <Link
-            className="text-sky-400 hover:underline dark:text-cyan-500/90"
+            className="text-blue-400 hover:underline dark:text-blue-500/90"
             href="https://github.com/NoistNT"
             target="_blank"
           >
