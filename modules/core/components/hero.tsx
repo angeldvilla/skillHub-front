@@ -24,15 +24,15 @@ export default function Hero() {
         {/* hero image */}
         <div className="relative z-0 h-[590px] w-[90%] xl:h-full xl:w-full">
           <Image fill alt="Jobs" className="object-contain" src="/hero.webp" />
-          {/* hero image overlay */}
-          <div className="bg-hero-bg -1/4 absolute -z-10 h-[590px] w-full overflow-hidden bg-repeat-round xl:-right-1/2 xl:-top-20 xl:h-screen">
-            <Image
-              fill
-              alt="Jobs"
-              className="object-contain"
-              src="/hero-bg.webp"
-            />
-          </div>
+        </div>
+        {/* hero image overlay */}
+        <div className="bg-hero-bg -1/4 absolute -z-10 h-[590px] w-full overflow-hidden bg-repeat-round xl:-right-1/2 xl:-top-20 xl:h-screen">
+          <Image
+            fill
+            alt="Jobs"
+            className="object-contain"
+            src="/hero-bg.webp"
+          />
         </div>
       </div>
     </div>
