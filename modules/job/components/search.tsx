@@ -18,7 +18,7 @@ export default function Search() {
   }, 300)
 
   return (
-    <label className="input input-md input-bordered mx-auto my-4 flex max-w-xs items-center gap-2">
+    <label className="input input-md input-bordered my-4 flex max-w-xs items-center gap-2">
       <input
         className="grow"
         defaultValue={searchParams.get('title')?.toString()}
