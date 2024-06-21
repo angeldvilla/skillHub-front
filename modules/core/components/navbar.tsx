@@ -42,7 +42,7 @@ export default function NavBar() {
           <ul className="menu menu-horizontal z-10 px-1"> </ul>
         </div>
         <div className="navbar-end">
-          <Link className="btn btn-outline border-blue-400" href="/">
+          <Link className="btn btn-outline border-blue-400" href="/sign-up">
             Sign Up
           </Link>
         </div>
