@@ -1,4 +1,6 @@
 import CarrouselVertical from './carrouselVertical'
+import CarrouselVertical2 from './carrouselVertical2'
+import CarrouselVertical3 from './carrouselVertical3'
 
 export default function FeaturedWorks() {
   return (
@@ -17,10 +19,10 @@ export default function FeaturedWorks() {
             <CarrouselVertical />
           </div>
           <div className="relative z-0 h-[590px] w-[90%] xl:h-full xl:w-full">
-            <CarrouselVertical />
+            <CarrouselVertical2 />
           </div>
           <div className="relative z-0 h-[590px] w-[90%] xl:h-full xl:w-full">
-            <CarrouselVertical />
+            <CarrouselVertical3 />
           </div>
         </div>
       </div>
