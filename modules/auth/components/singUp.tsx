@@ -29,7 +29,7 @@ export default function SignUp() {
               <input
                 required
                 className="input input-bordered"
-                placeholder="email"
+                placeholder="name"
                 type="email"
               />
             </div>
