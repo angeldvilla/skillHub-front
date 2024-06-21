@@ -13,36 +13,11 @@ export default function CarrouselVertical2() {
       </div>
       <div className="carousel-item h-full">
         <Image
-          alt="img-logistic"
-          height={390}
-          src="/logistic.webp"
-          width={390}
-        />
-      </div>
-      <div className="carousel-item h-full">
-        <Image alt="img-sales" height={390} src="/sales.webp" width={390} />
-      </div>
-      <div className="carousel-item h-full">
-        <Image alt="img-tourism" height={390} src="/tourism.webp" width={390} />
-      </div>
-      <div className="carousel-item h-full">
-        <Image
           alt="img-ocuppations"
           height={390}
           src="/ocuppations.webp"
           width={390}
         />
-      </div>
-      <div className="carousel-item h-full">
-        <Image
-          alt="img-education"
-          height={390}
-          src="/education.webp"
-          width={390}
-        />
-      </div>
-      <div className="carousel-item h-full">
-        <Image alt="img-it" height={390} src="/it.webp" width={390} />
       </div>
     </div>
   )
