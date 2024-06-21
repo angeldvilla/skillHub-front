@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter, slugify } from '@/lib/utils'
 import { getJob } from '@/modules/job/actions/actions'
 
 interface Props {
@@ -15,8 +16,8 @@ export default async function DetailJobPage({ params: { id } }: Props) {
         <div className="max-w-md">
           <h2 className="mb-10 text-5xl font-bold">{title}</h2>
           <p className="mb-3">{description}</p>
-          <p className="mb-3">{category}</p>
-          <p className="mb-3">{location}</p>
+          <p className="mb-3">{capitalizeFirstLetter(slugify(category))}</p>
+          <p className="mb-3">{capitalizeFirstLetter(location)}</p>
           <p className="mb-3">{wage}</p>
         </div>
         <div className="max-w-md">

@@ -1,5 +1,7 @@
 import type { Job } from '@/modules/job/types'
 
+import { capitalizeFirstLetter, slugify } from '@/lib/utils'
+
 import Card from './card'
 
 export default function List({ jobs }: { jobs: Job[] }) {
@@ -8,11 +10,11 @@ export default function List({ jobs }: { jobs: Job[] }) {
       {jobs.map(({ id, category, description, image, location, title }) => (
         <Card
           key={id}
-          category={category}
+          category={capitalizeFirstLetter(slugify(category))}
           description={description}
           id={id}
           image={image}
-          location={location}
+          location={capitalizeFirstLetter(location)}
           title={title}
         />
       ))}
