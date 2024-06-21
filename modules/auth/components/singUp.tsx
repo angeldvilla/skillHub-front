@@ -1,7 +1,17 @@
+import Image from 'next/image'
+import Link from 'next/link'
+
 export default function SignUp() {
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
+        <Image
+          alt="register-img"
+          className="max-w-sm rounded-md shadow-2xl"
+          height={300}
+          src="/register-bg.webp"
+          width={340}
+        />
         <div className="px-20 text-center lg:text-left">
           <h1 className="text-5xl font-bold">Register now!</h1>
           <p className="py-12">
@@ -45,12 +55,12 @@ export default function SignUp() {
                 type="password"
               />
               <label className="label" htmlFor="sign-in">
-                <a
+                <Link
                   className="link-hover link label-text-alt text-blue-500"
                   href="/sign-in"
                 >
                   Do you have an account? Login here!
-                </a>
+                </Link>
               </label>
             </div>
             <div className="form-control mt-6">
