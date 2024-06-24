@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import { getCategories, getJobs } from '@/modules/job/actions/actions'
 import List from '@/modules/job/components/list'
 import Menu from '@/modules/job/components/menu'
@@ -22,7 +24,14 @@ export default async function JobsPage({ searchParams: { title } }: Props) {
       {jobs.length ? (
         <List jobs={jobs} />
       ) : (
-        <p className="my-48 text-center text-xl">
+        <p className="my-28 flex flex-col items-center gap-8 text-center text-3xl">
+          <Image
+            alt="not-found-jobs"
+            className="object-contain"
+            height={300}
+            src="/NotFoundJobs.webp"
+            width={300}
+          />
           No jobs found with that title
         </p>
       )}
