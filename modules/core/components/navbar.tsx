@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import ThemeController from './themeController'
+
 export default function NavBar() {
   return (
     <>
@@ -41,10 +43,11 @@ export default function NavBar() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal z-10 px-1"> </ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end gap-4 px-4">
           <Link className="btn btn-outline border-blue-400" href="/sign-up">
             Sign Up
           </Link>
+          <ThemeController />
         </div>
       </div>
       <div className="h-0.5 w-full bg-blue-700" />
