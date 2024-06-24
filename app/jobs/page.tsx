@@ -4,11 +4,13 @@ import Menu from '@/modules/job/components/menu'
 import Search from '@/modules/job/components/search'
 
 interface Props {
-  searchParams: { title?: string }
+  searchParams: { title?: string; category?: string }
 }
 
-export default async function JobsPage({ searchParams: { title } }: Props) {
-  const jobsData = getJobs(title)
+export default async function JobsPage({
+  searchParams: { title, category }
+}: Props) {
+  const jobsData = getJobs(title, category)
   const categoriesData = getCategories()
 
   const [jobs, categories] = await Promise.all([jobsData, categoriesData])
