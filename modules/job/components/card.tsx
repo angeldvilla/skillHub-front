@@ -48,6 +48,35 @@ export default function Card({
               {location}
             </div>
           </div>
+          {/* rating */}
+          <div className="rating mt-4">
+            <input
+              className="mask mask-star-2 bg-orange-400"
+              name="rating-2"
+              type="radio"
+            />
+            <input
+              defaultChecked
+              className="mask mask-star-2 bg-orange-400"
+              name="rating-2"
+              type="radio"
+            />
+            <input
+              className="mask mask-star-2 bg-orange-400"
+              name="rating-2"
+              type="radio"
+            />
+            <input
+              className="mask mask-star-2 bg-orange-400"
+              name="rating-2"
+              type="radio"
+            />
+            <input
+              className="mask mask-star-2 bg-orange-400"
+              name="rating-2"
+              type="radio"
+            />
+          </div>
         </div>
       </div>
     </Link>
