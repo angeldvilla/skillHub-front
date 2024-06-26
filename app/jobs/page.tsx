@@ -1,27 +1,24 @@
 import Image from 'next/image'
 
-import { getCategories, getJobs } from '@/modules/job/actions/actions'
+import { getJobs } from '@/modules/job/actions/actions'
 import List from '@/modules/job/components/list'
 import Menu from '@/modules/job/components/menu'
 import Search from '@/modules/job/components/search'
 
 interface Props {
-  searchParams: { title?: string; category?: string }
+  searchParams: { title?: string; category?: string; location?: string }
 }
 
 export default async function JobsPage({
-  searchParams: { title, category }
+  searchParams: { title, category, location }
 }: Props) {
-  const jobsData = getJobs(title, category)
-  const categoriesData = getCategories()
-
-  const [jobs, categories] = await Promise.all([jobsData, categoriesData])
+  const jobs = await getJobs(title, category, location)
 
   return (
     <div className="flex min-h-screen">
       {/* Left column for menu */}
       <div className="w-[240px] border-r border-neutral-700 p-4">
-        <Menu categories={categories} />
+        <Menu />
       </div>
 
       {/* Right column for jobs */}
