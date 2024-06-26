@@ -1,66 +1,19 @@
-'use client'
+import { getCategories, getJobs } from '@/modules/job/actions/actions'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import Filter from './filter'
 
-import { capitalizeFirstLetter, slugify } from '@/lib/utils'
+export default async function Menu() {
+  const jobsData = getJobs()
+  const categoriesData = getCategories()
 
-interface Props {
-  categories: string[]
-}
-
-export default function Menu({ categories }: Props) {
-  const pathname = usePathname()
-  const { replace } = useRouter()
-  const searchParams = useSearchParams()
-
-  const handleChange = (category: string) => {
-    const params = new URLSearchParams(searchParams)
-
-    if (category && category !== 'Categories') params.set('category', category)
-    else params.delete('category')
-
-    replace(`${pathname}?${params.toString()}`)
-  }
+  const [jobs, categories] = await Promise.all([jobsData, categoriesData])
+  const locations = Array.from(new Set(jobs.map(({ location }) => location)))
 
   return (
     <div className="flex flex-col items-center gap-10">
       <h1 className="m-2 text-center text-3xl">Menu</h1>
-      <select
-        className="select select-bordered w-52"
-        defaultValue={searchParams.get('category')?.toString() ?? ''}
-        onChange={(event) => handleChange(event.target.value)}
-      >
-        <option>Categories</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {capitalizeFirstLetter(slugify(category))}
-          </option>
-        ))}
-      </select>
-      <select
-        className="select select-bordered w-52"
-        defaultValue={searchParams.get('category')?.toString() ?? ''}
-        onChange={(event) => handleChange(event.target.value)}
-      >
-        <option>Wage</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {capitalizeFirstLetter(slugify(category))}
-          </option>
-        ))}
-      </select>
-      <select
-        className="select select-bordered w-52"
-        defaultValue={searchParams.get('category')?.toString() ?? ''}
-        onChange={(event) => handleChange(event.target.value)}
-      >
-        <option>Location</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {capitalizeFirstLetter(slugify(category))}
-          </option>
-        ))}
-      </select>
+      <Filter filters={categories} label="Category" />
+      <Filter filters={locations} label="Location" />
     </div>
   )
 }
