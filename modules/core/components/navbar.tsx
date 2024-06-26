@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -10,7 +12,16 @@ export default function NavBar() {
       <div className="navbar mb-1.5 bg-base-100">
         <div className="navbar-start">
           <div className="dropdown">
-            <div className="btn btn-ghost lg:hidden" role="button" tabIndex={0}>
+            <div
+              className="btn btn-ghost lg:hidden"
+              role="button"
+              tabIndex={0}
+              onClick={() => {
+                const menu = document.getElementById('dropdown-menu')
+
+                menu?.classList.toggle('hidden')
+              }}
+            >
               <svg
                 className="h-5 w-5"
                 fill="none"
@@ -26,8 +37,24 @@ export default function NavBar() {
                 />
               </svg>
             </div>
-            <ul className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-blue-700 p-2 shadow">
-              {' '}
+            <ul
+              className="menu dropdown-content menu-sm z-[1] mt-3 hidden w-52 rounded-box bg-blue-700 p-2 shadow lg:block"
+              id="dropdown-menu"
+            >
+              <li className="items-center">
+                <Link href="/">Home</Link>
+              </li>
+              <li className="items-center">
+                <Link href="/">Services</Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  className="btn btn-outline border-blue-500 hover:border-gray-100 hover:bg-blue-500 hover:text-white hover:duration-300 hover:ease-linear"
+                  href="/sign-up"
+                >
+                  Sign Up
+                </Link>
+              </li>
             </ul>
           </div>
           <Link className="btn btn-ghost text-xl" href="/">
@@ -41,18 +68,17 @@ export default function NavBar() {
             SkillHub
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal z-10 px-1"> </ul>
-        </div>
-        <div className="navbar-end gap-4 px-4">
+        <div className="navbar-end flex items-center gap-4 px-4 lg:flex">
+          <div className="flex items-center gap-4">
+            <ThemeController />
+            <ChangeLanguage />
+          </div>
           <Link
-            className="btn btn-outline border-blue-500 hover:border-gray-100 hover:bg-blue-500 hover:text-white hover:duration-300 hover:ease-linear"
+            className="btn btn-outline hidden items-center justify-center border-blue-500 hover:border-gray-100 hover:bg-blue-500 hover:text-white hover:duration-300 hover:ease-linear lg:flex"
             href="/sign-up"
           >
             Sign Up
           </Link>
-          <ChangeLanguage />
-          <ThemeController />
         </div>
       </div>
       <div className="h-0.5 w-full bg-blue-700" />
