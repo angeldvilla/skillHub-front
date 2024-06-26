@@ -15,7 +15,7 @@ export default function List({ jobs }: { jobs: Job[] }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 2000)
+    }, 1000)
 
     return () => clearTimeout(timer)
   }, [])
@@ -27,7 +27,7 @@ export default function List({ jobs }: { jobs: Job[] }) {
       ))}
     </div>
   ) : (
-    <div className="mx-auto mb-4 grid w-full max-w-lg grid-cols-1 gap-5 rounded-3xl border-2 border-neutral-700 bg-neutral-950 p-8 text-neutral-500 md:max-w-4xl md:grid-cols-2 xl:max-w-7xl xl:grid-cols-3 xl:gap-6">
+    <div className="mx-auto mb-4 grid w-full max-w-lg grid-cols-1 gap-5 rounded-3xl border-2 border-neutral-700 p-8 text-neutral-500 md:max-w-4xl md:grid-cols-2 xl:max-w-7xl xl:grid-cols-3 xl:gap-6">
       {jobs.map(({ id, category, description, image, location, title }) => (
         <Card
           key={id}
