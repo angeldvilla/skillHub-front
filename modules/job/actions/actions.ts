@@ -2,7 +2,11 @@ import type { Job } from '@/modules/job/types'
 
 import { API_URL } from '@/config'
 
-export const getJobs = async (title?: string, category?: string) => {
+export const getJobs = async (
+  title?: string,
+  category?: string,
+  location?: string
+) => {
   const params = new URLSearchParams()
 
   if (title) params.set('title', title)
@@ -10,6 +14,9 @@ export const getJobs = async (title?: string, category?: string) => {
 
   if (category) params.set('category', category)
   else params.delete('category')
+
+  if (location) params.set('location', location)
+  else params.delete('location')
 
   const res = await fetch(`${API_URL}/job?${params.toString()}`, {
     cache: 'no-store'
