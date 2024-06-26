@@ -25,6 +25,7 @@ export default function ListView({ view, setView }: ListViewProps) {
           <li>
             <button
               className="flex w-full items-center gap-2 p-2 text-left"
+              type="button"
               onClick={() => setView('list')}
             >
               <Image
@@ -39,8 +40,9 @@ export default function ListView({ view, setView }: ListViewProps) {
         ) : (
           <li>
             <button
-              onClick={() => setView('gallery')}
               className="flex w-full items-center gap-2 p-2 text-left"
+              type="button"
+              onClick={() => setView('gallery')}
             >
               <Image
                 alt="Gallery View"
