@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import ThemeController from './themeController'
+import ChangeLanguage from './language'
 
 export default function NavBar() {
   return (
@@ -44,9 +45,13 @@ export default function NavBar() {
           <ul className="menu menu-horizontal z-10 px-1"> </ul>
         </div>
         <div className="navbar-end gap-4 px-4">
-          <Link className="btn btn-outline border-blue-400" href="/sign-up">
+          <Link
+            className="btn btn-outline border-blue-500 hover:border-gray-100 hover:bg-blue-500 hover:text-white hover:duration-300 hover:ease-linear"
+            href="/sign-up"
+          >
             Sign Up
           </Link>
+          <ChangeLanguage />
           <ThemeController />
         </div>
       </div>
