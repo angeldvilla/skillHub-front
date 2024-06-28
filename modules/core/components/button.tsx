@@ -5,10 +5,11 @@ import Link from 'next/link'
 export default function CustomButton({
   title,
   containerStyles,
-  btnType
+  btnType,
+  route
 }: CustomButtonProps) {
   return (
-    <Link href="/jobs">
+    <Link href={route ? route : '/'}>
       <button
         className={`relative flex flex-row items-center justify-center px-6 py-3 outline-none ${containerStyles}`}
         type={!btnType ? 'button' : 'submit'}
