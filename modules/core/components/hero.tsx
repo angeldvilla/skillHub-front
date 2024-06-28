@@ -16,6 +16,7 @@ export default function Hero() {
         </p>
         <CustomButton
           containerStyles="bg-blue-700 text-white rounded-full mt-10"
+          route="/jobs"
           title="Explore Jobs"
         />
       </div>
