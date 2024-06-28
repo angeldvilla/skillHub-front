@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function SignIn() {
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen bg-base-100">
       <div className="hero-content flex-col lg:flex-row">
         <Image
           alt="login-img"
@@ -57,6 +57,18 @@ export default function SignIn() {
                 Sign in
               </button>
             </div>
+            <hr className="mt-4 w-full border-gray-600" />
+            <p className="text-center">Or continue with</p>
+            <kbd className="kbd kbd-md bg-gray-200 hover:bg-gray-300 hover:transition-colors hover:duration-300 hover:ease-in-out">
+              <button type="button">
+                <Image
+                  alt="google"
+                  height={25}
+                  src="https://img.icons8.com/?size=256w&id=17949&format=png"
+                  width={25}
+                />
+              </button>
+            </kbd>
           </form>
         </div>
       </div>
