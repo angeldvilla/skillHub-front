@@ -1,73 +1,64 @@
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
 
+interface Language {
+  name: string
+  src: string
+}
+
 export default function ChangeLanguage() {
+  const languages: Language[] = [
+    {
+      name: 'English',
+      src: 'https://img.icons8.com/?size=256w&id=uuRAtTzhLyT5&format=png'
+    },
+    {
+      name: 'Spanish',
+      src: 'https://img.icons8.com/?size=256w&id=ZGEFKpJoPdJQ&format=png'
+    },
+    {
+      name: 'French',
+      src: 'https://img.icons8.com/?size=256w&id=5RtaKEr09Jy6&format=png'
+    },
+    {
+      name: 'Portuguese',
+      src: 'https://img.icons8.com/?size=512w&id=iHI2gDXCsMzH&format=png'
+    },
+    {
+      name: 'Chinese',
+      src: 'https://img.icons8.com/?size=512w&id=OafC2pWK4RV4&format=png'
+    }
+  ]
+
+  const [language, setLanguage] = useState<Language>(languages[0])
+
+  const handleLanguageChange = (selectedLanguage: Language) => {
+    setLanguage(selectedLanguage)
+  }
+
   return (
     <div className="dropdown dropdown-hover">
-      <div className="m-1 flex gap-2" role="button" tabIndex={0}>
-        <Image
-          alt="English"
-          height={20}
-          src="https://img.icons8.com/?size=256w&id=uuRAtTzhLyT5&format=png"
-          width={20}
-        />
-        English
-      </div>
+      <button className="m-1 flex items-center gap-2" type="button">
+        <Image alt={language.name} height={20} src={language.src} width={20} />
+        {language.name}
+      </button>
       <ul className="menu dropdown-content z-[1] w-36 rounded-box bg-base-100 p-2 shadow">
-        <li>
-          <p>
-            <Image
-              alt="English"
-              height={20}
-              src="https://img.icons8.com/?size=256w&id=uuRAtTzhLyT5&format=png"
-              width={20}
-            />
-            English
-          </p>
-        </li>
-        <li>
-          <p>
-            <Image
-              alt="Spanish"
-              height={20}
-              src="https://img.icons8.com/?size=256w&id=ZGEFKpJoPdJQ&format=png"
-              width={20}
-            />
-            Spanish
-          </p>
-        </li>
-        <li>
-          <p>
-            <Image
-              alt="French"
-              height={20}
-              src="https://img.icons8.com/?size=256w&id=5RtaKEr09Jy6&format=png"
-              width={20}
-            />
-            French
-          </p>
-        </li>
-        <li>
-          <p>
-            <Image
-              alt="Portuguse"
-              height={50}
-              src="https://img.icons8.com/?size=512w&id=iHI2gDXCsMzH&format=png"
-              width={150}
-            />
-            Portuguese
-          </p>
-        </li>
-        <li>
-          <p>
-            <Image
-              alt="Chinese"
-              height={20}
-              src="https://img.icons8.com/?size=512w&id=OafC2pWK4RV4&format=png"
-              width={20}
-            />
-            Chinese
-          </p>
-        </li>
+        {languages.map((lang) => (
+          <li key={lang.name}>
+            <button
+              onClick={() => handleLanguageChange(lang)}
+              className={`flex w-full items-center gap-2 text-left ${
+                lang.name === language.name ? 'font-bold' : ''
+              }`}
+              type="button"
+            >
+              <Image alt={lang.name} height={20} src={lang.src} width={20} />
+              {lang.name}
+            </button>
+          </li>
+        ))}
       </ul>
     </div>
   )
