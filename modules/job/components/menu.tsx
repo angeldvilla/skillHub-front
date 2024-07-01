@@ -1,6 +1,7 @@
 import { getCategories, getJobs } from '@/modules/job/actions/actions'
 
 import Filter from './filter'
+import WageFilter from './wageFilter'
 
 export default async function Menu() {
   const jobsData = getJobs()
@@ -14,6 +15,7 @@ export default async function Menu() {
       <h1 className="m-2 text-center text-3xl">Menu</h1>
       <Filter filters={categories} label="Category" />
       <Filter filters={locations} label="Location" />
+      <WageFilter />
     </div>
   )
 }
