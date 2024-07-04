@@ -1,4 +1,4 @@
-import SignUp from '@/modules/auth/components/singUp'
+import SignUp from '@/modules/auth/ui/sign-up'
 
 export default async function SignUpPage() {
   return (
