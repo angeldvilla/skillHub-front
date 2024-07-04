@@ -11,9 +11,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "14.2.4",
-    "react": "^18",
-    "react-dom": "^18"
+    "next": "15.0.0-canary.54",
+    "react": "19.0.0-rc-e02baf6c92-20240627",
+    "react-dom": "19.0.0-rc-e02baf6c92-20240627"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
@@ -32,7 +32,8 @@
     "prettier-plugin-tailwindcss": "^0.6.4",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
-    "use-debounce": "^10.0.1"
+    "use-debounce": "^10.0.1",
+    "zod": "^3.23.8"
   },
   "packageManager": "pnpm@9.4.0+sha256.e1f9e8d1a16607a46dd3c158b5f7a7dc7945501d1c6222d454d63d033d1d918f"
 }
