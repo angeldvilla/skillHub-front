@@ -3,6 +3,7 @@ export interface User {
   name: string
   email: string
   role: string
+  username: string
 }
 
 export interface Job {
@@ -15,4 +16,12 @@ export interface Job {
   wage: number
   userId: number
   user: User
+}
+
+export interface PostUser {
+  name: string
+  email: string
+  password: string
+  username: string
+  confirmPassword: string
 }
