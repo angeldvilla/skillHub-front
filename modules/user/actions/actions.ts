@@ -1,6 +1,6 @@
 'use server'
 
-import type { User } from '@/modules/auth/types'
+import type { User } from '@/modules/user/types'
 
 import { z } from 'zod'
 
@@ -8,7 +8,6 @@ import { API_URL } from '@/config'
 
 export const createUser = async (
   _prevState: {
-    id: number
     email: string
     username: string
     name: string
@@ -17,7 +16,6 @@ export const createUser = async (
   formData: FormData
 ) => {
   const schema = z.object({
-    id: z.number(),
     email: z.string().email(),
     username: z.string().min(2).max(50),
     name: z.string().min(2).max(50),
@@ -25,7 +23,6 @@ export const createUser = async (
   })
 
   const parse = schema.safeParse({
-    id: Number(formData.get('id')),
     email: formData.get('email') as string,
     username: formData.get('username') as string,
     name: formData.get('name') as string,
@@ -40,9 +37,7 @@ export const createUser = async (
 
   const res = await fetch(`${API_URL}/user`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   })
 
