@@ -7,7 +7,9 @@ import { API_URL } from '@/config'
 export const getJobs = async (
   title?: string,
   category?: string,
-  location?: string
+  location?: string,
+  wageOperator?: string,
+  wageValue?: number
 ) => {
   const params = new URLSearchParams()
 
@@ -19,6 +21,11 @@ export const getJobs = async (
 
   if (location) params.set('location', location)
   else params.delete('location')
+
+  if (wageOperator && wageValue !== undefined) {
+    params.set('wageOperator', wageOperator)
+    params.set('wageValue', wageValue.toString())
+  }
 
   const res = await fetch(`${API_URL}/job?${params.toString()}`, {
     cache: 'no-store'

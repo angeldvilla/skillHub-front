@@ -3,13 +3,19 @@ import Menu from '@/modules/job/components/menu'
 import JobsDisplay from '@/modules/job/components/jobDispaly'
 
 interface Props {
-  searchParams: { title?: string; category?: string; location?: string }
+  searchParams: {
+    title?: string
+    category?: string
+    location?: string
+    wageOperator?: string
+    wageValue?: number
+  }
 }
 
 export default async function JobsPage({
-  searchParams: { title, category, location }
+  searchParams: { title, category, location, wageOperator, wageValue }
 }: Props) {
-  const jobs = await getJobs(title, category, location)
+  const jobs = await getJobs(title, category, location, wageOperator, wageValue)
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">

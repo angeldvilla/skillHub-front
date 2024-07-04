@@ -44,7 +44,11 @@ export default async function DetailJobPage({ params: { id } }: Props) {
           alt={title}
           className="w-full max-w-xs rounded-lg border border-gray-300 lg:max-w-none"
           height={300}
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+          src={
+            !image
+              ? image
+              : 'https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg'
+          }
           width={300}
         />
         <button className="hidden lg:block" type="button">

@@ -8,6 +8,7 @@ interface Props {
   image: string
   location: string
   title: string
+  wage: number
 }
 
 export default function Card({
@@ -16,7 +17,8 @@ export default function Card({
   description,
   image,
   location,
-  title
+  title,
+  wage
 }: Props) {
   return (
     <Link href={`/jobs/${id}`}>
@@ -40,12 +42,17 @@ export default function Card({
             <div className="badge badge-accent">NEW</div>
           </h2>
           <p>{description}</p>
-          <div className="card-actions mt-4 justify-end">
-            <div className="badge badge-outline hover:bg-base-content hover:text-base-100">
-              {category}
+          <div className="card-actions mt-4 items-center justify-between">
+            <div className="text-md font-semibold text-neutral-400">
+              ${wage}
             </div>
-            <div className="badge badge-outline hover:bg-base-content hover:text-base-100">
-              {location}
+            <div className="flex gap-2">
+              <div className="badge badge-outline hover:bg-base-content hover:text-base-100">
+                {category}
+              </div>
+              <div className="badge badge-outline hover:bg-base-content hover:text-base-100">
+                {location}
+              </div>
             </div>
           </div>
           {/* rating */}
