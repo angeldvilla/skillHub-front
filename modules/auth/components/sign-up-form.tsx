@@ -3,11 +3,10 @@
 import Link from 'next/link'
 import { useActionState } from 'react'
 
-import { createUser } from '@/modules/auth/actions/actions'
 import SignUpButton from '@/modules/auth/ui/sign-up-button'
+import { createUser } from '@/modules/user/actions/actions'
 
 const initialState = {
-  id: 0,
   email: '',
   username: '',
   name: '',
