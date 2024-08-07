@@ -1,7 +1,8 @@
 'use server'
 
+import type { Job } from '@/modules/job/types'
+
 import { API_URL } from '@/config'
-import { fetcher } from '@/modules/job/hooks/hooks'
 
 export const getJobs = async (
   title?: string,
@@ -26,25 +27,30 @@ export const getJobs = async (
     params.set('wageValue', wageValue.toString())
   }
 
-  return await fetcher({
-    url: `${API_URL}/job?${params.toString()}`,
-    infoDataToFetch: 'jobs',
-    cacheData: true
+  const res = await fetch(`${API_URL}/job?${params.toString()}`, {
+    cache: 'no-store'
   })
+  const data = (await res.json()) as Job[]
+
+  if (!res.ok) throw new Error('Failed to fetch jobs')
+
+  return data
 }
 
 export const getJob = async (id: string) => {
-  return await fetcher({
-    url: `${API_URL}/job/${id}`,
-    infoDataToFetch: 'job',
-    cacheData: true
-  })
+  const res = await fetch(`${API_URL}/job/${id}`, { cache: 'no-store' })
+  const data = (await res.json()) as Job
+
+  if (!res.ok) throw new Error('Failed to fetch job')
+
+  return data
 }
 
 export const getCategories = async () => {
-  return await fetcher({
-    url: `${API_URL}/category`,
-    infoDataToFetch: 'categories',
-    cacheData: true
-  })
+  const res = await fetch(`${API_URL}/category`)
+  const data = (await res.json()) as string[]
+
+  if (!res.ok) throw new Error('Failed to fetch categories')
+
+  return data
 }
