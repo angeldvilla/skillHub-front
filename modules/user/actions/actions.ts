@@ -23,15 +23,14 @@ export const createUser = async (
   })
 
   const parse = schema.safeParse({
-    email: formData.get('email') as string,
-    username: formData.get('username') as string,
-    name: formData.get('name') as string,
-    password: formData.get('password') as string
+    email: formData.get('email'),
+    username: formData.get('username'),
+    name: formData.get('name'),
+    password: formData.get('password')
   })
 
-  if (!parse.success) {
-    throw new Error(parse.error.issues.toString())
-  }
+  if (!parse.success) throw new Error(parse.error.issues.toString())
+
   const id = (await getUsers()).length + 1
   const data = { ...parse.data, id }
 
