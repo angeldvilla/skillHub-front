@@ -11,12 +11,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.0.0-canary.54",
+    "next": "15.0.0-canary.106",
     "react": "19.0.0-rc-187dd6a7-20240806",
     "react-dom": "19.0.0-rc-187dd6a7-20240806"
   },
   "devDependencies": {
-    "@svgr/webpack": "^8.1.0",
     "@types/node": "^22.1.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -33,7 +32,8 @@
     "tailwindcss": "^3.4.7",
     "typescript": "^5.5.4",
     "use-debounce": "^10.0.2",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^4.5.4"
   },
   "packageManager": "pnpm@9.7.0"
 }
