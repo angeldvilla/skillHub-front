@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
+import { useState } from 'react'
 
 interface Language {
   name: string
@@ -48,11 +48,11 @@ export default function ChangeLanguage() {
         {languages.map((lang) => (
           <li key={lang.name}>
             <button
-              onClick={() => handleLanguageChange(lang)}
               className={`flex w-full items-center gap-2 text-left ${
                 lang.name === language.name ? 'font-bold' : ''
               }`}
               type="button"
+              onClick={() => handleLanguageChange(lang)}
             >
               <Image alt={lang.name} height={20} src={lang.src} width={20} />
               {lang.name}
