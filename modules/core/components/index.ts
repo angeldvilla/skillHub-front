@@ -1,17 +1,9 @@
-import Loader from './loader'
-import NavBar from './navbar'
+import FeaturedWorks from './featuredWorks'
 import Footer from './footer'
 import Hero from './hero'
-import FeaturedWorks from './featuredWorks'
-import ThemeController from './themeController'
 import ChangeLanguage from './language'
+import NavBar from './navbar'
+import ThemeController from './themeController'
 
-export {
-  Loader,
-  NavBar,
-  Footer,
-  Hero,
-  FeaturedWorks,
-  ThemeController,
-  ChangeLanguage
-}
+export { ChangeLanguage, FeaturedWorks, Footer, Hero, NavBar, ThemeController }
+
