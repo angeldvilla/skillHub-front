@@ -4,17 +4,11 @@ import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
-import ChangeView from './changeView'
-
-interface SearchProps {
-  setView: (view: 'list' | 'gallery') => void
-  view: 'list' | 'gallery'
-}
-
-export default function Search({ setView, view }: SearchProps) {
+export default function Search() {
   const pathname = usePathname()
   const { replace } = useRouter()
   const searchParams = useSearchParams()
+
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams)
 
@@ -26,7 +20,6 @@ export default function Search({ setView, view }: SearchProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="m-2 text-center text-3xl">Explore Jobs</h1>
       <div className="flex items-center justify-around">
         <label className="input input-md input-bordered my-4 flex max-w-xs items-center gap-2">
           <input
@@ -45,9 +38,6 @@ export default function Search({ setView, view }: SearchProps) {
             />
           </kbd>
         </label>
-        <div className="flex w-full flex-col items-center gap-2 p-2 md:w-auto md:flex-row md:gap-20">
-          <ChangeView setView={setView} view={view} />
-        </div>
       </div>
     </div>
   )
