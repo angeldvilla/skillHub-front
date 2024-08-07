@@ -44,7 +44,7 @@ export default function Card({
           <p>{description}</p>
           <div className="card-actions mt-4 items-center justify-between">
             <div className="text-md font-semibold text-neutral-400">
-              ${wage}
+              $ {wage}
             </div>
             <div className="flex gap-2">
               <div className="badge badge-outline hover:bg-base-content hover:text-base-100">
