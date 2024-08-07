@@ -1,6 +1,8 @@
 import { getJobs } from '@/modules/job/actions/actions'
+import List from '@/modules/job/components/list'
 import Menu from '@/modules/job/components/menu'
-import JobsDisplay from '@/modules/job/components/jobDispaly'
+import Search from '@/modules/job/components/search'
+import { View } from '@/modules/job/components/view'
 
 interface Props {
   searchParams: {
@@ -25,8 +27,13 @@ export default async function JobsPage({
       </div>
 
       {/* Right column for jobs */}
-      <div className="w-full p-2">
-        <JobsDisplay jobs={jobs} />
+      <div className="w-full">
+        <h1 className="my-4 text-center text-3xl">Explore Jobs</h1>
+        <div className="flex items-center justify-center gap-x-6">
+          <Search />
+          <View />
+        </div>
+        <List jobs={jobs} />
       </div>
     </div>
   )

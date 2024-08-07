@@ -1,15 +1,14 @@
 import Image from 'next/image'
 
 import { capitalizeFirstLetter, slugify } from '@/lib/utils'
-import { getJob } from '@/modules/job/actions/actions'
 import CustomButton from '@/modules/core/components/button'
+import { getJob } from '@/modules/job/actions/actions'
 
 interface Props {
   params: { id: string }
 }
 
 export default async function DetailJobPage({ params: { id } }: Props) {
-  new Promise((resolve) => setTimeout(resolve, 2000))
   const { category, description, image, location, title, wage, user } =
     await getJob(id)
 
@@ -66,7 +65,7 @@ export default async function DetailJobPage({ params: { id } }: Props) {
         <p className="mb-3 text-base lg:text-lg">
           Location: {capitalizeFirstLetter(location)}
         </p>
-        <p className="mb-3 text-base lg:text-lg">Wage: {wage}</p>
+        <p className="mb-3 text-base lg:text-lg">Wage: ${wage}</p>
         <h3 className="mt-6 text-2xl font-bold lg:text-3xl">
           Posted by: {user.name}
         </h3>
