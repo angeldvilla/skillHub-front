@@ -4,9 +4,9 @@ import { View } from '@/modules/job/components/view'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="lg:flex lg:gap-x-10">
+    <div className="lg:flex">
       <Menu />
-      <div>
+      <div className="w-full flex-1">
         <h1 className="my-4 text-center text-3xl">Explore Jobs</h1>
         <div className="flex items-center justify-center gap-x-6">
           <Search />

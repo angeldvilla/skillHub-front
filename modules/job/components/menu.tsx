@@ -22,7 +22,7 @@ export default async function Menu() {
   return (
     <div className="flex flex-col border-r-2 border-gray-500/50 pt-8">
       <h1 className="my-6 text-center text-3xl">Filter</h1>
-      <div className="mx-auto flex flex-wrap justify-center gap-4 lg:max-w-72 lg:gap-8">
+      <div className="mx-auto flex max-w-md flex-wrap justify-center gap-4 lg:max-w-72 lg:gap-8">
         <Filter filters={categories} label="Category" />
         <Filter filters={locations} label="Location" />
         <Filter filters={operators} label="Wage Operator" />

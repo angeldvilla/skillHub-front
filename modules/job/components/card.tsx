@@ -19,11 +19,11 @@ export default function Card({
 }: Props) {
   return (
     <Link href={`/jobs/${id}`}>
-      <div className="card card-bordered mx-auto max-w-xl cursor-pointer bg-base-300 shadow-xl hover:border hover:border-neutral-700 hover:bg-base-100">
+      <div className="card card-bordered mx-auto max-w-md cursor-pointer bg-base-300 shadow-xl hover:border hover:border-neutral-700 hover:bg-base-100 xl:max-w-sm">
         <figure>
           <Image
             alt="Shoes"
-            className="w-full rounded-t-xl bg-base-300 object-cover"
+            className="w-full rounded-t-xl bg-base-300"
             height={225}
             src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
             width={380}
