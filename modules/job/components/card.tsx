@@ -8,7 +8,6 @@ interface Props {
   image: string
   location: string
   title: string
-  wage: number
 }
 
 export default function Card({
@@ -24,10 +23,10 @@ export default function Card({
         <figure>
           <Image
             alt="Shoes"
-            className="w-full"
-            height={300}
+            className="w-full rounded-t-xl bg-base-300 object-cover"
+            height={225}
             src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-            width={300}
+            width={380}
           />
         </figure>
         <div className="card-body text-base-content">
