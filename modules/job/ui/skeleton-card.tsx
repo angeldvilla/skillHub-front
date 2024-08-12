@@ -1,6 +1,6 @@
 export default function SkeletonCard() {
   return (
-    <div className="rounded-3xl bg-gray-700">
+    <div className="mx-auto w-[28rem] rounded-3xl bg-gray-700 xl:h-[24rem] xl:w-[24rem]">
       <figure className="skeleton h-56 w-96 bg-gray-700"> </figure>
       <div className="card-body text-base-content">
         <h2 className="card-title skeleton mt-2 h-5 w-3/4"> </h2>
