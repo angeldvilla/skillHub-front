@@ -1,43 +1,24 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import SignInButton from './sign-in-button'
+import { FormControl } from '@/modules/auth/components/form-control'
+import { SubmitFormButton } from '@/modules/auth/components/submit-form-button'
 
 export default function SignInForm() {
   return (
     <form className="card-body">
-      <div className="form-control">
-        <label className="label" htmlFor="email">
-          <span className="label-text">Email</span>
-        </label>
-        <input
-          required
-          className="input input-bordered"
-          placeholder="email"
-          type="email"
-        />
-      </div>
-      <div className="form-control">
-        <label className="label" htmlFor="email">
-          <span className="label-text">Password</span>
-        </label>
-        <input
-          required
-          className="input input-bordered"
-          placeholder="password"
-          type="password"
-        />
-        <label className="label" htmlFor="sign-up">
-          <Link
-            className="link-hover link label-text-alt text-end text-blue-600"
-            href="/sign-up"
-          >
-            Don&apos;t have an account? Sign up
-          </Link>
-        </label>
-      </div>
+      <FormControl label="Email" placeholder="email" type="email" />
+      <FormControl label="Password" placeholder="password" type="password" />
+      <label className="label" htmlFor="sign-up">
+        <Link
+          className="link-hover link label-text-alt text-end text-blue-600"
+          href="/sign-up"
+        >
+          Don&apos;t have an account? Sign up
+        </Link>
+      </label>
       <div className="form-control mt-6">
-        <SignInButton />
+        <SubmitFormButton label="Sign in" />
         <hr className="mt-6 w-full border-gray-600" />
         <p className="mt-2 text-center">Or continue with</p>
         <button
