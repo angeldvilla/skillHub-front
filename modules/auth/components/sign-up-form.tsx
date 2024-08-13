@@ -1,9 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useActionState } from 'react'
 
-import SignUpButton from '@/modules/auth/ui/sign-up-button'
+import SignUpButton from '@/modules/auth/components/sign-up-button'
 import { createUser } from '@/modules/user/actions/actions'
 
 const initialState = {
@@ -88,6 +89,19 @@ export default function SignUpForm() {
       </label>
       <div className="form-control mt-6">
         <SignUpButton />
+        <hr className="mt-6 w-full border-gray-600" />
+        <p className="mt-2 text-center">Or continue with</p>
+        <button
+          className="btn btn-accent mx-auto my-4 w-full rounded-btn bg-gray-200 py-2.5 transition-colors hover:bg-white hover:transition-colors"
+          type="button"
+        >
+          <Image
+            alt="google"
+            height={25}
+            src="https://img.icons8.com/?size=256w&id=17949&format=png"
+            width={25}
+          />
+        </button>
       </div>
     </form>
   )
