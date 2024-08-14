@@ -3,7 +3,7 @@ import { slugify } from '@/lib/utils'
 interface Props {
   label: string
   placeholder: string
-  type: string
+  type: 'text' | 'email' | 'password'
 }
 
 export function FormControl({ label, placeholder, type }: Props) {
