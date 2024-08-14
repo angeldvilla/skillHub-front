@@ -7,8 +7,12 @@ import { SubmitFormButton } from '@/modules/auth/components/submit-form-button'
 export default function SignInForm() {
   return (
     <form className="card-body">
-      <FormControl label="Email" placeholder="email" type="email" />
-      <FormControl label="Password" placeholder="password" type="password" />
+      <FormControl label="Username" placeholder="john_doe" type="text" />
+      <FormControl
+        label="Password"
+        placeholder="a-secure-password"
+        type="password"
+      />
       <label className="label" htmlFor="sign-up">
         <Link
           className="link-hover link label-text-alt text-end text-blue-600"
