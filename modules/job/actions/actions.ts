@@ -2,7 +2,7 @@
 
 import type { Job } from '@/modules/job/types'
 
-import { API_URL } from '@/config'
+import { API_URL } from '@/constants'
 
 export const getJobs = async (
   title?: string,

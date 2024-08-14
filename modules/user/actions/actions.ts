@@ -4,7 +4,7 @@ import type { User } from '@/modules/user/types'
 
 import { z } from 'zod'
 
-import { API_URL } from '@/config'
+import { API_URL } from '@/constants'
 
 export const createUser = async (
   _prevState: {
