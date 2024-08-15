@@ -7,9 +7,14 @@ interface Props {
   route?: string
 }
 
-export default function CustomButton({ title, className, btnType }: Props) {
+export default function CustomButton({
+  title,
+  className,
+  btnType,
+  route
+}: Props) {
   return (
-    <Link href="/jobs">
+    <Link href={route ? route : '/'}>
       <button
         className={`relative flex flex-row items-center justify-center px-6 py-3 outline-none ${className}`}
         type={!btnType ? 'button' : 'submit'}
