@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import CustomButton from './button'
+import CustomButton from '@/modules/core/components/button'
 
 export default function Hero() {
   return (
@@ -15,7 +15,7 @@ export default function Hero() {
           formality. Start exploring and finding those talents today!
         </p>
         <CustomButton
-          containerStyles="bg-blue-700 text-white rounded-full mt-10"
+          className="mt-10 rounded-full bg-blue-700 text-white transition-colors hover:bg-blue-800 hover:shadow-lg"
           route="/jobs"
           title="Explore Jobs"
         />
