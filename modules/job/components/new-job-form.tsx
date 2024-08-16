@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 
 import { capitalizeFirstLetter, slugify } from '@/lib/utils'
 import { FormControl } from '@/modules/auth/components/form-control'
@@ -18,16 +18,13 @@ const initialState = {
   image: '',
   location: '',
   title: '',
-  wage: 0,
-  userId: 1
+  wage: 0
+  // TODO: Add userId
 }
 
 export default function NewJobForm({ categories }: Props) {
   const [_state, formAction] = useActionState(createJob, initialState)
-
-  const handleChange = (value: string) => {
-    // TODO: handle form data and update state with selected category
-  }
+  const [category, setCategory] = useState('')
 
   return (
     <form action={formAction} className="card-body">
@@ -44,10 +41,11 @@ export default function NewJobForm({ categories }: Props) {
         </label>
         <select
           className="select select-bordered w-full"
-          value={_state.category}
-          onChange={(event) => handleChange(event.target.value)}
+          name="category"
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
         >
-          <option value="category">Select a category</option>
+          <option value="">Select a category</option>
           {categories.map((category) => (
             <option key={category} value={category}>
               {capitalizeFirstLetter(slugify(category))}
