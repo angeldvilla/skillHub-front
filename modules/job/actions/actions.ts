@@ -29,6 +29,7 @@ export const createJob = async (
   })
 
   const parse = schema.safeParse({
+    // TODO: Update id with a more efficient way for example with uuid
     id: await getJobs().then((jobs) => jobs.length + 1),
     category: formData.get('category'),
     description: formData.get('description'),
@@ -82,27 +83,24 @@ export const getJobs = async (
   const res = await fetch(`${API_URL}/job?${params.toString()}`, {
     cache: 'no-store'
   })
-  const data = (await res.json()) as Job[]
 
   if (!res.ok) throw new Error('Failed to fetch jobs')
 
-  return data
+  return (await res.json()) as Job[]
 }
 
 export const getJob = async (id: string) => {
   const res = await fetch(`${API_URL}/job/${id}`, { cache: 'no-store' })
-  const data = (await res.json()) as Job
 
   if (!res.ok) throw new Error('Failed to fetch job')
 
-  return data
+  return (await res.json()) as Job
 }
 
 export const getCategories = async () => {
   const res = await fetch(`${API_URL}/category`)
-  const data = (await res.json()) as string[]
 
   if (!res.ok) throw new Error('Failed to fetch categories')
 
-  return data
+  return (await res.json()) as string[]
 }
